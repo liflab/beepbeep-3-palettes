@@ -1,0 +1,10 @@
+*.jar
+lib/
+*.tmp
+*~
+*/bin
+*/dep
+*/doc
+*/tests
+*/.classpath
+*/.project
