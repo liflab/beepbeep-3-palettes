@@ -1,0 +1,10 @@
+ca.uqac.lif.cep.fol
+ca.uqac.lif.cep.fsm
+ca.uqac.lif.cep.gnuplot
+ca.uqac.lif.cep.io.websocket
+ca.uqac.lif.cep.jdbc
+ca.uqac.lif.cep.json
+ca.uqac.lif.cep.ltl
+ca.uqac.lif.cep.sets
+ca.uqac.lif.cep.signal
+ca.uqac.lif.cep.xml
