@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+    Build script for the palettes
+    Copyright (C) 2015-2016  Sylvain Hallé
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<project
+  name="BeepBeep3-Palettes"
+  default="javadoc"
+  basedir=".">
+  
+  <!-- The project's display name -->
+  <property name="build.name" value="BeepBeep 3 Palettes"/>
+  
+  <!-- The project's version number -->
+  <property name="build.version" value="1.0"/>
+  
+  <!-- The project's author -->
+  <property name="build.author" value="Laboratoire d'informatique formelle"/>
+  
+  <!-- The folder where the Javadoc files should go -->
+  <property name="build.docdir" value="doc"/>
+
+  <!-- Target: javadoc
+       Generates the javadoc associated to each project
+  -->
+  <target name="javadoc" description="Generate the documentation">
+    <mkdir dir="${build.docdir}"/>
+    <javadoc
+             destdir="${build.docdir}"
+             packagenames="*"
+             excludepackagenames="org.junit.*"
+             defaultexcludes="yes"
+             author="true"
+             version="true"
+             use="true"
+             Encoding="utf8"
+             docencoding="utf8"
+             charset="utf8"
+             windowtitle="${build.name} Documentation"> 
+      <doctitle><![CDATA[<h1>]]>${build.name}<![CDATA[ Documentation</h1>]]></doctitle>
+      <bottom><![CDATA[<i>Copyright&nbsp;&#169; ]]>${build.author}<![CDATA[. All Rights Reserved.</i>]]></bottom>
+      <link href="http://docs.oracle.com/javase/6/docs/api/"/>
+      <fileset dir=".">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <classpath>
+        <fileset dir=".">
+          <include name="beepbeep-3.jar"/>
+          <include name="**/*.java"/>
+          <include name="**/*.jar"/>
+          <exclude name="**/*Test.java"/>
+        </fileset>
+      </classpath>
+    </javadoc>
+  </target>
+
+</project>
+
+
