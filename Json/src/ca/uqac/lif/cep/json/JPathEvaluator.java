@@ -25,6 +25,9 @@ import ca.uqac.lif.json.JsonElement;
 import ca.uqac.lif.json.JsonPath;
 import ca.uqac.lif.json.JsonPath.PathElement;
 
+/**
+ * Evaluates a JPath expression on a trace of JSON elements.
+ */
 public class JPathEvaluator extends FunctionProcessor
 {	
 	public JPathEvaluator(String path)
@@ -33,18 +36,18 @@ public class JPathEvaluator extends FunctionProcessor
 	}
 	
 	/**
-	 * Function that converts a string into an XML element
+	 * Function that evaluates a JPath expression on a JsonElement
 	 */
 	public static class JPathFunction extends UnaryFunction<JsonElement,JsonElement> 
 	{
 		/**
-		 * The XPath expression this function evaluates
+		 * The JPath expression this function evaluates
 		 */
 		private final List<PathElement> m_path;
 		
 		/**
-		 * Creates a new XPath function
-		 * @param exp The XPath expression to evaluate
+		 * Creates a new JPath function
+		 * @param path The JPath expression to evaluate
 		 */
 		public JPathFunction(String path)
 		{

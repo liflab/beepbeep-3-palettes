@@ -19,6 +19,14 @@ package ca.uqac.lif.cep.sets;
 
 import ca.uqac.lif.cep.functions.BinaryFunction;
 
+/**
+ * Adds all the elements of the second multiset to the first, and
+ * returns this first multiset as its output. This function <em>modifies</em>
+ * the first multiset and returns it. This should be contrasted with
+ * {@link MultisetUnion}.
+ *  
+ * @author Sylvain Hallé
+ */
 public class MultisetAddAll extends BinaryFunction<Multiset,Multiset,Multiset> 
 {
 	/**

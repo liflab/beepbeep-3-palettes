@@ -28,7 +28,7 @@ import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.epl.QueueSource;
+import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tuples.AttributePlaceholder;
 import ca.uqac.lif.cep.tuples.EqualsExpression;
 import ca.uqac.lif.cep.tuples.NumberExpression;

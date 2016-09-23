@@ -20,6 +20,10 @@ package ca.uqac.lif.cep.ltl;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.Function;
 
+/**
+ * Troolean implementation of the first-order existential quantifier.
+ * @author Sylvain Hallé
+ */
 public class Some extends TrooleanQuantifier
 {
 	Some()

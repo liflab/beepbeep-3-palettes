@@ -21,11 +21,11 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.epl.Slicer;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.CumulativeProcessor;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
+import ca.uqac.lif.cep.tmf.Slicer;
 
 public abstract class FirstOrderSlicer extends GroupProcessor
 {

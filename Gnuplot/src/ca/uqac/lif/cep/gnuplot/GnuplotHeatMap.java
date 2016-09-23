@@ -27,7 +27,7 @@ import ca.uqac.lif.cep.tuples.EmlNumber;
 import ca.uqac.lif.cep.tuples.NamedTuple;
 
 /**
- * Generates a Gnuplot file from a 2D {@link ca.uqac.lif.cep.sets.EmlBag}.
+ * Generates a Gnuplot file from a 2D {@link ca.uqac.lif.cep.sets.Multiset}.
  * The keys of the heatmap
  * are {@link NamedTuple}s of integers representing (x,y) coordinates; the
  * values of the heatmap are integers. When its method {@link #compute(Object[])}

@@ -30,12 +30,12 @@ import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.epl.QueueSource;
 import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.io.StreamGrammar;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
 import ca.uqac.lif.cep.numbers.NumberGrammar;
+import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tuples.TupleGrammar;
 
 /**

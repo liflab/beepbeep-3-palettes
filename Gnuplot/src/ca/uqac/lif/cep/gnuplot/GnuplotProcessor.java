@@ -22,6 +22,12 @@ import java.util.Queue;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.sets.Multiset;
 
+/**
+ * Generic processor configuring basic parameters about the generation
+ * of a Gnuplot output string from an event trace.
+ * 
+ * @author Sylvain Hallé
+ */
 public abstract class GnuplotProcessor extends SingleProcessor 
 {
 	/**
@@ -167,6 +173,11 @@ public abstract class GnuplotProcessor extends SingleProcessor
 		return out;
 	}
 
+	/**
+	 * Converts a string into a Gnuplot terminal value
+	 * @param s The string
+	 * @return The terminal value
+	 */
 	public static Terminal stringToTerminal(String s)
 	{
 		s = s.trim();

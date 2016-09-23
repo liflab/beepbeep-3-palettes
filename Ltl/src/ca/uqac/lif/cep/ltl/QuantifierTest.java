@@ -10,13 +10,9 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.GroupProcessor;
-import ca.uqac.lif.cep.Passthrough;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.SmartFork;
-import ca.uqac.lif.cep.epl.QueueSink;
-import ca.uqac.lif.cep.epl.QueueSource;
 import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
 import ca.uqac.lif.cep.functions.Equals;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
@@ -25,6 +21,10 @@ import ca.uqac.lif.cep.functions.TracePlaceholder;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.numbers.IsGreaterThan;
 import ca.uqac.lif.cep.numbers.IsLessThan;
+import ca.uqac.lif.cep.tmf.Passthrough;
+import ca.uqac.lif.cep.tmf.QueueSink;
+import ca.uqac.lif.cep.tmf.QueueSource;
+import ca.uqac.lif.cep.tmf.SmartFork;
 
 /**
  * Unit tests for quantifiers

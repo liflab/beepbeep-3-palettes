@@ -17,12 +17,16 @@
  */
 package ca.uqac.lif.cep.ltl;
 
-import ca.uqac.lif.cep.FileHelper;
 import ca.uqac.lif.cep.Palette;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorBox;
 import ca.uqac.lif.cep.ProcessorSettings;
+import ca.uqac.lif.cep.util.FileHelper;
 
+/**
+ * Palette object for the processor included in this package.
+ * @author Sylvain Hallé
+ */
 public class PackageExtension extends Palette
 {
 	public PackageExtension()

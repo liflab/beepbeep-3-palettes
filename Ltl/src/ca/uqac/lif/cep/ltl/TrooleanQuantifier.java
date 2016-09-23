@@ -25,12 +25,12 @@ import java.util.Set;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.GroupProcessor;
-import ca.uqac.lif.cep.Passthrough;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.SimpleFunction;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
+import ca.uqac.lif.cep.tmf.Passthrough;
 
 public abstract class TrooleanQuantifier extends GroupProcessor 
 {

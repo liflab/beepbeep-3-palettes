@@ -19,6 +19,12 @@ package ca.uqac.lif.cep.sets;
 
 import ca.uqac.lif.cep.functions.BinaryFunction;
 
+/**
+ * Adds an element to a multiset. This function <em>modifies</em>
+ * the multiset and returns it.
+ *  
+ * @author Sylvain Hallé
+ */
 public class MultisetAddElement extends BinaryFunction<Multiset,Object,Multiset> 
 {
 	/**

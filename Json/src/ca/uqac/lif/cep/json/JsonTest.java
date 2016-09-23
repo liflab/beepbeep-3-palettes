@@ -28,7 +28,7 @@ import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pushable;
-import ca.uqac.lif.cep.epl.SinkLast;
+import ca.uqac.lif.cep.tmf.SinkLast;
 import ca.uqac.lif.json.JsonList;
 import ca.uqac.lif.json.JsonMap;
 import ca.uqac.lif.json.JsonParser;

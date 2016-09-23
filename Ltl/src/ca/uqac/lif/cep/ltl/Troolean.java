@@ -107,8 +107,8 @@ public class Troolean
 	
 	/**
 	 * Computes the logical implication of two values
-	 * @param a The first value
-	 * @param b The second value
+	 * @param x The first value
+	 * @param y The second value
 	 * @return The result
 	 */
 	public static Value implies(Value x, Value y)
@@ -145,7 +145,7 @@ public class Troolean
 	
 	/**
 	 * Computes the logical negation of a value
-	 * @param a The first value
+	 * @param x The value
 	 * @return The result
 	 */
 	public static Value not(Value x)
@@ -177,7 +177,7 @@ public class Troolean
 	 * <li>Other numbers evaluate to TRUE</li>
 	 * <li>All other objects evaluate to INCONCLUSIVE</li>
 	 * </ul>
-	 * @param b The object
+	 * @param o The object
 	 * @return The Troolean value
 	 */
 	public static Value trooleanValue(Object o)

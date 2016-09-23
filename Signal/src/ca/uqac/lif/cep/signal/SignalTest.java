@@ -28,7 +28,7 @@ import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.epl.QueueSource;
+import ca.uqac.lif.cep.tmf.QueueSource;
 
 /**
  * Unit tests for the signal processing processors (!)

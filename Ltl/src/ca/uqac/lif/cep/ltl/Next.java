@@ -21,9 +21,13 @@ import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.epl.Trim;
+import ca.uqac.lif.cep.tmf.Trim;
 import ca.uqac.lif.cep.Processor;
 
+/**
+ * Boolean implementation of the LTL <b>X</b> processor
+ * @author Sylvain Hallé
+ */
 public class Next extends Trim
 {
 	public Next()

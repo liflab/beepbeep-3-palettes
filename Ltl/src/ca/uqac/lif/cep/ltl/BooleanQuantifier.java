@@ -11,8 +11,8 @@ import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SingleProcessor;
-import ca.uqac.lif.cep.epl.QueueSink;
 import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.tmf.QueueSink;
 
 public class BooleanQuantifier extends SingleProcessor 
 {

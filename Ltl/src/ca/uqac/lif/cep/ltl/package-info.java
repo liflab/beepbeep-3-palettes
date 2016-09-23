@@ -24,8 +24,10 @@
  * Temporal operators and quantifiers have processors in two versions:
  * Boolean and <em>Troolean</em>.
  * <p>
- * Boolean processors are called {@link Globally}, {@link Eventually}
- * {@link Until}, {@link Next}, {@link ForAll} and {@link Exists}.
+ * Boolean processors are called {@link ca.uqac.lif.cep.ltl.Globally}, 
+ * {@link ca.uqac.lif.cep.ltl.Eventually}
+ * {@link ca.uqac.lif.cep.ltl.Until}, {@link ca.uqac.lif.cep.ltl.Next}, 
+ * {@link ca.uqac.lif.cep.ltl.ForAll} and {@link ca.uqac.lif.cep.ltl.Exists}.
  * If a<sub>0</sub> a<sub>1</sub>
  * a<sub>2</sub> &hellip; is an input trace, the processor Globally
  * produces an output trace b<sub>0</sub> b<sub>1</sub>
@@ -34,8 +36,10 @@
  * words, the i-th output event is the Boolean verdict of evaluating
  * <b>G</b> &phi; on the input trace, starting at the i-th event.
  * <p>
- * Troolean processors are called {@link Always}, {@link Sometime},
- * {@link UpTo}, {@link After}, {@link Every} and {@link Some}.
+ * Troolean processors are called {@link ca.uqac.lif.cep.ltl.Always},
+ *  {@link ca.uqac.lif.cep.ltl.Sometime},
+ * {@link ca.uqac.lif.cep.ltl.UpTo}, {@link ca.uqac.lif.cep.ltl.After}, 
+ * {@link ca.uqac.lif.cep.ltl.Every} and {@link ca.uqac.lif.cep.ltl.Some}.
  * If a<sub>0</sub> a<sub>1</sub>
  * a<sub>2</sub> &hellip; is an input trace, the processor Always
  * produces an output trace b<sub>0</sub> b<sub>1</sub>

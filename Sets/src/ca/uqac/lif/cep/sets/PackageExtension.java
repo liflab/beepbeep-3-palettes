@@ -19,6 +19,10 @@ package ca.uqac.lif.cep.sets;
 
 import ca.uqac.lif.cep.Palette;
 
+/**
+ * Palette object for the processor included in this package.
+ * @author Sylvain Hallé
+ */
 public class PackageExtension extends Palette
 {
 	public PackageExtension()

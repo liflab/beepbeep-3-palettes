@@ -22,7 +22,7 @@ import java.util.Set;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 
 /**
- * Evaluates the cardinality of a set or a multiset
+ * Checks if a multiset contains an element.
  * 
  * @author Sylvain Hallé
  */

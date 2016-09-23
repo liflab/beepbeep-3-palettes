@@ -24,6 +24,10 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.Processor;
 
+/**
+ * Troolean implementation of logical disjunction.
+ * @author Sylvain Hallé
+ */
 public class TrooleanOr extends FunctionProcessor 
 {
 	public TrooleanOr()
