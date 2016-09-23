@@ -104,7 +104,7 @@ About the author                                                   {#about}
 
 BeepBeep 3 was written by [Sylvain Hallé](http://leduotang.ca/sylvain),
 associate professor at Université du Québec à Chicoutimi, Canada. Part of
-this work has been funded by the Canada Research Chair in Specification,
-testing and verification of software systems and the
+this work has been funded by the Canada Research Chair in Software
+Specification, Testing and Verification and the
 [Natural Sciences and Engineering Research Council
 of Canada](http://nserc-crsng.gc.ca).
