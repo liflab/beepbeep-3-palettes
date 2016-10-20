@@ -13,11 +13,11 @@ import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
+import ca.uqac.lif.cep.functions.ContextPlaceholder;
 import ca.uqac.lif.cep.functions.Equals;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.functions.FunctionTree;
-import ca.uqac.lif.cep.functions.TracePlaceholder;
+import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.numbers.IsGreaterThan;
 import ca.uqac.lif.cep.numbers.IsLessThan;
@@ -36,8 +36,8 @@ public class QuantifierTest
 	public void testForAllPush1() throws ConnectorException
 	{
 		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
-		tree.setChild(0, new TracePlaceholder(0));
-		tree.setChild(1, new ArgumentPlaceholder("x"));
+		tree.setChild(0, new ArgumentPlaceholder(0));
+		tree.setChild(1, new ContextPlaceholder("x"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
 		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), gt);
 		QueueSink sink = new QueueSink(1);
@@ -57,8 +57,8 @@ public class QuantifierTest
 	{
 		QueueSource source = new QueueSource(0, 1);
 		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
-		tree.setChild(0, new TracePlaceholder(0));
-		tree.setChild(1, new ArgumentPlaceholder("x"));
+		tree.setChild(0, new ArgumentPlaceholder(0));
+		tree.setChild(1, new ContextPlaceholder("x"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
 		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), gt);
 		Connector.connect(source, fa);
@@ -73,8 +73,8 @@ public class QuantifierTest
 	public void testForAll2() throws ConnectorException
 	{
 		FunctionTree tree = new FunctionTree(IsLessThan.instance); 
-		tree.setChild(0, new TracePlaceholder(0));
-		tree.setChild(1, new ArgumentPlaceholder("x"));
+		tree.setChild(0, new ArgumentPlaceholder(0));
+		tree.setChild(1, new ContextPlaceholder("x"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
 		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), gt);
 		QueueSink sink = new QueueSink(1);
@@ -97,8 +97,8 @@ public class QuantifierTest
 	public void testForAll3() throws ConnectorException
 	{
 		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
-		tree.setChild(0, new ArgumentPlaceholder("x"));
-		tree.setChild(1, new ArgumentPlaceholder("y"));
+		tree.setChild(0, new ContextPlaceholder("x"));
+		tree.setChild(1, new ContextPlaceholder("y"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
 		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), gt);
 		Some fa2 = new Some("y", new DummyCollectionFunction(1, 2, 3), fa);
@@ -119,8 +119,8 @@ public class QuantifierTest
 	{
 		QueueSource source = new QueueSource(0, 1);
 		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
-		tree.setChild(0, new ArgumentPlaceholder("x"));
-		tree.setChild(1, new ArgumentPlaceholder("y"));
+		tree.setChild(0, new ContextPlaceholder("x"));
+		tree.setChild(1, new ContextPlaceholder("y"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
 		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), gt);
 		Some fa2 = new Some("y", new DummyCollectionFunction(1, 2, 3), fa);
@@ -136,8 +136,8 @@ public class QuantifierTest
 	public void testForAll4() throws ConnectorException
 	{
 		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
-		tree.setChild(0, new ArgumentPlaceholder("y"));
-		tree.setChild(1, new ArgumentPlaceholder("x"));
+		tree.setChild(0, new ContextPlaceholder("y"));
+		tree.setChild(1, new ContextPlaceholder("x"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
 		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), gt);
 		Some fa2 = new Some("y", new DummyCollectionFunction(2, 3, 4), fa);
@@ -158,8 +158,8 @@ public class QuantifierTest
 	{
 		QueueSource source = new QueueSource(0, 1);
 		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
-		tree.setChild(0, new ArgumentPlaceholder("y"));
-		tree.setChild(1, new ArgumentPlaceholder("x"));
+		tree.setChild(0, new ContextPlaceholder("y"));
+		tree.setChild(1, new ContextPlaceholder("x"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
 		Every fa = new Every("x", new DummyCollectionFunction(2), gt);
 		Every fa2 = new Every("y", new DummyCollectionFunction(1), fa);
@@ -175,8 +175,8 @@ public class QuantifierTest
 	public void testExists1() throws ConnectorException
 	{
 		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
-		tree.setChild(0, new TracePlaceholder(0));
-		tree.setChild(1, new ArgumentPlaceholder("x"));
+		tree.setChild(0, new ArgumentPlaceholder(0));
+		tree.setChild(1, new ContextPlaceholder("x"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
 		Some fa = new Some("x", new DummyCollectionFunction(1, 2, 3), gt);
 		QueueSink sink = new QueueSink(1);
@@ -195,8 +195,8 @@ public class QuantifierTest
 	public void testExists2() throws ConnectorException
 	{
 		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
-		tree.setChild(0, new TracePlaceholder(0));
-		tree.setChild(1, new ArgumentPlaceholder("x"));
+		tree.setChild(0, new ArgumentPlaceholder(0));
+		tree.setChild(1, new ContextPlaceholder("x"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
 		Some fa = new Some("x", new DummyCollectionFunction(1, 2, 3), gt);
 		QueueSink sink = new QueueSink(1);
@@ -218,8 +218,8 @@ public class QuantifierTest
 		Object o;
 		TrooleanImplies imp = new TrooleanImplies();
 		SmartFork fork = new SmartFork(2);
-		FunctionProcessor left = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new TracePlaceholder(0), new TracePlaceholder(0))));
-		FunctionProcessor right = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new TracePlaceholder(0), new TracePlaceholder(0))));
+		FunctionProcessor left = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ArgumentPlaceholder(0), new ArgumentPlaceholder(0))));
+		FunctionProcessor right = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ArgumentPlaceholder(0), new ArgumentPlaceholder(0))));
 		Connector.connect(fork, left, 0, 0);
 		Connector.connect(fork, right, 1, 0);
 		Connector.connect(left, imp, 0, 0);
@@ -250,8 +250,8 @@ public class QuantifierTest
 		Object o;
 		TrooleanImplies imp = new TrooleanImplies();
 		SmartFork fork = new SmartFork(2);
-		FunctionProcessor left = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new TracePlaceholder(0), new TracePlaceholder(0))));
-		FunctionProcessor right = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new TracePlaceholder(0), new ArgumentPlaceholder("x"))));
+		FunctionProcessor left = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ArgumentPlaceholder(0), new ArgumentPlaceholder(0))));
+		FunctionProcessor right = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ArgumentPlaceholder(0), new ContextPlaceholder("x"))));
 		Connector.connect(fork, left, 0, 0);
 		Connector.connect(fork, right, 1, 0);
 		Connector.connect(left, imp, 0, 0);
@@ -282,7 +282,7 @@ public class QuantifierTest
 		Pullable p;
 		Object o;
 		Passthrough pt = new Passthrough(1);
-		FunctionProcessor left = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new TracePlaceholder(0), new TracePlaceholder(0))));
+		FunctionProcessor left = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ArgumentPlaceholder(0), new ArgumentPlaceholder(0))));
 		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), left);
 		Connector.connect(pt, fa);
 		GroupProcessor gp = new GroupProcessor(1, 1);
