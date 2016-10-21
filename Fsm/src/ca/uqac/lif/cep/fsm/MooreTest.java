@@ -49,7 +49,7 @@ public class MooreTest extends BeepBeepUnitTest
 	public void testMoore1() throws ConnectorException
 	{
 		// Setup event source
-		QueueSource source = new QueueSource(null, 1);
+		QueueSource source = new QueueSource(1);
 		Vector<Object> events = new Vector<Object>();
 		events.add(1);
 		events.add(2);
@@ -67,10 +67,10 @@ public class MooreTest extends BeepBeepUnitTest
 		Connector.connect(source, m);
 		Pullable p = m.getPullableOutput(0);
 		Object event = null;
-		event = p.pull();
+		event = p.pullSoft();
 		assertNotNull(event);
 		assertEquals("In zero", event);
-		event = p.pull();
+		event = p.pullSoft();
 		assertEquals("In one", event);
 		
 	}

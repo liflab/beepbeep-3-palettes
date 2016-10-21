@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.ltl;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Context;
@@ -246,11 +247,26 @@ public class Spawn extends Processor
 		}
 		
 		@Override
+		public Object pullSoft()
+		{
+			if (m_pullable == null)
+			{
+				Object o = m_inputPushable.getPullable().pull();
+				spawn(o);
+				// Re-put o in fork's queue so that it can process it
+				m_fork.putInQueue(o);
+				//m_fork.getPushableInput(0).push(o);
+			}
+			return m_pullable.pullSoft();
+		}
+
+		@Override
 		public Object pull()
 		{
 			if (m_pullable == null)
 			{
-				Object o = m_inputPushable.getPullable().pullHard();
+				Object o = m_inputPushable.getPullable().pull();
+				//System.out.println("Getting " + o);
 				spawn(o);
 				// Re-put o in fork's queue so that it can process it
 				m_fork.putInQueue(o);
@@ -258,48 +274,39 @@ public class Spawn extends Processor
 			}
 			return m_pullable.pull();
 		}
+		
+		@Override
+		public final Object next()
+		{
+			return pull();
+		}
 
 		@Override
-		public Object pullHard()
+		public NextStatus hasNextSoft()
 		{
 			if (m_pullable == null)
 			{
-				Object o = m_inputPushable.getPullable().pullHard();
-				//System.out.println("Getting " + o);
+				Object o = m_inputPushable.getPullable().pull();
 				spawn(o);
 				// Re-put o in fork's queue so that it can process it
 				m_fork.putInQueue(o);
 				//m_fork.getPushableInput(0).push(o);
 			}
-			return m_pullable.pullHard();
+			return m_pullable.hasNextSoft();
 		}
 
 		@Override
-		public NextStatus hasNext()
+		public boolean hasNext()
 		{
 			if (m_pullable == null)
 			{
-				Object o = m_inputPushable.getPullable().pullHard();
+				Object o = m_inputPushable.getPullable().pull();
 				spawn(o);
 				// Re-put o in fork's queue so that it can process it
 				m_fork.putInQueue(o);
 				//m_fork.getPushableInput(0).push(o);
 			}
 			return m_pullable.hasNext();
-		}
-
-		@Override
-		public NextStatus hasNextHard()
-		{
-			if (m_pullable == null)
-			{
-				Object o = m_inputPushable.getPullable().pullHard();
-				spawn(o);
-				// Re-put o in fork's queue so that it can process it
-				m_fork.putInQueue(o);
-				//m_fork.getPushableInput(0).push(o);
-			}
-			return m_pullable.hasNextHard();
 		}
 
 		@Override
@@ -341,6 +348,12 @@ public class Spawn extends Processor
 		public Pushable getPushable()
 		{
 			return m_pushable;
+		}
+
+		@Override
+		public Iterator<Object> iterator() 
+		{
+			return this;
 		}
 	}
 	

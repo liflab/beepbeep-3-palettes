@@ -29,7 +29,7 @@ public class BeepBeepResultSet extends EmptyResultSet
 	protected final Pullable m_pullable;
 	
 	/**
-	 * The last tuple return by a call to {@link Pullable#pullHard()}
+	 * The last tuple return by a call to {@link Pullable#pull()}
 	 */
 	protected NamedTuple m_lastTuple;
 	
@@ -47,10 +47,10 @@ public class BeepBeepResultSet extends EmptyResultSet
 	@Override
 	public boolean next()
 	{
-		boolean status = m_pullable.hasNextHard() != Pullable.NextStatus.NO;
+		boolean status = m_pullable.hasNext() != false;
 		if (status)
 		{
-			m_lastTuple = (NamedTuple) m_pullable.pullHard();
+			m_lastTuple = (NamedTuple) m_pullable.pull();
 		}
 		return status;
 	}

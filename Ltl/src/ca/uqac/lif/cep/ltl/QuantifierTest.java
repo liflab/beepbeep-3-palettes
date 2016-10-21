@@ -55,7 +55,8 @@ public class QuantifierTest
 	@Test
 	public void testForAllPull1() throws ConnectorException
 	{
-		QueueSource source = new QueueSource(0, 1);
+		QueueSource source = new QueueSource(1);
+		source.addEvent(0);
 		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
 		tree.setChild(0, new ArgumentPlaceholder(0));
 		tree.setChild(1, new ContextPlaceholder("x"));
@@ -63,7 +64,7 @@ public class QuantifierTest
 		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), gt);
 		Connector.connect(source, fa);
 		Pullable out = fa.getPullableOutput(0);
-		Object output = out.pullHard();
+		Object output = out.pull();
 		assertNotNull(output);
 		assertTrue(output instanceof Troolean.Value);
 		assertEquals(Troolean.Value.FALSE, (Troolean.Value) output);
@@ -117,7 +118,8 @@ public class QuantifierTest
 	@Test
 	public void testForAllPull3() throws ConnectorException
 	{
-		QueueSource source = new QueueSource(0, 1);
+		QueueSource source = new QueueSource(1);
+		source.addEvent(0);
 		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
 		tree.setChild(0, new ContextPlaceholder("x"));
 		tree.setChild(1, new ContextPlaceholder("y"));
@@ -126,7 +128,7 @@ public class QuantifierTest
 		Some fa2 = new Some("y", new DummyCollectionFunction(1, 2, 3), fa);
 		Connector.connect(source, fa2);
 		Pullable out = fa2.getPullableOutput(0);
-		Object output = out.pull();
+		Object output = out.pullSoft();
 		assertNotNull(output);
 		assertTrue(output instanceof Troolean.Value);
 		assertEquals(Troolean.Value.FALSE, (Troolean.Value) output);
@@ -156,7 +158,8 @@ public class QuantifierTest
 	@Test
 	public void testForAllPull5() throws ConnectorException
 	{
-		QueueSource source = new QueueSource(0, 1);
+		QueueSource source = new QueueSource(1);
+		source.addEvent(0);
 		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
 		tree.setChild(0, new ContextPlaceholder("y"));
 		tree.setChild(1, new ContextPlaceholder("x"));
@@ -165,7 +168,7 @@ public class QuantifierTest
 		Every fa2 = new Every("y", new DummyCollectionFunction(1), fa);
 		Connector.connect(source, fa2);
 		Pullable out = fa2.getPullableOutput(0);
-		Object output = out.pullHard();
+		Object output = out.pull();
 		assertNotNull(output);
 		assertTrue(output instanceof Troolean.Value);
 		assertEquals(Troolean.Value.FALSE, (Troolean.Value) output);
@@ -229,17 +232,19 @@ public class QuantifierTest
 		gp.associateInput(0, fork, 0);
 		gp.associateOutput(0, imp, 0);
 		// Check that first group works
-		QueueSource source1 = new QueueSource(0, 1);
+		QueueSource source1 = new QueueSource(1);
+		source1.addEvent(0);
 		Connector.connect(source1, gp);
 		p = gp.getPullableOutput(0);
-		o = p.pullHard();
+		o = p.pull();
 		assertEquals(o, Troolean.Value.TRUE);
 		// Now clone and re-check
 		GroupProcessor gp_clone = gp.clone();
-		QueueSource source2 = new QueueSource(0, 1);
+		QueueSource source2 = new QueueSource(1);
+		source2.addEvent(0);
 		Connector.connect(source2, gp_clone);
 		p = gp_clone.getPullableOutput(0);
-		o = p.pullHard();
+		o = p.pull();
 		assertEquals(o, Troolean.Value.TRUE);
 	}
 	
@@ -262,17 +267,19 @@ public class QuantifierTest
 		gp.associateOutput(0, imp, 0);
 		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), gp);
 		// Check that first group works
-		QueueSource source1 = new QueueSource(0, 1);
+		QueueSource source1 = new QueueSource(1);
+		source1.addEvent(0);
 		Connector.connect(source1, fa);
 		p = fa.getPullableOutput(0);
-		o = p.pullHard();
+		o = p.pull();
 		assertEquals(o, Troolean.Value.FALSE);
 		// Now clone and re-check
 		Every gp_clone = fa.clone();
-		QueueSource source2 = new QueueSource(0, 1);
+		QueueSource source2 = new QueueSource(1);
+		source2.addEvent(0);
 		Connector.connect(source2, gp_clone);
 		p = gp_clone.getPullableOutput(0);
-		o = p.pullHard();
+		o = p.pull();
 		assertEquals(o, Troolean.Value.FALSE);
 	}
 	
@@ -290,19 +297,21 @@ public class QuantifierTest
 		gp.associateInput(0, pt, 0);
 		gp.associateOutput(0, fa, 0);
 		// Check that first group works
-		QueueSource source1 = new QueueSource(0, 1);
+		QueueSource source1 = new QueueSource(1);
+		source1.addEvent(0);
 		Connector.connect(source1, fa);
 		p = fa.getPullableOutput(0);
-		o = p.pullHard();
+		o = p.pull();
 		assertEquals(o, Troolean.Value.TRUE);
 		// Now clone and re-check
 		Every gp_clone = fa.clone();
-		QueueSource source2 = new QueueSource(0, 1);
+		QueueSource source2 = new QueueSource(1);
+		source2.addEvent(0);
 		Connector.connect(source2, gp_clone);
 		p = gp_clone.getPullableOutput(0);
-		o = p.pullHard();
+		o = p.pull();
 		assertEquals(o, Troolean.Value.TRUE);
-		o = p.pullHard();
+		o = p.pull();
 		assertEquals(o, Troolean.Value.TRUE);
 	}
 

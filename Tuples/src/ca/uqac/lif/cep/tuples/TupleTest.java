@@ -126,12 +126,12 @@ public class TupleTest
 		Select sel = new Select(sel_f);
 		Connector.connect(source, sel);
 		Pullable p = sel.getPullableOutput(0);
-		Tuple t = (Tuple) p.pull();
+		Tuple t = (Tuple) p.pullSoft();
 		assertNotNull(t);
 		assertEquals(6, ((Number) t.get("p1")).intValue());
 		assertEquals(-2, ((Number) t.get("p2")).intValue());
 		assertEquals("foo", t.get("p3"));
-		t = (Tuple) p.pull();
+		t = (Tuple) p.pullSoft();
 		assertNotNull(t);
 		assertEquals(14, ((Number) t.get("p1")).intValue());
 		assertEquals(3, ((Number) t.get("p2")).intValue());

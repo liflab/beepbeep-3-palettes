@@ -39,7 +39,7 @@ public class SignalTest extends BeepBeepUnitTest
 	@Test
 	public void testPeakFinder1() throws ConnectorException
 	{
-		QueueSource qs = new QueueSource(null, 1);
+		QueueSource qs = new QueueSource(1);
 		Vector<Object> values = new Vector<Object>();
 		values.add(1);
 		values.add(11); // Peak
@@ -55,21 +55,21 @@ public class SignalTest extends BeepBeepUnitTest
 		Number n;
 		for (int i = 0; i < 6; i++)
 		{
-			n = (Number) p.pull();
+			n = (Number) p.pullSoft();
 			assertNull(n);			
 		}
-		n = (Number) p.pull();
+		n = (Number) p.pullSoft();
 		assertEquals(0, n.doubleValue(), 0.01); // First event is not a peak
-		n = (Number) p.pull();
+		n = (Number) p.pullSoft();
 		assertEquals(10, n.doubleValue(), 0.01); // Second event is a peak of 10
-		n = (Number) p.pull();
+		n = (Number) p.pullSoft();
 		assertNull(n); // Not enough info yet to conclude on 3rd event
 	}
 	
 	@Test
 	public void testPeakFinder2() throws ConnectorException
 	{
-		QueueSource qs = new QueueSource(null, 1);
+		QueueSource qs = new QueueSource(1);
 		Vector<Object> values = new Vector<Object>();
 		values.add(1);
 		values.add(11); // Peak
@@ -86,15 +86,15 @@ public class SignalTest extends BeepBeepUnitTest
 		Connector.connect(qs,  pf);
 		Pullable p = pf.getPullableOutput(0);
 		Number n;
-		n = (Number) p.pullHard();
+		n = (Number) p.pull();
 		assertEquals(0, n.doubleValue(), 0.01);
-		n = (Number) p.pullHard();
+		n = (Number) p.pull();
 		assertEquals(10, n.doubleValue(), 0.01);
-		n = (Number) p.pullHard();
+		n = (Number) p.pull();
 		assertEquals(0, n.doubleValue(), 0.01);
-		n = (Number) p.pullHard();
+		n = (Number) p.pull();
 		assertEquals(0, n.doubleValue(), 0.01);
-		n = (Number) p.pullHard();
+		n = (Number) p.pull();
 		assertEquals(2, n.doubleValue(), 0.01);
 	}
 
@@ -102,7 +102,7 @@ public class SignalTest extends BeepBeepUnitTest
 	@Test
 	public void testPlateauFinder1() throws ConnectorException
 	{
-		QueueSource qs = new QueueSource(null, 1);
+		QueueSource qs = new QueueSource(1);
 		Vector<Object> values = new Vector<Object>();
 		values.add(1);
 		values.add(11);
@@ -119,16 +119,16 @@ public class SignalTest extends BeepBeepUnitTest
 		Number n;
 		for (int i = 0; i < 4; i++)
 		{
-			n = (Number) p.pull();
+			n = (Number) p.pullSoft();
 			assertNull(n);
 		}
-		n = (Number) p.pull(); // First event not start of a plateau
+		n = (Number) p.pullSoft(); // First event not start of a plateau
 		assertEquals(0, n.floatValue(), 0.01);
-		n = (Number) p.pull(); // 2nd event not start of a plateau
+		n = (Number) p.pullSoft(); // 2nd event not start of a plateau
 		assertEquals(0, n.floatValue(), 0.01);
-		n = (Number) p.pull(); // 3rd is
+		n = (Number) p.pullSoft(); // 3rd is
 		assertEquals(1.5, n.floatValue(), 0.01);
-		n = (Number) p.pull(); // Don't create new event for the same plateau
+		n = (Number) p.pullSoft(); // Don't create new event for the same plateau
 		assertEquals(0, n.floatValue(), 0.01);
 	}
 

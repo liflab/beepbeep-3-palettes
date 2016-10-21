@@ -59,7 +59,7 @@ public class LtlTest extends BeepBeepUnitTest
 	@Test
 	public void testGlobally1() throws ConnectorException
 	{
-		QueueSource src = new QueueSource(null, 1);
+		QueueSource src = new QueueSource(1);
 		Vector<Object> input_events = new Vector<Object>();
 		input_events.add(Value.TRUE);
 		input_events.add(Value.TRUE);
@@ -70,20 +70,20 @@ public class LtlTest extends BeepBeepUnitTest
 		Connector.connect(src, g);
 		Pullable p = g.getPullableOutput(0);
 		Value b;
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertNull(b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertNull(b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.FALSE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.FALSE, b);
 	}
 	
 	@Test
 	public void testAlways1() throws ConnectorException
 	{
-		QueueSource src = new QueueSource(null, 1);
+		QueueSource src = new QueueSource(1);
 		Vector<Object> input_events = new Vector<Object>();
 		input_events.add(Value.TRUE);
 		input_events.add(Value.TRUE);
@@ -94,20 +94,20 @@ public class LtlTest extends BeepBeepUnitTest
 		Connector.connect(src, g);
 		Pullable p = g.getPullableOutput(0);
 		Value b;
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.INCONCLUSIVE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.INCONCLUSIVE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.FALSE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.FALSE, b);
 	}
 	
 	@Test
 	public void testEventually1() throws ConnectorException
 	{
-		QueueSource src = new QueueSource(null, 1);
+		QueueSource src = new QueueSource(1);
 		Vector<Object> input_events = new Vector<Object>();
 		input_events.add(Value.FALSE);
 		input_events.add(Value.FALSE);
@@ -118,21 +118,21 @@ public class LtlTest extends BeepBeepUnitTest
 		Connector.connect(src, g);
 		Pullable p = g.getPullableOutput(0);
 		Value b;
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertNull(b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertNull(b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertNotNull(b);
 		assertEquals(Value.TRUE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.TRUE, b);
 	}
 	
 	@Test
 	public void testSometime1() throws ConnectorException
 	{
-		QueueSource src = new QueueSource(null, 1);
+		QueueSource src = new QueueSource(1);
 		Vector<Object> input_events = new Vector<Object>();
 		input_events.add(Value.FALSE);
 		input_events.add(Value.FALSE);
@@ -143,20 +143,20 @@ public class LtlTest extends BeepBeepUnitTest
 		Connector.connect(src, g);
 		Pullable p = g.getPullableOutput(0);
 		Value b;
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.INCONCLUSIVE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.INCONCLUSIVE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.TRUE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.TRUE, b);
 	}
 	
 	@Test
 	public void testNext1() throws ConnectorException
 	{
-		QueueSource src = new QueueSource(null, 1);
+		QueueSource src = new QueueSource(1);
 		Vector<Object> input_events = new Vector<Object>();
 		input_events.add(Value.FALSE);
 		input_events.add(Value.FALSE);
@@ -167,19 +167,19 @@ public class LtlTest extends BeepBeepUnitTest
 		Connector.connect(src, g);
 		Pullable p = g.getPullableOutput(0);
 		Value b;
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertNull(b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertNotNull(b);
 		assertEquals(Value.FALSE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.TRUE, b);
 	}
 	
 	@Test
 	public void testNext2() throws ConnectorException
 	{
-		QueueSource src = new QueueSource(null, 1);
+		QueueSource src = new QueueSource(1);
 		Vector<Object> input_events = new Vector<Object>();
 		input_events.add(Value.FALSE);
 		input_events.add(Value.TRUE);
@@ -190,9 +190,9 @@ public class LtlTest extends BeepBeepUnitTest
 		Connector.connect(src, g);
 		Pullable p = g.getPullableOutput(0);
 		Value b;
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertNull(b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertNotNull(b);
 		assertEquals(Value.TRUE, b);
 	}
@@ -200,7 +200,7 @@ public class LtlTest extends BeepBeepUnitTest
 	@Test
 	public void testNot() throws ConnectorException
 	{
-		QueueSource src = new QueueSource(null, 1);
+		QueueSource src = new QueueSource(1);
 		Vector<Object> input_events = new Vector<Object>();
 		input_events.add(Value.FALSE);
 		input_events.add(Value.TRUE);
@@ -211,21 +211,21 @@ public class LtlTest extends BeepBeepUnitTest
 		Connector.connect(src, g);
 		Pullable p = g.getPullableOutput(0);
 		Value b;
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.TRUE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.FALSE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.FALSE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.TRUE, b);
 	}
 	
 	@Test
 	public void testAnd1() throws ConnectorException
 	{
-		QueueSource src_left = new QueueSource(null, 1);
-		QueueSource src_right = new QueueSource(null, 1);
+		QueueSource src_left = new QueueSource(1);
+		QueueSource src_right = new QueueSource(1);
 		{
 			Vector<Object> input_events = new Vector<Object>();
 			input_events.add(Value.FALSE);
@@ -247,21 +247,21 @@ public class LtlTest extends BeepBeepUnitTest
 		Connector.connect(src_right, g, 0, 1);
 		Pullable p = g.getPullableOutput(0);
 		Value b;
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.FALSE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.TRUE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.FALSE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.FALSE, b);
 	}
 	
 	@Test
 	public void testAnd2() throws ConnectorException
 	{
-		QueueSource src_left = new QueueSource(null, 1);
-		QueueSource src_right = new QueueSource(null, 1);
+		QueueSource src_left = new QueueSource(1);
+		QueueSource src_right = new QueueSource(1);
 		{
 			Vector<Object> input_events = new Vector<Object>();
 			input_events.add(Value.FALSE);
@@ -279,17 +279,17 @@ public class LtlTest extends BeepBeepUnitTest
 		Connector.connect(src_right, g, 0, 1);
 		Pullable p = g.getPullableOutput(0);
 		Value b;
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertNull(b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.FALSE, b);
 	}
 	
 	@Test
 	public void testOr() throws ConnectorException
 	{
-		QueueSource src_left = new QueueSource(null, 1);
-		QueueSource src_right = new QueueSource(null, 1);
+		QueueSource src_left = new QueueSource(1);
+		QueueSource src_right = new QueueSource(1);
 		{
 			Vector<Object> input_events = new Vector<Object>();
 			input_events.add(Value.FALSE);
@@ -311,21 +311,21 @@ public class LtlTest extends BeepBeepUnitTest
 		Connector.connect(src_right, g, 0, 1);
 		Pullable p = g.getPullableOutput(0);
 		Value b;
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.FALSE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.TRUE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.TRUE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.TRUE, b);
 	}
 	
 	@Test
 	public void testUntil1() throws ConnectorException
 	{
-		QueueSource src_left = new QueueSource(null, 1);
-		QueueSource src_right = new QueueSource(null, 1);
+		QueueSource src_left = new QueueSource(1);
+		QueueSource src_right = new QueueSource(1);
 		{
 			Vector<Object> input_events = new Vector<Object>();
 			input_events.add(Value.FALSE);
@@ -347,21 +347,21 @@ public class LtlTest extends BeepBeepUnitTest
 		Connector.connect(src_right, g, 0, 1);
 		Pullable p = g.getPullableOutput(0);
 		Value b;
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.FALSE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.TRUE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertNull(b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.TRUE, b);
 	}
 	
 	@Test
 	public void testUntil2() throws ConnectorException
 	{
-		QueueSource src_left = new QueueSource(null, 1);
-		QueueSource src_right = new QueueSource(null, 1);
+		QueueSource src_left = new QueueSource(1);
+		QueueSource src_right = new QueueSource(1);
 		{
 			Vector<Object> input_events = new Vector<Object>();
 			input_events.add(Value.TRUE);
@@ -383,21 +383,21 @@ public class LtlTest extends BeepBeepUnitTest
 		Connector.connect(src_right, g, 0, 1);
 		Pullable p = g.getPullableOutput(0);
 		Value b;
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertNull(b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertNull(b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.TRUE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.FALSE, b);
 	}
 	
 	@Test
 	public void testUpTo1() throws ConnectorException
 	{
-		QueueSource src_left = new QueueSource(null, 1);
-		QueueSource src_right = new QueueSource(null, 1);
+		QueueSource src_left = new QueueSource(1);
+		QueueSource src_right = new QueueSource(1);
 		{
 			Vector<Object> input_events = new Vector<Object>();
 			input_events.add(Value.FALSE);
@@ -419,21 +419,21 @@ public class LtlTest extends BeepBeepUnitTest
 		Connector.connect(src_right, g, 0, 1);
 		Pullable p = g.getPullableOutput(0);
 		Value b;
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.FALSE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.FALSE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.FALSE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.FALSE, b);
 	}
 	
 	@Test
 	public void testUpTo2() throws ConnectorException
 	{
-		QueueSource src_left = new QueueSource(null, 1);
-		QueueSource src_right = new QueueSource(null, 1);
+		QueueSource src_left = new QueueSource(1);
+		QueueSource src_right = new QueueSource(1);
 		{
 			Vector<Object> input_events = new Vector<Object>();
 			input_events.add(Value.TRUE);
@@ -455,13 +455,13 @@ public class LtlTest extends BeepBeepUnitTest
 		Connector.connect(src_right, g, 0, 1);
 		Pullable p = g.getPullableOutput(0);
 		Value b;
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.INCONCLUSIVE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.INCONCLUSIVE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.TRUE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.TRUE, b);
 	}
 	
@@ -470,7 +470,7 @@ public class LtlTest extends BeepBeepUnitTest
 	{
 		String expression = "(@T) AND (@U)";
 		{
-			QueueSource src = new QueueSource(null, 1);
+			QueueSource src = new QueueSource(1);
 			Vector<Object> input_events = new Vector<Object>();
 			input_events.add(Value.FALSE);
 			input_events.add(Value.FALSE);
@@ -480,7 +480,7 @@ public class LtlTest extends BeepBeepUnitTest
 			m_interpreter.addPlaceholder("@T", "processor", src);
 		}
 		{
-			QueueSource src = new QueueSource(null, 1);
+			QueueSource src = new QueueSource(1);
 			Vector<Object> input_events = new Vector<Object>();
 			input_events.add(Value.FALSE);
 			input_events.add(Value.FALSE);
@@ -491,13 +491,13 @@ public class LtlTest extends BeepBeepUnitTest
 		}
 		Pullable p = m_interpreter.executeQuery(expression);
 		Value b;
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.FALSE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.FALSE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.TRUE, b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.FALSE, b);
 	}
 	
@@ -506,7 +506,7 @@ public class LtlTest extends BeepBeepUnitTest
 	{
 		String expression = "(@T) AND (X (@U))";
 		{
-			QueueSource src = new QueueSource(null, 1);
+			QueueSource src = new QueueSource(1);
 			Vector<Object> input_events = new Vector<Object>();
 			input_events.add(Value.TRUE);
 			input_events.add(Value.FALSE);
@@ -516,7 +516,7 @@ public class LtlTest extends BeepBeepUnitTest
 			m_interpreter.addPlaceholder("@T", "processor", src);
 		}
 		{
-			QueueSource src = new QueueSource(null, 1);
+			QueueSource src = new QueueSource(1);
 			Vector<Object> input_events = new Vector<Object>();
 			input_events.add(Value.FALSE);
 			input_events.add(Value.TRUE);
@@ -528,9 +528,9 @@ public class LtlTest extends BeepBeepUnitTest
 		Pullable p = m_interpreter.executeQuery(expression);
 		assertNotNull(p);
 		Value b;
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertNull(b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.TRUE, b);
 	}
 	
@@ -539,7 +539,7 @@ public class LtlTest extends BeepBeepUnitTest
 	{
 		String expression = "X (@U)";
 		{
-			QueueSource src = new QueueSource(null, 1);
+			QueueSource src = new QueueSource(1);
 			Vector<Object> input_events = new Vector<Object>();
 			input_events.add(Value.FALSE);
 			input_events.add(Value.TRUE);
@@ -551,9 +551,9 @@ public class LtlTest extends BeepBeepUnitTest
 		Pullable p = m_interpreter.executeQuery(expression);
 		assertNotNull(p);
 		Value b;
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertNull(b);
-		b = (Value) p.pull();
+		b = (Value) p.pullSoft();
 		assertEquals(Value.TRUE, b);
 	}
 	
@@ -562,7 +562,7 @@ public class LtlTest extends BeepBeepUnitTest
 	{
 		String expression = "(SELECT (a) LESS THAN (2) FROM (@P))\nAND\n(X (SELECT (a) GREATER THAN (1) FROM (@P)))";
 		{
-			QueueSource src = new QueueSource(null, 1);
+			QueueSource src = new QueueSource(1);
 			Vector<Object> input_events = new Vector<Object>();
 			input_events.add(Value.FALSE);
 			input_events.add(Value.TRUE);
