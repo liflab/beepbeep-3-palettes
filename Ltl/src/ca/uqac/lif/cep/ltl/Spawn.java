@@ -199,16 +199,6 @@ public class Spawn extends Processor
 		}
 
 		@Override
-		public int getPushCount()
-		{
-			if (m_pushable == null)
-			{
-				return 0;
-			}
-			return m_pushable.getPushCount();
-		}
-
-		@Override
 		public Processor getProcessor() 
 		{
 			return Spawn.this;
@@ -307,12 +297,6 @@ public class Spawn extends Processor
 				//m_fork.getPushableInput(0).push(o);
 			}
 			return m_pullable.hasNext();
-		}
-
-		@Override
-		public int getPullCount() 
-		{
-			return m_pullable.getPullCount();
 		}
 
 		@Override

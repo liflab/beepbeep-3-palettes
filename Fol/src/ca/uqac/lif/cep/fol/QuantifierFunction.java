@@ -43,7 +43,7 @@ public abstract class QuantifierFunction extends Function
 			Object[] return_values = m_expression.evaluate(inputs, new_context);
 			if (return_values != null && return_values.length > 0 
 					&& return_values[0] instanceof Boolean 
-					&& (boolean) return_values[0] == m_stopValue)
+					&& (Boolean) return_values[0] == m_stopValue)
 			{
 				out[0] = m_stopValue;
 				return out;

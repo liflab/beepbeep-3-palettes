@@ -78,7 +78,7 @@ public class FunctionTransition extends Transition
 	public boolean isFired(Object[] input, Context context)
 	{
 		Object[] values = m_function.evaluate(input, context);
-		boolean b = (boolean) values[0];
+		boolean b = (Boolean) values[0];
 		return b;
 	}
 

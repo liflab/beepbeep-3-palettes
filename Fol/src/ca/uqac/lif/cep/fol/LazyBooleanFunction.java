@@ -43,14 +43,14 @@ public class LazyBooleanFunction extends Function
 	{
 		Object[] out = new Object[1];
 		// Evaluate LHS
-		boolean value = (boolean) m_left.evaluate(inputs, context)[0];
+		boolean value = (Boolean) m_left.evaluate(inputs, context)[0];
 		if (value == m_stopValue)
 		{
 			out[0] = m_stopValue;
 			return out;
 		}
 		// Evaluate RHS
-		value = (boolean) m_right.evaluate(inputs, context)[0];
+		value = (Boolean) m_right.evaluate(inputs, context)[0];
 		if (value == m_stopValue)
 		{
 			out[0] = m_stopValue;

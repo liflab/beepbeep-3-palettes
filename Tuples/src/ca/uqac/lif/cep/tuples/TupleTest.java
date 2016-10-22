@@ -62,9 +62,9 @@ public class TupleTest
 		assertTrue(outputs[0] instanceof AttributeGroup);
 		AttributeGroup g = (AttributeGroup) outputs[0];
 		int v;
-		v = (int) g.getAttribute("x");
+		v = (Integer) g.getAttribute("x");
 		assertTrue(v == 0 || v == 4);
-		v = (int) g.getAttribute("A", "x");
+		v = (Integer) g.getAttribute("A", "x");
 		assertEquals(0, v);
 		Object o = g.getAttribute("B", "t");
 		assertTrue(o instanceof String);

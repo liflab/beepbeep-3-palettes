@@ -60,7 +60,7 @@ public class Where extends SingleProcessor
 	{
 		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
 		Object[] values = m_condition.evaluate(inputs);
-		boolean value = (boolean) values[0];
+		boolean value = (Boolean) values[0];
 		if (value == true)
 		{
 			out_queue.add(inputs);
