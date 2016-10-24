@@ -339,6 +339,13 @@ public class Spawn extends Processor
 		{
 			return this;
 		}
+
+		@Override
+		public void remove() 
+		{
+			// Cannot remove an event on a pullable
+			throw new UnsupportedOperationException();
+		}
 	}
 	
 	protected boolean spawn(Object o)
