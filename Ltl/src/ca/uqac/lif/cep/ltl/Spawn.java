@@ -27,7 +27,7 @@ import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
-import ca.uqac.lif.cep.functions.ConstantFunction;
+import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.tmf.NaryToArray;
@@ -350,7 +350,7 @@ public class Spawn extends Processor
 			if (size == 0)
 			{
 				// Domain is empty: processor returns a fixed value
-				FunctionProcessor mutator = new FunctionProcessor(new ConstantFunction(m_valueIfEmptyDomain));
+				FunctionProcessor mutator = new FunctionProcessor(new Constant(m_valueIfEmptyDomain));
 				m_inputPushable.setPushable(mutator.getPushableInput(0));
 				mutator.setPullableInput(0, m_inputPushable.getPullable());
 				m_outputPullable.setPullable(mutator.getPullableOutput(0));

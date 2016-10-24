@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
-import ca.uqac.lif.cep.functions.ConstantFunction;
+import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.SimpleFunction;
 
 public class Predicate extends SimpleFunction
@@ -260,7 +260,7 @@ public class Predicate extends SimpleFunction
 	 * Special constant that can be used when evaluating a predicate to 
 	 * indicate a "don't care" value
 	 */
-	public static class Wildcard extends ConstantFunction
+	public static class Wildcard extends Constant
 	{
 		public static final transient Wildcard instance = new Wildcard();
 		
