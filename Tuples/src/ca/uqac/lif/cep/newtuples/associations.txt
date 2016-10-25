@@ -1,0 +1,22 @@
+# -----------------------------------------
+# Class associations for the EML
+# -----------------------------------------
+
+
+<tuples_select>,ca.uqac.lif.cep.newtuples.Select
+<tuples_where>,ca.uqac.lif.cep.newtuples.Where
+
+<attribute_expression_list>,ca.uqac.lif.cep.newtuples.AttributeExpressionList
+<attribute_expression>,ca.uqac.lif.cep.newtuples.AttributeExpression 
+<named_attribute_expression>,ca.uqac.lif.cep.newtuples.NamedAttributeExpression
+<anonymous_attribute_expression>,ca.uqac.lif.cep.newtuples.AnonymousAttributeExpression
+
+<tuples_from>,ca.uqac.lif.cep.newtuples.From
+<tuple_expression_list>,ca.uqac.lif.cep.newtuples.TupleExpressionList
+<tuple_expression>,ca.uqac.lif.cep.newtuples.TupleExpression
+<named_tuple_expression>,ca.uqac.lif.cep.newtuples.NamedTupleExpression
+<anonymous_tuple_expression>,ca.uqac.lif.cep.newtuples.AnonymousTupleExpression
+
+<get_attribute>,ca.uqac.lif.cep.newtuples.GetAttribute
+<get_attribute_qual>,ca.uqac.lif.cep.newtuples.GetAttributeQualified
+<get_attribute_unqual>,ca.uqac.lif.cep.newtuples.GetAttributeUnqualified

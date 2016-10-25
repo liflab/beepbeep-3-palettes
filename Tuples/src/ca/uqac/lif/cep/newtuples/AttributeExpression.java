@@ -15,7 +15,10 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.tuples;
+package ca.uqac.lif.cep.newtuples;
+
+
+import java.util.Stack;
 
 import ca.uqac.lif.cep.functions.Function;
 
@@ -57,7 +60,22 @@ public class AttributeExpression
 	{
 		super();
 		m_expression = expression;
-		m_targetName = name;
+		if (name != null)
+		{
+			m_targetName = name;
+		}
+		else
+		{
+			// Guess a name for the attribute based on the function
+			if (m_expression instanceof GetAttribute)
+			{
+				m_targetName = ((GetAttribute) m_expression).getAttributeName();
+			}
+			else
+			{
+				m_targetName = null;
+			}
+		}
 	}
 	
 	/**
@@ -80,5 +98,22 @@ public class AttributeExpression
 		Object[] inputs = new Object[1];
 		inputs[0] = group;
 		return m_expression.evaluate(inputs)[0];
+	}
+	
+	@Override
+	public String toString()
+	{
+		StringBuilder out = new StringBuilder();
+		out.append("(").append(m_expression).append(")");
+		if (m_targetName != null)
+		{
+			out.append(" AS ").append(m_targetName);
+		}
+		return out.toString();
+	}
+	
+	public static void build(Stack<Object> stack)
+	{
+		// Do nothing
 	}
 }

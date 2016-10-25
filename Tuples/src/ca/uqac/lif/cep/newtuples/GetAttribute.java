@@ -15,7 +15,9 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.tuples;
+package ca.uqac.lif.cep.newtuples;
+
+import java.util.Stack;
 
 import ca.uqac.lif.cep.functions.UnaryFunction;
 
@@ -56,6 +58,24 @@ public class GetAttribute extends UnaryFunction<AttributeGroup,Object>
 	{
 		this(null, attribute_name);
 	}
+	
+	/**
+	 * Gets the name of the attribute to get
+	 * @return The name
+	 */
+	public String getAttributeName()
+	{
+		return m_attributeName;
+	}
+	
+	/**
+	 * Gets the name of the trace to get the attribute from
+	 * @return The name; null if no name has been given
+	 */
+	public String getTraceName()
+	{
+		return m_traceName;
+	}
 
 	@Override
 	public Object getValue(AttributeGroup g) 
@@ -79,5 +99,10 @@ public class GetAttribute extends UnaryFunction<AttributeGroup,Object>
 		}
 		out.append(m_attributeName);
 		return out.toString();
+	}
+	
+	public static void build(Stack<Object> stack)
+	{
+		// Do nothing
 	}
 }

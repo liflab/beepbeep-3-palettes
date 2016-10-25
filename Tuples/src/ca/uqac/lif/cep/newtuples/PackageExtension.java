@@ -15,27 +15,19 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.tuples;
+package ca.uqac.lif.cep.newtuples;
 
-import java.util.Map;
+import ca.uqac.lif.cep.Palette;
 
 /**
- * A (named) tuple is a map between attribute names (character strings) and
- * attribute values (any kind of Object). This class is a generalization of
- * the classical concept of "tuple" in relational databases (where attributes
- * can only have <em>scalar</em> values).
- * <p>
- * There are two direct descendents of the Tuple class:
- * <ul>
- * <li>{@link TupleMap}: the most general implementation of a tuple; this is
- * basically a <code>Map</code> object with a few extra methods</li>
- * <li>{@link TupleFixed}: a fixed tuple assumes stronger hypotheses on its
- * use in order to reduce memory usage and decrease response time.</li>
- * </ul>
+ * Palette object for the processor included in this package.
  * @author Sylvain Hallé
- *
  */
-public abstract class Tuple implements Map<String,Object>
+public class PackageExtension extends Palette
 {
-
+	public PackageExtension()
+	{
+		super(PackageExtension.class, "Tuples palette\n"
+				+ "(C) 2016 Sylvain Hallé, Université du Québec à Chicoutim");
+	}
 }

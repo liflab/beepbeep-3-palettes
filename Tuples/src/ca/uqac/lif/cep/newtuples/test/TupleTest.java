@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.tuples;
+package ca.uqac.lif.cep.newtuples.test;
 
 import static org.junit.Assert.*;
 
@@ -28,14 +28,40 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.FunctionTree;
+import ca.uqac.lif.cep.newtuples.AttributeExpression;
+import ca.uqac.lif.cep.newtuples.AttributeGroup;
+import ca.uqac.lif.cep.newtuples.From;
+import ca.uqac.lif.cep.newtuples.FromFunction;
+import ca.uqac.lif.cep.newtuples.GetAttribute;
+import ca.uqac.lif.cep.newtuples.Select;
+import ca.uqac.lif.cep.newtuples.Tuple;
+import ca.uqac.lif.cep.newtuples.TupleFixed;
+import ca.uqac.lif.cep.newtuples.Select.SelectFunction;
+import ca.uqac.lif.cep.newtuples.TupleMap;
 import ca.uqac.lif.cep.numbers.Addition;
 import ca.uqac.lif.cep.numbers.Subtraction;
 import ca.uqac.lif.cep.tmf.QueueSource;
-import ca.uqac.lif.cep.tuples.From.FromFunction;
-import ca.uqac.lif.cep.tuples.Select.SelectFunction;
 
 public class TupleTest 
 {
+	@Test
+	public void stringTest()
+	{
+		// Call toString on every object, just so that it gets covered
+		// by some test
+		checkToString(new FromFunction("A"));
+		checkToString(new From(new FromFunction("A")));
+		checkToString(new AttributeGroup(new String[]{"A", "B", "C"}));
+		checkToString(new TupleFixed(new String[]{"x", "q"}, new Integer[]{4, 5}));
+		checkToString(new TupleMap(new String[]{"x", "q"}, new Integer[]{4, 5}));
+	}
+	
+	public static void checkToString(Object o)
+	{
+		assertNotNull(o);
+		assertNotNull(o.toString());
+	}
+	
 	@Test
 	public void testFromFunction1()
 	{
@@ -47,10 +73,36 @@ public class TupleTest
 		assertEquals(1, class_set.size());
 		assertEquals(AttributeGroup.class, ff.getOutputTypeFor(0));
 	}
+	
 	@Test
 	public void testFromFunction2()
 	{
 		FromFunction ff = new FromFunction("A", "B", "C");
+		assertEquals(3, ff.getInputArity());
+		Object[] inputs = new Object[]
+		{
+			new TupleFixed(new String[]{"x", "y"}, new Integer[]{0, 1}),
+			new TupleFixed(new String[]{"z", "t"}, new Object[]{2, "foo"}),
+			new TupleFixed(new String[]{"x", "q"}, new Integer[]{4, 5})
+		};
+		Object[] outputs = ff.evaluate(inputs);
+		assertTrue(outputs[0] instanceof AttributeGroup);
+		AttributeGroup g = (AttributeGroup) outputs[0];
+		int v;
+		v = (Integer) g.getAttribute("x");
+		assertTrue(v == 0 || v == 4);
+		v = (Integer) g.getAttribute("A", "x");
+		assertEquals(0, v);
+		Object o = g.getAttribute("B", "t");
+		assertTrue(o instanceof String);
+	}
+	
+	@Test
+	public void testFromFunction3()
+	{
+		FromFunction ff_o = new FromFunction("A", "B", "C");
+		FromFunction ff = ff_o.clone();
+		ff.reset();
 		assertEquals(3, ff.getInputArity());
 		Object[] inputs = new Object[]
 		{
@@ -79,6 +131,7 @@ public class TupleTest
 		group.add(1, new TupleFixed(new String[]{"z", "t"}, new Object[]{2, "foo"}));
 		group.add(2, new TupleFixed(new String[]{"x", "q"}, new Integer[]{4, 5}));
 		AttributeExpression ae = new AttributeExpression(ft, "p1");
+		checkToString(ae);
 		Object o = ae.getValue(group);
 		assertNotNull(o);
 		assertTrue(o instanceof Number);
@@ -111,19 +164,19 @@ public class TupleTest
 		o = t.get("p3");
 		assertTrue(o instanceof String);
 		assertEquals("foo", o);
+		// Just so we cover the toString() method
+		checkToString(sel_f);
 	}
 	
 	@Test
 	public void testSelect() throws ConnectorException
 	{
 		// SELECT A.y + C.q as p1, z - C.x as p2, t as p3
-		SelectFunction sel_f = new SelectFunction(new AttributeExpression[]{
+		QueueSource source = createGroupSource();
+		Select sel = new Select(new AttributeExpression[]{
 				new AttributeExpression(new FunctionTree(Addition.instance, new GetAttribute("A", "y"), new GetAttribute("C", "q")), "p1"),
 				new AttributeExpression(new FunctionTree(Subtraction.instance, new GetAttribute("z"), new GetAttribute("C", "x")), "p2"),
-				new AttributeExpression(new GetAttribute("t"), "p3")
-		});
-		QueueSource source = createGroupSource();
-		Select sel = new Select(sel_f);
+				new AttributeExpression(new GetAttribute("t"), "p3")});
 		Connector.connect(source, sel);
 		Pullable p = sel.getPullableOutput(0);
 		Tuple t = (Tuple) p.pullSoft();
@@ -136,8 +189,14 @@ public class TupleTest
 		assertEquals(14, ((Number) t.get("p1")).intValue());
 		assertEquals(3, ((Number) t.get("p2")).intValue());
 		assertEquals("bar", t.get("p3"));
+		// Just so we cover the toString() method
+		checkToString(sel);
 	}
 	
+	/**
+	 * Creates a simple group source with a few attribute groups
+	 * @return The source
+	 */
 	public QueueSource createGroupSource()
 	{
 		QueueSource qs = new QueueSource(1);

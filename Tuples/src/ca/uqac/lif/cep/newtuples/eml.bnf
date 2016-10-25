@@ -1,0 +1,36 @@
+# -----------------------------------------
+# Grammar for BeepBeep 3; edit at your own risk!
+#
+# This is an EML (Event Manipulation Language) for tuple manipulation.
+# -----------------------------------------
+
+<processor>                      := <tuples_select> | <tuples_from> ;
+<tuple_name>                     := ^[a-zA-Z][\w_]*; 
+<function>                       := <get_attribute> ;
+
+# "SELECT" statement
+
+<tuples_select>                  := SELECT <attribute_expression_list> <processor> ;
+<attribute_expression_list>      := <attribute_expression> , <attribute_expression_list>
+                                    | <attribute_expression> ;
+<attribute_expression>           := <named_attribute_expression> 
+                                    | <anonymous_attribute_expression> ;
+<named_attribute_expression>     := ( <function> ) AS <tuple_name> ;
+<anonymous_attribute_expression> := ( <function> ) ;
+
+
+# "FROM" statement
+
+<tuples_from>                    := FROM <tuple_expression_list> ;
+<tuple_expression_list>          := <tuple_expression> , <tuple_expression_list>
+                                    | <tuple_expression> ;
+<tuple_expression>               := <named_tuple_expression> 
+                                    | <anonymous_tuple_expression> ;
+<named_tuple_expression>         := ( <processor> ) AS <tuple_name> ;
+<anonymous_tuple_expression>     := ( <processor> ) ;
+
+# Tuple functions
+
+<get_attribute>                  := <get_attribute_qual> | <get_attribute_unqual> ;
+<get_attribute_qual>             := <tuple_name> . <tuple_name> ;
+<get_attribute_unqual>             := <tuple_name> ;

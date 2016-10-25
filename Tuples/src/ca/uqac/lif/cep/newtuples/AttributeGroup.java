@@ -15,13 +15,14 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.tuples;
+package ca.uqac.lif.cep.newtuples;
 
 /**
  * A group of attributes taken from the merging of one or more tuples.
- * Each attribute is identified
+ * Each attribute is identified by the name of the trace it comes
+ * from.
+ * 
  * @author Sylvain Hallé
- *
  */
 public class AttributeGroup 
 {
@@ -75,7 +76,7 @@ public class AttributeGroup
 		Object out = null;
 		for (int i = 0; i < m_names.length; i++)
 		{
-			if (trace_name.compareTo(m_names[i]) == 0)
+			if (m_names[i] != null && trace_name.compareTo(m_names[i]) == 0)
 			{
 				out = m_tuples[i].get(attribute_name);
 				break;

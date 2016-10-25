@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.tuples;
+package ca.uqac.lif.cep.newtuples;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -46,6 +46,15 @@ public class TupleMap extends Tuple
 	{
 		super();
 		m_contents = new HashMap<String,Object>();
+	}
+	
+	public TupleMap(String[] names, Object[] values)
+	{
+		this();
+		for (int i = 0; i < names.length; i++)
+		{
+			m_contents.put(names[i], values[i]);
+		}
 	}
 	
 	/**
