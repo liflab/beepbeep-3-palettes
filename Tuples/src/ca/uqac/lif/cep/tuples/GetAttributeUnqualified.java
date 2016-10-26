@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.newtuples;
+package ca.uqac.lif.cep.tuples;
 
 import java.util.Stack;
 
@@ -24,11 +24,6 @@ class GetAttributeUnqualified extends GetAttribute
 	public GetAttributeUnqualified(String attribute_name) 
 	{
 		super(attribute_name);
-	}
-	
-	public GetAttributeUnqualified(String trace_name, String attribute_name) 
-	{
-		super(trace_name, attribute_name);
 	}
 
 	public static void build(Stack<Object> stack)

@@ -36,7 +36,6 @@ import ca.uqac.lif.cep.io.StreamGrammar;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
 import ca.uqac.lif.cep.numbers.NumberGrammar;
 import ca.uqac.lif.cep.tmf.QueueSource;
-import ca.uqac.lif.cep.tuples.TupleGrammar;
 
 /**
  * Unit tests for the LTL operators
@@ -52,7 +51,6 @@ public class LtlTest extends BeepBeepUnitTest
 		m_interpreter = new Interpreter();
 		m_interpreter.extendGrammar(NumberGrammar.class);
 		m_interpreter.extendGrammar(StreamGrammar.class);
-		m_interpreter.extendGrammar(TupleGrammar.class);
 		m_interpreter.extendGrammar(ca.uqac.lif.cep.ltl.PackageExtension.class);
 	}
 	

@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.newtuples;
+package ca.uqac.lif.cep.tuples;
 
 import java.util.Stack;
 
@@ -24,9 +24,14 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 
 /**
- * Creates an {@link AttributeGroup} from a set of input tuples and an
+ * Creates an {@link TupleExpression} from a set of input tuples and an
  * array of names. This performs roughly the same function as the
  * <code>FROM</code> clause in an SQL statement.
+ * <p>
+ * <strong>Caveat emptor:</strong> The input processors of FROM must be
+ * <em>distinct</em>. If the same processor instance occurs multiple
+ * times, it will be pulled more than once. (Note though that this applies
+ * to any n-ary processor.) 
  * 
  * @author Sylvain Hallé
  */

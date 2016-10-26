@@ -15,10 +15,19 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package ca.uqac.lif.cep.tuples;
+
+import ca.uqac.lif.cep.Palette;
 
 /**
- * Manipulate tuples using SQL-like operations such as <code>SELECT</code>,
- * <code>FROM</code> and <code>WHERE</code>.
+ * Palette object for the processor included in this package.
  * @author Sylvain Hallé
  */
-package ca.uqac.lif.cep.newtuples;
+public class PackageExtension extends Palette
+{
+	public PackageExtension()
+	{
+		super(PackageExtension.class, "Tuples palette\n"
+				+ "(C) 2016 Sylvain Hallé, Université du Québec à Chicoutim");
+	}
+}

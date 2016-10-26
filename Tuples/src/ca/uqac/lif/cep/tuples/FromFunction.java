@@ -1,4 +1,4 @@
-package ca.uqac.lif.cep.newtuples;
+package ca.uqac.lif.cep.tuples;
 
 import java.util.Set;
 

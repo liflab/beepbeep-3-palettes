@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.newtuples;
+package ca.uqac.lif.cep.tuples;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 
 /**
  * Implementation of a named tuple. Contrarily to a {@link TupleMap},
@@ -208,14 +209,7 @@ public final class TupleFixed extends Tuple
 				out.append(",");
 			}
 			out.append("(").append(m_names[i]).append(",");
-			if (i < m_values.length)
-			{
-				out.append(m_values[i]);
-			}
-			else
-			{
-				out.append("?");
-			}
+			out.append(m_values[i]);
 			out.append(")");
 		}
 		out.append(")");
@@ -226,6 +220,34 @@ public final class TupleFixed extends Tuple
 	public TupleFixed clone()
 	{
 		return new TupleFixed(m_names, m_values);
+	}
+	
+	@Override
+	public boolean equals(Object o) 
+	{
+		if (o == null || !(o instanceof TupleFixed))
+		{
+			return false;
+		}
+		TupleFixed t = (TupleFixed) o;
+		if (t.m_names.length != m_names.length || t.m_values.length != m_values.length)
+		{
+			return false;
+		}
+		for (int i = 0; i < m_names.length; i++)
+		{
+			if (!t.get(m_names[i]).equals(m_values[i]))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		return m_values[0].hashCode();
 	}
 
 }

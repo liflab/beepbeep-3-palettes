@@ -2,7 +2,7 @@ package ca.uqac.lif.cep.signal;
 
 import java.util.Queue;
 
-import ca.uqac.lif.cep.tuples.EmlNumber;
+import ca.uqac.lif.cep.numbers.NumberCast;
 
 /**
  * Finds peaks in a sequence of numerical values using the "travel-rise"
@@ -30,7 +30,7 @@ public class PeakFinderTravelRise extends WindowProcessor
 	@Override
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
-		m_values.addElement(EmlNumber.parseFloat(inputs[0]));
+		m_values.addElement(NumberCast.getNumber(inputs[0]).floatValue());
 		if (m_values.size() == m_windowWidth + 1)
 		{
 			m_values.remove(0);

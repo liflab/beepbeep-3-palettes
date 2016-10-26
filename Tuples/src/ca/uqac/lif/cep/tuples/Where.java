@@ -15,11 +15,14 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.newtuples;
+package ca.uqac.lif.cep.tuples;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
+import java.util.Stack;
 
+import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.functions.Function;
@@ -38,7 +41,7 @@ public class Where extends SingleProcessor
 	 */
 	protected Function m_condition;
 	
-	public Where() 
+	Where() 
 	{
 		super(1, 1);
 	}
@@ -69,9 +72,23 @@ public class Where extends SingleProcessor
 	}
 
 	@Override
-	public Processor clone()
+	public Where clone()
 	{
 		return new Where(m_condition.clone());
+	}
+	
+	public static void build(Stack<Object> stack) throws ConnectorException
+	{
+		stack.pop(); // (
+		Function f = (Function) stack.pop();
+		stack.pop(); // )
+		stack.pop(); // WHERE
+		stack.pop(); // (
+		Processor p = (Processor) stack.pop();
+		stack.pop(); // )
+		Where w = new Where(f);
+		Connector.connect(p, w);
+		stack.push(w);
 	}
 
 }

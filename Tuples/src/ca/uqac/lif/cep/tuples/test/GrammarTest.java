@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.newtuples.test;
+package ca.uqac.lif.cep.tuples.test;
 
 import static org.junit.Assert.*;
 
@@ -24,13 +24,15 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.interpreter.Interpreter;
+import ca.uqac.lif.cep.interpreter.UserDefinition;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
-import ca.uqac.lif.cep.newtuples.AttributeGroup;
-import ca.uqac.lif.cep.newtuples.PackageExtension;
-import ca.uqac.lif.cep.newtuples.Tuple;
-import ca.uqac.lif.cep.newtuples.TupleFixed;
 import ca.uqac.lif.cep.tmf.QueueSource;
+import ca.uqac.lif.cep.tuples.AttributeGroup;
+import ca.uqac.lif.cep.tuples.PackageExtension;
+import ca.uqac.lif.cep.tuples.Tuple;
+import ca.uqac.lif.cep.tuples.TupleFixed;
 
 public class GrammarTest 
 {
@@ -135,11 +137,11 @@ public class GrammarTest
 	{
 		QueueSource qs = createGroupSource();
 		m_interpreter.addPlaceholder("@foo", "processor", qs);
-		Processor proc = (Processor) m_interpreter.parseQuery("SELECT ((A.x) + (3)) @foo");
+		Processor proc = (Processor) m_interpreter.parseQuery("SELECT ((z) + (3)) @foo");
 		Pullable p = proc.getPullableOutput();
 		Object o = p.pull();
 		assertTrue(o instanceof Number);
-		assertEquals(3, ((Number) o).intValue());
+		assertEquals(5, ((Number) o).intValue());
 	}
 	
 	@Test
@@ -197,6 +199,98 @@ public class GrammarTest
 		assertEquals(0, ((Number) tup.get("t")).intValue());
 		assertEquals(10, ((Number) tup.get("u")).intValue());
 		assertNull(tup.get("x"));
+	}
+	
+	@Test
+	public void testSelectFrom4() throws ParseException, ConnectorException
+	{
+		QueueSource qs = new QueueSource();
+		qs.addEvent(new TupleFixed(new String[]{"a"}, new Object[]{0}));
+		m_interpreter.addPlaceholder("@foo", "processor", qs);
+		String expression = "SELECT ((2) + (1)) FROM (@foo)";
+		Object user_stmt = m_interpreter.parseQuery(expression);
+		assertNotNull(user_stmt);
+		assertTrue(user_stmt instanceof Processor);
+		Pullable p = ((Processor) user_stmt).getPullableOutput(0);
+		// Pull a tuple from the resulting processor
+		Object answer = p.pullSoft();
+		assertNotNull(answer);
+		assertTrue(answer instanceof Number);
+		Number num = (Number) answer;
+		assertEquals(3, num.intValue());
+		// Pull another
+		num = (Number) p.pullSoft();
+		assertEquals(3, num.intValue());
+	}
+	
+	@Test
+	public void testSelectInside() throws ParseException, ConnectorException
+	{
+		QueueSource qs = new QueueSource();
+		qs.addEvent(new TupleFixed(new String[]{"a"}, new Object[]{0}));
+		m_interpreter.addPlaceholder("@foo", "processor", qs);
+		String expression = "COMBINE (SELECT (1) FROM (@foo)) WITH ADDITION";
+		Object user_stmt = m_interpreter.parseQuery(expression);
+		assertNotNull(user_stmt);
+		assertTrue(user_stmt instanceof Processor);
+		Pullable p = ((Processor) user_stmt).getPullableOutput(0);
+		// Pull a tuple from the resulting processor
+		Object answer = p.pullSoft();
+		assertNotNull(answer);
+		assertTrue(answer instanceof Number);
+		Number num = (Number) answer;
+		assertEquals(1, num.intValue());
+		// Pull another
+		num = (Number) p.pullSoft();
+		assertEquals(2, num.intValue());
+		// Pull another
+		num = (Number) p.pullSoft();
+		assertEquals(3, num.intValue());
+	}
+	
+	@Test
+	public void testWhere1() throws ParseException
+	{
+		m_interpreter.addPlaceholder("@foo", "processor", createGroupSource());
+		Processor proc = (Processor) m_interpreter.parseQuery("(@foo) WHERE ((A.x) > (0))");
+		Pullable p = proc.getPullableOutput();
+		Object o = p.pull();
+		assertTrue(o instanceof AttributeGroup);
+		AttributeGroup tup = (AttributeGroup) o;
+		assertEquals(10, ((Number) tup.getAttribute("B",  "z")).intValue());
+	}
+	
+	@Test
+	public void testDefinition2() throws ParseException, ConnectorException
+	{
+		String expression = "WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT (1) FROM (@P)) WITH ADDITION";
+		Object o = m_interpreter.parseQuery(expression);
+		assertNotNull(o);
+		assertTrue(o instanceof UserDefinition);
+		UserDefinition user_def = (UserDefinition) o;
+		user_def.addToInterpreter(m_interpreter);
+		QueueSource qs = new QueueSource();
+		qs.addEvent(new TupleFixed(new String[]{"a"}, new Object[]{0}));
+		m_interpreter.addPlaceholder("@foo", "processor", qs);
+		// Now, parse an expression that uses this definition
+		String user_expression = "THE COUNT OF (@foo)";
+		m_interpreter.setDebugMode(true);
+		Object user_stmt = m_interpreter.parseQuery(user_expression);
+		assertNotNull(user_stmt);
+		assertTrue(user_stmt instanceof Processor);
+		Pullable p = ((Processor) user_stmt).getPullableOutput(0);
+		// Pull a tuple from the resulting processor
+		Object answer = p.pullSoft();
+		assertNotNull(answer);
+		assertTrue(answer instanceof Number);
+		Number num = (Number) answer;
+		assertEquals(1, num.intValue());
+		// Pull another
+		num = (Number) p.pullSoft();
+		assertEquals(2, num.intValue());
+		// Pull another
+		num = (Number) p.pullSoft();
+		assertEquals(3, num.intValue());
 	}
 	
 	/**

@@ -15,13 +15,14 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.newtuples;
+package ca.uqac.lif.cep.tuples;
 
 import java.util.Collection;
 import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.functions.UnaryFunction;
@@ -126,6 +127,33 @@ public class Select extends FunctionProcessor
 				// directly, without wrapping it in a tuple
 				return no_named;
 			}
+		}
+		
+		@Override
+		public Class<?> getOutputTypeFor(int index)
+		{
+			/*
+			 * We guess the output type based on the contents of the SELECT
+			 * expression.
+			 * - If it contains more than one attribute expression, the
+			 *   return type is Tuple
+			 * - Otherwise, the return type is that of the unnamed
+			 *   expression 
+			 */
+			if (m_expressions.length > 1)
+			{
+				return Tuple.class;
+			}
+			Class<?> type = Variant.class;
+			for (AttributeExpression exp : m_expressions)
+			{
+				if (exp.getName() == null)
+				{
+					type = exp.m_expression.getOutputTypeFor(0);
+					break;
+				}
+			}
+			return type;
 		}
 	}
 	

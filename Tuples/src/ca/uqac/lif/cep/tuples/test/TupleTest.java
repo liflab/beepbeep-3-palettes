@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.newtuples.test;
+package ca.uqac.lif.cep.tuples.test;
 
 import static org.junit.Assert.*;
 
@@ -27,20 +27,24 @@ import org.junit.Test;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.FunctionTree;
-import ca.uqac.lif.cep.newtuples.AttributeExpression;
-import ca.uqac.lif.cep.newtuples.AttributeGroup;
-import ca.uqac.lif.cep.newtuples.From;
-import ca.uqac.lif.cep.newtuples.FromFunction;
-import ca.uqac.lif.cep.newtuples.GetAttribute;
-import ca.uqac.lif.cep.newtuples.Select;
-import ca.uqac.lif.cep.newtuples.Tuple;
-import ca.uqac.lif.cep.newtuples.TupleFixed;
-import ca.uqac.lif.cep.newtuples.Select.SelectFunction;
-import ca.uqac.lif.cep.newtuples.TupleMap;
+import ca.uqac.lif.cep.functions.Or;
 import ca.uqac.lif.cep.numbers.Addition;
+import ca.uqac.lif.cep.numbers.IsGreaterThan;
 import ca.uqac.lif.cep.numbers.Subtraction;
 import ca.uqac.lif.cep.tmf.QueueSource;
+import ca.uqac.lif.cep.tuples.AttributeExpression;
+import ca.uqac.lif.cep.tuples.AttributeGroup;
+import ca.uqac.lif.cep.tuples.From;
+import ca.uqac.lif.cep.tuples.FromFunction;
+import ca.uqac.lif.cep.tuples.GetAttribute;
+import ca.uqac.lif.cep.tuples.Select;
+import ca.uqac.lif.cep.tuples.Tuple;
+import ca.uqac.lif.cep.tuples.TupleFixed;
+import ca.uqac.lif.cep.tuples.TupleMap;
+import ca.uqac.lif.cep.tuples.Where;
+import ca.uqac.lif.cep.tuples.Select.SelectFunction;
 
 public class TupleTest 
 {
@@ -52,8 +56,60 @@ public class TupleTest
 		checkToString(new FromFunction("A"));
 		checkToString(new From(new FromFunction("A")));
 		checkToString(new AttributeGroup(new String[]{"A", "B", "C"}));
-		checkToString(new TupleFixed(new String[]{"x", "q"}, new Integer[]{4, 5}));
-		checkToString(new TupleMap(new String[]{"x", "q"}, new Integer[]{4, 5}));
+	}
+	
+	@Test
+	public void testTupleFixed()
+	{
+		TupleFixed tuple = new TupleFixed(new String[]{"x", "q"}, new Object[]{4, "foo"});
+		TupleFixed tuple_clone = tuple.clone();
+		assertEquals(2, tuple.size());
+		assertFalse(tuple.isEmpty());
+		assertFalse(tuple.containsKey(null));
+		assertFalse(tuple.containsKey(""));
+		assertTrue(tuple.containsKey("x"));
+		assertTrue(tuple.containsKey("q"));
+		assertFalse(tuple.containsKey("z"));
+		assertTrue(tuple.containsValue(4));
+		assertTrue(tuple.containsValue("foo"));
+		assertTrue(tuple_clone.containsKey("x"));
+		assertTrue(tuple_clone.containsKey("q"));
+		assertFalse(tuple_clone.containsKey("z"));
+		assertTrue(tuple_clone.containsValue(4));
+		assertTrue(tuple_clone.containsValue("foo"));
+		assertNull(tuple.get(null));
+		assertNull(tuple.get(""));
+		assertEquals(4, tuple.get("x"));
+		assertTrue(tuple.equals(tuple_clone));
+		assertTrue(tuple_clone.equals(tuple));
+		checkToString(tuple);
+	}
+	
+	@Test
+	public void testTupleMap()
+	{
+		TupleMap tuple = new TupleMap(new String[]{"x", "q"}, new Object[]{4, "foo"});
+		TupleMap tuple_clone = tuple.clone();
+		assertEquals(2, tuple.size());
+		assertFalse(tuple.isEmpty());
+		assertFalse(tuple.containsKey(null));
+		assertFalse(tuple.containsKey(""));
+		assertTrue(tuple.containsKey("x"));
+		assertTrue(tuple.containsKey("q"));
+		assertFalse(tuple.containsKey("z"));
+		assertTrue(tuple.containsValue(4));
+		assertTrue(tuple.containsValue("foo"));
+		assertTrue(tuple_clone.containsKey("x"));
+		assertTrue(tuple_clone.containsKey("q"));
+		assertFalse(tuple_clone.containsKey("z"));
+		assertTrue(tuple_clone.containsValue(4));
+		assertTrue(tuple_clone.containsValue("foo"));
+		assertNull(tuple.get(null));
+		assertNull(tuple.get(""));
+		assertEquals(4, tuple.get("x"));
+		assertTrue(tuple.equals(tuple_clone));
+		assertTrue(tuple_clone.equals(tuple));
+		checkToString(tuple);
 	}
 	
 	public static void checkToString(Object o)
@@ -178,7 +234,7 @@ public class TupleTest
 				new AttributeExpression(new FunctionTree(Subtraction.instance, new GetAttribute("z"), new GetAttribute("C", "x")), "p2"),
 				new AttributeExpression(new GetAttribute("t"), "p3")});
 		Connector.connect(source, sel);
-		Pullable p = sel.getPullableOutput(0);
+		Pullable p = sel.getPullableOutput();
 		Tuple t = (Tuple) p.pullSoft();
 		assertNotNull(t);
 		assertEquals(6, ((Number) t.get("p1")).intValue());
@@ -193,13 +249,58 @@ public class TupleTest
 		checkToString(sel);
 	}
 	
+	@Test
+	public void testWhere1() throws ConnectorException
+	{
+		QueueSource qs = createGroupSource();
+		FunctionTree condition = new FunctionTree(Or.instance,
+				new FunctionTree(IsGreaterThan.instance,
+						new GetAttribute("A", "x"),
+						new Constant(0)),
+				new FunctionTree(IsGreaterThan.instance,
+						new GetAttribute("C", "q"),
+						new Constant(9))
+				);
+		Where w = new Where(condition);
+		Connector.connect(qs, w);
+		Pullable p = w.getPullableOutput();
+		Object o = p.pull();
+		assertNotNull(o);
+		assertTrue(o instanceof AttributeGroup);
+		AttributeGroup ag = (AttributeGroup) o;
+		assertEquals(10, ((Number) ag.getAttribute("B", "z")).intValue());
+	}
+	
+	@Test
+	public void testWhere2() throws ConnectorException
+	{
+		QueueSource qs = createGroupSource();
+		FunctionTree condition = new FunctionTree(Or.instance,
+				new FunctionTree(IsGreaterThan.instance,
+						new GetAttribute("A", "x"),
+						new Constant(0)),
+				new FunctionTree(IsGreaterThan.instance,
+						new GetAttribute("C", "q"),
+						new Constant(9))
+				);
+		Where w_old = new Where(condition);
+		Where w = w_old.clone();
+		Connector.connect(qs, w);
+		Pullable p = w.getPullableOutput();
+		Object o = p.pull();
+		assertNotNull(o);
+		assertTrue(o instanceof AttributeGroup);
+		AttributeGroup ag = (AttributeGroup) o;
+		assertEquals(10, ((Number) ag.getAttribute("B", "z")).intValue());
+	}
+	
 	/**
 	 * Creates a simple group source with a few attribute groups
 	 * @return The source
 	 */
 	public QueueSource createGroupSource()
 	{
-		QueueSource qs = new QueueSource(1);
+		QueueSource qs = new QueueSource();
 		{
 			AttributeGroup group = new AttributeGroup(new String[]{"A", "B", "C"});
 			group.add(0, new TupleFixed(new String[]{"x", "y"}, new Integer[]{0, 1}));
@@ -212,6 +313,13 @@ public class TupleTest
 			group.add(0, new TupleFixed(new String[]{"x", "y"}, new Integer[]{9, 8}));
 			group.add(1, new TupleFixed(new String[]{"z", "t"}, new Object[]{10, "bar"}));
 			group.add(2, new TupleFixed(new String[]{"x", "q"}, new Integer[]{7, 6}));
+			qs.addEvent(group);
+		}
+		{
+			AttributeGroup group = new AttributeGroup(new String[]{"A", "B", "C"});
+			group.add(0, new TupleFixed(new String[]{"x", "y"}, new Integer[]{9, 8}));
+			group.add(1, new TupleFixed(new String[]{"z", "t"}, new Object[]{10, "bar"}));
+			group.add(2, new TupleFixed(new String[]{"x", "q"}, new Integer[]{7, 9}));
 			qs.addEvent(group);
 		}
 		return qs;

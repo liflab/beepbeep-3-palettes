@@ -28,8 +28,8 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.sets.Multiset;
-import ca.uqac.lif.cep.tuples.EmlNumber;
-import ca.uqac.lif.cep.tuples.NamedTuple;
+import ca.uqac.lif.cep.tuples.Tuple;
+import ca.uqac.lif.cep.numbers.NumberCast;
 
 /**
  * Generates a Gnuplot file from a 2D {@link ca.uqac.lif.cep.sets.Multiset}.
@@ -150,10 +150,10 @@ public class GnuplotScatterplot extends GnuplotProcessor
 		// First, fetch all lines
 		for (Object bag_element : bag_elements)
 		{
-			if (bag_element instanceof NamedTuple)
+			if (bag_element instanceof Tuple)
 			{
-				NamedTuple tuple = (NamedTuple) bag_element;
-				float x_value = EmlNumber.parseFloat(tuple.get(m_xHeader));
+				Tuple tuple = (Tuple) bag_element;
+				float x_value = NumberCast.getNumber(tuple.get(m_xHeader)).floatValue();
 				StringBuilder line = new StringBuilder();
 				line.append(x_value);
 				for (String key : m_otherHeaders)
@@ -183,7 +183,7 @@ public class GnuplotScatterplot extends GnuplotProcessor
 	 */
 	protected void getColumnNames(Multiset bag)
 	{
-		NamedTuple nt = (NamedTuple) bag.getAnyElement();
+		Tuple nt = (Tuple) bag.getAnyElement();
 		List<String> names = new ArrayList<String>();
 		int col_count = 0;
 		for (String s : nt.keySet())

@@ -1,50 +1,48 @@
-package ca.uqac.lif.cep.newtuples;
+package ca.uqac.lif.cep.tuples;
 
 import java.util.ArrayList;
 import java.util.Stack;
 
+
 /**
- * A list of attribute expressions. This class exists only to provide
+ * A list of input traces. This class exists only to provide
  * an object to build when parsing an expression.
  * 
  * @author Sylvain Hallé
  */
-class AttributeExpressionList extends ArrayList<AttributeExpression>
+class TupleExpressionList extends ArrayList<TupleExpression>
 {
 	/**
 	 * Dummy UID
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	public static void build(Stack<Object> stack)
 	{
 		Object top = stack.peek();
-		AttributeExpressionList new_al = new AttributeExpressionList();
-		if (top instanceof AttributeExpressionList)
+		TupleExpressionList new_al = new TupleExpressionList();
+		if (top instanceof TupleExpressionList)
 		{
-			AttributeExpressionList al = (AttributeExpressionList) stack.pop();
-			if (!stack.isEmpty())
-			{
-				stack.pop(); // ,
-				AttributeExpression def = (AttributeExpression) stack.pop();
-				new_al.add(def);
-			}
+			TupleExpressionList al = (TupleExpressionList) stack.pop();
+			stack.pop(); // ,
+			TupleExpression def = (TupleExpression) stack.pop();
+			new_al.add(def);
 			new_al.addAll(al);
 		}
 		else
 		{
-			AttributeExpression def = (AttributeExpression) stack.pop();
+			TupleExpression def = (TupleExpression) stack.pop();
 			new_al.add(def);
 		}
 		stack.push(new_al);
 	}
-	
+
 	@Override
 	public String toString()
 	{
 		StringBuilder out = new StringBuilder();
 		boolean first = true;
-		for (AttributeExpression te : this)
+		for (TupleExpression te : this)
 		{
 			if (first)
 			{

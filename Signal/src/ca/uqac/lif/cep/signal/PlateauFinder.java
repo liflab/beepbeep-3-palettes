@@ -23,7 +23,7 @@ import java.util.Stack;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.tuples.EmlNumber;
+import ca.uqac.lif.cep.numbers.NumberCast;
 
 /**
  * Finds a plateau in a data stream. A plateau is found when all
@@ -117,7 +117,7 @@ public class PlateauFinder extends WindowProcessor
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		Object[] out_vector = new Object[1];
-		float d = EmlNumber.parseFloat(inputs[0]);
+		float d = NumberCast.getNumber(inputs[0]).floatValue();
 		if (m_values.size() < m_windowWidth)
 		{
 			m_values.addElement(d);

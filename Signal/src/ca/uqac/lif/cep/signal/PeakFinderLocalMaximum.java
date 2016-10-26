@@ -24,7 +24,7 @@ import java.util.Stack;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.tuples.EmlNumber;
+import ca.uqac.lif.cep.numbers.NumberCast;
 
 /**
  * Finds a peak in a data stream using the
@@ -87,7 +87,7 @@ public class PeakFinderLocalMaximum extends WindowProcessor
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
-		float d = EmlNumber.parseFloat(inputs[0]);
+		float d = NumberCast.getNumber(inputs[0]).floatValue();
 		if (m_values.size() < m_windowWidth)
 		{
 			m_values.addElement(d);

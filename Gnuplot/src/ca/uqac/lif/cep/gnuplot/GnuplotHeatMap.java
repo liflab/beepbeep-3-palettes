@@ -23,8 +23,8 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.sets.Multiset;
-import ca.uqac.lif.cep.tuples.EmlNumber;
-import ca.uqac.lif.cep.tuples.NamedTuple;
+import ca.uqac.lif.cep.tuples.Tuple;
+import ca.uqac.lif.cep.numbers.NumberCast;
 
 /**
  * Generates a Gnuplot file from a 2D {@link ca.uqac.lif.cep.sets.Multiset}.
@@ -177,10 +177,10 @@ public class GnuplotHeatMap extends GnuplotProcessor
 		// Now replace matrix with actual values when defined
 		for (Object o : m_lastMap.keySet())
 		{
-			NamedTuple tuple = (NamedTuple) o;
+			Tuple tuple = (Tuple) o;
 			int value = m_lastMap.get(tuple);
-			int x = ((EmlNumber) tuple.get("x")).intValue();
-			int y = ((EmlNumber) tuple.get("y")).intValue();
+			int x = NumberCast.getNumber(tuple.get("x")).intValue();
+			int y = NumberCast.getNumber(tuple.get("y")).intValue();
 			m_values[x - m_minX][y - m_minY] = value / m_scale;
 		}
 		// Create Gnuplot output file from that data

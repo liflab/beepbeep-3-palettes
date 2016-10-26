@@ -22,7 +22,6 @@ import java.sql.ResultSet;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.io.StreamGrammar;
-import ca.uqac.lif.cep.tuples.TupleGrammar;
 
 public class BeepBeepStatement extends EmptyStatement
 {
@@ -34,7 +33,6 @@ public class BeepBeepStatement extends EmptyStatement
 		m_interpreter = interpreter;
 		// Load a few extensions
 		m_interpreter.extendGrammar(StreamGrammar.class);
-		m_interpreter.extendGrammar(TupleGrammar.class);
 	}
 	
 	@Override

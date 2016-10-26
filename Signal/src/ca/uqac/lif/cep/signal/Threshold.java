@@ -24,7 +24,7 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
-import ca.uqac.lif.cep.tuples.EmlNumber;
+import ca.uqac.lif.cep.numbers.NumberCast;
 
 public class Threshold extends SingleProcessor
 {
@@ -42,7 +42,7 @@ public class Threshold extends SingleProcessor
 	@Override
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
-		float value = EmlNumber.parseFloat(inputs[0]);
+		float value = NumberCast.getNumber(inputs[0]).floatValue();
 		if (Math.abs(value) > m_threshold)
 		{
 			return wrapObject(value);
@@ -52,7 +52,7 @@ public class Threshold extends SingleProcessor
 
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
-		float t_value = EmlNumber.parseFloat(stack.pop());
+		float t_value = NumberCast.getNumber(stack.pop()).floatValue();
 		stack.pop(); // THRESHOLD
 		stack.pop(); // (
 		Processor p = (Processor) stack.pop();
