@@ -28,11 +28,12 @@ import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
+import ca.uqac.lif.cep.functions.Constant;
+import ca.uqac.lif.cep.functions.Equals;
+import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.tmf.QueueSource;
-import ca.uqac.lif.cep.tuples.AttributePlaceholder;
-import ca.uqac.lif.cep.tuples.EqualsExpression;
-import ca.uqac.lif.cep.tuples.NumberExpression;
-import ca.uqac.lif.cep.tuples.Select;
 
 /**
  * Unit tests for the Moore Machine processor
@@ -58,10 +59,12 @@ public class MooreTest extends BeepBeepUnitTest
 		MooreMachine m = new MooreMachine(1, 1);
 		m.addTransition(ST_0, new ProcessorTransition(ST_1,
 				// in state 0, event = 2, go to state 1
-				new Select(1, new EqualsExpression(new AttributePlaceholder(), new NumberExpression(2)))));
+				new FunctionProcessor(new FunctionTree(Equals.instance, 
+						new ArgumentPlaceholder(0), new Constant(2)))));
 		m.addTransition(ST_0, new ProcessorTransition(ST_0,
 				// in state 0, event = 1, go to state 0
-				new Select(1, new EqualsExpression(new AttributePlaceholder(), new NumberExpression(1)))));
+				new FunctionProcessor(new FunctionTree(Equals.instance, 
+						new ArgumentPlaceholder(0), new Constant(1)))));
 		m.addSymbol(0, "In zero");
 		m.addSymbol(1, "In one");
 		Connector.connect(source, m);
@@ -72,7 +75,5 @@ public class MooreTest extends BeepBeepUnitTest
 		assertEquals("In zero", event);
 		event = p.pullSoft();
 		assertEquals("In one", event);
-		
 	}
-
 }

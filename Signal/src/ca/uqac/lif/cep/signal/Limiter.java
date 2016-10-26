@@ -22,7 +22,7 @@ import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.SingleProcessor;
-import ca.uqac.lif.cep.tuples.EmlNumber;
+import ca.uqac.lif.cep.numbers.NumberCast;
 
 /**
  * Outputs at most one non-zero event in an interval of width <i>n</i>.
@@ -51,7 +51,7 @@ public class Limiter extends SingleProcessor
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
 		m_counter--;
-		float value = EmlNumber.parseFloat(inputs[0]);
+		float value = NumberCast.getNumber(inputs[0]).floatValue();
 		if (m_counter > 0 || value == 0)
 		{
 			// Ignore this event

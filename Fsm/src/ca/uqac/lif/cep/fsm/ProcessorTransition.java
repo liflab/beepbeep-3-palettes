@@ -20,11 +20,12 @@ package ca.uqac.lif.cep.fsm;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.tmf.QueueSink;
-import ca.uqac.lif.cep.tuples.EmlBoolean;
+import ca.uqac.lif.cep.functions.EmlBoolean;
 
 /**
  * Represents a transition in the Moore machine.  
@@ -91,7 +92,8 @@ public class ProcessorTransition extends MooreMachine.Transition
 		Connector.connect(m_condition, m_sink);
 	}
 	
-	public boolean isFired(Object[] inputs)
+	@Override
+	public boolean isFired(Object[] inputs, Context context)
 	{
 		// First, push the inputs into the processor
 		for (int i = 0; i < inputs.length; i++)
