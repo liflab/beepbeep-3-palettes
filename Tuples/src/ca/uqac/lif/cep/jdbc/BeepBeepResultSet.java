@@ -18,8 +18,8 @@
 package ca.uqac.lif.cep.jdbc;
 
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.tuples.EmlNumber;
-import ca.uqac.lif.cep.tuples.NamedTuple;
+import ca.uqac.lif.cep.numbers.NumberCast;
+import ca.uqac.lif.cep.tuples.Tuple;
 
 public class BeepBeepResultSet extends EmptyResultSet
 {
@@ -31,7 +31,7 @@ public class BeepBeepResultSet extends EmptyResultSet
 	/**
 	 * The last tuple return by a call to {@link Pullable#pull()}
 	 */
-	protected NamedTuple m_lastTuple;
+	protected Tuple m_lastTuple;
 	
 	/**
 	 * Constructor of a result set
@@ -50,7 +50,7 @@ public class BeepBeepResultSet extends EmptyResultSet
 		boolean status = m_pullable.hasNext() != false;
 		if (status)
 		{
-			m_lastTuple = (NamedTuple) m_pullable.pull();
+			m_lastTuple = (Tuple) m_pullable.pull();
 		}
 		return status;
 	}
@@ -79,7 +79,7 @@ public class BeepBeepResultSet extends EmptyResultSet
 			return 0;
 		}
 		Object o = m_lastTuple.get(attribute);
-		return EmlNumber.parseFloat(o);
+		return NumberCast.getNumber(o).floatValue();
 	}
 
 	@Override

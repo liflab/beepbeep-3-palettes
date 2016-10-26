@@ -16,11 +16,11 @@ At the moment, the folder contains the following palettes:
 - `Fol`: for manipulation of first-order logic statements
 - `Fsm`: for manipulation of extended finite-state machines
 - `Gnuplot`: for drawing plots from event streams
-- `Jdbc`: for using BeepBeep as a JDBC driver
 - `Json`: to read and write events in the JSON format
 - `Ltl`: to express properties in Linear Temporal Logic
 - `Sets`: to manipulate streams of sets
 - `Signal`: basic signal processing functions (peak detection, etc.)
+- `Tuples`: for manipulating tuples and using BeepBeep as a JDBC driver
 - `WebSocket`: to read/write events from/to a web socket
 - `Xml`: to read and write events in the JSON format
 

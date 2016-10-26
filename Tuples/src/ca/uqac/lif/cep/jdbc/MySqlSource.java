@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.tuples;
+package ca.uqac.lif.cep.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -30,6 +30,7 @@ import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.tmf.Source;
+import ca.uqac.lif.cep.tuples.TupleMap;
 
 /**
  * Converts a query to a MySQL database into a trace of named tuples.
@@ -154,7 +155,7 @@ public class MySqlSource extends Source
 			}
 			while (m_resultSet.next())
 			{
-				NamedTupleMap nt = new NamedTupleMap();
+				TupleMap nt = new TupleMap();
 				for (int i = 1; i <= col_count; i++)
 				{
 					String name = col_names.get(i);
@@ -165,7 +166,7 @@ public class MySqlSource extends Source
 					}
 					else if (value instanceof Number)
 					{
-						nt.put(name, EmlNumber.toEmlNumber(value));
+						nt.put(name, value);
 					}
 				}
 			}
