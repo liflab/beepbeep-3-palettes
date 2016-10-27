@@ -55,5 +55,13 @@
     Write JAR dependencies here.
   -->
   <dependencies>
+    <dependency>
+    <!-- java_websocket. Used to implement the websocket -->
+      <name>json-lif</name>
+      <classname>org.java_websocket.client.WebSocketClient</classname>
+      <files>
+        <zip>https://github.com/liflab/Java-WebSocket/releases/download/v1.3.0/java_websocket-1.3.zip</zip>
+      </files>
+    </dependency>
   </dependencies>
 </build>

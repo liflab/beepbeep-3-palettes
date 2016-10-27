@@ -65,7 +65,9 @@ public class TupleFeeder extends TokenFeeder
 
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
+		stack.pop(); // )
 		Processor p = (Processor) stack.pop();
+		stack.pop(); // (
 		stack.pop(); // OF
 		stack.pop(); // TUPLES
 		stack.pop(); // THE

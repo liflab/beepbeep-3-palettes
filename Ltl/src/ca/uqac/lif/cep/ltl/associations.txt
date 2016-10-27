@@ -9,3 +9,4 @@
 <eventually>,ca.uqac.lif.cep.ltl.Eventually
 <until>,ca.uqac.lif.cep.ltl.Until
 <next>,ca.uqac.lif.cep.ltl.Next
+<troolean>,ca.uqac.lif.cep.ltl.Troolean

@@ -4,9 +4,13 @@
 # This is an EML (Event Manipulation Language) for tuple manipulation.
 # -----------------------------------------
 
-<processor>                      := <tuples_where> | <tuples_select> | <tuples_from> ;
+<processor>                      := <tuples_where> | <tuples_select> | <tuples_from> 
+                                    | <tuple_reader> ;
 <tuple_name>                     := ^[a-zA-Z][\w_]*; 
 <function>                       := <get_attribute> ;
+
+# Other processors
+<tuple_reader>                   := THE TUPLES OF ( <processor> ) ;
 
 # "SELECT" statement
 

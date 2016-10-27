@@ -83,7 +83,7 @@ public class RegexTupleBuilder extends SingleProcessor
 			// The pattern was not found: don't output anything
 			return null;
 		}
-		NamedTupleMap tuple = new NamedTupleMap();
+		TupleMap tuple = new TupleMap();
 		int group_count = mat.groupCount();
 		for (int i = 1; i < group_count; i++) // i=0 is the entire pattern
 		{
@@ -91,7 +91,7 @@ public class RegexTupleBuilder extends SingleProcessor
 			String name = new Integer(i).toString();
 			if (i < num_names)
 			{
-				name = m_attributeNames.get(i - 1).m_attributeName;
+				name = m_attributeNames.get(i - 1).getName();
 			}
 			tuple.put(name, group);
 		}
@@ -115,7 +115,7 @@ public class RegexTupleBuilder extends SingleProcessor
 		stack.push(rtp);
 	}
 	
-	public static class RegexAttributeNameList extends ArrayList<AttributeNamePlain>
+	public static class RegexAttributeNameList extends ArrayList<AttributeExpression>
 	{
 		/**
 		 * Dummy UID
@@ -137,14 +137,14 @@ public class RegexTupleBuilder extends SingleProcessor
 				if (!stack.isEmpty())
 				{
 					stack.pop(); // ,
-					AttributeNamePlain def = (AttributeNamePlain) stack.pop();
+					AttributeExpression def = (AttributeExpression) stack.pop();
 					ranl.add(def);
 				}
 				ranl.addAll(al);
 			}
 			else
 			{
-				AttributeNamePlain def = (AttributeNamePlain) stack.pop();
+				AttributeExpression def = (AttributeExpression) stack.pop();
 				ranl.add(def);
 			}
 			stack.push(ranl);

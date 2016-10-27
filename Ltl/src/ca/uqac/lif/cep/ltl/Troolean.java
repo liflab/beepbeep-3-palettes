@@ -17,7 +17,10 @@
  */
 package ca.uqac.lif.cep.ltl;
 
+import java.util.Stack;
+
 import ca.uqac.lif.cep.functions.BinaryFunction;
+import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.util.Arrays;
 
@@ -26,8 +29,8 @@ import ca.uqac.lif.cep.util.Arrays;
  * has three values: TRUE, FALSE and INCONCLUSIVE (which can also
  * stand for UNKNOWN).
  */
-public class Troolean 
-{
+public class Troolean extends Constant
+{	
 	/**
 	 * The three possible values of a Troolean
 	 */
@@ -52,6 +55,44 @@ public class Troolean
 	 * Static reference to the negation function
 	 */
 	public static final transient TrooleanNot NOT_FUNCTION = new TrooleanNot();
+	
+	/**
+	 * Static reference to a constant object containing the value TRUE
+	 */
+	public static final transient Troolean TRUE = new Troolean(Value.TRUE);
+	
+	/**
+	 * Static reference to a constant object containing the value FALSE
+	 */
+	public static final transient Troolean FALSE = new Troolean(Value.FALSE);
+	
+	/**
+	 * Static reference to a constant object containing the value INCONCLUSIVE
+	 */
+	public static final transient Troolean INCONCLUSIVE = new Troolean(Value.INCONCLUSIVE);
+	
+	// Don't use this
+	private Troolean(Object o)
+	{
+		super(o);
+	}
+	
+	public static void build(Stack<Object> stack)
+	{
+		String symbol = (String) stack.pop();
+		if (symbol.compareTo("⊤") == 0)
+		{
+			stack.push(TRUE);
+		}
+		else if (symbol.compareTo("⊥") == 0)
+		{
+			stack.push(FALSE);
+		}
+		else
+		{
+			stack.push(INCONCLUSIVE);
+		}
+	}
 
 	/**
 	 * Computes the logical conjunction of the values

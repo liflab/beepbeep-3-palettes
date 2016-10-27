@@ -32,9 +32,7 @@ import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.interpreter.Interpreter;
 import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
-import ca.uqac.lif.cep.io.StreamGrammar;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
-import ca.uqac.lif.cep.numbers.NumberGrammar;
 import ca.uqac.lif.cep.tmf.QueueSource;
 
 /**
@@ -49,8 +47,6 @@ public class LtlTest extends BeepBeepUnitTest
 	public void setUp()
 	{
 		m_interpreter = new Interpreter();
-		m_interpreter.extendGrammar(NumberGrammar.class);
-		m_interpreter.extendGrammar(StreamGrammar.class);
 		m_interpreter.extendGrammar(ca.uqac.lif.cep.ltl.PackageExtension.class);
 	}
 	
@@ -487,6 +483,7 @@ public class LtlTest extends BeepBeepUnitTest
 			src.setEvents(input_events);
 			m_interpreter.addPlaceholder("@U", "processor", src);
 		}
+		m_interpreter.setDebugMode(true);
 		Pullable p = m_interpreter.executeQuery(expression);
 		Value b;
 		b = (Value) p.pullSoft();
@@ -556,9 +553,79 @@ public class LtlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testMultiline() throws ConnectorException
+	public void testGrammarConstant1() throws ConnectorException
 	{
-		String expression = "(SELECT (a) LESS THAN (2) FROM (@P))\nAND\n(X (SELECT (a) GREATER THAN (1) FROM (@P)))";
+		Pullable p = m_interpreter.executeQuery("CONSTANT (true)");
+		assertNotNull(p);
+	}
+	
+	@Test
+	public void testGrammarConstant2() throws ConnectorException
+	{
+		Pullable p = m_interpreter.executeQuery("CONSTANT (⊥)");
+		assertNotNull(p);
+	}
+	
+	@Test
+	public void testGrammarConnectives1() throws ConnectorException
+	{
+		Pullable p = m_interpreter.executeQuery("(CONSTANT (⊥)) AND (CONSTANT (⊥))");
+		assertNotNull(p);
+	}
+	
+	@Test
+	public void testGrammarConnectives2() throws ConnectorException
+	{
+		Pullable p = m_interpreter.executeQuery("(CONSTANT (⊥)) OR (CONSTANT (⊥))");
+		assertNotNull(p);
+	}
+	
+	@Test
+	public void testGrammarConnectives3() throws ConnectorException
+	{
+		Pullable p = m_interpreter.executeQuery("NOT (CONSTANT(⊥))");
+		assertNotNull(p);
+	}
+	
+	@Test
+	public void testGrammarConnectives4() throws ConnectorException
+	{
+		Pullable p = m_interpreter.executeQuery("X (CONSTANT(⊥))");
+		assertNotNull(p);
+	}
+	
+	@Test
+	public void testGrammarConnectives5() throws ConnectorException
+	{
+		Pullable p = m_interpreter.executeQuery("G (CONSTANT(⊥))");
+		assertNotNull(p);
+	}
+	
+	@Test
+	public void testGrammarConnectives6() throws ConnectorException
+	{
+		Pullable p = m_interpreter.executeQuery("F (CONSTANT(⊥))");
+		assertNotNull(p);
+	}
+	
+	@Test
+	public void testGrammarConnectives7() throws ConnectorException
+	{
+		Pullable p = m_interpreter.executeQuery("(CONSTANT(⊥)) U (CONSTANT(⊥))");
+		assertNotNull(p);
+	}
+	
+	@Test
+	public void testGrammarConnectives8() throws ConnectorException
+	{
+		Pullable p = m_interpreter.executeQuery("(X ((CONSTANT(⊥)) U (CONSTANT(⊥)))) AND (NOT (F (CONSTANT(⊥))))");
+		assertNotNull(p);
+	}
+	
+	@Test
+	public void testGrammarMultiline() throws ConnectorException
+	{
+		String expression = "(CONSTANT(⊥))\nAND\n(X (CONSTANT(⊥)))";
 		{
 			QueueSource src = new QueueSource(1);
 			Vector<Object> input_events = new Vector<Object>();
@@ -574,26 +641,10 @@ public class LtlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testMultipleQueries1() throws ParseException, IOException, ConnectorException
-	{
-		InputStream is = this.getClass().getResourceAsStream("test.esql");
-		Object o = m_interpreter.executeQueries(is);
-		assertNotNull(o);
-	}
-	
-	@Test
 	public void testMultipleQueries2() throws ParseException, IOException, ConnectorException
 	{
 		InputStream is = this.getClass().getResourceAsStream("test2.esql");
 		m_interpreter.executeQueries(is);
-	}
-	
-	@Test
-	public void testMultipleQueries3() throws ParseException, IOException, ConnectorException
-	{
-		InputStream is = this.getClass().getResourceAsStream("test3.esql");
-		Object o = m_interpreter.executeQueries(is);
-		assertNotNull(o);
 	}
 	
 }

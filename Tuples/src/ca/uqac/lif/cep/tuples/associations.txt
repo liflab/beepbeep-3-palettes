@@ -3,20 +3,21 @@
 # -----------------------------------------
 
 
-<tuples_select>,ca.uqac.lif.cep.newtuples.Select
-<tuples_where>,ca.uqac.lif.cep.newtuples.Where
+<tuples_select>,ca.uqac.lif.cep.tuples.Select
+<tuples_where>,ca.uqac.lif.cep.tuples.Where
+<tuple_reader>,ca.uqac.lif.cep.tuples.TupleFeeder
 
-<attribute_expression_list>,ca.uqac.lif.cep.newtuples.AttributeExpressionList
-<attribute_expression>,ca.uqac.lif.cep.newtuples.AttributeExpression 
-<named_attribute_expression>,ca.uqac.lif.cep.newtuples.NamedAttributeExpression
-<anonymous_attribute_expression>,ca.uqac.lif.cep.newtuples.AnonymousAttributeExpression
+<attribute_expression_list>,ca.uqac.lif.cep.tuples.AttributeExpressionList
+<attribute_expression>,ca.uqac.lif.cep.tuples.AttributeExpression 
+<named_attribute_expression>,ca.uqac.lif.cep.tuples.NamedAttributeExpression
+<anonymous_attribute_expression>,ca.uqac.lif.cep.tuples.AnonymousAttributeExpression
 
-<tuples_from>,ca.uqac.lif.cep.newtuples.From
-<tuple_expression_list>,ca.uqac.lif.cep.newtuples.TupleExpressionList
-<tuple_expression>,ca.uqac.lif.cep.newtuples.TupleExpression
-<named_tuple_expression>,ca.uqac.lif.cep.newtuples.NamedTupleExpression
-<anonymous_tuple_expression>,ca.uqac.lif.cep.newtuples.AnonymousTupleExpression
+<tuples_from>,ca.uqac.lif.cep.tuples.From
+<tuple_expression_list>,ca.uqac.lif.cep.tuples.TupleExpressionList
+<tuple_expression>,ca.uqac.lif.cep.tuples.TupleExpression
+<named_tuple_expression>,ca.uqac.lif.cep.tuples.NamedTupleExpression
+<anonymous_tuple_expression>,ca.uqac.lif.cep.tuples.AnonymousTupleExpression
 
-<get_attribute>,ca.uqac.lif.cep.newtuples.GetAttribute
-<get_attribute_qual>,ca.uqac.lif.cep.newtuples.GetAttributeQualified
-<get_attribute_unqual>,ca.uqac.lif.cep.newtuples.GetAttributeUnqualified
+<get_attribute>,ca.uqac.lif.cep.tuples.GetAttribute
+<get_attribute_qual>,ca.uqac.lif.cep.tuples.GetAttributeQualified
+<get_attribute_unqual>,ca.uqac.lif.cep.tuples.GetAttributeUnqualified

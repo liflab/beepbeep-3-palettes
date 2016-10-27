@@ -17,8 +17,6 @@
  */
 package ca.uqac.lif.cep.jdbc;
 
-import static org.junit.Assert.*;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -55,14 +53,12 @@ public class JdbcTest extends BeepBeepUnitTest
 			Class.forName("ca.uqac.lif.cep.jdbc.BeepBeepDriver");
 			Connection con = java.sql.DriverManager.getConnection("jdbc:beepbeep:","user","password");
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT \"A\" AS name, 1 AS salary FROM (1)");
+			ResultSet rs = stmt.executeQuery("SELECT (foo) AS name, (bar) AS salary FROM (THE TUPLES OF (FILE \"tuples.csv\"))");
 			while(rs.next())
 			{
-				String s = rs.getString("name");
+				int s = rs.getInt("name");
 				int sal = rs.getInt("salary");
-				assertEquals(s, "A");
-				assertEquals(sal, 1);
-				break; // Normally we don't break, but here the result is infinite
+				System.out.printf("name = %d, salary = %d\n", s, sal);
 			}
 			rs.close();
 			con.close();

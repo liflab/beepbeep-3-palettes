@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.signal;
 
-import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -86,7 +85,7 @@ public class PeakFinderLocalMaximum extends WindowProcessor
 	@Override
 	protected Queue<Object[]> compute(Object[] inputs)
 	{
-		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
+		Queue<Object[]> out_queue = getEmptyQueue();;
 		float d = NumberCast.getNumber(inputs[0]).floatValue();
 		if (m_values.size() < m_windowWidth)
 		{
@@ -109,7 +108,7 @@ public class PeakFinderLocalMaximum extends WindowProcessor
 				}
 			}
 			// Window not filled yet: don't return anything
-			return null;
+			return getEmptyQueue();
 		}
 		// Window is full; remove first element and put new at the end
 		m_values.remove(0);
@@ -147,7 +146,7 @@ public class PeakFinderLocalMaximum extends WindowProcessor
 				return out_queue;
 			}
 		}
-		return null;
+		return getEmptyQueue();
 	}
 	
 	public int getPeakPosition()

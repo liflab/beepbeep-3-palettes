@@ -31,6 +31,9 @@ public class BeepBeepConnection extends EmptyConnection
 	{
 		super();
 		m_interpreter = new Interpreter();
+		// Load the tuple palette, as obviously we'll be manipulating
+		// tuples in queries
+		m_interpreter.extendGrammar(ca.uqac.lif.cep.tuples.PackageExtension.class);
 	}
 	
 	@Override
