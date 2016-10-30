@@ -17,6 +17,11 @@
  */
 package ca.uqac.lif.cep.xml;
 
+import java.util.Stack;
+
+import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.xml.XmlElement;
@@ -60,5 +65,16 @@ public class XmlFeeder extends FunctionProcessor
 			}
 			return null;
 		}
+	}
+	
+	public static void build(Stack<Object> stack) throws ConnectorException
+	{
+		Processor p = (Processor) stack.pop();
+		stack.pop(); // OF
+		stack.pop(); // XML
+		stack.pop(); // THE
+		XmlFeeder feeder = new XmlFeeder();
+		Connector.connect(p, feeder);
+		stack.push(feeder);
 	}
 }

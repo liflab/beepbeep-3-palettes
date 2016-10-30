@@ -13,9 +13,18 @@ class AnonymousTupleExpression extends TupleExpression
 
 	public static void build(Stack<Object> stack)
 	{
-		stack.pop(); // (
-		Processor p = (Processor) stack.pop();
-		stack.pop(); // )
+		Object o;
+		Processor p;
+		o = stack.pop(); // ( ?
+		if (o instanceof String)
+		{
+			p = (Processor) stack.pop();
+			stack.pop(); // )
+		}
+		else
+		{
+			p = (Processor) o;
+		}
 		AnonymousTupleExpression te = new AnonymousTupleExpression(p);
 		stack.push(te);
 	}

@@ -42,7 +42,7 @@ public class GrammarTest
 	public void setup()
 	{
 		m_interpreter = new Interpreter();
-		m_interpreter.extendGrammar(PackageExtension.class);
+		m_interpreter.load(PackageExtension.class);
 		m_interpreter.setDebugMode(true);
 	}
 	

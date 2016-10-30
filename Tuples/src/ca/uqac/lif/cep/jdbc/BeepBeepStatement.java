@@ -32,7 +32,7 @@ public class BeepBeepStatement extends EmptyStatement
 		super();
 		m_interpreter = interpreter;
 		// Load a few extensions
-		m_interpreter.extendGrammar(PackageExtension.class);
+		m_interpreter.load(PackageExtension.class);
 	}
 	
 	@Override

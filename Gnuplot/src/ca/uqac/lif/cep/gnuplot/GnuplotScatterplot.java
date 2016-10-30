@@ -205,9 +205,7 @@ public class GnuplotScatterplot extends GnuplotProcessor
 
 	public static void build(Stack<Object> stack) throws ConnectorException 
 	{
-		stack.pop(); // )
 		Processor p = (Processor) stack.pop();
-		stack.pop(); // (
 		stack.pop(); // OF
 		stack.pop(); // SCATTERPLOT
 		stack.pop(); // GNUPLOT

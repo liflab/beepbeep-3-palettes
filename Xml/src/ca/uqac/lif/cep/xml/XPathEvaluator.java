@@ -18,6 +18,11 @@
 package ca.uqac.lif.cep.xml;
 
 
+import java.util.Stack;
+
+import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.xml.XPathExpression;
 
@@ -31,5 +36,16 @@ public class XPathEvaluator extends FunctionProcessor
 	public XPathEvaluator(XPathExpression exp)
 	{
 		super(new XPathFunction(exp));
+	}
+	
+	public static void build(Stack<Object> stack) throws ConnectorException
+	{
+		Processor p = (Processor) stack.pop();
+		stack.pop(); // ON
+		String expression = (String) stack.pop();
+		stack.pop(); // XPATH
+		XPathEvaluator xp = new XPathEvaluator(expression);
+		Connector.connect(p, xp);
+		stack.push(xp);
 	}
 }

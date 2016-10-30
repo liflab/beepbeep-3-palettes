@@ -47,7 +47,7 @@ public class LtlTest extends BeepBeepUnitTest
 	public void setUp()
 	{
 		m_interpreter = new Interpreter();
-		m_interpreter.extendGrammar(ca.uqac.lif.cep.ltl.PackageExtension.class);
+		m_interpreter.load(ca.uqac.lif.cep.ltl.PackageExtension.class);
 	}
 	
 	@Test

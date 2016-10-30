@@ -200,12 +200,9 @@ public class GnuplotHeatMap extends GnuplotProcessor
 
 	public static void build(Stack<Object> stack) throws ConnectorException, ConnectorException 
 	{
-		stack.pop(); // )
 		Processor p = (Processor) stack.pop();
-		stack.pop(); // (
 		stack.pop(); // OF
 		stack.pop(); // HEATMAP
-		stack.pop(); // GNUPLOT
 		stack.pop(); // THE
 		GnuplotHeatMap ghm = new GnuplotHeatMap();
 		Connector.connect(p, ghm);

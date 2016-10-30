@@ -1,16 +1,14 @@
 # -----------------------------------------
-# Grammar for BeepBeep 3; edit at your own risk!
-#
-# This is an EML (Event Manipulation Language) for tuple manipulation.
+# Tuples and SQL-like operations
 # -----------------------------------------
 
 <processor>                      := <tuples_where> | <tuples_select> | <tuples_from> 
                                     | <tuple_reader> ;
 <tuple_name>                     := ^[a-zA-Z][\w_]*; 
-<function>                       := <get_attribute> ;
+<constant>                       := <get_attribute> ;
 
 # Other processors
-<tuple_reader>                   := THE TUPLES OF ( <processor> ) ;
+<tuple_reader>                   := THE TUPLES OF <processor> ;
 
 # "SELECT" statement
 
@@ -19,8 +17,8 @@
                                     | <attribute_expression> ;
 <attribute_expression>           := <named_attribute_expression> 
                                     | <anonymous_attribute_expression> ;
-<named_attribute_expression>     := ( <function> ) AS <tuple_name> ;
-<anonymous_attribute_expression> := ( <function> ) ;
+<named_attribute_expression>     := <function> AS <tuple_name> ;
+<anonymous_attribute_expression> := <function> ;
 
 
 # "FROM" statement
@@ -30,12 +28,12 @@
                                     | <tuple_expression> ;
 <tuple_expression>               := <named_tuple_expression> 
                                     | <anonymous_tuple_expression> ;
-<named_tuple_expression>         := ( <processor> ) AS <tuple_name> ;
-<anonymous_tuple_expression>     := ( <processor> ) ;
+<named_tuple_expression>         := <processor> AS <tuple_name> ;
+<anonymous_tuple_expression>     := <processor> ;
 
 # "WHERE" statement
 
-<tuples_where>                   := ( <processor> ) WHERE ( <function> ) ;
+<tuples_where>                   := ( <processor> ) WHERE <function> ;
 
 # Tuple functions
 

@@ -196,14 +196,13 @@ public class PlateauFinder extends WindowProcessor
 	
 	public static void build(Stack<Object> stack) throws ConnectorException 
 	{
-		stack.pop(); // )
 		Processor p = (Processor) stack.pop();
-		stack.pop(); // (
 		stack.pop(); // OF
 		stack.pop(); // PLATEAU
 		stack.pop(); // THE
 		PlateauFinder pf = new PlateauFinder();
 		Connector.connect(p, pf);
+		stack.push(pf);
 	}
 
 	@Override

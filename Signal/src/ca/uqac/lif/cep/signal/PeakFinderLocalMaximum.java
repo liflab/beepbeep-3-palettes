@@ -171,14 +171,13 @@ public class PeakFinderLocalMaximum extends WindowProcessor
 
 	public static void build(Stack<Object> stack) throws ConnectorException 
 	{
-		stack.pop(); // )
 		Processor p = (Processor) stack.pop();
-		stack.pop(); // (
 		stack.pop(); // OF
 		stack.pop(); // PEAK
 		stack.pop(); // THE
 		PeakFinderLocalMaximum pflm = new PeakFinderLocalMaximum();
 		Connector.connect(p, pflm);
+		stack.push(pflm);
 	}
 	
 	@Override

@@ -79,9 +79,18 @@ public class Where extends SingleProcessor
 	
 	public static void build(Stack<Object> stack) throws ConnectorException
 	{
-		stack.pop(); // (
-		Function f = (Function) stack.pop();
-		stack.pop(); // )
+		Object o;
+		Function f;
+		o = stack.pop(); // ( ?
+		if (o instanceof String)
+		{
+			f = (Function) stack.pop();
+			stack.pop(); // )
+		}
+		else
+		{
+			f = (Function) o;
+		}
 		stack.pop(); // WHERE
 		stack.pop(); // (
 		Processor p = (Processor) stack.pop();

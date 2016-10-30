@@ -13,11 +13,20 @@ class NamedTupleExpression extends TupleExpression
 
 	public static void build(Stack<Object> stack)
 	{
+		Object o;
+		Processor p;
 		String name = (String) stack.pop();
 		stack.pop(); // AS
-		stack.pop(); // (
-		Processor p = (Processor) stack.pop();
-		stack.pop(); // )
+		o = stack.pop(); // ( ?
+		if (o instanceof String)
+		{
+			p = (Processor) stack.pop();
+			stack.pop(); // )
+		}
+		else
+		{
+			p = (Processor) o;
+		}
 		NamedTupleExpression te = new NamedTupleExpression(p, name);
 		stack.push(te);
 	}

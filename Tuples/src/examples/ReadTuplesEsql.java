@@ -16,8 +16,8 @@ public class ReadTuplesEsql
 	{
 		// Instantiate interpreter and load a few palettes
 		Interpreter my_int = new Interpreter();
-		my_int.extendGrammar(ca.uqac.lif.cep.io.PackageExtension.class);
-		my_int.extendGrammar(ca.uqac.lif.cep.tuples.PackageExtension.class);
+		my_int.load(ca.uqac.lif.cep.io.PackageExtension.class);
+		my_int.load(ca.uqac.lif.cep.tuples.PackageExtension.class);
 		
 		// Run query and extract results
 		Pullable p = my_int.executeQuery("THE TUPLES OF (FILE \"tuples.csv\")");

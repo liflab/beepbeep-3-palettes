@@ -17,7 +17,12 @@
  */
 package ca.uqac.lif.cep.tuples;
 
-
+/**
+ * Utility class to create instances of tuples with a fixed
+ * schema
+ * 
+ * @author Sylvain Hallé
+ */
 public final class FixedTupleBuilder
 {
 	private final String[] m_names;

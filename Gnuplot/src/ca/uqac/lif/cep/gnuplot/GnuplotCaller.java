@@ -17,6 +17,11 @@
  */
 package ca.uqac.lif.cep.gnuplot;
 
+import java.util.Stack;
+
+import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.io.Caller;
 
 /**
@@ -35,5 +40,14 @@ public class GnuplotCaller extends Caller
 	public GnuplotCaller()
 	{
 		super("gnuplot");
+	}
+	
+	public static void build(Stack<Object> stack) throws ConnectorException
+	{
+		Processor p = (Processor) stack.pop();
+		stack.pop(); // ON
+		stack.pop(); // GNUPLOT
+		GnuplotCaller caller = new GnuplotCaller();
+		Connector.connect(p, caller);
 	}
 }
