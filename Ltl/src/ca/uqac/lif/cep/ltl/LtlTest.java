@@ -460,7 +460,7 @@ public class LtlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testExpression1() throws ConnectorException
+	public void testExpression1() throws ConnectorException, ParseException
 	{
 		String expression = "(@T) AND (@U)";
 		{
@@ -497,7 +497,7 @@ public class LtlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testExpression2() throws ConnectorException
+	public void testExpression2() throws ConnectorException, ParseException
 	{
 		String expression = "(@T) AND (X (@U))";
 		{
@@ -530,7 +530,7 @@ public class LtlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testExpression3() throws ConnectorException
+	public void testExpression3() throws ConnectorException, ParseException
 	{
 		String expression = "X (@U)";
 		{
@@ -553,77 +553,77 @@ public class LtlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testGrammarConstant1() throws ConnectorException
+	public void testGrammarConstant1() throws ConnectorException, ParseException
 	{
 		Pullable p = m_interpreter.executeQuery("CONSTANT (true)");
 		assertNotNull(p);
 	}
 	
 	@Test
-	public void testGrammarConstant2() throws ConnectorException
+	public void testGrammarConstant2() throws ConnectorException, ParseException
 	{
 		Pullable p = m_interpreter.executeQuery("CONSTANT (⊥)");
 		assertNotNull(p);
 	}
 	
 	@Test
-	public void testGrammarConnectives1() throws ConnectorException
+	public void testGrammarConnectives1() throws ConnectorException, ParseException
 	{
 		Pullable p = m_interpreter.executeQuery("(CONSTANT (⊥)) AND (CONSTANT (⊥))");
 		assertNotNull(p);
 	}
 	
 	@Test
-	public void testGrammarConnectives2() throws ConnectorException
+	public void testGrammarConnectives2() throws ConnectorException, ParseException
 	{
 		Pullable p = m_interpreter.executeQuery("(CONSTANT (⊥)) OR (CONSTANT (⊥))");
 		assertNotNull(p);
 	}
 	
 	@Test
-	public void testGrammarConnectives3() throws ConnectorException
+	public void testGrammarConnectives3() throws ConnectorException, ParseException
 	{
 		Pullable p = m_interpreter.executeQuery("NOT (CONSTANT(⊥))");
 		assertNotNull(p);
 	}
 	
 	@Test
-	public void testGrammarConnectives4() throws ConnectorException
+	public void testGrammarConnectives4() throws ConnectorException, ParseException
 	{
 		Pullable p = m_interpreter.executeQuery("X (CONSTANT(⊥))");
 		assertNotNull(p);
 	}
 	
 	@Test
-	public void testGrammarConnectives5() throws ConnectorException
+	public void testGrammarConnectives5() throws ConnectorException, ParseException
 	{
 		Pullable p = m_interpreter.executeQuery("G (CONSTANT(⊥))");
 		assertNotNull(p);
 	}
 	
 	@Test
-	public void testGrammarConnectives6() throws ConnectorException
+	public void testGrammarConnectives6() throws ConnectorException, ParseException
 	{
 		Pullable p = m_interpreter.executeQuery("F (CONSTANT(⊥))");
 		assertNotNull(p);
 	}
 	
 	@Test
-	public void testGrammarConnectives7() throws ConnectorException
+	public void testGrammarConnectives7() throws ConnectorException, ParseException
 	{
 		Pullable p = m_interpreter.executeQuery("(CONSTANT(⊥)) U (CONSTANT(⊥))");
 		assertNotNull(p);
 	}
 	
 	@Test
-	public void testGrammarConnectives8() throws ConnectorException
+	public void testGrammarConnectives8() throws ConnectorException, ParseException
 	{
 		Pullable p = m_interpreter.executeQuery("(X ((CONSTANT(⊥)) U (CONSTANT(⊥)))) AND (NOT (F (CONSTANT(⊥))))");
 		assertNotNull(p);
 	}
 	
 	@Test
-	public void testGrammarMultiline() throws ConnectorException
+	public void testGrammarMultiline() throws ConnectorException, ParseException
 	{
 		String expression = "(CONSTANT(⊥))\nAND\n(X (CONSTANT(⊥)))";
 		{
