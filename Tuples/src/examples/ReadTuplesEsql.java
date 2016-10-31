@@ -3,6 +3,7 @@ package examples;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.interpreter.Interpreter;
+import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.tuples.Tuple;
 
 /**
@@ -12,7 +13,7 @@ import ca.uqac.lif.cep.tuples.Tuple;
  */
 public class ReadTuplesEsql
 {
-	public static void main(String[] args) throws ConnectorException
+	public static void main(String[] args) throws ConnectorException, ParseException
 	{
 		// Instantiate interpreter and load a few palettes
 		Interpreter my_int = new Interpreter();

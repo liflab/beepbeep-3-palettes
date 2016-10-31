@@ -2,6 +2,7 @@ package examples;
 
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.interpreter.Interpreter;
+import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 
 /**
  * Execute a <code>SELECT</code> statement on a stream of tuples to
@@ -11,7 +12,7 @@ import ca.uqac.lif.cep.interpreter.Interpreter;
  */
 public class SelectFromEsqlNumber
 {
-	public static void main(String[] args)
+	public static void main(String[] args) throws ParseException
 	{
 		// Instantiate interpreter and load a few palettes
 		Interpreter my_int = new Interpreter();

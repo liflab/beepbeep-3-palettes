@@ -2,6 +2,7 @@ package examples;
 
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.interpreter.Interpreter;
+import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 
 /**
  * Extract values from a trace of tuples
@@ -12,7 +13,7 @@ import ca.uqac.lif.cep.interpreter.Interpreter;
  */
 public class WindowSumEsql
 {
-	public static void main(String[] args)
+	public static void main(String[] args) throws ParseException
 	{
 		// Instantiate interpreter and load a few palettes
 		Interpreter my_int = new Interpreter();
@@ -20,11 +21,11 @@ public class WindowSumEsql
 		my_int.load(ca.uqac.lif.cep.tuples.PackageExtension.class);
 		
 		// Run query and extract results
-		Pullable p = my_int.executeQuery("APPLY "
-				+ "(COMBINE (*) WITH ADDITION) " 
-				+ "ON ("
+		Pullable p = my_int.executeQuery("GET "
+				+ "COMBINE (*) WITH ADDITION " 
+				+ "FROM ("
 				+ "  SELECT (foo × bar) "
-				+ "  FROM (THE TUPLES OF (FILE \"tuples.csv\"))) "
+				+ "  FROM THE TUPLES OF FILE \"tuples.csv\") "
 				+ "ON A WINDOW OF 3");
 		while (p.hasNext())
 		{

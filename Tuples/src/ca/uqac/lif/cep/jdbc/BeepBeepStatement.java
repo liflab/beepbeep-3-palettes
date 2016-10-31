@@ -21,6 +21,7 @@ import java.sql.ResultSet;
 
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.interpreter.Interpreter;
+import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.io.PackageExtension;
 
 public class BeepBeepStatement extends EmptyStatement
@@ -38,7 +39,14 @@ public class BeepBeepStatement extends EmptyStatement
 	@Override
 	public ResultSet executeQuery(String query)
 	{
-		Pullable p = m_interpreter.executeQuery(query);
-		return new BeepBeepResultSet(p);
+		try
+		{
+			Pullable p = m_interpreter.executeQuery(query);
+			return new BeepBeepResultSet(p);
+		}
+		catch (ParseException e)
+		{
+			return null;
+		}
 	}
 }
