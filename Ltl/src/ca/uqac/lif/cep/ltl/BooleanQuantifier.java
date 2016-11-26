@@ -96,6 +96,10 @@ public class BooleanQuantifier extends SingleProcessor
 		}
 		// Check if some instance reached a result
 		int max_fetch_count = m_instances.size();
+		for (int i = 0; i < m_instancePushables.size(); i++)
+		{
+			m_instancePushables.get(i).waitFor();
+		}
 		while (!m_instances.isEmpty() && max_fetch_count > 0)
 		{
 			Pushable i_pushable = m_instancePushables.get(0);
@@ -119,6 +123,7 @@ public class BooleanQuantifier extends SingleProcessor
 			{
 				// If this processor hasn't reached a verdict,
 				// no use in processing the following
+				System.out.println("NO VERDICT");
 				break;
 			}
 		}
