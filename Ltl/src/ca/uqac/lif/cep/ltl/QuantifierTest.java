@@ -13,8 +13,11 @@ import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Connector.ConnectorException;
+import ca.uqac.lif.cep.concurrency.NonBlockingPusher;
+import ca.uqac.lif.cep.concurrency.ThreadManager;
 import ca.uqac.lif.cep.functions.ContextPlaceholder;
 import ca.uqac.lif.cep.functions.Equals;
+import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
@@ -314,6 +317,25 @@ public class QuantifierTest
 		o = p.pull();
 		assertEquals(o, Troolean.Value.TRUE);
 	}
+	
+	@Test
+	public void testNonBlockingInQuantifier() throws ConnectorException
+	{
+		ThreadManager tm = new ThreadManager(-1); // Unlimited threads
+		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ArgumentPlaceholder(0), new ArgumentPlaceholder(0))), 1000);
+		NonBlockingPusher pp = new NonBlockingPusher(left, tm);
+		ForAll fa = new ForAll("x", new DummyCollectionFunction(1, 2, 3), pp);
+		QueueSource source1 = new QueueSource(1);
+		source1.addEvent(0);
+		Connector.connect(source1, fa);
+		Pullable p = fa.getPullableOutput(0);
+		long time_before = System.currentTimeMillis();
+		Object o = p.pull();
+		long time_after = System.currentTimeMillis();
+		System.out.println("TIME: " + (time_after - time_before));
+		assertNotNull(o);
+		assertEquals(o, Troolean.Value.TRUE);
+	}
 
 	@SuppressWarnings("rawtypes")
 	public static class DummyCollectionFunction extends UnaryFunction<Object,Set>
@@ -369,6 +391,34 @@ public class QuantifierTest
 		public IsEvenProcessor()
 		{
 			super(new DummyBooleanFunction());
+		}
+	}
+	
+	/**
+	 * Like a function processor, but waits before returning its answer
+	 */
+	public static class SlowFunctionProcessor extends FunctionProcessor
+	{
+		protected long m_waitInterval;
+
+		public SlowFunctionProcessor(Function comp, long wait_interval)
+		{
+			super(comp);
+			m_waitInterval = wait_interval;
+		}
+		
+		@Override
+		public Queue<Object[]> compute(Object[] inputs)
+		{
+			ThreadManager.sleep(m_waitInterval);
+			return super.compute(inputs);
+		}
+
+		@Override
+		public SlowFunctionProcessor clone()
+		{
+			SlowFunctionProcessor sfp = new SlowFunctionProcessor(getFunction().clone(m_context), m_waitInterval);
+			return sfp;
 		}
 	}
 

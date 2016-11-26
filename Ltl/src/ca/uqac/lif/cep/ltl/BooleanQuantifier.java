@@ -92,12 +92,14 @@ public class BooleanQuantifier extends SingleProcessor
 		// Push event to all instances
 		for (Pushable push : m_instancePushables)
 		{
-			push.push(inputs[0]);
+			push.pushFast(inputs[0]);
 		}
 		// Check if some instance reached a result
 		int max_fetch_count = m_instances.size();
 		while (!m_instances.isEmpty() && max_fetch_count > 0)
 		{
+			Pushable i_pushable = m_instancePushables.get(0);
+			i_pushable.waitFor();
 			max_fetch_count--;
 			Queue<Object> queue = m_queues.get(0);
 			if (!queue.isEmpty())
@@ -108,6 +110,7 @@ public class BooleanQuantifier extends SingleProcessor
 				v[0] = value;
 				out_queue.add(v);
 				m_instances.remove(0);
+				i_pushable.dispose();
 				m_instancePushables.remove(0);
 				m_sinks.remove(0);
 				m_queues.remove(0);
@@ -164,6 +167,26 @@ public class BooleanQuantifier extends SingleProcessor
 		public FirstOrderSpawn clone()
 		{
 			return new FirstOrderSpawn(m_variableName, m_splitFunction.clone(m_context), m_processor.clone(), m_combineProcessor.getFunction().clone(m_context), m_valueIfEmptyDomain);
+		}
+	}
+	
+	@Override
+	public void start()
+	{
+		super.start();
+		for (FirstOrderSpawn spawn : m_instances)
+		{
+			spawn.start();
+		}
+	}
+	
+	@Override
+	public void stop()
+	{
+		super.stop();
+		for (FirstOrderSpawn spawn : m_instances)
+		{
+			spawn.stop();
 		}
 	}
 

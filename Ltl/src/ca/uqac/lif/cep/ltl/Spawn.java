@@ -197,6 +197,16 @@ public class Spawn extends Processor
 			}
 			return m_pushable.push(o);
 		}
+		
+		@Override
+		public Pushable pushFast(Object o)
+		{
+			if (m_pushable == null)
+			{
+				spawn(o);
+			}
+			return m_pushable.pushFast(o);
+		}
 
 		@Override
 		public Processor getProcessor() 
@@ -222,6 +232,25 @@ public class Spawn extends Processor
 		public Pullable getPullable()
 		{
 			return m_pullable;
+		}
+
+		@Override
+		public void waitFor() 
+		{
+			m_pushable.waitFor();
+		}
+
+		@Override
+		public void dispose() 
+		{
+			if (m_pullable != null)
+			{
+				m_pullable.dispose();
+			}
+			if (m_pushable != null)
+			{
+				m_pushable.dispose();
+			}
 		}
 	}
 	
@@ -346,6 +375,32 @@ public class Spawn extends Processor
 			// Cannot remove an event on a pullable
 			throw new UnsupportedOperationException();
 		}
+
+		@Override
+		public void start() 
+		{
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void stop() 
+		{
+			m_pullable.stop();
+		}
+
+		@Override
+		public void dispose() 
+		{
+			if (m_pullable != null)
+			{
+				m_pullable.dispose();
+			}
+			if (m_pushable != null)
+			{
+				m_pushable.dispose();
+			}
+		}
 	}
 	
 	protected boolean spawn(Object o)
@@ -388,6 +443,10 @@ public class Spawn extends Processor
 				}
 				Connector.connect(m_joinProcessor, m_combineProcessor, 0, 0);
 				m_outputPullable.setPullable(m_combineProcessor.getPullableOutput(0));
+				for (i = 0; i < size; i++)
+				{
+					m_instances[i].start();
+				}
 			}
 		}
 		catch (ConnectorException e) 
@@ -444,5 +503,33 @@ public class Spawn extends Processor
 		out.setContext(m_context);
 		out.m_valueIfEmptyDomain = m_valueIfEmptyDomain;
 		return out;
+	}
+	
+	@Override
+	public void start()
+	{
+		super.start();
+		if (m_instances == null)
+		{
+			return;
+		}
+		for (Processor p : m_instances)
+		{
+			p.start();
+		}
+	}
+	
+	@Override
+	public void stop()
+	{
+		super.stop();
+		if (m_instances == null)
+		{
+			return;
+		}
+		for (Processor p : m_instances)
+		{
+			p.stop();
+		}
 	}
 }
