@@ -53,7 +53,7 @@ public class Spawn extends Processor
 	 * quantifier
 	 */
 	protected Processor[] m_instances;
-	
+
 	/**
 	 * The fork used to split the input to the multiple instances of the
 	 * processor
@@ -70,27 +70,27 @@ public class Spawn extends Processor
 	 * instance 
 	 */
 	protected FunctionProcessor m_combineProcessor;
-	
+
 	/**
 	 * The pushable that will detect when the first event comes
 	 */
 	protected SentinelPushable m_inputPushable;
-	
+
 	/**
 	 * The pullable that will detect when the first event is requested
 	 */
 	protected SentinelPullable m_outputPullable;
-	
+
 	/**
 	 * Whether the split function generated any values
 	 */
 	protected boolean m_emptyDomain = false;
-	
+
 	/**
 	 * The value to output if the spawn ranges over the empty set
 	 */
 	protected Object m_valueIfEmptyDomain = null;
-	
+
 	private Spawn()
 	{
 		super(1, 1);
@@ -99,28 +99,31 @@ public class Spawn extends Processor
 	public Spawn(Processor p, Function split_function, Function combine_function)
 	{
 		super(1, 1);
-		m_processor = p;
-		m_splitFunction = split_function;
-		m_combineProcessor = new FunctionProcessor(combine_function);
-		m_combineProcessor.setContext(m_context);
-		m_instances = null;
-		m_fork = null;
-		m_inputPushable = new SentinelPushable();
-		m_outputPullable = new SentinelPullable();
-		//m_processor.setPullableInput(0, m_outputPullable);
+		synchronized (this)
+		{
+			m_processor = p;
+			m_splitFunction = split_function;
+			m_combineProcessor = new FunctionProcessor(combine_function);
+			m_combineProcessor.setContext(m_context);
+			m_instances = null;
+			m_fork = null;
+			m_inputPushable = new SentinelPushable();
+			m_outputPullable = new SentinelPullable();
+			//m_processor.setPullableInput(0, m_outputPullable);
+		}
 	}
-	
+
 	/**
 	 * Sets the value to output if the spawn ranges over the empty set
 	 * @param value The value
 	 */
-	public void setValueIfEmptyDomain(Object value)
+	synchronized public void setValueIfEmptyDomain(Object value)
 	{
 		m_valueIfEmptyDomain = value;
 	}
-	
+
 	@Override
-	public Pushable getPushableInput(int index)
+	synchronized public Pushable getPushableInput(int index)
 	{
 		if (index != 0)
 		{
@@ -128,31 +131,31 @@ public class Spawn extends Processor
 		}
 		return m_inputPushable;
 	}
-	
+
 	@Override
-	public void setContext(Context context)
+	synchronized public void setContext(Context context)
 	{
 		super.setContext(context);
 		m_combineProcessor.setContext(context);
 		m_splitFunction.setContext(context);
 	}
-	
+
 	@Override
-	public void setContext(String key, Object value)
+	synchronized public void setContext(String key, Object value)
 	{
 		super.setContext(key, value);
 		m_combineProcessor.setContext(key, value);
 		m_splitFunction.setContext(key, value);
 	}
-	
+
 	@Override
-	public void setPullableInput(int index, Pullable p)
+	synchronized public void setPullableInput(int index, Pullable p)
 	{
 		m_inputPushable.setPullable(p);
 	}
-	
+
 	@Override
-	public Pullable getPullableOutput(int index)
+	synchronized public Pullable getPullableOutput(int index)
 	{
 		if (index != 0)
 		{
@@ -160,26 +163,26 @@ public class Spawn extends Processor
 		}
 		return m_outputPullable;
 	}
-	
+
 	@Override
-	public void setPushableOutput(int index, Pushable p)
+	synchronized public void setPushableOutput(int index, Pushable p)
 	{
 		//m_outputPullable.setPushable(p);
 		m_outputPullable.setPushable(p);
 	}
-	
+
 	protected class SentinelPushable implements Pushable
 	{
 		protected Pushable m_pushable = null;
-		
+
 		protected Pullable m_pullable = null;
-		
+
 		public SentinelPushable()
 		{
 			super();
 		}
-		
-		public void setPushable(Pushable p)
+
+		synchronized public void setPushable(Pushable p)
 		{
 			m_pushable = p;
 			if (m_fork != null && m_pullable != null)
@@ -189,7 +192,7 @@ public class Spawn extends Processor
 		}
 
 		@Override
-		public Pushable push(Object o)
+		synchronized public Pushable push(Object o)
 		{
 			if (m_pushable == null)
 			{
@@ -197,9 +200,9 @@ public class Spawn extends Processor
 			}
 			return m_pushable.push(o);
 		}
-		
+
 		@Override
-		public Pushable pushFast(Object o)
+		synchronized public Pushable pushFast(Object o)
 		{
 			if (m_pushable == null)
 			{
@@ -209,18 +212,18 @@ public class Spawn extends Processor
 		}
 
 		@Override
-		public Processor getProcessor() 
+		synchronized public Processor getProcessor() 
 		{
 			return Spawn.this;
 		}
 
 		@Override
-		public int getPosition() 
+		synchronized public int getPosition() 
 		{
 			return 0;
 		}
-		
-		public void setPullable(Pullable p)
+
+		synchronized public void setPullable(Pullable p)
 		{
 			m_pullable = p;
 			if (m_fork != null)
@@ -228,20 +231,20 @@ public class Spawn extends Processor
 				m_fork.setPullableInput(0, m_pullable);
 			}
 		}
-		
-		public Pullable getPullable()
+
+		synchronized public Pullable getPullable()
 		{
 			return m_pullable;
 		}
 
 		@Override
-		public void waitFor() 
+		synchronized public void waitFor() 
 		{
 			m_pushable.waitFor();
 		}
 
 		@Override
-		public void dispose() 
+		synchronized public void dispose() 
 		{
 			if (m_pullable != null)
 			{
@@ -253,20 +256,20 @@ public class Spawn extends Processor
 			}
 		}
 	}
-	
+
 	protected class SentinelPullable implements Pullable
 	{
 		protected Pullable m_pullable = null;
-		
+
 		protected Pushable m_pushable = null;
-		
+
 		public SentinelPullable()
 		{
 			super();
 		}
-		
+
 		@Override
-		public Object pullSoft()
+		synchronized public Object pullSoft()
 		{
 			if (m_pullable == null)
 			{
@@ -280,7 +283,7 @@ public class Spawn extends Processor
 		}
 
 		@Override
-		public Object pull()
+		synchronized public Object pull()
 		{
 			if (m_pullable == null)
 			{
@@ -293,15 +296,15 @@ public class Spawn extends Processor
 			}
 			return m_pullable.pull();
 		}
-		
+
 		@Override
-		public final Object next()
+		synchronized public final Object next()
 		{
 			return pull();
 		}
 
 		@Override
-		public NextStatus hasNextSoft()
+		synchronized public NextStatus hasNextSoft()
 		{
 			if (m_pullable == null)
 			{
@@ -315,7 +318,7 @@ public class Spawn extends Processor
 		}
 
 		@Override
-		public boolean hasNext()
+		synchronized public boolean hasNext()
 		{
 			if (m_pullable == null)
 			{
@@ -329,18 +332,18 @@ public class Spawn extends Processor
 		}
 
 		@Override
-		public Processor getProcessor()
+		synchronized public Processor getProcessor()
 		{
 			return Spawn.this;
 		}
 
 		@Override
-		public int getPosition()
+		synchronized public int getPosition()
 		{
 			return 0;
 		}
-		
-		public void setPullable(Pullable p)
+
+		synchronized public void setPullable(Pullable p)
 		{
 			m_pullable = p;
 			if (m_combineProcessor != null && m_pushable != null)
@@ -348,8 +351,8 @@ public class Spawn extends Processor
 				m_combineProcessor.setPushableOutput(0, m_pushable);
 			}
 		}
-		
-		public void setPushable(Pushable p)
+
+		synchronized public void setPushable(Pushable p)
 		{
 			m_pushable = p;
 			if (m_combineProcessor != null)
@@ -357,40 +360,40 @@ public class Spawn extends Processor
 				m_combineProcessor.setPushableOutput(0, m_pushable);
 			}
 		}
-		
-		public Pushable getPushable()
+
+		synchronized public Pushable getPushable()
 		{
 			return m_pushable;
 		}
 
 		@Override
-		public Iterator<Object> iterator() 
+		synchronized public Iterator<Object> iterator() 
 		{
 			return this;
 		}
 
 		@Override
-		public void remove() 
+		synchronized public void remove() 
 		{
 			// Cannot remove an event on a pullable
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public void start() 
+		synchronized public void start() 
 		{
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
-		public void stop() 
+		synchronized public void stop() 
 		{
 			m_pullable.stop();
 		}
 
 		@Override
-		public void dispose() 
+		synchronized public void dispose() 
 		{
 			if (m_pullable != null)
 			{
@@ -402,8 +405,8 @@ public class Spawn extends Processor
 			}
 		}
 	}
-	
-	protected boolean spawn(Object o)
+
+	synchronized protected boolean spawn(Object o)
 	{
 		try 
 		{
@@ -456,7 +459,7 @@ public class Spawn extends Processor
 		}
 		return true;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	protected /*@NotNull*/ Collection<Object> getDomain(Object o)
 	{
@@ -495,7 +498,7 @@ public class Spawn extends Processor
 	{
 		// Do nothing
 	}
-	
+
 	@Override
 	public Spawn clone()
 	{
@@ -504,7 +507,7 @@ public class Spawn extends Processor
 		out.m_valueIfEmptyDomain = m_valueIfEmptyDomain;
 		return out;
 	}
-	
+
 	@Override
 	public void start()
 	{
@@ -518,7 +521,7 @@ public class Spawn extends Processor
 			p.start();
 		}
 	}
-	
+
 	@Override
 	public void stop()
 	{

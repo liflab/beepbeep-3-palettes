@@ -20,57 +20,67 @@ public class BooleanQuantifier extends SingleProcessor
 	 * The internal processor
 	 */
 	protected FirstOrderSpawn m_spawn;
-	
+
 	/**
 	 * The instances of the spawn processor
 	 */
 	protected List<FirstOrderSpawn> m_instances;
-	
+
 	/**
 	 * The input pushables of each instance
 	 */
 	protected List<Pushable> m_instancePushables;
-	
+
 	/**
 	 * A sink for each instance
 	 */
 	protected List<QueueSink> m_sinks;
-	
+
 	/**
 	 * A queue for each sink
 	 */
 	protected List<Queue<Object>> m_queues;	
-	
+
 	/**
 	 * The name of the quantified variable
 	 */
 	protected String m_variableName;
-	
+
 	BooleanQuantifier()
 	{
 		super(1, 1);
-		m_instances = new LinkedList<FirstOrderSpawn>();
-		m_instancePushables = new LinkedList<Pushable>();
-		m_sinks = new LinkedList<QueueSink>();
-		m_queues = new LinkedList<Queue<Object>>();
+		synchronized (this)
+		{
+			m_instances = new LinkedList<FirstOrderSpawn>();
+			m_instancePushables = new LinkedList<Pushable>();
+			m_sinks = new LinkedList<QueueSink>();
+			m_queues = new LinkedList<Queue<Object>>();
+		}
 	}
-	
+
 	public BooleanQuantifier(String var_name, FirstOrderSpawn spawn)
 	{
 		this();
-		m_variableName = var_name;
-		m_spawn = spawn;
+		synchronized (this)
+		{
+			m_variableName = var_name;
+			m_spawn = spawn;
+		}
 	}
-	
+
 	public BooleanQuantifier(String var_name, Function split_function, Processor p, Function combine_function, Object value_empty)
 	{
 		this();
-		m_variableName = var_name;
-		m_spawn = new FirstOrderSpawn(var_name, split_function, p, combine_function, value_empty);
+		synchronized (this)
+		{
+			m_variableName = var_name;
+			m_spawn = new FirstOrderSpawn(var_name, split_function, p, combine_function, value_empty);
+
+		}
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs) 
+	synchronized protected Queue<Object[]> compute(Object[] inputs) 
 	{
 		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
 		FirstOrderSpawn new_spawn = m_spawn.clone();
@@ -123,45 +133,47 @@ public class BooleanQuantifier extends SingleProcessor
 			{
 				// If this processor hasn't reached a verdict,
 				// no use in processing the following
-				System.out.println("NO VERDICT");
 				break;
 			}
 		}
 		return out_queue;
 	}
-	
+
 	@Override
-	public void setContext(Context context)
+	synchronized public void setContext(Context context)
 	{
 		super.setContext(context);
 		m_spawn.setContext(context);
 	}
-	
+
 	@Override
-	public void setContext(String key, Object value)
+	synchronized public void setContext(String key, Object value)
 	{
 		super.setContext(key, value);
 		m_spawn.setContext(key, value);
 	}
 
 	@Override
-	public BooleanQuantifier clone() 
+	synchronized public BooleanQuantifier clone() 
 	{
 		return new BooleanQuantifier(m_variableName, m_spawn);
 	}
-	
+
 	protected class FirstOrderSpawn extends Spawn
 	{
 		public FirstOrderSpawn(String var_name, Function split_function, Processor p, Function combine_function, Object value_empty)
 		{
 			super(p, split_function, combine_function);
-			m_variableName = var_name;
-			m_valueIfEmptyDomain = value_empty;
-			//m_domainFunction = domain;
+			synchronized (this)
+			{
+				m_variableName = var_name;
+				m_valueIfEmptyDomain = value_empty;
+				//m_domainFunction = domain;				
+			}
 		}
 
 		@Override
-		public void addContextFromSlice(Processor p, Object slice) 
+		synchronized public void addContextFromSlice(Processor p, Object slice) 
 		{
 			Object[] input = new Object[1];
 			input[0] = slice;
@@ -169,14 +181,14 @@ public class BooleanQuantifier extends SingleProcessor
 		}
 
 		@Override
-		public FirstOrderSpawn clone()
+		synchronized public FirstOrderSpawn clone()
 		{
 			return new FirstOrderSpawn(m_variableName, m_splitFunction.clone(m_context), m_processor.clone(), m_combineProcessor.getFunction().clone(m_context), m_valueIfEmptyDomain);
 		}
 	}
-	
+
 	@Override
-	public void start()
+	synchronized public void start()
 	{
 		super.start();
 		for (FirstOrderSpawn spawn : m_instances)
@@ -184,9 +196,9 @@ public class BooleanQuantifier extends SingleProcessor
 			spawn.start();
 		}
 	}
-	
+
 	@Override
-	public void stop()
+	synchronized public void stop()
 	{
 		super.stop();
 		for (FirstOrderSpawn spawn : m_instances)
