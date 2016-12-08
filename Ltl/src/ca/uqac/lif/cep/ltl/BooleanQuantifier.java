@@ -19,12 +19,12 @@ public class BooleanQuantifier extends SingleProcessor
 	/**
 	 * The internal processor
 	 */
-	protected FirstOrderSpawn m_spawn;
+	protected Processor m_spawn;
 
 	/**
 	 * The instances of the spawn processor
 	 */
-	protected List<FirstOrderSpawn> m_instances;
+	protected List<Processor> m_instances;
 
 	/**
 	 * The input pushables of each instance
@@ -42,48 +42,46 @@ public class BooleanQuantifier extends SingleProcessor
 	protected List<Queue<Object>> m_queues;	
 
 	/**
-	 * The name of the quantified variable
+	 * The function used to fetch the values of the quantified variable
+	 * inside an input event
 	 */
-	protected String m_variableName;
+	protected Function m_domainFunction;
+
+	/**
+	 * The function used to combine the values of each instance of the inner
+	 * processor (typically conjunction or disjunction).
+	 */
+	protected Function m_combineFunction;
 
 	BooleanQuantifier()
 	{
 		super(1, 1);
-		synchronized (this)
-		{
-			m_instances = new LinkedList<FirstOrderSpawn>();
-			m_instancePushables = new LinkedList<Pushable>();
-			m_sinks = new LinkedList<QueueSink>();
-			m_queues = new LinkedList<Queue<Object>>();
-		}
+		m_instances = new LinkedList<Processor>();
+		m_instancePushables = new LinkedList<Pushable>();
+		m_sinks = new LinkedList<QueueSink>();
+		m_queues = new LinkedList<Queue<Object>>();
 	}
 
-	public BooleanQuantifier(String var_name, FirstOrderSpawn spawn)
+	public BooleanQuantifier(Processor spawn)
 	{
 		this();
-		synchronized (this)
-		{
-			m_variableName = var_name;
-			m_spawn = spawn;
-		}
+		m_spawn = spawn;
 	}
 
-	public BooleanQuantifier(String var_name, Function split_function, Processor p, Function combine_function, Object value_empty)
+	/*
+	public BooleanQuantifier(String var_name, Function split_function, Processor spawn, Function combine_function, Object value_empty)
 	{
 		this();
-		synchronized (this)
-		{
-			m_variableName = var_name;
-			m_spawn = new FirstOrderSpawn(var_name, split_function, p, combine_function, value_empty);
-
-		}
-	}
+		m_variableName = var_name;
+		m_domainFunction = split_function;
+		m_spawn = spawn;
+	}*/
 
 	@Override
 	synchronized protected Queue<Object[]> compute(Object[] inputs) 
 	{
 		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
-		FirstOrderSpawn new_spawn = m_spawn.clone();
+		Processor new_spawn = m_spawn.clone();
 		new_spawn.setContext(m_context);
 		m_instances.add(new_spawn);
 		m_instancePushables.add(new_spawn.getPushableInput(0));
@@ -133,7 +131,7 @@ public class BooleanQuantifier extends SingleProcessor
 			{
 				// If this processor hasn't reached a verdict,
 				// no use in processing the following
-				break;
+				//break;
 			}
 		}
 		return out_queue;
@@ -156,20 +154,26 @@ public class BooleanQuantifier extends SingleProcessor
 	@Override
 	synchronized public BooleanQuantifier clone() 
 	{
-		return new BooleanQuantifier(m_variableName, m_spawn);
+		Processor new_spawn = m_spawn.clone(); 
+		m_spawn.setContext(m_context);
+		BooleanQuantifier bq = new BooleanQuantifier(new_spawn);
+		if (m_context != null)
+		{
+			bq.getContext().putAll(m_context);
+		}
+		return bq;
 	}
 
-	protected class FirstOrderSpawn extends Spawn
+	public static class FirstOrderSpawn extends Spawn
 	{
+		protected String m_variableName;
+		
 		public FirstOrderSpawn(String var_name, Function split_function, Processor p, Function combine_function, Object value_empty)
 		{
 			super(p, split_function, combine_function);
-			synchronized (this)
-			{
-				m_variableName = var_name;
-				m_valueIfEmptyDomain = value_empty;
-				//m_domainFunction = domain;				
-			}
+			m_variableName = var_name;
+			m_valueIfEmptyDomain = value_empty;
+			//m_domainFunction = domain;				
 		}
 
 		@Override
@@ -191,7 +195,7 @@ public class BooleanQuantifier extends SingleProcessor
 	synchronized public void start()
 	{
 		super.start();
-		for (FirstOrderSpawn spawn : m_instances)
+		for (Processor spawn : m_instances)
 		{
 			spawn.start();
 		}
@@ -201,7 +205,7 @@ public class BooleanQuantifier extends SingleProcessor
 	synchronized public void stop()
 	{
 		super.stop();
-		for (FirstOrderSpawn spawn : m_instances)
+		for (Processor spawn : m_instances)
 		{
 			spawn.stop();
 		}

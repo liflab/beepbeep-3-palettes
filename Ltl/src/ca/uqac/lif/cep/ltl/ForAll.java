@@ -31,23 +31,23 @@ public class ForAll extends BooleanQuantifier
 		super();
 	}
 	
-	public ForAll(String var_name, Function split_function, Processor p)
+	public ForAll(String var_name, Processor spawn)
 	{
-		super(var_name, split_function, p, ArrayAnd.instance, Troolean.Value.TRUE);
+		super(var_name, spawn);
 	}
 	
 	@Override
 	public String toString()
 	{
-		return "for all " + m_variableName + " in " + m_spawn.m_splitFunction.toString();
+		return "for all " + m_variableName + " in " + m_domainFunction.toString();
 	}
 	
 	@Override
-	public ForAll clone() 
+	synchronized public ForAll clone() 
 	{
-		Processor new_proc =  m_spawn.m_processor.clone();
+		Processor new_proc =  m_spawn.clone();
 		new_proc.setContext(m_context);
-		return new ForAll(m_variableName, m_spawn.m_splitFunction, new_proc);
+		return new ForAll(m_variableName, new_proc);
 	}
 
 }

@@ -36,7 +36,7 @@ import ca.uqac.lif.cep.tmf.SmartFork;
 public class QuantifierTest 
 {
 	@Test
-	public void testForAllPush1() throws ConnectorException
+	public void testEveryPush1() throws ConnectorException
 	{
 		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
 		tree.setChild(0, new ArgumentPlaceholder(0));
@@ -56,7 +56,7 @@ public class QuantifierTest
 	}
 	
 	@Test
-	public void testForAllPull1() throws ConnectorException
+	public void testEveryPull1() throws ConnectorException
 	{
 		QueueSource source = new QueueSource(1);
 		source.addEvent(0);
@@ -74,7 +74,7 @@ public class QuantifierTest
 	}
 	
 	@Test
-	public void testForAll2() throws ConnectorException
+	public void testEvery2() throws ConnectorException
 	{
 		FunctionTree tree = new FunctionTree(IsLessThan.instance); 
 		tree.setChild(0, new ArgumentPlaceholder(0));
@@ -98,7 +98,7 @@ public class QuantifierTest
 	}
 	
 	@Test
-	public void testForAll3() throws ConnectorException
+	public void testEvery3() throws ConnectorException
 	{
 		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
 		tree.setChild(0, new ContextPlaceholder("x"));
@@ -119,7 +119,7 @@ public class QuantifierTest
 	}
 	
 	@Test
-	public void testForAllPull3() throws ConnectorException
+	public void testEveryPull3() throws ConnectorException
 	{
 		QueueSource source = new QueueSource(1);
 		source.addEvent(0);
@@ -138,7 +138,7 @@ public class QuantifierTest
 	}
 	
 	@Test
-	public void testForAll4() throws ConnectorException
+	public void testEvery4() throws ConnectorException
 	{
 		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
 		tree.setChild(0, new ContextPlaceholder("y"));
@@ -159,7 +159,7 @@ public class QuantifierTest
 	}
 	
 	@Test
-	public void testForAllPull5() throws ConnectorException
+	public void testEveryPull5() throws ConnectorException
 	{
 		QueueSource source = new QueueSource(1);
 		source.addEvent(0);
@@ -178,7 +178,7 @@ public class QuantifierTest
 	}
 	
 	@Test
-	public void testExists1() throws ConnectorException
+	public void testSome1() throws ConnectorException
 	{
 		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
 		tree.setChild(0, new ArgumentPlaceholder(0));
@@ -198,7 +198,7 @@ public class QuantifierTest
 	}
 
 	@Test
-	public void testExists2() throws ConnectorException
+	public void testSome2() throws ConnectorException
 	{
 		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
 		tree.setChild(0, new ArgumentPlaceholder(0));
@@ -319,12 +319,68 @@ public class QuantifierTest
 	}
 	
 	@Test
+	public void testForAll1() throws ConnectorException
+	{
+		ThreadManager tm = new ThreadManager(-1); // Unlimited threads
+		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ArgumentPlaceholder(0), new ArgumentPlaceholder(0))), 0);
+		BooleanQuantifier fa = new BooleanQuantifier(new ForAllSpawn("x", left, new DummyCollectionFunction(1, 2, 3)));
+		QueueSource source1 = new QueueSource(1);
+		source1.addEvent(0);
+		Connector.connect(source1, fa);
+		Pullable p = fa.getPullableOutput(0);
+		Object o = p.pull();
+		assertNotNull(o);
+		assertNotNull(o);
+		assertEquals(o, Troolean.Value.TRUE);
+	}
+	
+	@Test
+	public void testForAll2() throws ConnectorException
+	{
+		ThreadManager tm = new ThreadManager(-1); // Unlimited threads
+		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ArgumentPlaceholder(0), new ArgumentPlaceholder(0))), 0);
+		ForAllSpawn fas = new ForAllSpawn("x", left, new DummyCollectionFunction(1, 2, 3));
+		NonBlockingPusher nbp = new NonBlockingPusher(fas);
+		BooleanQuantifier fa = new BooleanQuantifier(nbp);
+		QueueSource source1 = new QueueSource(1);
+		source1.addEvent(0);
+		Connector.connect(source1, fa);
+		Pullable p = fa.getPullableOutput(0);
+		Object o = p.pull();
+		assertNotNull(o);
+		assertNotNull(o);
+		assertEquals(o, Troolean.Value.TRUE);
+	}
+	
+	@Test
+	public void testForAll3() throws ConnectorException
+	{
+		ThreadManager tm = new ThreadManager(-1); // Unlimited threads
+		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ContextPlaceholder("x"), new ContextPlaceholder("z"))), 0);
+		ForAllSpawn fas = new ForAllSpawn("x", left, new DummyCollectionFunction(1, 2, 3));
+		NonBlockingPusher nbp = new NonBlockingPusher(fas, tm);
+		nbp.start();
+		BooleanQuantifier fa = new BooleanQuantifier(nbp);
+		ForAllSpawn fa2 = new ForAllSpawn("z", fa, new DummyCollectionFunction(1, 2, 3));
+		QueueSource source1 = new QueueSource(1);
+		source1.addEvent(0);
+		Connector.connect(source1, fa2);
+		Pullable p = fa2.getPullableOutput(0);
+		Object o = p.pull();
+		assertNotNull(o);
+		assertNotNull(o);
+		assertEquals(Troolean.Value.FALSE, o);
+		nbp.stop();
+	}
+	
+	@Test
 	public void testNonBlockingInQuantifier() throws ConnectorException
 	{
 		ThreadManager tm = new ThreadManager(-1); // Unlimited threads
 		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ArgumentPlaceholder(0), new ArgumentPlaceholder(0))), 1000);
-		NonBlockingPusher pp = new NonBlockingPusher(left, tm);
-		ForAll fa = new ForAll("x", new DummyCollectionFunction(1, 2, 3), pp);
+		ForAllSpawn fas = new ForAllSpawn("x", left, new DummyCollectionFunction(1, 2, 3));
+		NonBlockingPusher pp = new NonBlockingPusher(fas, tm);
+		BooleanQuantifier fa = new BooleanQuantifier(pp);
 		QueueSource source1 = new QueueSource(1);
 		source1.addEvent(0);
 		Connector.connect(source1, fa);

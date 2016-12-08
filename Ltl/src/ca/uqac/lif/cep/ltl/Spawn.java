@@ -33,7 +33,7 @@ import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.tmf.NaryToArray;
 import ca.uqac.lif.cep.tmf.SmartFork;
 
-public class Spawn extends Processor
+class Spawn extends Processor
 {	
 	/**
 	 * The internal processor to evaluate the quantifier on
@@ -117,13 +117,13 @@ public class Spawn extends Processor
 	 * Sets the value to output if the spawn ranges over the empty set
 	 * @param value The value
 	 */
-	synchronized public void setValueIfEmptyDomain(Object value)
+	public void setValueIfEmptyDomain(Object value)
 	{
 		m_valueIfEmptyDomain = value;
 	}
 
 	@Override
-	synchronized public Pushable getPushableInput(int index)
+	public Pushable getPushableInput(int index)
 	{
 		if (index != 0)
 		{
@@ -133,7 +133,7 @@ public class Spawn extends Processor
 	}
 
 	@Override
-	synchronized public void setContext(Context context)
+	public void setContext(Context context)
 	{
 		super.setContext(context);
 		m_combineProcessor.setContext(context);
@@ -141,7 +141,7 @@ public class Spawn extends Processor
 	}
 
 	@Override
-	synchronized public void setContext(String key, Object value)
+	public void setContext(String key, Object value)
 	{
 		super.setContext(key, value);
 		m_combineProcessor.setContext(key, value);
@@ -149,13 +149,13 @@ public class Spawn extends Processor
 	}
 
 	@Override
-	synchronized public void setPullableInput(int index, Pullable p)
+	public void setPullableInput(int index, Pullable p)
 	{
 		m_inputPushable.setPullable(p);
 	}
 
 	@Override
-	synchronized public Pullable getPullableOutput(int index)
+	public Pullable getPullableOutput(int index)
 	{
 		if (index != 0)
 		{
@@ -165,7 +165,7 @@ public class Spawn extends Processor
 	}
 
 	@Override
-	synchronized public void setPushableOutput(int index, Pushable p)
+	public void setPushableOutput(int index, Pushable p)
 	{
 		//m_outputPullable.setPushable(p);
 		m_outputPullable.setPushable(p);
@@ -192,7 +192,7 @@ public class Spawn extends Processor
 		}
 
 		@Override
-		synchronized public Pushable push(Object o)
+		public Pushable push(Object o)
 		{
 			if (m_pushable == null)
 			{
@@ -202,7 +202,7 @@ public class Spawn extends Processor
 		}
 
 		@Override
-		synchronized public Pushable pushFast(Object o)
+		public Pushable pushFast(Object o)
 		{
 			if (m_pushable == null)
 			{
@@ -212,18 +212,18 @@ public class Spawn extends Processor
 		}
 
 		@Override
-		synchronized public Processor getProcessor() 
+		public Processor getProcessor() 
 		{
 			return Spawn.this;
 		}
 
 		@Override
-		synchronized public int getPosition() 
+		public int getPosition() 
 		{
 			return 0;
 		}
 
-		synchronized public void setPullable(Pullable p)
+		public void setPullable(Pullable p)
 		{
 			m_pullable = p;
 			if (m_fork != null)
@@ -232,19 +232,19 @@ public class Spawn extends Processor
 			}
 		}
 
-		synchronized public Pullable getPullable()
+		public Pullable getPullable()
 		{
 			return m_pullable;
 		}
 
 		@Override
-		synchronized public void waitFor() 
+		public void waitFor() 
 		{
 			m_pushable.waitFor();
 		}
 
 		@Override
-		synchronized public void dispose() 
+		public void dispose() 
 		{
 			if (m_pullable != null)
 			{
