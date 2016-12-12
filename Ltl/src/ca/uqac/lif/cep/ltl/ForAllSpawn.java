@@ -12,15 +12,11 @@ public class ForAllSpawn extends FirstOrderSpawn
 	}
 	
 	@Override
-	public ForAllSpawn clone()
+	public synchronized ForAllSpawn clone()
 	{
 		Processor new_proc = m_processor.clone();
-		m_processor.setContext(m_context);
 		ForAllSpawn new_spawn = new ForAllSpawn(m_variableName, new_proc, m_splitFunction.clone(m_context));
-		if (m_context != null)
-		{
-			new_spawn.getContext().putAll(m_context);
-		}
+		new_spawn.setContext(m_context);
 		return new_spawn;
 	}
 

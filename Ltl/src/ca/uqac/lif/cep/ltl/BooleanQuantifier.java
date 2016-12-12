@@ -155,7 +155,7 @@ public class BooleanQuantifier extends SingleProcessor
 	synchronized public BooleanQuantifier clone() 
 	{
 		Processor new_spawn = m_spawn.clone(); 
-		m_spawn.setContext(m_context);
+		new_spawn.setContext(m_context);
 		BooleanQuantifier bq = new BooleanQuantifier(new_spawn);
 		if (m_context != null)
 		{
@@ -177,7 +177,7 @@ public class BooleanQuantifier extends SingleProcessor
 		}
 
 		@Override
-		synchronized public void addContextFromSlice(Processor p, Object slice) 
+		public synchronized void addContextFromSlice(Processor p, Object slice) 
 		{
 			Object[] input = new Object[1];
 			input[0] = slice;
@@ -185,9 +185,12 @@ public class BooleanQuantifier extends SingleProcessor
 		}
 
 		@Override
-		synchronized public FirstOrderSpawn clone()
+		public synchronized FirstOrderSpawn clone()
 		{
-			return new FirstOrderSpawn(m_variableName, m_splitFunction.clone(m_context), m_processor.clone(), m_combineProcessor.getFunction().clone(m_context), m_valueIfEmptyDomain);
+			Processor new_p = m_processor.clone();
+			FirstOrderSpawn fos = new FirstOrderSpawn(m_variableName, m_splitFunction.clone(m_context), new_p, m_combineProcessor.getFunction().clone(m_context), m_valueIfEmptyDomain);
+			fos.setContext(m_context);
+			return fos;
 		}
 	}
 

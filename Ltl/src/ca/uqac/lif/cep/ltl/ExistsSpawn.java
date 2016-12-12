@@ -12,10 +12,10 @@ public class ExistsSpawn extends FirstOrderSpawn
 	}
 	
 	@Override
-	public ExistsSpawn clone()
+	public synchronized ExistsSpawn clone()
 	{
 		Processor new_proc = m_processor.clone();
-		m_processor.setContext(m_context);
+		new_proc.setContext(m_context);
 		ExistsSpawn new_spawn = new ExistsSpawn(m_variableName, new_proc, m_splitFunction.clone(m_context));
 		new_spawn.setContext(m_context);
 		return new_spawn;

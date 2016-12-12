@@ -99,25 +99,22 @@ class Spawn extends Processor
 	public Spawn(Processor p, Function split_function, Function combine_function)
 	{
 		super(1, 1);
-		synchronized (this)
-		{
-			m_processor = p;
-			m_splitFunction = split_function;
-			m_combineProcessor = new FunctionProcessor(combine_function);
-			m_combineProcessor.setContext(m_context);
-			m_instances = null;
-			m_fork = null;
-			m_inputPushable = new SentinelPushable();
-			m_outputPullable = new SentinelPullable();
-			//m_processor.setPullableInput(0, m_outputPullable);
-		}
+		m_processor = p;
+		m_splitFunction = split_function;
+		m_combineProcessor = new FunctionProcessor(combine_function);
+		m_combineProcessor.setContext(m_context);
+		m_instances = null;
+		m_fork = null;
+		m_inputPushable = new SentinelPushable();
+		m_outputPullable = new SentinelPullable();
+		//m_processor.setPullableInput(0, m_outputPullable);
 	}
 
 	/**
 	 * Sets the value to output if the spawn ranges over the empty set
 	 * @param value The value
 	 */
-	public void setValueIfEmptyDomain(Object value)
+	public synchronized void setValueIfEmptyDomain(Object value)
 	{
 		m_valueIfEmptyDomain = value;
 	}
@@ -133,23 +130,37 @@ class Spawn extends Processor
 	}
 
 	@Override
-	public void setContext(Context context)
+	public synchronized void setContext(Context context)
 	{
 		super.setContext(context);
 		m_combineProcessor.setContext(context);
 		m_splitFunction.setContext(context);
+		if (m_instances != null)
+		{
+			for (Processor p : m_instances)
+			{
+				p.setContext(context);
+			}
+		}
 	}
 
 	@Override
-	public void setContext(String key, Object value)
+	public synchronized void setContext(String key, Object value)
 	{
 		super.setContext(key, value);
 		m_combineProcessor.setContext(key, value);
 		m_splitFunction.setContext(key, value);
+		if (m_instances != null)
+		{
+			for (Processor p : m_instances)
+			{
+				p.setContext(key, value);
+			}
+		}
 	}
 
 	@Override
-	public void setPullableInput(int index, Pullable p)
+	public synchronized void setPullableInput(int index, Pullable p)
 	{
 		m_inputPushable.setPullable(p);
 	}
@@ -165,7 +176,7 @@ class Spawn extends Processor
 	}
 
 	@Override
-	public void setPushableOutput(int index, Pushable p)
+	public synchronized void setPushableOutput(int index, Pushable p)
 	{
 		//m_outputPullable.setPushable(p);
 		m_outputPullable.setPushable(p);
@@ -461,7 +472,7 @@ class Spawn extends Processor
 	}
 
 	@SuppressWarnings("unchecked")
-	protected /*@NotNull*/ Collection<Object> getDomain(Object o)
+	protected synchronized /*@NotNull*/ Collection<Object> getDomain(Object o)
 	{
 		/* TODO: there are *lots* of null checks in this method, just to
 		 * fend off whatever the split function returns. A couple of these
@@ -500,16 +511,18 @@ class Spawn extends Processor
 	}
 
 	@Override
-	public Spawn clone()
+	public synchronized Spawn clone()
 	{
-		Spawn out = new Spawn(m_processor.clone(), m_splitFunction.clone(m_context), m_combineProcessor.getFunction().clone(m_context));
+		Processor new_p = m_processor.clone();
+		new_p.setContext(m_context);
+		Spawn out = new Spawn(new_p, m_splitFunction.clone(m_context), m_combineProcessor.getFunction().clone(m_context));
 		out.setContext(m_context);
 		out.m_valueIfEmptyDomain = m_valueIfEmptyDomain;
 		return out;
 	}
 
 	@Override
-	public void start()
+	public synchronized void start()
 	{
 		super.start();
 		if (m_instances == null)
@@ -523,7 +536,7 @@ class Spawn extends Processor
 	}
 
 	@Override
-	public void stop()
+	public synchronized void stop()
 	{
 		super.stop();
 		if (m_instances == null)
