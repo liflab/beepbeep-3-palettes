@@ -17,32 +17,43 @@
  */
 package ca.uqac.lif.cep.tuples;
 
-import java.util.ArrayDeque;
+import ca.uqac.lif.cep.functions.UnaryFunction;
 
-import ca.uqac.lif.cep.Processor;
-
-class AnonymousTupleExpression extends TupleExpression
+/**
+ * Turns a scalar object into a singleton tuple.
+ * @author Sylvain Hallé
+ */
+public class ScalarIntoTuple extends UnaryFunction<Object,TupleFixed>
 {
-	public AnonymousTupleExpression(Processor p) 
+	/**
+	 * The name given to the key for the resulting tuple
+	 */
+	protected String m_keyName;
+	
+	ScalarIntoTuple()
 	{
-		super(p, null);
+		super(Object.class, TupleFixed.class);
+	}
+	
+	/**
+	 * Creates a new instance of the function
+	 * @param name The name given to the key in the resulting tuple
+	 */
+	public ScalarIntoTuple(String name)
+	{
+		this();
+		m_keyName = name;
 	}
 
-	public static void build(ArrayDeque<Object> stack)
+	@Override
+	public TupleFixed getValue(Object x)
 	{
-		Object o;
-		Processor p;
-		o = stack.pop(); // ( ?
-		if (o instanceof String)
-		{
-			p = (Processor) stack.pop();
-			stack.pop(); // )
-		}
-		else
-		{
-			p = (Processor) o;
-		}
-		AnonymousTupleExpression te = new AnonymousTupleExpression(p);
-		stack.push(te);
+		return new TupleFixed(new String[]{m_keyName}, new Object[]{x});
+	}
+	
+	@Override
+	public ScalarIntoTuple clone()
+	{
+		return new ScalarIntoTuple(m_keyName);
 	}
 }
