@@ -106,8 +106,12 @@ public final class TupleFixed extends Tuple
 	@Override
 	public final Set<java.util.Map.Entry<String, Object>> entrySet()
 	{
-		// Don't implement this for now
-		return null;
+		Set<java.util.Map.Entry<String, Object>> entries = new HashSet<java.util.Map.Entry<String, Object>>();
+		for (int i = 0; i < m_names.length; i++)
+		{
+			entries.add(new Tuple.MapEntry<String,Object>(m_names[i], m_values[i]));
+		}
+		return entries;
 	}
 
 	@Override

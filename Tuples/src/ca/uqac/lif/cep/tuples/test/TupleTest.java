@@ -40,6 +40,7 @@ import ca.uqac.lif.cep.tuples.ExpandAsColumns;
 import ca.uqac.lif.cep.tuples.From;
 import ca.uqac.lif.cep.tuples.FromFunction;
 import ca.uqac.lif.cep.tuples.GetAttribute;
+import ca.uqac.lif.cep.tuples.MergeTuples;
 import ca.uqac.lif.cep.tuples.Select;
 import ca.uqac.lif.cep.tuples.Tuple;
 import ca.uqac.lif.cep.tuples.TupleFixed;
@@ -319,6 +320,22 @@ public class TupleTest
 		assertEquals(2, new_t.keySet().size());
 		assertEquals(2, new_t.get("1"));
 		assertEquals(3, new_t.get("baz"));
+	}
+	
+	@Test
+	public void testMerge1()
+	{
+		Tuple t1 = new TupleFixed(new String[]{"foo", "bar", "baz"}, new String[]{"a", "b", "c"});
+		Tuple t2 = new TupleFixed(new String[]{"arf", "ard", "arz"}, new String[]{"d", "e", "f"});
+		MergeTuples mt = new MergeTuples(2);
+		Object[] o = mt.evaluate(new Object[]{t1, t2});
+		assertTrue(o[0] instanceof Tuple);
+		Tuple new_t = (Tuple) o[0];
+		assertEquals(6, new_t.keySet().size());
+		assertEquals("a", new_t.get("foo"));
+		assertEquals("b", new_t.get("bar"));
+		assertEquals("d", new_t.get("arf"));
+		assertEquals("f", new_t.get("arz"));
 	}
 	
 	/**
