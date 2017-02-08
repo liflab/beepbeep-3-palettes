@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.tuples;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Processor;
 
@@ -28,7 +28,7 @@ class AnonymousTupleExpression extends TupleExpression
 		super(p, null);
 	}
 
-	public static void build(Stack<Object> stack)
+	public static void build(ArrayDeque<Object> stack)
 	{
 		Object o;
 		Processor p;

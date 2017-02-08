@@ -18,7 +18,7 @@
 package ca.uqac.lif.cep.signal;
 
 import java.util.Queue;
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
@@ -50,7 +50,7 @@ public class Threshold extends SingleProcessor
 		return wrapObject(0);
 	}
 
-	public static void build(Stack<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) throws ConnectorException
 	{
 		float t_value = NumberCast.getNumber(stack.pop()).floatValue();
 		stack.pop(); // THRESHOLD

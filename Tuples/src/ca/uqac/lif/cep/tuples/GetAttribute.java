@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.tuples;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.functions.UnaryFunction;
 
@@ -101,7 +101,7 @@ public class GetAttribute extends UnaryFunction<AttributeGroup,Object>
 		return out.toString();
 	}
 	
-	public static void build(Stack<Object> stack)
+	public static void build(ArrayDeque<Object> stack)
 	{
 		// Do nothing
 	}

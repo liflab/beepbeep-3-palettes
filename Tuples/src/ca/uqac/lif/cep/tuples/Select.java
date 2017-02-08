@@ -18,7 +18,7 @@
 package ca.uqac.lif.cep.tuples;
 
 import java.util.Collection;
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
@@ -157,7 +157,7 @@ public class Select extends FunctionProcessor
 		}
 	}
 	
-	public static void build(Stack<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) throws ConnectorException
 	{
 		Processor from = (Processor) stack.pop();
 		AttributeExpressionList ael = (AttributeExpressionList) stack.pop();

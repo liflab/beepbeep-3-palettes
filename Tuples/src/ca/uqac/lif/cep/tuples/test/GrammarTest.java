@@ -43,7 +43,7 @@ public class GrammarTest
 	{
 		m_interpreter = new Interpreter();
 		m_interpreter.load(PackageExtension.class);
-		m_interpreter.setDebugMode(true);
+		m_interpreter.setDebugMode(false);
 	}
 	
 	@Test
@@ -51,7 +51,7 @@ public class GrammarTest
 	{
 		QueueSource qs = getQueueSource1();
 		m_interpreter.addPlaceholder("@foo", "processor", qs);
-		Processor proc = (Processor) m_interpreter.parseQuery("FROM (@foo) AS a");
+		Processor proc = (Processor) m_interpreter.parseQuery("FROM @foo AS a");
 		Pullable p = proc.getPullableOutput();
 		Object o = p.pull();
 		assertTrue(o instanceof AttributeGroup);
@@ -65,7 +65,7 @@ public class GrammarTest
 	{
 		m_interpreter.addPlaceholder("@foo", "processor", getQueueSource1());
 		m_interpreter.addPlaceholder("@bar", "processor", getQueueSource2());
-		Processor proc = (Processor) m_interpreter.parseQuery("FROM (@foo) AS a, (@bar) AS b");
+		Processor proc = (Processor) m_interpreter.parseQuery("FROM @foo AS a, @bar AS b");
 		Pullable p = proc.getPullableOutput();
 		Object o = p.pull();
 		assertTrue(o instanceof AttributeGroup);
@@ -80,7 +80,7 @@ public class GrammarTest
 	{
 		QueueSource qs = getQueueSource1();
 		m_interpreter.addPlaceholder("@foo", "processor", qs);
-		Processor proc = (Processor) m_interpreter.parseQuery("FROM (@foo)");
+		Processor proc = (Processor) m_interpreter.parseQuery("FROM @foo");
 		Pullable p = proc.getPullableOutput();
 		Object o = p.pull();
 		assertTrue(o instanceof AttributeGroup);
@@ -94,7 +94,7 @@ public class GrammarTest
 	{
 		QueueSource qs = createGroupSource();
 		m_interpreter.addPlaceholder("@foo", "processor", qs);
-		Processor proc = (Processor) m_interpreter.parseQuery("SELECT (A.x) @foo");
+		Processor proc = (Processor) m_interpreter.parseQuery("SELECT A.x @foo");
 		Pullable p = proc.getPullableOutput();
 		Object o = p.pull();
 		assertTrue(o instanceof Tuple);
@@ -108,7 +108,7 @@ public class GrammarTest
 	{
 		QueueSource qs = createGroupSource();
 		m_interpreter.addPlaceholder("@foo", "processor", qs);
-		Processor proc = (Processor) m_interpreter.parseQuery("SELECT (A.x) AS t @foo");
+		Processor proc = (Processor) m_interpreter.parseQuery("SELECT A.x AS t @foo");
 		Pullable p = proc.getPullableOutput();
 		Object o = p.pull();
 		assertTrue(o instanceof Tuple);
@@ -122,7 +122,7 @@ public class GrammarTest
 	{
 		QueueSource qs = createGroupSource();
 		m_interpreter.addPlaceholder("@foo", "processor", qs);
-		Processor proc = (Processor) m_interpreter.parseQuery("SELECT (A.x) AS t, (B.t) AS ululu @foo");
+		Processor proc = (Processor) m_interpreter.parseQuery("SELECT A.x AS t, B.t AS ululu @foo");
 		Pullable p = proc.getPullableOutput();
 		Object o = p.pull();
 		assertTrue(o instanceof Tuple);
@@ -137,7 +137,7 @@ public class GrammarTest
 	{
 		QueueSource qs = createGroupSource();
 		m_interpreter.addPlaceholder("@foo", "processor", qs);
-		Processor proc = (Processor) m_interpreter.parseQuery("SELECT ((z) + (3)) @foo");
+		Processor proc = (Processor) m_interpreter.parseQuery("SELECT z + 3 @foo");
 		Pullable p = proc.getPullableOutput();
 		Object o = p.pull();
 		assertTrue(o instanceof Number);
@@ -149,7 +149,7 @@ public class GrammarTest
 	{
 		QueueSource qs = createGroupSource();
 		m_interpreter.addPlaceholder("@foo", "processor", qs);
-		Processor proc = (Processor) m_interpreter.parseQuery("SELECT ((A.x) + (3)) AS t, ((B.z) × (B.z)) AS u @foo");
+		Processor proc = (Processor) m_interpreter.parseQuery("SELECT A.x + 3 AS t, B.z × B.z AS u @foo");
 		Pullable p = proc.getPullableOutput();
 		Object o = p.pull();
 		assertTrue(o instanceof Tuple);
@@ -163,7 +163,7 @@ public class GrammarTest
 	{
 		QueueSource qs = getQueueSource1();
 		m_interpreter.addPlaceholder("@foo", "processor", qs);
-		Processor proc = (Processor) m_interpreter.parseQuery("SELECT (A.x) AS t FROM (@foo) AS A");
+		Processor proc = (Processor) m_interpreter.parseQuery("SELECT A.x AS t FROM @foo AS A");
 		Pullable p = proc.getPullableOutput();
 		Object o = p.pull();
 		assertTrue(o instanceof Tuple);
@@ -177,7 +177,7 @@ public class GrammarTest
 	{
 		m_interpreter.addPlaceholder("@foo", "processor", getQueueSource1());
 		m_interpreter.addPlaceholder("@bar", "processor", getQueueSource2());
-		Processor proc = (Processor) m_interpreter.parseQuery("SELECT (A.x) AS t FROM (@foo) AS A, (@bar) AS B");
+		Processor proc = (Processor) m_interpreter.parseQuery("SELECT A.x AS t FROM @foo AS A, @bar AS B");
 		Pullable p = proc.getPullableOutput();
 		Object o = p.pull();
 		assertTrue(o instanceof Tuple);
@@ -191,7 +191,7 @@ public class GrammarTest
 	{
 		m_interpreter.addPlaceholder("@foo", "processor", getQueueSource1());
 		m_interpreter.addPlaceholder("@bar", "processor", getQueueSource2());
-		Processor proc = (Processor) m_interpreter.parseQuery("SELECT (A.x) AS t, (B.z) AS u FROM (@foo) AS A, (@bar) AS B");
+		Processor proc = (Processor) m_interpreter.parseQuery("SELECT A.x AS t, B.z AS u FROM @foo AS A, @bar AS B");
 		Pullable p = proc.getPullableOutput();
 		Object o = p.pull();
 		assertTrue(o instanceof Tuple);
@@ -207,7 +207,7 @@ public class GrammarTest
 		QueueSource qs = new QueueSource();
 		qs.addEvent(new TupleFixed(new String[]{"a"}, new Object[]{0}));
 		m_interpreter.addPlaceholder("@foo", "processor", qs);
-		String expression = "SELECT ((2) + (1)) FROM (@foo)";
+		String expression = "SELECT 2 + 1 FROM @foo";
 		Object user_stmt = m_interpreter.parseQuery(expression);
 		assertNotNull(user_stmt);
 		assertTrue(user_stmt instanceof Processor);
@@ -229,7 +229,7 @@ public class GrammarTest
 		QueueSource qs = new QueueSource();
 		qs.addEvent(new TupleFixed(new String[]{"a"}, new Object[]{0}));
 		m_interpreter.addPlaceholder("@foo", "processor", qs);
-		String expression = "COMBINE (SELECT (1) FROM (@foo)) WITH ADDITION";
+		String expression = "COMBINE SELECT 1 FROM @foo WITH ADDITION";
 		Object user_stmt = m_interpreter.parseQuery(expression);
 		assertNotNull(user_stmt);
 		assertTrue(user_stmt instanceof Processor);
@@ -252,7 +252,7 @@ public class GrammarTest
 	public void testWhere1() throws ParseException
 	{
 		m_interpreter.addPlaceholder("@foo", "processor", createGroupSource());
-		Processor proc = (Processor) m_interpreter.parseQuery("(@foo) WHERE ((A.x) > (0))");
+		Processor proc = (Processor) m_interpreter.parseQuery("(@foo) WHERE A.x > 0");
 		Pullable p = proc.getPullableOutput();
 		Object o = p.pull();
 		assertTrue(o instanceof AttributeGroup);
@@ -263,7 +263,7 @@ public class GrammarTest
 	@Test
 	public void testDefinition2() throws ParseException, ConnectorException
 	{
-		String expression = "WHEN @P IS A processor: THE COUNT OF ( @P ) IS THE processor COMBINE (SELECT (1) FROM (@P)) WITH ADDITION";
+		String expression = "WHEN @P IS A PROCESSOR: THE COUNT OF @P IS THE PROCESSOR COMBINE SELECT 1 FROM @P WITH ADDITION";
 		Object o = m_interpreter.parseQuery(expression);
 		assertNotNull(o);
 		assertTrue(o instanceof UserDefinition);
@@ -273,7 +273,7 @@ public class GrammarTest
 		qs.addEvent(new TupleFixed(new String[]{"a"}, new Object[]{0}));
 		m_interpreter.addPlaceholder("@foo", "processor", qs);
 		// Now, parse an expression that uses this definition
-		String user_expression = "THE COUNT OF (@foo)";
+		String user_expression = "THE COUNT OF @foo";
 		m_interpreter.setDebugMode(true);
 		Object user_stmt = m_interpreter.parseQuery(user_expression);
 		assertNotNull(user_stmt);

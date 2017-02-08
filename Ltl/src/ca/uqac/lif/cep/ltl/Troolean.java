@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.ltl;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.Constant;
@@ -77,7 +77,7 @@ public class Troolean extends Constant
 		super(o);
 	}
 	
-	public static void build(Stack<Object> stack)
+	public static void build(ArrayDeque<Object> stack)
 	{
 		String symbol = (String) stack.pop();
 		if (symbol.compareTo("⊤") == 0)

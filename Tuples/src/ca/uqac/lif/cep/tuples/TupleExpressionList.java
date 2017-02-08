@@ -18,7 +18,7 @@
 package ca.uqac.lif.cep.tuples;
 
 import java.util.ArrayList;
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 
 /**
@@ -34,7 +34,7 @@ class TupleExpressionList extends ArrayList<TupleExpression>
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public static void build(Stack<Object> stack)
+	public static void build(ArrayDeque<Object> stack)
 	{
 		Object top = stack.peek();
 		TupleExpressionList new_al = new TupleExpressionList();

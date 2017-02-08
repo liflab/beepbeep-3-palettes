@@ -19,7 +19,6 @@ package ca.uqac.lif.cep.tuples;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
-import java.util.Stack;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
@@ -77,7 +76,7 @@ public class Where extends SingleProcessor
 		return new Where(m_condition.clone());
 	}
 	
-	public static void build(Stack<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) throws ConnectorException
 	{
 		Object o;
 		Function f;

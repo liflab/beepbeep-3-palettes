@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.tuples;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 class GetAttributeQualified extends GetAttribute
 {
@@ -31,7 +31,7 @@ class GetAttributeQualified extends GetAttribute
 		super(trace_name, attribute_name);
 	}
 
-	public static void build(Stack<Object> stack)
+	public static void build(ArrayDeque<Object> stack)
 	{
 		String n = (String) stack.pop();
 		stack.pop(); // .

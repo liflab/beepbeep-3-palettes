@@ -20,7 +20,7 @@ package ca.uqac.lif.cep.tuples;
 
 import java.util.ArrayList;
 import java.util.Queue;
-import java.util.Stack;
+import java.util.ArrayDeque;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -99,7 +99,7 @@ public class RegexTupleBuilder extends SingleProcessor
 		return wrapVector(out_vector);
 	}
 
-	public static void build(Stack<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) throws ConnectorException
 	{
 		stack.pop(); // )
 		Processor p = (Processor) stack.pop();
@@ -127,7 +127,7 @@ public class RegexTupleBuilder extends SingleProcessor
 			super();
 		}
 
-		public static void build(Stack<Object> stack) throws ConnectorException
+		public static void build(ArrayDeque<Object> stack) throws ConnectorException
 		{
 			Object top = stack.peek();
 			RegexAttributeNameList ranl = new RegexAttributeNameList();

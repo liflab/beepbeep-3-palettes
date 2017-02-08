@@ -18,7 +18,7 @@
 package ca.uqac.lif.cep.xml;
 
 
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
@@ -38,7 +38,7 @@ public class XPathEvaluator extends FunctionProcessor
 		super(new XPathFunction(exp));
 	}
 	
-	public static void build(Stack<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) throws ConnectorException
 	{
 		Processor p = (Processor) stack.pop();
 		stack.pop(); // ON

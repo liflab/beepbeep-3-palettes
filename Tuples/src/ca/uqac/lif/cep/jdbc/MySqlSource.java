@@ -26,7 +26,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.tmf.Source;
@@ -178,7 +178,7 @@ public class MySqlSource extends Source
 		return null;
 	}
 
-	public static void build(Stack<Object> stack) throws ConnectorException 
+	public static void build(ArrayDeque<Object> stack) throws ConnectorException 
 	{
 		String password = (String) stack.pop();
 		stack.pop(); // PASSWORD

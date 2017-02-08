@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.tuples;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
@@ -63,7 +63,7 @@ public class TupleFeeder extends TokenFeeder
 		return m_builder.createTupleFromString(parts);
 	}
 
-	public static void build(Stack<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) throws ConnectorException
 	{
 		Object o;
 		Processor p; 

@@ -18,7 +18,7 @@
 package ca.uqac.lif.cep.ltl;
 
 import java.util.Queue;
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
@@ -46,7 +46,7 @@ public class Globally extends SingleProcessor
 		m_notFalseCount = 0;
 	}
 	
-	public static void build(Stack<Object> stack) throws ConnectorException, ConnectorException 
+	public static void build(ArrayDeque<Object> stack) throws ConnectorException, ConnectorException 
 	{
 		stack.pop(); // (
 		Processor p = (Processor) stack.pop();
