@@ -152,7 +152,7 @@ public final class TupleFixed extends Tuple
 	@Override
 	public final Set<String> keySet()
 	{
-		Set<String> s = new HashSet<String>();
+		Set<String> s = new HashSet<String>(m_names.length);
 		for (String name : m_names)
 		{
 			s.add(name);

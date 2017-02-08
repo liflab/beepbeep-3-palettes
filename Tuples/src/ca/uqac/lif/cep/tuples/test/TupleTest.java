@@ -36,6 +36,7 @@ import ca.uqac.lif.cep.numbers.Subtraction;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tuples.AttributeExpression;
 import ca.uqac.lif.cep.tuples.AttributeGroup;
+import ca.uqac.lif.cep.tuples.ExpandAsColumns;
 import ca.uqac.lif.cep.tuples.From;
 import ca.uqac.lif.cep.tuples.FromFunction;
 import ca.uqac.lif.cep.tuples.GetAttribute;
@@ -292,6 +293,32 @@ public class TupleTest
 		assertTrue(o instanceof AttributeGroup);
 		AttributeGroup ag = (AttributeGroup) o;
 		assertEquals(10, ((Number) ag.getAttribute("B", "z")).intValue());
+	}
+	
+	@Test
+	public void testExpand1()
+	{
+		Tuple t = new TupleFixed(new String[]{"foo", "bar", "baz"}, new String[]{"a", "b", "c"});
+		ExpandAsColumns eac = new ExpandAsColumns("foo", "bar");
+		Object[] o = eac.evaluate(new Object[]{t});
+		assertTrue(o[0] instanceof Tuple);
+		Tuple new_t = (Tuple) o[0];
+		assertEquals(2, new_t.keySet().size());
+		assertEquals("b", new_t.get("a"));
+		assertEquals("c", new_t.get("baz"));
+	}
+	
+	@Test
+	public void testExpand2()
+	{
+		Tuple t = new TupleFixed(new String[]{"foo", "bar", "baz"}, new Integer[]{1, 2, 3});
+		ExpandAsColumns eac = new ExpandAsColumns("foo", "bar");
+		Object[] o = eac.evaluate(new Object[]{t});
+		assertTrue(o[0] instanceof Tuple);
+		Tuple new_t = (Tuple) o[0];
+		assertEquals(2, new_t.keySet().size());
+		assertEquals(2, new_t.get("1"));
+		assertEquals(3, new_t.get("baz"));
 	}
 	
 	/**
