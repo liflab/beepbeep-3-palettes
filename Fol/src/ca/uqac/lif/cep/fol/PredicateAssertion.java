@@ -56,30 +56,30 @@ public class PredicateAssertion extends Function
 	}
 
 	@Override
-	public Object[] evaluate(Object[] inputs, Context context)
+	public void evaluate(Object[] inputs, Object[] outputs, Context context)
 	{
 		Interpretation inter = (Interpretation) inputs[0];
-		Object[] out = new Object[1];
 		if (!inter.m_predicates.containsKey(m_predicateName))
 		{
 			// Closed world assumption
-			out[0] = false;
-			return out;
+			outputs[0] = false;
+			return;
 		}
 		Predicate pred = inter.m_predicates.get(m_predicateName);
 		Object[] values = new Object[m_arguments.length];
 		for (int i = 0; i < m_arguments.length; i++)
 		{
-			values[i] = m_arguments[i].evaluate(inputs, context)[0];
+			Object[] val = new Object[1];
+			m_arguments[i].evaluate(inputs, val, context);
+			values[i] = val[0];
 		}
-		out[0] = pred.evaluate(values, context)[0];
-		return out;
+		pred.evaluate(values, outputs, context);
 	}
 
 	@Override
-	public Object[] evaluate(Object[] inputs)
+	public void evaluate(Object[] inputs, Object[] outputs)
 	{
-		return evaluate(inputs, null);
+		evaluate(inputs, outputs, null);
 	}
 
 	@Override

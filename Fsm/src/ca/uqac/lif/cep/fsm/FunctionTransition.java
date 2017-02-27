@@ -77,7 +77,8 @@ public class FunctionTransition extends Transition
 	@Override
 	public boolean isFired(Object[] input, Context context)
 	{
-		Object[] values = m_function.evaluate(input, context);
+		Object[] values = new Object[1];
+		m_function.evaluate(input, values, context);
 		boolean b = (Boolean) values[0];
 		return b;
 	}
@@ -89,11 +90,11 @@ public class FunctionTransition extends Transition
 	}
 	
 	@Override
-	public void modifyContext(Object[] inputs, MooreMachine machine)
+	public void modifyContext(Object[] inputs, Object[] outputs, MooreMachine machine)
 	{
 		for (ContextAssignment asg : m_assignments)
 		{
-			asg.assign(inputs, machine);
+			asg.assign(inputs, outputs, machine);
 		}
 	}
 	

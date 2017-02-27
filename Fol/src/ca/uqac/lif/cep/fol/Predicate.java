@@ -88,21 +88,19 @@ public class Predicate extends SimpleFunction
 	}
 
 	@Override
-	public Object[] compute(Object[] inputs) 
+	public void compute(Object[] inputs, Object[] outputs) 
 	{
-		Object[] value = new Object[1];
 		PredicateArgument arg = new PredicateArgument(inputs);
 		for (PredicateArgument def_arg : m_definition.keySet())
 		{
 			if (arg.matches(def_arg))
 			{
-				value[0] = m_definition.get(def_arg);
-				return value;				
+				outputs[0] = m_definition.get(def_arg);
+				return;				
 			}
 		}
 		// No match: closed world assumption
-		value[0] = false;
-		return value;
+		outputs[0] = false;
 	}
 
 	@Override
@@ -270,11 +268,9 @@ public class Predicate extends SimpleFunction
 		}
 
 		@Override
-		public Object[] evaluate(Object[] inputs, Context context)
+		public void evaluate(Object[] inputs, Object[] outputs, Context context)
 		{
-			Object[] out = new Object[1];
-			out[0] = this;
-			return out;
+			outputs[0] = this;
 		}
 		
 		@Override

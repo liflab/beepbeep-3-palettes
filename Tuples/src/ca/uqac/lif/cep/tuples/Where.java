@@ -60,7 +60,8 @@ public class Where extends SingleProcessor
 	@Override
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
-		Object[] values = m_condition.evaluate(inputs);
+		Object[] values = new Object[1];
+		m_condition.evaluate(inputs, values);
 		boolean value = (Boolean) values[0];
 		if (value == true)
 		{

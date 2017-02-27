@@ -97,7 +97,9 @@ public class AttributeExpression
 	{
 		Object[] inputs = new Object[1];
 		inputs[0] = group;
-		return m_expression.evaluate(inputs)[0];
+		Object[] outputs = new Object[1];
+		m_expression.evaluate(inputs, outputs);
+		return outputs[0];
 	}
 	
 	@Override

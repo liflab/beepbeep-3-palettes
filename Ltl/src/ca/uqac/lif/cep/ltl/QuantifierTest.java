@@ -466,7 +466,7 @@ public class QuantifierTest
 		}
 		
 		@Override
-		public boolean compute(Object[] inputs, Queue<Object[]> outputs)
+		public boolean compute(Object[] inputs, Object[] outputs)
 		{
 			ThreadManager.sleep(m_waitInterval);
 			return super.compute(inputs, outputs);

@@ -57,13 +57,13 @@ public class MergeTuples extends Function
 	}
 
 	@Override
-	public Object[] evaluate(Object[] inputs, Context context)
+	public void evaluate(Object[] inputs, Object[] outputs, Context context)
 	{
-		return evaluate(inputs);
+		evaluate(inputs, outputs);
 	}
 
 	@Override
-	public Object[] evaluate(Object[] inputs)
+	public void evaluate(Object[] inputs, Object[] outputs)
 	{
 		Tuple new_t = new TupleMap();
 		for (int i = 0; i < inputs.length; i++)
@@ -71,7 +71,7 @@ public class MergeTuples extends Function
 			Tuple t = (Tuple) inputs[i];
 			new_t.putAll(t);
 		}
-		return new Object[]{new_t};
+		outputs[0] = new_t;
 	}
 
 	@Override

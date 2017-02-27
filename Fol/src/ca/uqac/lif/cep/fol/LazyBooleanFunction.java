@@ -39,31 +39,27 @@ public class LazyBooleanFunction extends Function
 	}
 	
 	@Override
-	public Object[] evaluate(Object[] inputs, Context context)
+	public void evaluate(Object[] inputs, Object[] out, Context context)
 	{
-		Object[] out = new Object[1];
 		// Evaluate LHS
-		boolean value = (Boolean) m_left.evaluate(inputs, context)[0];
-		if (value == m_stopValue)
+		m_left.evaluate(inputs, out, context);
+		if ((Boolean) out[0] == m_stopValue)
 		{
-			out[0] = m_stopValue;
-			return out;
+			return;
 		}
 		// Evaluate RHS
-		value = (Boolean) m_right.evaluate(inputs, context)[0];
-		if (value == m_stopValue)
+		m_right.evaluate(inputs, out, context);
+		if ((Boolean) out[0] == m_stopValue)
 		{
-			out[0] = m_stopValue;
-			return out;				
+			return;				
 		}
 		out[0] = !m_stopValue;
-		return out;
 	}
 	
 	@Override
-	public Object[] evaluate(Object[] inputs)
+	public void evaluate(Object[] inputs, Object[] outputs)
 	{
-		return evaluate(inputs, null);
+		evaluate(inputs, outputs, null);
 	}
 	
 	protected static class DummyInterpretationFunction extends UnaryFunction<Interpretation,Boolean>

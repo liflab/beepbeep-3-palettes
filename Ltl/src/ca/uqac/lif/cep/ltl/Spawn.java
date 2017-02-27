@@ -480,7 +480,8 @@ class Spawn extends Processor
 		 */
 		Object[] inputs = new Object[1];
 		inputs[0] = o;
-		Object[] function_value = m_splitFunction.evaluate(inputs, m_context);
+		Object[] function_value = new Object[1];
+		m_splitFunction.evaluate(inputs, function_value, m_context);
 		Collection<Object> values = new HashSet<Object>();
 		Object value = function_value[0];
 		if (value == null)

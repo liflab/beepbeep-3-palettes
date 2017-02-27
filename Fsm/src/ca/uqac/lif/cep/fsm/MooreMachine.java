@@ -21,10 +21,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 
 import ca.uqac.lif.cep.Context;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.UniformProcessor;
 
 /**
  * A finite-state automaton with output symbols associated to its states.
@@ -41,7 +40,7 @@ import ca.uqac.lif.cep.SingleProcessor;
  * @author Sylvain Hallé
  *
  */
-public class MooreMachine extends SingleProcessor
+public class MooreMachine extends UniformProcessor
 {
 	/**
 	 * A map from a state to the list of transitions from that
@@ -141,7 +140,7 @@ public class MooreMachine extends SingleProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
 		List<Transition> transitions = m_relation.get(m_currentState);
 		//System.out.println(inputs[0]);
@@ -178,16 +177,16 @@ public class MooreMachine extends SingleProcessor
 	 *   {@code null} otherwise
 	 * @return {@code false} if nothing fired, {@code true} otherwise
 	 */
-	protected boolean fire(Transition t, Object[] inputs, Queue<Object[]> outputs)
+	protected boolean fire(Transition t, Object[] inputs, Object[] outputs)
 	{
 		m_currentState = t.getDestination();
-		t.modifyContext(inputs, this);
+		t.modifyContext(inputs, outputs, this);
 		//System.out.println(t);
 		//System.out.println(m_context);
 		// Anything to output?
 		if (m_outputSymbols.containsKey(m_currentState))
 		{
-			outputs.add(m_outputSymbols.get(m_currentState));
+			outputs[0] = m_outputSymbols.get(m_currentState);
 			return true;
 		}
 		return false;
@@ -240,7 +239,7 @@ public class MooreMachine extends SingleProcessor
 		/**
 		 * Modifies the context of the state machine
 		 */
-		public void modifyContext(Object[] inputs, MooreMachine machine)
+		public void modifyContext(Object[] inputs, Object[] outputs, MooreMachine machine)
 		{
 			// Do nothing
 		}

@@ -25,10 +25,9 @@ public abstract class QuantifierFunction extends Function
 	}
 	
 	@Override
-	public Object[] evaluate(Object[] inputs, Context context)
+	public void evaluate(Object[] inputs, Object[] out, Context context)
 	{
 		Interpretation inter = (Interpretation) inputs[0];
-		Object[] out = new Object[1];
 		Set<Object> values = inter.getDomain(m_domainName);
 		int dom_count = 0;
 		Context new_context = new Context(context);
@@ -40,23 +39,24 @@ public abstract class QuantifierFunction extends Function
 				System.out.println("Dom: " + dom_count);
 			}
 			new_context.put(m_variableName, value);
-			Object[] return_values = m_expression.evaluate(inputs, new_context);
+			Object[] return_values = new Object[1];
+			m_expression.evaluate(inputs, return_values, new_context);
 			if (return_values != null && return_values.length > 0 
 					&& return_values[0] instanceof Boolean 
 					&& (Boolean) return_values[0] == m_stopValue)
 			{
 				out[0] = m_stopValue;
-				return out;
+				return;
 			}
 		}
 		out[0] = !m_stopValue;
-		return out;
+		return;
 	}
 
 	@Override
-	public Object[] evaluate(Object[] inputs) 
+	public void evaluate(Object[] inputs, Object[] outputs) 
 	{
-		return evaluate(inputs, new Context());
+		evaluate(inputs, outputs, new Context());
 	}
 
 	@Override

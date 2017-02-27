@@ -43,22 +43,20 @@ public class FromFunction extends Function
 	}
 	
 	@Override
-	public Object[] evaluate(Object[] inputs, Context context) 
+	public void evaluate(Object[] inputs, Object[] out, Context context) 
 	{
-		Object[] out = new Object[1];
 		AttributeGroup group = new AttributeGroup(m_traceNames);
 		for (int i = 0; i < m_traceNames.length; i++)
 		{
 			group.add(i,  (Tuple) inputs[i]);
 		}
 		out[0] = group;
-		return out;
 	}
 
 	@Override
-	public Object[] evaluate(Object[] inputs) 
+	public void evaluate(Object[] inputs, Object[] outputs) 
 	{
-		return evaluate(inputs, null);
+		evaluate(inputs, outputs, null);
 	}
 
 	@Override

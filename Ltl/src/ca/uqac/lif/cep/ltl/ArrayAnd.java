@@ -11,9 +11,8 @@ public class ArrayAnd extends ArrayTroolean
 	public static final transient ArrayAnd instance = new ArrayAnd();
 	
 	@Override
-	public Value[] compute(Object[] inputs)
+	public void compute(Object[] inputs, Object[] out)
 	{
-		Value[] out = new Value[1];
 		if (inputs[0] instanceof Object[])
 		{
 			for (Object o : (Object[]) inputs[0])
@@ -22,16 +21,15 @@ public class ArrayAnd extends ArrayTroolean
 				if (v == Value.FALSE)
 				{
 					out[0] = Value.FALSE;
-					return out;
+					return;
 				}
 				if (v == Value.INCONCLUSIVE)
 				{
 					out[0] = Value.INCONCLUSIVE;
-					return out;
+					return;
 				}
 			}
 			out[0] = Value.TRUE;
-			return out;
 		}
 		if (inputs[0] instanceof Collection<?>)
 		{
@@ -41,18 +39,18 @@ public class ArrayAnd extends ArrayTroolean
 				if (v == Value.FALSE)
 				{
 					out[0] = Value.FALSE;
-					return out;
+					return;
 				}
 				if (v == Value.INCONCLUSIVE)
 				{
 					out[0] = Value.INCONCLUSIVE;
-					return out;
+					return;
 				}
 			}
 			out[0] = Value.TRUE;
-			return out;			
+			return;			
 		}
-		return out;
+		return;
 	}
 
 	@Override

@@ -143,7 +143,8 @@ public class TupleTest
 			new TupleFixed(new String[]{"z", "t"}, new Object[]{2, "foo"}),
 			new TupleFixed(new String[]{"x", "q"}, new Integer[]{4, 5})
 		};
-		Object[] outputs = ff.evaluate(inputs);
+		Object[] outputs = new Object[1];
+		ff.evaluate(inputs, outputs);
 		assertTrue(outputs[0] instanceof AttributeGroup);
 		AttributeGroup g = (AttributeGroup) outputs[0];
 		int v;
@@ -168,7 +169,8 @@ public class TupleTest
 			new TupleFixed(new String[]{"z", "t"}, new Object[]{2, "foo"}),
 			new TupleFixed(new String[]{"x", "q"}, new Integer[]{4, 5})
 		};
-		Object[] outputs = ff.evaluate(inputs);
+		Object[] outputs = new Object[1];
+		ff.evaluate(inputs, outputs);
 		assertTrue(outputs[0] instanceof AttributeGroup);
 		AttributeGroup g = (AttributeGroup) outputs[0];
 		int v;
@@ -209,7 +211,8 @@ public class TupleTest
 				new AttributeExpression(new FunctionTree(Subtraction.instance, new GetAttribute("z"), new GetAttribute("C", "x")), "p2"),
 				new AttributeExpression(new GetAttribute("t"), "p3")
 		});
-		Object[] values = sel_f.evaluate(new Object[]{group});
+		Object[] values = new Object[1];
+		sel_f.evaluate(new Object[]{group}, values);
 		assertTrue(values[0] instanceof Tuple);
 		Tuple t = (Tuple) values[0];
 		Object o;
@@ -301,7 +304,8 @@ public class TupleTest
 	{
 		Tuple t = new TupleFixed(new String[]{"foo", "bar", "baz"}, new String[]{"a", "b", "c"});
 		ExpandAsColumns eac = new ExpandAsColumns("foo", "bar");
-		Object[] o = eac.evaluate(new Object[]{t});
+		Object[] o = new Object[1];
+		eac.evaluate(new Object[]{t}, o);
 		assertTrue(o[0] instanceof Tuple);
 		Tuple new_t = (Tuple) o[0];
 		assertEquals(2, new_t.keySet().size());
@@ -314,7 +318,8 @@ public class TupleTest
 	{
 		Tuple t = new TupleFixed(new String[]{"foo", "bar", "baz"}, new Integer[]{1, 2, 3});
 		ExpandAsColumns eac = new ExpandAsColumns("foo", "bar");
-		Object[] o = eac.evaluate(new Object[]{t});
+		Object[] o = new Object[1];
+		eac.evaluate(new Object[]{t}, o);
 		assertTrue(o[0] instanceof Tuple);
 		Tuple new_t = (Tuple) o[0];
 		assertEquals(2, new_t.keySet().size());
@@ -328,7 +333,8 @@ public class TupleTest
 		Tuple t1 = new TupleFixed(new String[]{"foo", "bar", "baz"}, new String[]{"a", "b", "c"});
 		Tuple t2 = new TupleFixed(new String[]{"arf", "ard", "arz"}, new String[]{"d", "e", "f"});
 		MergeTuples mt = new MergeTuples(2);
-		Object[] o = mt.evaluate(new Object[]{t1, t2});
+		Object[] o = new Object[1];
+		mt.evaluate(new Object[]{t1, t2}, o);
 		assertTrue(o[0] instanceof Tuple);
 		Tuple new_t = (Tuple) o[0];
 		assertEquals(6, new_t.keySet().size());
