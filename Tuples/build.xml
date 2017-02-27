@@ -153,6 +153,8 @@
         <fileset dir="../">
           <include name="beepbeep-3.jar"/>
         </fileset>
+        <pathelement location="${build.libdir}/${junit.jarname}"/>
+        <pathelement location="${build.libdir}/${junit.hamcrest}"/>
       </classpath>
     </javac>
     <copy todir="${build.bindir}" includeemptydirs="false">
