@@ -83,9 +83,8 @@ public class PeakFinderLocalMaximum extends WindowProcessor
 	}
 	
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
-		Queue<Object[]> out_queue = getEmptyQueue();;
 		float d = NumberCast.getNumber(inputs[0]).floatValue();
 		if (m_values.size() < m_windowWidth)
 		{
@@ -108,7 +107,7 @@ public class PeakFinderLocalMaximum extends WindowProcessor
 				}
 			}
 			// Window not filled yet: don't return anything
-			return getEmptyQueue();
+			return true;
 		}
 		// Window is full; remove first element and put new at the end
 		m_values.remove(0);
@@ -131,22 +130,22 @@ public class PeakFinderLocalMaximum extends WindowProcessor
 				{
 					Object[] out_vector = new Object[1];
 					out_vector[0] = 0;
-					out_queue.add(out_vector);
+					outputs.add(out_vector);
 				}
 				// Then, create output event with peak height (max - min)
 				float peak_height = m_maxValue - m_minValue;
 				Object[] out_vector = new Object[1];
 				out_vector[0] = peak_height;
-				out_queue.add(out_vector);
+				outputs.add(out_vector);
 				// Reset everything
 				m_maxValue = getMaxValue();
 				m_minValue = getMinValue();
 				m_peakPosition = getPeakPosition();
 				m_numSincePeak = 0;
-				return out_queue;
+				return true;
 			}
 		}
-		return getEmptyQueue();
+		return true;
 	}
 	
 	public int getPeakPosition()

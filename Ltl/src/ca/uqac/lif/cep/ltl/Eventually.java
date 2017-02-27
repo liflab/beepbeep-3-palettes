@@ -64,9 +64,8 @@ public class Eventually extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs) 
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
 	{
-		Queue<Object[]> out = newQueue();
 		Value v = Troolean.trooleanValue(inputs[0]);
 		if (v == Value.TRUE)
 		{
@@ -74,7 +73,7 @@ public class Eventually extends SingleProcessor
 			{
 				Object[] e = new Object[1];
 				e[0] = Value.TRUE;
-				out.add(e);
+				outputs.add(e);
 			}
 			m_notTrueCount = 0;
 		}
@@ -82,6 +81,6 @@ public class Eventually extends SingleProcessor
 		{
 			m_notTrueCount++;
 		}
-		return out;
+		return true;
 	}
 }

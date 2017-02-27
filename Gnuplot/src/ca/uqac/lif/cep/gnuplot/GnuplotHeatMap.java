@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep.gnuplot;
 
 import java.util.ArrayDeque;
+import java.util.Queue;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
@@ -30,7 +31,7 @@ import ca.uqac.lif.cep.numbers.NumberCast;
  * Generates a Gnuplot file from a 2D {@link ca.uqac.lif.cep.sets.Multiset}.
  * The keys of the heatmap
  * are {@link NamedTuple}s of integers representing (x,y) coordinates; the
- * values of the heatmap are integers. When its method {@link #compute(Object[])}
+ * values of the heatmap are integers. When its method {@link #compute(Object[], Queue)}
  * is called, the processor returns a String containing a Gnuplot file
  * producing the graphical heatmap from the <em>last</em> map received as an
  * input.
@@ -81,7 +82,7 @@ public class GnuplotHeatMap extends GnuplotProcessor
 	/**
 	 * The last heatmap that was sent to the processor. The output
 	 * will only be generated from that map upon a call to 
-	 * {@link #compute(Object[])}.
+	 * {@link #compute(Object[], Queue)}.
 	 */
 	protected Multiset m_lastMap;
 

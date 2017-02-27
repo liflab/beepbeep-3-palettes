@@ -1,6 +1,5 @@
 package ca.uqac.lif.cep.ltl;
 
-import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -78,9 +77,8 @@ public class BooleanQuantifier extends SingleProcessor
 	}*/
 
 	@Override
-	synchronized protected Queue<Object[]> compute(Object[] inputs) 
+	synchronized protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
 	{
-		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
 		Processor new_spawn = m_spawn.clone();
 		new_spawn.setContext(m_context);
 		m_instances.add(new_spawn);
@@ -120,7 +118,7 @@ public class BooleanQuantifier extends SingleProcessor
 				Object value = queue.remove();
 				Object[] v = new Object[1];
 				v[0] = value;
-				out_queue.add(v);
+				outputs.add(v);
 				m_instances.remove(0);
 				i_pushable.dispose();
 				m_instancePushables.remove(0);
@@ -134,7 +132,7 @@ public class BooleanQuantifier extends SingleProcessor
 				//break;
 			}
 		}
-		return out_queue;
+		return true;
 	}
 
 	@Override

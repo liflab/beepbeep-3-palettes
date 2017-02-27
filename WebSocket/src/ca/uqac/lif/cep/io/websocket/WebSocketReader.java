@@ -58,9 +58,9 @@ public class WebSocketReader extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
-		return null;
+		return false;
 	}
 
 	@Override

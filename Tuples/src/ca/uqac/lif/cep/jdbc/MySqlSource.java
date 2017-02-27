@@ -86,10 +86,15 @@ public class MySqlSource extends Source
 
 	/**
 	 * Whether the tuples of the underlying relation should be output
-	 * one by one on every call to {@link #compute(Object[])}, or
+	 * one by one on every call to {@link #compute(Object[], Queue)}, or
 	 * output all at once on the first call to that method.
 	 */
 	protected boolean m_feedOneByOne;
+	
+	/**
+	 * Remembers whether the query has already been run on the database
+	 */
+	protected boolean m_hasRun = false;
 
 	/**
 	 * Builds a MySQL source.
@@ -113,7 +118,7 @@ public class MySqlSource extends Source
 
 	/**
 	 * Sets whether the tuples of the underlying relation should be output
-	 * one by one on every call to {@link #compute(Object[])}, or
+	 * one by one on every call to {@link #compute(Object[], Queue)}, or
 	 * output all at once on the first call to that method. While this
 	 * has no effect on the end result, it might have an impact on the
 	 * performance (e.g. if the source outputs a very large number of
@@ -127,8 +132,13 @@ public class MySqlSource extends Source
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
+		if (m_hasRun)
+		{
+			// Done; no more events
+			return false;
+		}
 		if (m_connection == null)
 		{
 			// First connect to the database
@@ -169,13 +179,16 @@ public class MySqlSource extends Source
 						nt.put(name, value);
 					}
 				}
+				outputs.add(wrapObject(nt));
 			}
+			m_hasRun = true;
+			return true;
 		} 
 		catch (SQLException e) 
 		{
 			e.printStackTrace();
 		}
-		return null;
+		return false;
 	}
 
 	public static void build(ArrayDeque<Object> stack) throws ConnectorException 
@@ -199,5 +212,11 @@ public class MySqlSource extends Source
 	public MySqlSource clone()
 	{
 		return new MySqlSource(m_username, m_password, m_databaseName, m_tableName);
+	}
+	
+	@Override
+	public void reset()
+	{
+		m_hasRun = false;
 	}
 }

@@ -72,7 +72,7 @@ public class RegexTupleBuilder extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs) 
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
 	{
 		Object[] out_vector = new Object[1];
 		int num_names = m_attributeNames.size();
@@ -81,7 +81,7 @@ public class RegexTupleBuilder extends SingleProcessor
 		if (!mat.find())
 		{
 			// The pattern was not found: don't output anything
-			return null;
+			return true;
 		}
 		TupleMap tuple = new TupleMap();
 		int group_count = mat.groupCount();
@@ -96,7 +96,8 @@ public class RegexTupleBuilder extends SingleProcessor
 			tuple.put(name, group);
 		}
 		out_vector[0] = tuple;
-		return wrapVector(out_vector);
+		outputs.add(out_vector);
+		return true;
 	}
 
 	public static void build(ArrayDeque<Object> stack) throws ConnectorException

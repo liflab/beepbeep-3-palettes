@@ -114,7 +114,7 @@ public class PlateauFinder extends WindowProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		Object[] out_vector = new Object[1];
 		float d = NumberCast.getNumber(inputs[0]).floatValue();
@@ -140,7 +140,7 @@ public class PlateauFinder extends WindowProcessor
 			if (m_values.size() < m_windowWidth)
 			{
 				// Window not filled yet: don't return anything
-				return null;
+				return true;
 			}
 		}
 		else
@@ -191,7 +191,8 @@ public class PlateauFinder extends WindowProcessor
 			out_vector[0] = cur_abs.doubleValue() - m_lastPlateauFound;
 			m_lastPlateauFound = cur_abs.doubleValue();
 		}
-		return wrapVector(out_vector);
+		outputs.add(out_vector);
+		return true;
 	}
 	
 	public static void build(ArrayDeque<Object> stack) throws ConnectorException 

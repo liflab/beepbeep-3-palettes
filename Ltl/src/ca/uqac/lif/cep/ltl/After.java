@@ -45,19 +45,21 @@ public class After extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] input) 
+	protected boolean compute(Object[] input, Queue<Object[]> outputs) 
 	{
 		if (m_eventCount == 0)
 		{
 			m_eventCount = 1;
-			return wrapObject(Value.INCONCLUSIVE);
+			outputs.add(wrapObject(Value.INCONCLUSIVE));
+			return true;
 		}
 		else if (m_eventCount == 1)
 		{
 			m_eventCount = 2;
 			m_valueToReturn = Troolean.trooleanValue(input[0]);
 		}
-		return wrapObject(m_valueToReturn);
+		outputs.add(wrapObject(m_valueToReturn));
+		return true;
 	}
 	
 	@Override

@@ -57,7 +57,7 @@ public class UpTo extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] input)
+	protected boolean compute(Object[] input, Queue<Object[]> outputs)
 	{
 		Value left = Troolean.trooleanValue(input[0]);
 		Value right = Troolean.trooleanValue(input[1]);
@@ -74,7 +74,8 @@ public class UpTo extends SingleProcessor
 				m_currentValue = Value.FALSE;
 			}
 		}
-		return wrapObject(m_currentValue);
+		outputs.add(wrapObject(m_currentValue));
+		return true;
 	}
 
 	public static void build(ArrayDeque<Object> stack) throws ConnectorException 

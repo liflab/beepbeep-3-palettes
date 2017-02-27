@@ -119,7 +119,7 @@ public abstract class GnuplotProcessor extends SingleProcessor
 	protected abstract StringBuilder computePlot(Multiset bag);
 	
 	@Override
-	protected final Queue<Object[]> compute(Object[] inputs) 
+	protected final boolean compute(Object[] inputs, Queue<Object[]> outputs) 
 	{
 		Object first_input = inputs[0];
 		if (first_input instanceof Multiset)
@@ -128,7 +128,8 @@ public abstract class GnuplotProcessor extends SingleProcessor
 			StringBuilder plot_contents = computePlot(bag);
 			m_lastPlot = plot_contents.toString();
 		}
-		return wrapObject(m_lastPlot);
+		outputs.add(wrapObject(m_lastPlot));
+		return true;
 	}
 	
 	/**

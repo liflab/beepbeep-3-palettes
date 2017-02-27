@@ -58,16 +58,15 @@ public class Where extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
-		Queue<Object[]> out_queue = new ArrayDeque<Object[]>();
 		Object[] values = m_condition.evaluate(inputs);
 		boolean value = (Boolean) values[0];
 		if (value == true)
 		{
-			out_queue.add(inputs);
+			outputs.add(inputs);
 		}
-		return out_queue;
+		return true;
 	}
 
 	@Override

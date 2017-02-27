@@ -48,18 +48,19 @@ public class Limiter extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		m_counter--;
 		float value = NumberCast.getNumber(inputs[0]).floatValue();
 		if (m_counter > 0 || value == 0)
 		{
 			// Ignore this event
-			return wrapObject(0);
+			outputs.add(wrapObject(0));
+			return true;
 		}
 		m_counter = m_limit;
-		
-		return wrapObject(value);
+		outputs.add(wrapObject(value));
+		return true;
 	}
 
 	public static void build(ArrayDeque<Object> stack) throws ConnectorException

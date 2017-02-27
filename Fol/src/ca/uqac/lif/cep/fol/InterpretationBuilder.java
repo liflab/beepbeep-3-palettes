@@ -57,14 +57,15 @@ public class InterpretationBuilder extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		Object o = inputs[0];
 		if (o instanceof PredicateTuple)
 		{
 			m_interpretation.addPredicateTuple((PredicateTuple) o); 
 		}
-		return wrapObject(m_interpretation);
+		outputs.add(wrapObject(m_interpretation));
+		return true;
 	}
 	
 }

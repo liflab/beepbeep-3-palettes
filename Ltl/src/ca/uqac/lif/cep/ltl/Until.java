@@ -48,11 +48,10 @@ public class Until extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] input)
+	protected boolean compute(Object[] input, Queue<Object[]> outputs)
 	{
 		Value left = Troolean.trooleanValue(input[0]);
 		Value right = Troolean.trooleanValue(input[1]);
-		Queue<Object[]> out = newQueue();
 		m_eventCount++;
 		if (right == Value.TRUE)
 		{
@@ -60,10 +59,10 @@ public class Until extends SingleProcessor
 			{
 				Object[] e = new Object[1];
 				e[0] = Value.TRUE;
-				out.add(e);
+				outputs.add(e);
 				m_eventCount = 0;
 			}
-			return out;
+			return true;
 		}
 		if (left == Value.FALSE)
 		{
@@ -71,12 +70,12 @@ public class Until extends SingleProcessor
 			{
 				Object[] e = new Object[1];
 				e[0] = Value.FALSE;
-				out.add(e);
+				outputs.add(e);
 				m_eventCount = 0;
 			}
-			return out;			
+			return true;			
 		}
-		return null;
+		return false;
 	}
 	
 	public static void build(ArrayDeque<Object> stack) throws ConnectorException 

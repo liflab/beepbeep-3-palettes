@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.ltl;
 
-import java.util.ArrayDeque;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
@@ -145,11 +144,12 @@ public abstract class TrooleanQuantifier extends GroupProcessor
 		}
 
 		@Override
-		protected Queue<Object[]> compute(Object[] inputs)
+		protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 		{
 			if (m_definiteValue != Value.INCONCLUSIVE)
 			{
-				return wrapObject(m_definiteValue);
+				outputs.add(wrapObject(m_definiteValue));
+				return true;
 			}
 			if (inputs[0] instanceof Troolean.Value && ((Troolean.Value) inputs[0]) != Value.INCONCLUSIVE)
 			{
@@ -166,9 +166,10 @@ public abstract class TrooleanQuantifier extends GroupProcessor
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				return wrapObject(m_definiteValue);
+				outputs.add(wrapObject(m_definiteValue));
+				return true;
 			}
-			return new ArrayDeque<Object[]>();
+			return true;
 		}
 
 		@Override

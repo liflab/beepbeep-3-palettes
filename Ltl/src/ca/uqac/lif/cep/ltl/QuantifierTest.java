@@ -318,6 +318,7 @@ public class QuantifierTest
 		assertEquals(o, Troolean.Value.TRUE);
 	}
 	
+	@SuppressWarnings("unused")
 	@Test
 	public void testForAll1() throws ConnectorException
 	{
@@ -334,6 +335,7 @@ public class QuantifierTest
 		assertEquals(o, Troolean.Value.TRUE);
 	}
 	
+	@SuppressWarnings("unused")
 	@Test
 	public void testForAll2() throws ConnectorException
 	{
@@ -464,10 +466,10 @@ public class QuantifierTest
 		}
 		
 		@Override
-		public Queue<Object[]> compute(Object[] inputs)
+		public boolean compute(Object[] inputs, Queue<Object[]> outputs)
 		{
 			ThreadManager.sleep(m_waitInterval);
-			return super.compute(inputs);
+			return super.compute(inputs, outputs);
 		}
 
 		@Override

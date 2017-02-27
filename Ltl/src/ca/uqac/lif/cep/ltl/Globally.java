@@ -64,9 +64,8 @@ public class Globally extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs) 
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
 	{
-		Queue<Object[]> out = newQueue();
 		Value v = Troolean.trooleanValue(inputs[0]);
 		if (v == Value.FALSE)
 		{
@@ -74,7 +73,7 @@ public class Globally extends SingleProcessor
 			{
 				Object[] e = new Object[1];
 				e[0] = Value.FALSE;
-				out.add(e);
+				outputs.add(e);
 			}
 			m_notFalseCount = 0;
 		}
@@ -82,6 +81,6 @@ public class Globally extends SingleProcessor
 		{
 			m_notFalseCount++;
 		}
-		return out;
+		return true;
 	}
 }

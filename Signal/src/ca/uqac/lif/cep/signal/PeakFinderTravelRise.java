@@ -28,7 +28,7 @@ public class PeakFinderTravelRise extends WindowProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		m_values.addElement(NumberCast.getNumber(inputs[0]).floatValue());
 		if (m_values.size() == m_windowWidth + 1)
@@ -57,10 +57,12 @@ public class PeakFinderTravelRise extends WindowProcessor
 			{
 				System.out.print(T/R + " ");
 				// Declare a peak
-				return wrapObject(getMaxValue() - getMinValue());
+				outputs.add(new Object[]{getMaxValue() - getMinValue()});
+				return true;
 			}
 		}
-		return wrapObject(0);
+		outputs.add(new Object[]{0});
+		return true;
 	}
 	
 	@Override

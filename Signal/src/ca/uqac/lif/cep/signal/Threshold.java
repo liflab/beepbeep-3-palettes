@@ -40,14 +40,16 @@ public class Threshold extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		float value = NumberCast.getNumber(inputs[0]).floatValue();
 		if (Math.abs(value) > m_threshold)
 		{
-			return wrapObject(value);
+			outputs.add(wrapObject(value));
+			return true;
 		}
-		return wrapObject(0);
+		outputs.add(wrapObject(0));
+		return true;
 	}
 
 	public static void build(ArrayDeque<Object> stack) throws ConnectorException

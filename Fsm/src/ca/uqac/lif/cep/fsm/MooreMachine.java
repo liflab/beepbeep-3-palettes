@@ -141,7 +141,7 @@ public class MooreMachine extends SingleProcessor
 	}
 
 	@Override
-	protected Queue<Object[]> compute(Object[] inputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		List<Transition> transitions = m_relation.get(m_currentState);
 		//System.out.println(inputs[0]);
@@ -157,27 +157,28 @@ public class MooreMachine extends SingleProcessor
 				if (t.isFired(inputs, m_context))
 				{
 					// This transition fires: move to that state
-					return fire(t, inputs);
+					return fire(t, inputs, outputs);
 				}
 			}
 		}
 		if (otherwise != null)
 		{
 			// No "normal" transition has fired, but we have an "otherwise": fire it
-			return fire(otherwise, inputs);
+			return fire(otherwise, inputs, outputs);
 		}
 		// Screwed: no transition defined for this input
-		return null;
+		return false;
 	}
 	
 	/**
 	 * Fires a transition and updates the machine's state
 	 * @param t The transition to fire
 	 * @param inputs The inputs that caused the transition to fire
-	 * @return Any output symbol associated with the destination state,
-	 *   <code>null</code> otherwise
+	 * @param outputs Any output symbol associated with the destination state,
+	 *   {@code null} otherwise
+	 * @return {@code false} if nothing fired, {@code true} otherwise
 	 */
-	protected Queue<Object[]> fire(Transition t, Object[] inputs)
+	protected boolean fire(Transition t, Object[] inputs, Queue<Object[]> outputs)
 	{
 		m_currentState = t.getDestination();
 		t.modifyContext(inputs, this);
@@ -186,9 +187,10 @@ public class MooreMachine extends SingleProcessor
 		// Anything to output?
 		if (m_outputSymbols.containsKey(m_currentState))
 		{
-			return wrapVector(m_outputSymbols.get(m_currentState));
+			outputs.add(m_outputSymbols.get(m_currentState));
+			return true;
 		}
-		return null;
+		return false;
 	}
 
 	/**
