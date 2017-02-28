@@ -32,11 +32,21 @@ building these extensions.
 Building the palettes
 ---------------------
 
+### tl;dr
+
+1. Build or download `beepbeep-3.jar` and put it in the root of this
+   repository,
+2. Run the script `build-all.sh` to build all palettes in succession.
+3. If everything goes well, all the resulting jars will be created at the
+   root of the repository. Move them around and enjoy.
+
+### More details
+
 First make sure you have the following installed:
 
 - The Java Development Kit (JDK) to compile. BeepBeep was developed and
-  tested on version 7 of the JDK, but it is probably safe to use either
-  version 6 or 8.
+  tested on version 6 of the JDK, but it is probably safe to use either
+  version 7 or 8.
 - [Ant](http://ant.apache.org) to automate the compilation and build process
 
 Each palette depends on BeepBeep's core library, which must be built
