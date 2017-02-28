@@ -23,7 +23,7 @@
   xmlns:jacoco="antlib:org.jacoco.ant">
   
   <!-- The build script's version number. Do not edit! -->
-  <property name="antrun.version" value="1.1.5-palette"/>
+  <property name="antrun.version" value="1.1.5a-palette"/>
   
   <!-- Load project properties from XML file -->
   <xmlproperty file="config.xml"/>
@@ -137,7 +137,7 @@
   <!-- Target: compile
        Compiles the main project
   -->
-  <target name="compile" depends="init" description="Compile the sources">
+  <target name="compile" depends="init,junit" description="Compile the sources">
     <mkdir dir="${build.bindir}"/>
     <javac
       target="1.6" source="1.6"
@@ -148,11 +148,15 @@
       includeantruntime="false">
       <classpath>
         <pathelement location="${build.bindir}"/>
-        <pathelement path="${build.depdir}"/>
+        <fileset dir="${build.depdir}">
+          <include name="*.jar"/>
+        </fileset>
         <pathelement path="${java.class.path}"/>
         <fileset dir="../">
           <include name="beepbeep-3.jar"/>
         </fileset>
+        <pathelement location="${build.libdir}/${junit.jarname}"/>
+        <pathelement location="${build.libdir}/${junit.hamcrest}"/>
       </classpath>
     </javac>
     <copy todir="${build.bindir}" includeemptydirs="false">
@@ -203,8 +207,11 @@
       <link href="http://docs.oracle.com/javase/6/docs/api/"/>
       <classpath>
         <pathelement location="${build.bindir}"/>
-        <pathelement path="${build.depdir}"/>
+        <fileset dir="${build.depdir}">
+          <include name="*.jar"/>
+        </fileset>
         <pathelement path="${java.class.path}"/>
+        <pathelement location="${build.libdir}/${junit.jarname}"/>
         <fileset dir="../">
           <include name="beepbeep-3.jar"/>
         </fileset>

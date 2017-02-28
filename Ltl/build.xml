@@ -148,7 +148,9 @@
       includeantruntime="false">
       <classpath>
         <pathelement location="${build.bindir}"/>
-        <pathelement path="${build.depdir}"/>
+        <fileset dir="${build.depdir}">
+          <include name="*.jar"/>
+        </fileset>
         <pathelement path="${java.class.path}"/>
         <fileset dir="../">
           <include name="beepbeep-3.jar"/>
@@ -205,7 +207,9 @@
       <link href="http://docs.oracle.com/javase/6/docs/api/"/>
       <classpath>
         <pathelement location="${build.bindir}"/>
-        <pathelement path="${build.depdir}"/>
+        <fileset dir="${build.depdir}">
+          <include name="*.jar"/>
+        </fileset>
         <pathelement path="${java.class.path}"/>
         <pathelement location="${build.libdir}/${junit.jarname}"/>
         <fileset dir="../">
