@@ -51,7 +51,7 @@ public final class FixedTupleBuilder
 	/**
 	 * Attempts to create a constant based on the contents of a string.
 	 * That is, if the string contains only digits, it will create an
-	 * {@link EmlNumber} instead of an {@link EmlString}.
+	 * number instead of a string.
 	 * @param s The string to read from
 	 * @return The constant
 	 */

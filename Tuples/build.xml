@@ -23,7 +23,7 @@
   xmlns:jacoco="antlib:org.jacoco.ant">
   
   <!-- The build script's version number. Do not edit! -->
-  <property name="antrun.version" value="1.1.5-palette"/>
+  <property name="antrun.version" value="1.1.5a-palette"/>
   
   <!-- Load project properties from XML file -->
   <xmlproperty file="config.xml"/>
@@ -137,7 +137,7 @@
   <!-- Target: compile
        Compiles the main project
   -->
-  <target name="compile" depends="init" description="Compile the sources">
+  <target name="compile" depends="init,junit" description="Compile the sources">
     <mkdir dir="${build.bindir}"/>
     <javac
       target="1.6" source="1.6"
@@ -207,6 +207,7 @@
         <pathelement location="${build.bindir}"/>
         <pathelement path="${build.depdir}"/>
         <pathelement path="${java.class.path}"/>
+        <pathelement location="${build.libdir}/${junit.jarname}"/>
         <fileset dir="../">
           <include name="beepbeep-3.jar"/>
         </fileset>
