@@ -26,8 +26,8 @@
  * <p>
  * Boolean processors are called {@link ca.uqac.lif.cep.ltl.Globally}, 
  * {@link ca.uqac.lif.cep.ltl.Eventually}
- * {@link ca.uqac.lif.cep.ltl.Until}, {@link ca.uqac.lif.cep.ltl.Next}, 
- * {@link ca.uqac.lif.cep.ltl.ForAll} and {@link ca.uqac.lif.cep.ltl.Exists}.
+ * {@link ca.uqac.lif.cep.ltl.Until}, {@link ca.uqac.lif.cep.ltl.Next},
+ * and forst-order quantifiers.
  * If a<sub>0</sub> a<sub>1</sub>
  * a<sub>2</sub> &hellip; is an input trace, the processor Globally
  * produces an output trace b<sub>0</sub> b<sub>1</sub>
