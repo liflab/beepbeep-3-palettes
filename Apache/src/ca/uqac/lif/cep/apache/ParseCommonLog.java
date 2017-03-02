@@ -45,7 +45,7 @@ public class ParseCommonLog extends UnaryFunction<String, HttpRequest>
 	/**
 	 * The pattern to parse a line of the log
 	 */
-	protected static final transient Pattern s_linePattern = Pattern.compile("([^\\s]+) ([^\\s]+) ([^\\s]+) \\[(.*?)\\] \"([^\"]*)\" (\\d+) (\\d+)");
+	protected static final transient Pattern s_linePattern = Pattern.compile("([^\\s]+) ([^\\s]+) ([^\\s]+) \\[(.*?)\\] \"([^\"]*)\" (\\d+) ([^\\s]+)");
 
 	/**
 	 * The pattern to parse a URL
@@ -69,7 +69,15 @@ public class ParseCommonLog extends UnaryFunction<String, HttpRequest>
 			String time_string = line_mat.group(4);
 			String full_url = line_mat.group(5);
 			int ret_code = Integer.parseInt(line_mat.group(6));
-			int size = Integer.parseInt(line_mat.group(7));
+			int size = 0;
+			try
+			{
+				size = Integer.parseInt(line_mat.group(7));
+			}
+			catch (NumberFormatException e)
+			{
+				// Do nothing
+			}
 			// Parse time string
 			long parsed_time = parseTime(m_calendar, time_string);
 			// Parse URL
@@ -101,34 +109,34 @@ public class ParseCommonLog extends UnaryFunction<String, HttpRequest>
 		calendar.set(year, month, day, hours, minutes, seconds);
 		return calendar.getTime().getTime() / 1000;
 	}
-	
+
 	public static int stringToMonth(String m)
 	{
 		if (m.compareTo("Jan") == 0)
 			return 1;
 		if (m.compareTo("Feb") == 0)
-			return 1;
+			return 2;
 		if (m.compareTo("Mar") == 0)
-			return 1;
+			return 3;
 		if (m.compareTo("Apr") == 0)
-			return 1;
+			return 4;
 		if (m.compareTo("May") == 0)
-			return 1;
+			return 5;
 		if (m.compareTo("Jun") == 0)
-			return 1;
+			return 6;
 		if (m.compareTo("Jul") == 0)
-			return 1;
+			return 7;
 		if (m.compareTo("Aug") == 0)
-			return 1;
+			return 8;
 		if (m.compareTo("Sep") == 0)
-			return 1;
+			return 9;
 		if (m.compareTo("Oct") == 0)
-			return 1;
+			return 10;
 		if (m.compareTo("Nov") == 0)
-			return 1;
+			return 11;
 		return 12;
 	}
-	
+
 	/**
 	 * Convenience method to transform a GET query into a map of
 	 * attribute-value pairs. For example, given an URI object
@@ -173,7 +181,7 @@ public class ParseCommonLog extends UnaryFunction<String, HttpRequest>
 			}
 		}
 		return out;    
-}
+	}
 
 	/**
 	 * Creates a string out of a method
@@ -195,7 +203,7 @@ public class ParseCommonLog extends UnaryFunction<String, HttpRequest>
 		}
 		return "";
 	}
-	
+
 	public static Method stringToMethod(String s)
 	{
 		if (s.compareTo("POST") == 0)
