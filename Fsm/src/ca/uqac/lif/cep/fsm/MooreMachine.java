@@ -186,7 +186,11 @@ public class MooreMachine extends UniformProcessor
 		// Anything to output?
 		if (m_outputSymbols.containsKey(m_currentState))
 		{
-			outputs[0] = m_outputSymbols.get(m_currentState);
+			Object[] out = m_outputSymbols.get(m_currentState);
+			for (int i = 0; i < outputs.length; i++)
+			{				
+				outputs[i] = out[i];
+			}
 			return true;
 		}
 		return false;
