@@ -143,7 +143,6 @@ public class MooreMachine extends UniformProcessor
 	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
 		List<Transition> transitions = m_relation.get(m_currentState);
-		//System.out.println(inputs[0]);
 		Transition otherwise = null;
 		for (Transition t : transitions)
 		{
