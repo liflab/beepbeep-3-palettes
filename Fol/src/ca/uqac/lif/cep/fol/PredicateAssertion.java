@@ -59,13 +59,13 @@ public class PredicateAssertion extends Function
 	public void evaluate(Object[] inputs, Object[] outputs, Context context)
 	{
 		Interpretation inter = (Interpretation) inputs[0];
-		if (!inter.m_predicates.containsKey(m_predicateName))
+		if (!inter.containsPredicate(m_predicateName))
 		{
 			// Closed world assumption
 			outputs[0] = false;
 			return;
 		}
-		Predicate pred = inter.m_predicates.get(m_predicateName);
+		Predicate pred = inter.getPredicate(m_predicateName);
 		Object[] values = new Object[m_arguments.length];
 		for (int i = 0; i < m_arguments.length; i++)
 		{

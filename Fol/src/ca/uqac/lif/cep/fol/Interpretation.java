@@ -17,10 +17,10 @@
  */
 package ca.uqac.lif.cep.fol;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A context in which predicates can be evaluated.
@@ -38,14 +38,14 @@ public class Interpretation
 	 * key of this map is the name of each domain, and the corresponding value
 	 * is the set of values in this domain.
 	 */
-	protected Map<String,Set<Object>> m_domains;
+	private Map<String,Set<Object>> m_domains;
 	
 	/**
 	 * The predicates defined for this interpretation. The
 	 * key of this map is the name of each predicate, and the value
 	 * is the corresponding {@link Predicate} object.
 	 */
-	protected Map<String,Predicate> m_predicates;
+	private Map<String,Predicate> m_predicates;
 	
 	/**
 	 * Creates a new empty interpretation
@@ -53,8 +53,8 @@ public class Interpretation
 	public Interpretation()
 	{
 		super();
-		m_domains = new HashMap<String,Set<Object>>();
-		m_predicates = new HashMap<String,Predicate>();
+		m_domains = new ConcurrentHashMap<String,Set<Object>>();
+		m_predicates = new ConcurrentHashMap<String,Predicate>();
 	}
 	
 	/**
@@ -139,7 +139,7 @@ public class Interpretation
 		if (m_predicates.containsKey(tuple.m_name))
 		{
 			Predicate pred = m_predicates.get(tuple.m_name);
-			pred.m_definition.put(tuple.m_arguments, tuple.m_value);
+			pred.addDefinition(tuple.m_arguments, tuple.m_value);
 			for (int i = 0; i < pred.m_domainNames.length; i++)
 			{
 				addToDomain(pred.m_domainNames[i], tuple.m_arguments.m_values[i]);
@@ -147,6 +147,10 @@ public class Interpretation
 		}
 	}
 	
+	/**
+	 * Adds a new predicate to this interpretation
+	 * @param p The predicate to add
+	 */
 	public void addPredicate(Predicate p)
 	{
 		m_predicates.put(p.m_name, p);
@@ -159,6 +163,9 @@ public class Interpretation
 		}
 	}
 	
+	/**
+	 * Clears this interpretation of all predicate and domain definitions
+	 */
 	public void clear()
 	{
 		for (String predicate_name : m_predicates.keySet())
@@ -171,5 +178,30 @@ public class Interpretation
 			// Clear domains
 			m_domains.put(domain_name, new HashSet<Object>());
 		}
+	}
+	
+	/**
+	 * Checks if this interpretation contains a predicate with given
+	 * name
+	 * @param name The predicate name
+	 * @return {@code true} if the interpretation contains such a
+	 * predicate, {@code false} otherwise
+	 */
+	public boolean containsPredicate(String name)
+	{
+		return m_predicates.containsKey(name);
+	}
+	
+	/**
+	 * Gets the predicate instance of given name
+	 * @param name The predicate name
+	 * @return The predicate, or {@code null} if no predicate exists with
+	 * this name
+	 */
+	public Predicate getPredicate(String name)
+	{
+		if (!containsPredicate(name))
+			return null;
+		return m_predicates.get(name);
 	}
 }

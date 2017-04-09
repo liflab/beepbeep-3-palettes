@@ -17,9 +17,9 @@
  */
 package ca.uqac.lif.cep.fol;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.functions.Constant;
@@ -40,22 +40,41 @@ public class Predicate extends SimpleFunction
 	/**
 	 * The definition of this predicate
 	 */
-	protected Map<PredicateArgument,Boolean> m_definition;
+	private Map<PredicateArgument,Boolean> m_definition;
 
+	/**
+	 * Creates a new predicate
+	 * @param name The name of the predicate
+	 * @param domain_names The name of the domains for each of its arguments
+	 */
 	public Predicate(String name, String ...domain_names)
 	{
 		super();
 		m_name = name;
 		m_domainNames = domain_names;
-		m_definition = new HashMap<PredicateArgument,Boolean>();
+		m_definition = new ConcurrentHashMap<PredicateArgument,Boolean>();
 	}
 	
+	/**
+	 * Creates a new predicate by copying its contents from another predicate
+	 * @param pred The predicate to copy from
+	 */
 	public Predicate(Predicate pred)
 	{
 		m_name = pred.m_name;
 		m_domainNames = pred.m_domainNames;
-		m_definition = new HashMap<PredicateArgument,Boolean>();
+		m_definition = new ConcurrentHashMap<PredicateArgument,Boolean>();
 		m_definition.putAll(pred.m_definition);
+	}
+	
+	/**
+	 * Adds a new tuple to the definition of this predicate
+	 * @param arguments The arguments
+	 * @param value The value associated to these arguments
+	 */
+	public void addDefinition(PredicateArgument arguments, boolean value)
+	{
+		m_definition.put(arguments, value);
 	}
 
 	public void updateDefinition(Object[] inputs, boolean value)

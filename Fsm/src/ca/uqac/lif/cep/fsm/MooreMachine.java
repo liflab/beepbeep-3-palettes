@@ -143,7 +143,6 @@ public class MooreMachine extends UniformProcessor
 	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
 		List<Transition> transitions = m_relation.get(m_currentState);
-		//System.out.println(inputs[0]);
 		Transition otherwise = null;
 		for (Transition t : transitions)
 		{
@@ -186,10 +185,10 @@ public class MooreMachine extends UniformProcessor
 		// Anything to output?
 		if (m_outputSymbols.containsKey(m_currentState))
 		{
-			Object[] outs = m_outputSymbols.get(m_currentState);
-			for (int i = 0; i < outs.length; i++)
-			{
-				outputs[i] = outs[i];
+			Object[] out = m_outputSymbols.get(m_currentState);
+			for (int i = 0; i < outputs.length; i++)
+			{				
+				outputs[i] = out[i];
 			}
 			return true;
 		}
