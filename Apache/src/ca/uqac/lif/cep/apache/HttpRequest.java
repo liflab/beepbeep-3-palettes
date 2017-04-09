@@ -209,6 +209,51 @@ public class HttpRequest
 			return request.getPath();
 		}
 	}
+	
+	/**
+	 * Function to get the path of an HTTP request
+	 */
+	public static class GetParameter extends UnaryFunction<HttpRequest,String>
+	{
+		/**
+		 * The name of the parameter to get
+		 */
+		protected String m_parameterName;
+		
+		public GetParameter(String parameter_name)
+		{
+			super(HttpRequest.class, String.class);
+			m_parameterName = parameter_name;
+		}
+
+		@Override
+		public String getValue(HttpRequest request)
+		{
+			String s = request.get(m_parameterName);
+			if (s == null)
+				return "";
+			return s;
+		}
+	}
+	
+	/**
+	 * Function to get the timestamp of an HTTP request
+	 */
+	public static class GetTimestamp extends UnaryFunction<HttpRequest,Long>
+	{
+		public static final GetTimestamp instance = new GetTimestamp();
+
+		GetTimestamp()
+		{
+			super(HttpRequest.class, Long.class);
+		}
+
+		@Override
+		public Long getValue(HttpRequest request)
+		{
+			return request.getTimestamp();
+		}
+	}
 
 	/**
 	 * Function to compare the request's time with another time
@@ -255,5 +300,11 @@ public class HttpRequest
 		}
 		calendar.set(year, month, day, hours, minutes, seconds);
 		return calendar.getTime().getTime() / 1000;
-	}	
+	}
+	
+	@Override
+	public String toString()
+	{
+		return m_path + m_parameters;
+	}
 }
