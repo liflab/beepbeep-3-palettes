@@ -1,5 +1,8 @@
 package ca.uqac.lif.cep.fol;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
@@ -15,6 +18,8 @@ public abstract class QuantifierFunction extends Function
 	
 	protected boolean m_stopValue;
 	
+	protected boolean m_failFast = false;
+	
 	public QuantifierFunction(String variable_name, String domain_name, Function expression, boolean stop_value)
 	{
 		super();
@@ -28,29 +33,59 @@ public abstract class QuantifierFunction extends Function
 	public void evaluate(Object[] inputs, Object[] out, Context context)
 	{
 		Interpretation inter = (Interpretation) inputs[0];
-		Set<Object> values = inter.getDomain(m_domainName);
+		Set<Object> values = new HashSet<Object>();
+		values.addAll(inter.getDomain(m_domainName));
 		int dom_count = 0;
 		Context new_context = new Context(context);
+		int num_values = values.size();
+		List<Object[]> all_vals = new ArrayList<Object[]>(num_values);
+		List<Function> all_expressions = new ArrayList<Function>(num_values);
+		// Start the evaluation of the function for each value in the domain
 		for (Object value : values)
 		{
+			Object[] return_values = new Object[1];
+			Function exp = m_expression.clone();
+			all_vals.add(return_values);
+			all_expressions.add(exp);
 			dom_count++;
 			if (m_variableName.compareTo("v") == 0 && dom_count % 1 == 0)
 			{
 				System.out.println("Dom: " + dom_count);
 			}
 			new_context.put(m_variableName, value);
-			Object[] return_values = new Object[1];
-			m_expression.evaluate(inputs, return_values, new_context);
+			exp.evaluateFast(inputs, return_values, new_context);
+		}
+		// Now wait until the evaluation of each function is done
+		for (int i = 0; i < num_values; i++)
+		{
+			all_expressions.get(i).waitFor();
+		}
+		out[0] = !m_stopValue;
+		for (int i = 0; i < num_values; i++)
+		{
+			Object[] return_values = all_vals.get(i);
 			if (return_values != null && return_values.length > 0 
 					&& return_values[0] instanceof Boolean 
 					&& (Boolean) return_values[0] == m_stopValue)
 			{
 				out[0] = m_stopValue;
-				return;
+				if (m_failFast)
+				{
+					return;
+				}
 			}
 		}
-		out[0] = !m_stopValue;
 		return;
+	}
+	
+	/**
+	 * Sets whether the quantifier evaluates the functions in "fail fast"
+	 * mode
+	 * @param b Set to {@code true} to use fail fast
+	 */
+	public void setFailFast(boolean b)
+	{
+		m_failFast = b;
 	}
 
 	@Override
