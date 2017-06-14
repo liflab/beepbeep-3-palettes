@@ -21,6 +21,7 @@ import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.FunctionException;
 
 /**
  * An assertion on the value of a predicate, to be evaluated on an
@@ -56,7 +57,7 @@ public class PredicateAssertion extends Function
 	}
 
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs, Context context)
+	public void evaluate(Object[] inputs, Object[] outputs, Context context) throws FunctionException
 	{
 		Interpretation inter = (Interpretation) inputs[0];
 		if (!inter.containsPredicate(m_predicateName))
@@ -77,7 +78,7 @@ public class PredicateAssertion extends Function
 	}
 
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs)
+	public void evaluate(Object[] inputs, Object[] outputs) throws FunctionException
 	{
 		evaluate(inputs, outputs, null);
 	}

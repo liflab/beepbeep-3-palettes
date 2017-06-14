@@ -4,6 +4,7 @@ import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.functions.Negation;
 import ca.uqac.lif.cep.functions.UnaryFunction;
@@ -39,7 +40,7 @@ public class LazyBooleanFunction extends Function
 	}
 	
 	@Override
-	public void evaluate(Object[] inputs, Object[] out, Context context)
+	public void evaluate(Object[] inputs, Object[] out, Context context) throws FunctionException
 	{
 		// Evaluate LHS
 		m_left.evaluate(inputs, out, context);
@@ -57,7 +58,7 @@ public class LazyBooleanFunction extends Function
 	}
 	
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs)
+	public void evaluate(Object[] inputs, Object[] outputs) throws FunctionException
 	{
 		evaluate(inputs, outputs, null);
 	}

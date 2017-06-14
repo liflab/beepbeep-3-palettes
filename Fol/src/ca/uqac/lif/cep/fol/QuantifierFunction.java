@@ -7,6 +7,7 @@ import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.FunctionException;
 
 public abstract class QuantifierFunction extends Function
 {
@@ -30,7 +31,7 @@ public abstract class QuantifierFunction extends Function
 	}
 	
 	@Override
-	public void evaluate(Object[] inputs, Object[] out, Context context)
+	public void evaluate(Object[] inputs, Object[] out, Context context) throws FunctionException
 	{
 		Interpretation inter = (Interpretation) inputs[0];
 		Set<Object> values = new HashSet<Object>();
@@ -89,7 +90,7 @@ public abstract class QuantifierFunction extends Function
 	}
 
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs) 
+	public void evaluate(Object[] inputs, Object[] outputs) throws FunctionException
 	{
 		evaluate(inputs, outputs, new Context());
 	}

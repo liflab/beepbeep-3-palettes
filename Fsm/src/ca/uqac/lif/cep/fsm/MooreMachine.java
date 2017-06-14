@@ -23,7 +23,9 @@ import java.util.List;
 import java.util.Map;
 
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.UniformProcessor;
+import ca.uqac.lif.cep.functions.FunctionException;
 
 /**
  * A finite-state automaton with output symbols associated to its states.
@@ -47,22 +49,22 @@ public class MooreMachine extends UniformProcessor
 	 * state
 	 */
 	protected Map<Integer,List<Transition>> m_relation;
-	
+
 	/**
 	 * Associates output symbols to the states of the machine
 	 */
 	protected Map<Integer,Object[]> m_outputSymbols;
-	
+
 	/**
 	 * The current state the machine is in
 	 */
 	protected int m_currentState;
-	
+
 	/**
 	 * The initial state of the machine
 	 */
 	protected int m_initialState;
-	
+
 	public MooreMachine(int in_arity, int out_arity)
 	{
 		super(in_arity, out_arity);
@@ -71,7 +73,7 @@ public class MooreMachine extends UniformProcessor
 		m_currentState = 0;
 		m_initialState = 0;
 	}
-	
+
 	@Override
 	public void reset()
 	{
@@ -87,7 +89,7 @@ public class MooreMachine extends UniformProcessor
 			}
 		}
 	}
-	
+
 	/**
 	 * Associates output symbols (i.e. event) to a state of the
 	 * Moore machine
@@ -103,7 +105,7 @@ public class MooreMachine extends UniformProcessor
 		m_outputSymbols.put(state, symbols);
 		return this;
 	}
-	
+
 	/**
 	 * Associates an output symbol (i.e. event) to a state of the
 	 * Moore machine
@@ -121,7 +123,7 @@ public class MooreMachine extends UniformProcessor
 		symbols[0] = symbol;
 		return addSymbols(state, symbols);
 	}
-	
+
 	/**
 	 * Adds a transition to the machine
 	 * @param source The source state
@@ -140,7 +142,7 @@ public class MooreMachine extends UniformProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Object[] outputs)
+	protected boolean compute(Object[] inputs, Object[] outputs) throws ProcessorException
 	{
 		List<Transition> transitions = m_relation.get(m_currentState);
 		Transition otherwise = null;
@@ -152,22 +154,36 @@ public class MooreMachine extends UniformProcessor
 			}
 			else
 			{
-				if (t.isFired(inputs, m_context))
+				try
 				{
-					// This transition fires: move to that state
-					return fire(t, inputs, outputs);
+					if (t.isFired(inputs, m_context))
+					{
+						// This transition fires: move to that state
+						return fire(t, inputs, outputs);
+					}
+				}
+				catch (FunctionException e)
+				{
+					throw new ProcessorException(e);
 				}
 			}
 		}
 		if (otherwise != null)
 		{
 			// No "normal" transition has fired, but we have an "otherwise": fire it
-			return fire(otherwise, inputs, outputs);
+			try
+			{
+				return fire(otherwise, inputs, outputs);
+			}
+			catch (FunctionException e)
+			{
+				throw new ProcessorException(e);
+			}
 		}
 		// Screwed: no transition defined for this input
 		return false;
 	}
-	
+
 	/**
 	 * Fires a transition and updates the machine's state
 	 * @param t The transition to fire
@@ -175,8 +191,10 @@ public class MooreMachine extends UniformProcessor
 	 * @param outputs Any output symbol associated with the destination state,
 	 *   {@code null} otherwise
 	 * @return {@code false} if nothing fired, {@code true} otherwise
+	 * @throws FunctionException If an error occurred in the evaluation
+	 *   of the transition
 	 */
-	protected boolean fire(Transition t, Object[] inputs, Object[] outputs)
+	protected boolean fire(Transition t, Object[] inputs, Object[] outputs) throws FunctionException
 	{
 		m_currentState = t.getDestination();
 		t.modifyContext(inputs, outputs, this);
@@ -209,7 +227,7 @@ public class MooreMachine extends UniformProcessor
 		{
 			super();
 		}
-		
+
 		/**
 		 * Copies a transition from another transition
 		 * @param t The transition to copy from
@@ -218,19 +236,21 @@ public class MooreMachine extends UniformProcessor
 		{
 			super();
 		}
-		
+
 		/**
 		 * Determines if the transition fires for the given input
 		 * @param inputs The input events
 		 * @param context The context for the evaluation
 		 * @return <code>true</code> if the transition fires, <code>false</code>
 		 *   otherwise
+		 * @throws FunctionException If an error occurred in the evaluation
+		 *   of the transition
 		 */
-		public boolean isFired(Object[] inputs, Context context)
+		public boolean isFired(Object[] inputs, Context context) throws FunctionException
 		{
 			return false;
 		}
-		
+
 		/**
 		 * Resets the state of the transition
 		 */
@@ -238,15 +258,17 @@ public class MooreMachine extends UniformProcessor
 		{
 			// Do nothing
 		}
-		
+
 		/**
 		 * Modifies the context of the state machine
+		 * @throws FunctionException  If an error occurs in the modification of
+		 *   the context
 		 */
-		public void modifyContext(Object[] inputs, Object[] outputs, MooreMachine machine)
+		public void modifyContext(Object[] inputs, Object[] outputs, MooreMachine machine) throws FunctionException
 		{
 			// Do nothing
 		}
-		
+
 		/**
 		 * Gets the destination (i.e. target state) of that transition
 		 * @return The destination state 
@@ -255,7 +277,7 @@ public class MooreMachine extends UniformProcessor
 		{
 			return 0;
 		}
-		
+
 		@Override
 		public Transition clone()
 		{
@@ -263,7 +285,7 @@ public class MooreMachine extends UniformProcessor
 			return out;
 		}
 	}
-	
+
 	/**
 	 * Represents the "otherwise" transition in the Moore machine
 	 * @author Sylvain Hallé
@@ -275,44 +297,44 @@ public class MooreMachine extends UniformProcessor
 		 * The destination state of that transition
 		 */
 		private final int m_destination;
-		
+
 		public TransitionOtherwise(TransitionOtherwise t)
 		{
 			super();
 			m_destination = t.m_destination;
 		}
-		
+
 		public TransitionOtherwise(int destination)
 		{
 			super();
 			m_destination = destination;
 		}
-		
+
 		@Override
 		public boolean isFired(Object[] inputs, Context context)
 		{
 			return true;
 		}
-		
+
 		@Override
 		public int getDestination()
 		{
 			return m_destination;
 		}
-		
+
 		@Override
 		public TransitionOtherwise clone()
 		{
 			return new TransitionOtherwise(this);
 		}
-		
+
 		@Override
 		public String toString()
 		{
 			return "* -> " + m_destination;
 		}
 	}
-	
+
 	@Override
 	public MooreMachine clone()
 	{
@@ -332,5 +354,5 @@ public class MooreMachine extends UniformProcessor
 		}
 		return out;
 	}
-	
+
 }

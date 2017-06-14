@@ -21,6 +21,7 @@ package ca.uqac.lif.cep.tuples;
 import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.FunctionException;
 
 /**
  * Association between an expression to compute a value from an
@@ -93,7 +94,7 @@ public class AttributeExpression
 	 * be computed
 	 * @return The value
 	 */
-	public Object getValue(AttributeGroup group)
+	public Object getValue(AttributeGroup group) throws FunctionException
 	{
 		Object[] inputs = new Object[1];
 		inputs[0] = group;

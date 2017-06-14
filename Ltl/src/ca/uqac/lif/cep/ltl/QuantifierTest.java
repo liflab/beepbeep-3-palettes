@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.GroupProcessor;
+import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.Connector.ConnectorException;
@@ -466,7 +467,7 @@ public class QuantifierTest
 		}
 		
 		@Override
-		public boolean compute(Object[] inputs, Object[] outputs)
+		public boolean compute(Object[] inputs, Object[] outputs) throws ProcessorException
 		{
 			ThreadManager.sleep(m_waitInterval);
 			return super.compute(inputs, outputs);

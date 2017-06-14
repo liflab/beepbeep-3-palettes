@@ -24,11 +24,13 @@ import java.util.Iterator;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.tmf.NaryToArray;
 import ca.uqac.lif.cep.tmf.SmartFork;
@@ -207,7 +209,14 @@ class Spawn extends Processor
 		{
 			if (m_pushable == null)
 			{
-				spawn(o);
+				try
+				{
+					spawn(o);
+				}
+				catch (ProcessorException e)
+				{
+					throw new PushableException(e);
+				}
 			}
 			return m_pushable.push(o);
 		}
@@ -217,7 +226,14 @@ class Spawn extends Processor
 		{
 			if (m_pushable == null)
 			{
-				spawn(o);
+				try
+				{
+					spawn(o);
+				}
+				catch (ProcessorException e)
+				{
+					throw new PushableException(e);
+				}
 			}
 			return m_pushable.pushFast(o);
 		}
@@ -285,7 +301,14 @@ class Spawn extends Processor
 			if (m_pullable == null)
 			{
 				Object o = m_inputPushable.getPullable().pull();
-				spawn(o);
+				try
+				{
+					spawn(o);
+				}
+				catch (ProcessorException e)
+				{
+					throw new PullableException(e);
+				}
 				// Re-put o in fork's queue so that it can process it
 				m_fork.putInQueue(o);
 				//m_fork.getPushableInput(0).push(o);
@@ -300,7 +323,14 @@ class Spawn extends Processor
 			{
 				Object o = m_inputPushable.getPullable().pull();
 				//System.out.println("Getting " + o);
-				spawn(o);
+				try
+				{
+					spawn(o);
+				}
+				catch (ProcessorException e)
+				{
+					throw new PullableException(e);
+				}
 				// Re-put o in fork's queue so that it can process it
 				m_fork.putInQueue(o);
 				//m_fork.getPushableInput(0).push(o);
@@ -320,7 +350,14 @@ class Spawn extends Processor
 			if (m_pullable == null)
 			{
 				Object o = m_inputPushable.getPullable().pull();
-				spawn(o);
+				try
+				{
+					spawn(o);
+				}
+				catch (ProcessorException e)
+				{
+					throw new PullableException(e);
+				}
 				// Re-put o in fork's queue so that it can process it
 				m_fork.putInQueue(o);
 				//m_fork.getPushableInput(0).push(o);
@@ -334,7 +371,14 @@ class Spawn extends Processor
 			if (m_pullable == null)
 			{
 				Object o = m_inputPushable.getPullable().pull();
-				spawn(o);
+				try
+				{
+					spawn(o);
+				}
+				catch (ProcessorException e)
+				{
+					throw new PullableException(e);
+				}
 				// Re-put o in fork's queue so that it can process it
 				m_fork.putInQueue(o);
 				//m_fork.getPushableInput(0).push(o);
@@ -417,7 +461,7 @@ class Spawn extends Processor
 		}
 	}
 
-	synchronized protected boolean spawn(Object o)
+	synchronized protected boolean spawn(Object o) throws ProcessorException
 	{
 		try 
 		{
@@ -465,14 +509,17 @@ class Spawn extends Processor
 		}
 		catch (ConnectorException e) 
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ProcessorException(e); 
+		} 
+		catch (FunctionException e)
+		{
+			throw new ProcessorException(e);
 		}
 		return true;
 	}
 
 	@SuppressWarnings("unchecked")
-	protected synchronized /*@NotNull*/ Collection<Object> getDomain(Object o)
+	protected synchronized /*@NotNull*/ Collection<Object> getDomain(Object o) throws FunctionException
 	{
 		/* TODO: there are *lots* of null checks in this method, just to
 		 * fend off whatever the split function returns. A couple of these

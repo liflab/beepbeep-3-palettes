@@ -23,8 +23,10 @@ import java.util.Queue;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.functions.Function;
+import ca.uqac.lif.cep.functions.FunctionException;
 
 /**
  * Filters a trace of <code>AttributeGroup</code> objects according to a
@@ -58,10 +60,17 @@ public class Where extends SingleProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException
 	{
 		Object[] values = new Object[1];
-		m_condition.evaluate(inputs, values);
+		try
+		{
+			m_condition.evaluate(inputs, values);
+		}
+		catch (FunctionException e)
+		{
+			throw new ProcessorException(e);
+		}
 		boolean value = (Boolean) values[0];
 		if (value == true)
 		{
