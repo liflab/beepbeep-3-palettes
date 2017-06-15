@@ -43,6 +43,12 @@ public class GnuplotScatterplot extends TwoDimensionalPlotFunction
 	 * list them in the same order.
 	 */
 	protected String[] m_otherHeaders;
+	
+	/**
+	 * Whether the columns in each tuple are fixed, or may vary from one tuple
+	 * to the next 
+	 */
+	protected boolean m_fixedColumns = true;
 
 	public GnuplotScatterplot()
 	{
@@ -52,10 +58,16 @@ public class GnuplotScatterplot extends TwoDimensionalPlotFunction
 
 	public GnuplotScatterplot(String column_name)
 	{
+		this(column_name, true);
+	}
+	
+	public GnuplotScatterplot(String column_name, boolean fixed_columns)
+	{
 		super();
 		m_otherHeaders = null;
+		m_fixedColumns = fixed_columns;
 		setX(column_name);
-	}	
+	}
 
 	/**
 	 * Defines the name of the column that contains the "x" values of
@@ -72,7 +84,7 @@ public class GnuplotScatterplot extends TwoDimensionalPlotFunction
 	@Override
 	public String getValue(Multiset bag) 
 	{
-		if (m_otherHeaders == null)
+		if (m_otherHeaders == null || !m_fixedColumns)
 		{
 			// We haven't harvested the column names yet: do that first
 			getColumnNames(bag);
@@ -128,7 +140,9 @@ public class GnuplotScatterplot extends TwoDimensionalPlotFunction
 
 	/**
 	 * Fetches column names from an element (i.e. a tuple) from the
-	 * bag.
+	 * bag. If {@link #m_fixedColumns} is set to {@code true}, the method
+	 * picks <em>any</em> tuple and fetches its columns. Otherwise, the method
+	 * picks the <em>largest</em> tuple and fetches its columns.
 	 * <p><strong>Warning:</strong> Gnuplot can handle a maximum of
 	 * <u>7</u> columns, and <em>segfaults</em> when given more. To avoid
 	 * that, this method limits itself to the first 7 column names it
@@ -137,7 +151,24 @@ public class GnuplotScatterplot extends TwoDimensionalPlotFunction
 	 */
 	protected void getColumnNames(Multiset bag)
 	{
-		Tuple nt = (Tuple) bag.getAnyElement();
+		Tuple nt = null;
+		if (m_fixedColumns)
+		{
+			nt = (Tuple) bag.getAnyElement();
+		}
+		else
+		{
+			int max_size = 0;
+			for (Object o : bag)
+			{
+				Tuple t = (Tuple) o;
+				if (t.size() > max_size)
+				{
+					nt = t;
+					max_size = t.size();
+				}
+			}
+		}
 		List<String> names = new ArrayList<String>();
 		int col_count = 0;
 		for (String s : nt.keySet())
