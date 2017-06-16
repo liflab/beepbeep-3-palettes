@@ -117,7 +117,7 @@ public class GnuplotScatterplot extends TwoDimensionalPlotFunction
 		String style = "linespoints";
 		if (m_stacked)
 		{
-			style = "filledcurves";
+			style = "filledcurves x1";
 		}
 		for (int i = 0; i < m_otherHeaders.length; i++)
 		{
@@ -165,12 +165,18 @@ public class GnuplotScatterplot extends TwoDimensionalPlotFunction
 		}
 		Collections.sort(tuples, new TupleComparator(m_xHeader));
 		// First, fetch all lines
+		String missing_symbol = s_datafileMissing;
+		if (m_stacked)
+		{
+			// In a stacked plot, we must treat missing data as 0
+			missing_symbol = "0";
+		}
 		for (Tuple tuple : tuples)
 		{
 			out.append(format(tuple.get(m_xHeader)));
 			for (String key : m_otherHeaders)
 			{
-				out.append(",").append(format(tuple.get(key)));
+				out.append(",").append(format(tuple.get(key), missing_symbol));
 			}
 			out.append("\n");
 		}
