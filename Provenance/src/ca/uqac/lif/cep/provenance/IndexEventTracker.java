@@ -181,6 +181,18 @@ public class IndexEventTracker implements EventTracker
 	
 	/**
 	 * Gets the provenance tree for a given event.
+	 * @param p
+	 * @param stream_index
+	 * @param stream_pos
+	 * @return
+	 */
+	public /*@NotNull*/ ProvenanceNode getProvenanceTree(Processor p, int stream_index, int stream_pos)
+	{
+		return getProvenanceTree(p.getId(), stream_index, stream_pos);
+	}
+	
+	/**
+	 * Gets the provenance tree for a given event.
 	 * @param proc_id
 	 * @param stream_index
 	 * @param stream_pos
