@@ -102,16 +102,21 @@ public abstract class PlotFunction extends UnaryFunction<Multiset,String>
 		out.append("set datafile missing \"").append(s_datafileMissing).append("\"\n");
 	}
 	
-	public static String format(Object o)
+	public static String format(Object o, String missing_symbol)
 	{
 		if (o == null)
 		{
-			return s_datafileMissing;
+			return missing_symbol;
 		}
 		if (o instanceof Number)
 		{
 			return o.toString();
 		}
 		return "\"" + o.toString() + "\"";
+	}
+	
+	public static String format(Object o)
+	{
+		return format(o, s_datafileMissing);
 	}
 }

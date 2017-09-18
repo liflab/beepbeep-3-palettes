@@ -49,6 +49,12 @@ public class GnuplotScatterplot extends TwoDimensionalPlotFunction
 	 * to the next 
 	 */
 	protected boolean m_fixedColumns = true;
+	
+	/**
+	 * Whether the multiple data series are stacked (i.e. added on top
+	 * of each other)
+	 */
+	protected boolean m_stacked = false;
 
 	public GnuplotScatterplot()
 	{
@@ -67,6 +73,16 @@ public class GnuplotScatterplot extends TwoDimensionalPlotFunction
 		m_otherHeaders = null;
 		m_fixedColumns = fixed_columns;
 		setX(column_name);
+	}
+	
+	/**
+	 * Sets whether the multiple data series should be stacked 
+	 * (i.e. added on top of each other)
+	 * @param b Set to {@code true} to have a stacked plot
+	 */
+	public void setStacked(boolean b)
+	{
+		m_stacked = b;
 	}
 
 	/**
@@ -98,6 +114,11 @@ public class GnuplotScatterplot extends TwoDimensionalPlotFunction
 		fillHeader(out);
 		StringBuilder plot_data = generatePlotData(bag);
 		out.append("plot ");
+		String style = "linespoints";
+		if (m_stacked)
+		{
+			style = "filledcurves x1";
+		}
 		for (int i = 0; i < m_otherHeaders.length; i++)
 		{
 			String header = m_otherHeaders[i];
@@ -105,7 +126,25 @@ public class GnuplotScatterplot extends TwoDimensionalPlotFunction
 			{
 				out.append(", ");
 			}
-			out.append("\"-\" u 1:").append(i + 2).append(" t \"").append(header).append("\" w linespoints");
+			out.append("\"-\" u 1:");
+			if (m_stacked)
+			{
+				out.append("(");
+				for (int j = 2; j <= m_otherHeaders.length - i + 1; j++)
+				{
+					if (j > 2)
+					{
+						out.append("+");
+					}
+					out.append("$").append(j);
+				}
+				out.append(")");
+			}
+			else
+			{
+				out.append(i + 2);
+			}
+			out.append(" t \"").append(header).append("\" w ").append(style);
 		}
 		out.append("\n");
 		// Repeat the data as many times as there are columns
@@ -126,12 +165,18 @@ public class GnuplotScatterplot extends TwoDimensionalPlotFunction
 		}
 		Collections.sort(tuples, new TupleComparator(m_xHeader));
 		// First, fetch all lines
+		String missing_symbol = s_datafileMissing;
+		if (m_stacked)
+		{
+			// In a stacked plot, we must treat missing data as 0
+			missing_symbol = "0";
+		}
 		for (Tuple tuple : tuples)
 		{
 			out.append(format(tuple.get(m_xHeader)));
 			for (String key : m_otherHeaders)
 			{
-				out.append(",").append(format(tuple.get(key)));
+				out.append(",").append(format(tuple.get(key), missing_symbol));
 			}
 			out.append("\n");
 		}
