@@ -36,9 +36,17 @@ public class DemoTest
 		p.pull();
 		p.pull();
 		p.pull();
-		ProvenanceNode root = it.getProvenanceTree(add, OUTPUT, 2);
+		p.pull();
+		p.pull();
+		//ProvenanceNode root = it.getProvenanceTree(add, OUTPUT, 2);
 		DotProvenanceTreeRenderer renderer = new DotProvenanceTreeRenderer();
-		String dot_file = renderer.toDot(root);
+		int n = 5;
+		ProvenanceNode[] trees = new ProvenanceNode[n];
+		for (int i = 0; i < n; i++)
+		{
+			trees[i] = it.getProvenanceTree(add, OUTPUT, i);
+		}
+		String dot_file = renderer.toDot(trees);
 		System.out.println(dot_file);
 	}
 }

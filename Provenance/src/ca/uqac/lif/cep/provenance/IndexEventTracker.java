@@ -192,7 +192,10 @@ public class IndexEventTracker implements EventTracker
 	}
 	
 	/**
-	 * Gets the provenance tree for a given event.
+	 * Gets the provenance tree for a given event. The provenance tree is the
+	 * directed acyclic graph of all the provenance nodes on which the current node
+	 * depends. It is the reverse of the impact tree.
+	 * @see #getImpactTree(int, int, int)
 	 * @param proc_id
 	 * @param stream_index
 	 * @param stream_pos
@@ -207,6 +210,54 @@ public class IndexEventTracker implements EventTracker
 		}
 		ProvenanceNode expanded_node = new ProvenanceNode(node.getNodeFunction());
 		for (ProvenanceNode parent : node.getParents())
+		{
+			ProvenanceNode new_parent;
+			NodeFunction nf = parent.getNodeFunction();
+			if (nf instanceof InputValue)
+			{
+				InputValue iv = (InputValue) nf;
+				// Try to find what processor produced the event
+				// that was given as an input to this processor
+				ProcessorConnection pc = getConnection(m_inputConnections, proc_id, iv.getStreamIndex());
+				if (pc == null)
+				{
+					// Not found; declare a broken chain
+					new_parent = BrokenChain.instance;
+				}
+				else
+				{
+					// Found it: recurse
+					new_parent = getProvenanceTree(pc.m_procId, pc.m_streamIndex, iv.getStreamPosition());
+				}
+			}
+			else
+			{
+				new_parent = parent;
+			}
+			expanded_node.addParent(new_parent);
+		}
+		return expanded_node;
+	}
+	
+	/**
+	 * Gets the impact tree for a given event. The impact tree is the directed
+	 * acyclic graph of all the downstream provenance nodes that depend on the
+	 * given node.
+	 * @see #getProvenanceTree(int, int, int)
+	 * @param proc_id
+	 * @param stream_index
+	 * @param stream_pos
+	 * @return
+	 */
+	public /*@NotNull*/ ProvenanceNode getImpactTree(int proc_id, int stream_index, int stream_pos)
+	{
+		ProvenanceNode node = fetchProvenanceNode(proc_id, stream_index, stream_pos);
+		if (node == null)
+		{
+			return BrokenChain.instance;
+		}
+		ProvenanceNode expanded_node = new ProvenanceNode(node.getNodeFunction());
+		for (ProvenanceNode parent : node.getChildren())
 		{
 			ProvenanceNode new_parent;
 			NodeFunction nf = parent.getNodeFunction();
@@ -260,5 +311,23 @@ public class IndexEventTracker implements EventTracker
 		{
 			return "P" + m_procId + "." + m_streamIndex; 
 		}
+	}
+	
+	/**
+	 * Returns the size of this tracker. This corresponds to the number of unique
+	 * input-output associations that are stored.
+	 * @return The size
+	 */
+	public int getSize()
+	{
+		int size = 0;
+		for (Map.Entry<Integer,Map<Integer,Map<Integer,ProvenanceNode>>> m1 : m_mapping.entrySet())
+		{
+			for (Map.Entry<Integer,Map<Integer,ProvenanceNode>> m2 : m1.getValue().entrySet())
+			{
+				size += m2.getValue().size();
+			}
+		}
+		return size;
 	}
 }
