@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep.concurrency;
 
 import ca.uqac.lif.cep.GroupProcessor;
+import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pullable;
 
 public class PullThreadGroup extends GroupProcessor
@@ -66,14 +67,14 @@ public class PullThreadGroup extends GroupProcessor
 	}
 
 	@Override
-	public void start()
+	public void start() throws ProcessorException
 	{
 		super.start();
 		m_pullable.start();
 	}
 
 	@Override
-	public void stop()
+	public void stop() throws ProcessorException
 	{
 		super.stop();
 		m_pullable.stop();

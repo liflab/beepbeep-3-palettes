@@ -7,6 +7,7 @@ import org.junit.Test;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.GroupProcessor;
+import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSource;
@@ -108,7 +109,7 @@ public class PullPipelineTest
 	}
 	
 	@Test(timeout=10000)
-	public void testClone1() throws ConnectorException
+	public void testClone1() throws ConnectorException, ProcessorException
 	{
 		GroupProcessor gp = new GroupProcessor(0, 1);
 		QueueSource qs = new QueueSource(1);

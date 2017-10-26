@@ -24,6 +24,7 @@ import java.util.Queue;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.SingleProcessor;
@@ -140,7 +141,7 @@ public class ThreadPullableTest
 	 * @throws ConnectorException 
 	 */
 	@Test(timeout=10000)
-	public void testContinuousGroup1() throws ConnectorException
+	public void testContinuousGroup1() throws ConnectorException, ProcessorException
 	{
 		DelayProcessor delay_1 = new DelayProcessor(0, 500);
 		PullThreadGroup group = new PullThreadGroup(0, 1);
