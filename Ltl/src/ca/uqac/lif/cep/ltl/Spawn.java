@@ -570,7 +570,7 @@ class Spawn extends Processor
 	}
 
 	@Override
-	public synchronized void start()
+	public synchronized void start() throws ProcessorException
 	{
 		super.start();
 		if (m_instances == null)
@@ -584,7 +584,7 @@ class Spawn extends Processor
 	}
 
 	@Override
-	public synchronized void stop()
+	public synchronized void stop() throws ProcessorException
 	{
 		super.stop();
 		if (m_instances == null)

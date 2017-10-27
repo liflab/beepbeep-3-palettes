@@ -8,6 +8,7 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.functions.Function;
@@ -193,7 +194,7 @@ public class BooleanQuantifier extends SingleProcessor
 	}
 
 	@Override
-	synchronized public void start()
+	synchronized public void start() throws ProcessorException
 	{
 		super.start();
 		for (Processor spawn : m_instances)
@@ -203,7 +204,7 @@ public class BooleanQuantifier extends SingleProcessor
 	}
 
 	@Override
-	synchronized public void stop()
+	synchronized public void stop() throws ProcessorException
 	{
 		super.stop();
 		for (Processor spawn : m_instances)

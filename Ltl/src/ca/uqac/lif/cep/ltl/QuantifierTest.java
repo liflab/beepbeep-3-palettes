@@ -356,7 +356,7 @@ public class QuantifierTest
 	}
 	
 	@Test
-	public void testForAll3() throws ConnectorException
+	public void testForAll3() throws ConnectorException, ProcessorException
 	{
 		ThreadManager tm = new ThreadManager(-1); // Unlimited threads
 		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ContextPlaceholder("x"), new ContextPlaceholder("z"))), 0);
