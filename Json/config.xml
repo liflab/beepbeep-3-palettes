@@ -60,7 +60,7 @@
       <name>json-lif</name>
       <classname>ca.uqac.lif.json.JsonMain</classname>
       <files>
-        <zip>https://github.com/liflab/json-lif/releases/download/v1.4/json-lif-1.4.zip</zip>
+        <zip>https://github.com/liflab/json-lif/releases/download/v1.6.2/json-lif-1.6.2.zip</zip>
       </files>
     </dependency>
   </dependencies>

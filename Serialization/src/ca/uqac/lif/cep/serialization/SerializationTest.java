@@ -80,6 +80,33 @@ public class SerializationTest
 		assertEquals(c3, co);
 	}
 	
+	@Test
+	public void testCompoundString1() throws ConnectorException
+	{
+		QueueSource source = new QueueSource();
+		CompoundObject c1 = new CompoundObject(3, "foo", null);
+		CompoundObject c2 = new CompoundObject(8, "bar", new CompoundObject(7, "arf", null));
+		CompoundObject c3 = new CompoundObject(5, "baz", null);
+		source.addEvent(c1);
+		source.addEvent(c2);
+		source.addEvent(c3);
+		FunctionProcessor ser = new FunctionProcessor(new JsonSerializeString());
+		FunctionProcessor deser = new FunctionProcessor(new JsonDeserializeString<CompoundObject>(CompoundObject.class));
+		Connector.connect(source, ser);
+		Connector.connect(ser, deser);
+		Pullable p = deser.getPullableOutput();
+		CompoundObject co;
+		Object o = p.pull();
+		assertNotNull(o);
+		assertTrue(o instanceof CompoundObject);
+		co = (CompoundObject) o;
+		assertEquals(c1, co);
+		co = (CompoundObject) p.pull();
+		assertEquals(c2, co);
+		co = (CompoundObject) p.pull();
+		assertEquals(c3, co);
+	}
+	
 	/**
 	 * A dummy object used to test serialization
 	 */

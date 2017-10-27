@@ -19,8 +19,6 @@ package ca.uqac.lif.cep.serialization;
 
 import java.util.Set;
 
-import ca.uqac.lif.json.JsonElement;
-
 /**
  * Function that deserializes a JSON <em>string</em> into an object
  * @param <U> The type of the deserialized objects
@@ -36,6 +34,6 @@ public class JsonDeserializeString<U> extends DeserializeEvents<String,U>
 	@Override
 	public void getInputTypesFor(Set<Class<?>> classes, int index) 
 	{
-		classes.add(JsonElement.class);
+		classes.add(String.class);
 	}
 }
