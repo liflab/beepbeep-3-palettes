@@ -19,25 +19,23 @@ package ca.uqac.lif.cep.serialization;
 
 import java.util.Set;
 
-import ca.uqac.lif.azrael.json.JsonSerializer;
-import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.json.JsonElement;
 
 /**
- * Function that serializes its input into a JSON element
+ * Function that deserializes a JSON <em>string</em> into an object
+ * @param <U> The type of the deserialized objects
  * @author Sylvain Hallé
  */
-public class JsonSerializeEvents extends SerializeEvents<JsonElement>
+public class JsonDeserializeString<U> extends DeserializeEvents<String,U>
 {
-	public JsonSerializeEvents()
+	public JsonDeserializeString(Class<U> output_type)
 	{
-		super(new JsonSerializer(), JsonElement.class);
+		super(new JsonStringSerializer(), String.class, output_type);
 	}
 
 	@Override
 	public void getInputTypesFor(Set<Class<?>> classes, int index) 
 	{
-		classes.add(Variant.class);
+		classes.add(JsonElement.class);
 	}
-
 }

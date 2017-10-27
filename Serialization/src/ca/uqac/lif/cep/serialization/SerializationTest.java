@@ -36,8 +36,8 @@ public class SerializationTest
 		source.addEvent(1.3f);
 		source.addEvent(2.6f);
 		source.addEvent(3.9f);
-		FunctionProcessor ser = new FunctionProcessor(new JsonSerializeEvents());
-		FunctionProcessor deser = new FunctionProcessor(new JsonDeserializeEvents<Number>(Number.class));
+		FunctionProcessor ser = new FunctionProcessor(new JsonSerialize());
+		FunctionProcessor deser = new FunctionProcessor(new JsonDeserialize<Number>(Number.class));
 		Connector.connect(source, ser);
 		Connector.connect(ser, deser);
 		Pullable p = deser.getPullableOutput();
@@ -63,8 +63,8 @@ public class SerializationTest
 		source.addEvent(c1);
 		source.addEvent(c2);
 		source.addEvent(c3);
-		FunctionProcessor ser = new FunctionProcessor(new JsonSerializeEvents());
-		FunctionProcessor deser = new FunctionProcessor(new JsonDeserializeEvents<CompoundObject>(CompoundObject.class));
+		FunctionProcessor ser = new FunctionProcessor(new JsonSerialize());
+		FunctionProcessor deser = new FunctionProcessor(new JsonDeserialize<CompoundObject>(CompoundObject.class));
 		Connector.connect(source, ser);
 		Connector.connect(ser, deser);
 		Pullable p = deser.getPullableOutput();

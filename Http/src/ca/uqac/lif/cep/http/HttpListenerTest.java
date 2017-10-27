@@ -19,104 +19,87 @@ package ca.uqac.lif.cep.http;
 
 import static org.junit.Assert.*;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Queue;
 
+import org.junit.After;
 import org.junit.Test;
 
-import com.sun.net.ssl.HttpsURLConnection;
-
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.ProcessorException;
+import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.jerrydog.RequestCallback.Method;
 
 public class HttpListenerTest
 {
-	@Test
+	HttpDownstreamGateway listener = null;
+	
+	@After
+	public void stopListener() throws ProcessorException
+	{
+		if (listener != null)
+		{
+			listener.stop();
+		}
+	}
+	
+	@Test(timeout = 2000)
 	public void testPushGet1() throws Exception
 	{
-		HttpListener listener = new HttpListener(10123, "/foo", Method.GET);
+		listener = new HttpDownstreamGateway(10123, "/foo", Method.GET);
 		listener.setPushOnReceive(true);
 		QueueSink sink = new QueueSink();
 		Queue<Object> q = sink.getQueue();
 		Connector.connect(listener, sink);
 		listener.start();
-		sendGet("http://localhost:10123/foo?5");
+		HttpGateway.sendGet("http://localhost:10123/foo?5");
 		Thread.sleep(100);
 		assertFalse(q.isEmpty());
 		String s = (String) q.poll();
 		assertEquals("5", s);
-		sendGet("http://localhost:10123/foo?abcd");
+		HttpGateway.sendGet("http://localhost:10123/foo?abcd");
+		Thread.sleep(100);
+		s = (String) q.poll();
+		assertEquals("abcd", s);
+	}
+	
+	@Test(timeout = 2000)
+	public void testGet1() throws Exception
+	{
+		listener = new HttpDownstreamGateway(10125, "/foo", Method.GET);
+		listener.setPushOnReceive(false);
+		listener.start();
+		Pullable p = listener.getPullableOutput();
+		HttpGateway.sendGet("http://localhost:10125/foo?5");
+		Thread.sleep(100);
+		assertTrue(p.hasNext());
+		String s = (String) p.pull();
+		assertEquals("5", s);
+		HttpGateway.sendGet("http://localhost:10125/foo?abcd");
+		Thread.sleep(100);
+		s = (String) p.pull();
+		assertEquals("abcd", s);
+	}
+	
+	@Test(timeout = 2000)
+	public void testPushPost1() throws Exception
+	{
+		HttpDownstreamGateway listener = new HttpDownstreamGateway(10124, "/foo", Method.POST);
+		listener.setPushOnReceive(true);
+		QueueSink sink = new QueueSink();
+		Queue<Object> q = sink.getQueue();
+		Connector.connect(listener, sink);
+		listener.start();
+		HttpGateway.sendPost("http://localhost:10124/foo", "5");
+		Thread.sleep(100);
+		assertFalse(q.isEmpty());
+		String s = (String) q.poll();
+		assertEquals("5", s);
+		HttpGateway.sendPost("http://localhost:10124/foo", "abcd");
 		Thread.sleep(100);
 		s = (String) q.poll();
 		assertEquals("abcd", s);
 		
-	}
-	
-	protected static String sendGet(String url) throws Exception
-	{
-		URL obj = new URL(url);
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-		// optional default is GET
-		con.setRequestMethod("GET");
-
-		//add request header
-		con.setRequestProperty("User-Agent", "Dummy agent");
-
-		int responseCode = con.getResponseCode();
-		BufferedReader in = new BufferedReader(
-		        new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuilder response = new StringBuilder();
-
-		while ((inputLine = in.readLine()) != null)
-		{
-			response.append(inputLine);
-		}
-		in.close();
-		return response.toString();
-	}
-	
-	protected static String sendPost() throws Exception 
-	{
-		String url = "https://selfsolve.apple.com/wcResults.do";
-		URL obj = new URL(url);
-		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
-
-		//add reuqest header
-		con.setRequestMethod("POST");
-		con.setRequestProperty("User-Agent", "Dummy Agent");
-		con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-
-		String urlParameters = "sn=C02G8416DRJM&cn=&locale=&caller=&num=12345";
-
-		// Send post request
-		con.setDoOutput(true);
-		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-		wr.writeBytes(urlParameters);
-		wr.flush();
-		wr.close();
-
-		int responseCode = con.getResponseCode();
-		System.out.println("\nSending 'POST' request to URL : " + url);
-		System.out.println("Post parameters : " + urlParameters);
-		System.out.println("Response Code : " + responseCode);
-
-		BufferedReader in = new BufferedReader(
-		        new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuffer response = new StringBuffer();
-
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
-		}
-		in.close();
-		return response.toString();
 	}
 
 }

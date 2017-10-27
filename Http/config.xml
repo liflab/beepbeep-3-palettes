@@ -61,7 +61,7 @@
       <name>Jerrydog</name>
       <classname>ca.uqac.lif.jerrydog.Server</classname>
       <files>
-        <zip>https://github.com/sylvainhalle/Jerrydog/releases/download/v0.3/jerrydog-0.3.zip</zip>
+        <zip>https://github.com/sylvainhalle/Jerrydog/releases/download/v0.3.1/jerrydog-0.3.1.zip</zip>
       </files>
     </dependency>
   </dependencies>
