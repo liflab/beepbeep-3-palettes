@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2017 Sylvain Hallï¿½
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -48,7 +48,7 @@ import ca.uqac.lif.jerrydog.Server;
  * The downstream gateway generally works in tandem with an <em>upstream</em>
  * gateway, which works in reverse.
  * 
- * @author Sylvain Hallé
+ * @author Sylvain HallÃ©
  *
  */
 public class HttpDownstreamGateway extends Source
@@ -196,7 +196,8 @@ public class HttpDownstreamGateway extends Source
 	@Override
 	public HttpDownstreamGateway clone()
 	{
-		return new HttpDownstreamGateway(m_port, m_url, m_method);
+		// It doesn't make much sense to clone a network processor
+		throw new UnsupportedOperationException();
 	}
 
 	protected class ListenerCallback extends RequestCallback

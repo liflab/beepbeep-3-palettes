@@ -24,27 +24,27 @@ import java.util.Queue;
 import org.junit.After;
 import org.junit.Test;
 
+import com.sun.net.httpserver.HttpExchange;
+
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.tmf.QueueSink;
+import ca.uqac.lif.cep.tmf.QueueSource;
+import ca.uqac.lif.jerrydog.CallbackResponse;
+import ca.uqac.lif.jerrydog.RequestCallback;
 import ca.uqac.lif.jerrydog.RequestCallback.Method;
+import ca.uqac.lif.jerrydog.Server;
 
 public class HttpListenerTest
 {
 	HttpDownstreamGateway listener = null;
 	
-	@After
-	public void stopListener() throws ProcessorException
-	{
-		if (listener != null)
-		{
-			listener.stop();
-		}
-	}
+	HttpUpstreamGateway hug = null;
 	
 	@Test(timeout = 2000)
-	public void testPushGet1() throws Exception
+	public void testPushDownstreamGet1() throws Exception
 	{
 		listener = new HttpDownstreamGateway(10123, "/foo", Method.GET);
 		listener.setPushOnReceive(true);
@@ -64,7 +64,7 @@ public class HttpListenerTest
 	}
 	
 	@Test(timeout = 2000)
-	public void testGet1() throws Exception
+	public void testDownstreamGet1() throws Exception
 	{
 		listener = new HttpDownstreamGateway(10125, "/foo", Method.GET);
 		listener.setPushOnReceive(false);
@@ -82,7 +82,7 @@ public class HttpListenerTest
 	}
 	
 	@Test(timeout = 2000)
-	public void testPushPost1() throws Exception
+	public void testPushDownstreamPost1() throws Exception
 	{
 		HttpDownstreamGateway listener = new HttpDownstreamGateway(10124, "/foo", Method.POST);
 		listener.setPushOnReceive(true);
@@ -99,7 +99,94 @@ public class HttpListenerTest
 		Thread.sleep(100);
 		s = (String) q.poll();
 		assertEquals("abcd", s);
+	}
+	
+	@Test(timeout = 10000)
+	public void testPullUpstream() throws Exception
+	{
+		QueueSource qs = new QueueSource();
+		qs.addEvent("A");
+		qs.addEvent("B");
+		qs.addEvent("C");
+		HttpUpstreamGateway hug = new HttpUpstreamGateway("http://localhost:11123/foo", Method.GET, "/pull", 11124);
+		Connector.connect(qs, hug);
+		hug.start();
+		String s = HttpGateway.sendGet("http://localhost:11124/pull");
+		assertNotNull(s);
+		s = s.trim();
+		assertEquals("A", s);
+		s = HttpGateway.sendGet("http://localhost:11124/pull");
+		assertNotNull(s);
+		s = s.trim();
+		assertEquals("B", s);
+		s = HttpGateway.sendGet("http://localhost:11124/pull");
+		assertNotNull(s);
+		s = s.trim();
+		assertEquals("C", s);
+	}
+	
+	@Test(timeout = 10000)
+	public void testPushUpstream() throws Exception
+	{
+		HttpUpstreamGateway hug = new HttpUpstreamGateway("http://localhost:11123/push");
+		hug.start();
+		Pushable p = hug.getPushableInput();
+		Server test_server = new Server();
+		test_server.setServerPort(11123);
+		TestCallback cb = new TestCallback();
+		test_server.registerCallback(cb);
+		test_server.startServer();
+		Thread.sleep(100);
+		p.push("A");
+		Thread.sleep(100);
+		assertEquals(1, cb.m_requestCount);
+		assertEquals("A", cb.m_lastBodyContents);
+		p.push("B");
+		Thread.sleep(100);
+		assertEquals(2, cb.m_requestCount);
+		assertEquals("B", cb.m_lastBodyContents);
+		p.push("C");
+		Thread.sleep(100);
+		assertEquals(3, cb.m_requestCount);
+		assertEquals("C", cb.m_lastBodyContents);
+		test_server.stopServer();
+	}
+	
+	@After
+	public void stopListener() throws ProcessorException
+	{
+		if (listener != null)
+		{
+			listener.stop();
+		}
+		if (hug != null)
+		{
+			hug.stop();
+		}
+	}
+	
+	protected static class TestCallback extends RequestCallback
+	{
+		public String m_lastBodyContents = "";
 		
+		public int m_requestCount = 0;
+		
+		@Override
+		public boolean fire(HttpExchange t)
+		{
+			String path = t.getRequestURI().getPath();
+			return t.getRequestMethod().compareToIgnoreCase("POST") == 0 && path.startsWith("/push");
+		}
+
+		@Override
+		public CallbackResponse process(HttpExchange t)
+		{
+			CallbackResponse cbr = new CallbackResponse(t);
+			cbr.setCode(CallbackResponse.HTTP_OK);
+			m_lastBodyContents = Server.streamToString(t.getRequestBody()).trim();
+			m_requestCount++;
+			return cbr;
+		}
 	}
 
 }

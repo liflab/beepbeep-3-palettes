@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2017 Sylvain Hallï¿½
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -19,13 +19,14 @@ package ca.uqac.lif.cep.http;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
  * Utility methods for handling HTTP requests.
- * @author Sylvain Hallé
+ * @author Sylvain Hallï¿½
  */
 public abstract class HttpGateway 
 {
@@ -42,7 +43,7 @@ public abstract class HttpGateway
 	 * @return The string of the HTTP response
 	 * @throws Exception
 	 */
-	public static String sendGet(String url) throws Exception
+	public static String sendGet(String url) throws IOException
 	{
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -70,7 +71,7 @@ public abstract class HttpGateway
 	 * @return The string of the HTTP response
 	 * @throws Exception
 	 */
-	public static String sendPost(String url, String payload) throws Exception 
+	public static String sendPost(String url, String payload) throws IOException 
 	{
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
