@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep.http;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.util.Queue;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -60,6 +61,12 @@ public class HttpUpstreamGateway extends Sink
 	 * pull URL
 	 */
 	protected Method m_pullMethod = Method.GET;
+	
+	/**
+	 * The number of times the processor will retry when it fails to
+	 * establish a connection to the other end
+	 */
+	protected static final int s_numRetries = 2;
 
 	public HttpUpstreamGateway(String push_url, Method push_method, String pull_url, int pull_port)
 	{
@@ -101,13 +108,27 @@ public class HttpUpstreamGateway extends Sink
 		String payload = (String) inputs[0];
 		if (m_pushMethod == Method.POST)
 		{
-			try 
+			for (int i = 0; i < s_numRetries; i++)
 			{
-				HttpGateway.sendPost(m_pushUrl, payload);
-			} 
-			catch (IOException e)
-			{
-				throw new ProcessorException(e);
+				try 
+				{
+					HttpGateway.sendPost(m_pushUrl, payload);
+				}
+				catch (ConnectException ce)
+				{
+					try 
+					{
+						Thread.sleep(500);
+					}
+					catch (InterruptedException e) 
+					{
+						// Do nothing
+					}
+				}
+				catch (IOException e)
+				{
+					throw new ProcessorException(e);
+				}
 			}
 		}
 		else if (m_pushMethod == Method.GET)
