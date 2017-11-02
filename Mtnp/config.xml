@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  Configuration file for AntRun.
+  
+  Use this file to override the default properties contained
+  in build.xml. For example, to override the build.jar.filename
+  property (which sets the name of the compiled jar file), add
+  an element
+  
+  <jar>
+    <filename>foo</filename>
+  </jar>
+  
+  inside the <build> element.
+  
+  **Caveat emptor:** in some cases, changing this file and running ant
+  again will result in Ant using a cached version of the old file! Run
+  "ant dummy" to make sure that the correct data is being read. Otherwise
+  you might need to run "ant clean" and start over.
+-->
+<build>
+  <!-- Uncomment any of these if you want to override the build
+       script's default values -->
+
+  <!-- The project's name -->
+  <name>Manipulate Tables N'Plots extension for BeepBeep 3</name>
+  
+  <!-- The project's version number -->
+  <version>0.1</version>
+  
+  <!-- The project's author. Currently this only
+  shows up in the footer of the Javadoc documentation. -->
+  <author>Sylvain Hall&#233;</author>
+  
+  <!-- The project's main class -->
+  <mainclass>ca.uqac.lif.cep.mtnp.PackageExtension</mainclass>
+  
+  <!-- Installation folders -->
+  <srcdir>src</srcdir>
+  <libdir>../lib</libdir>
+  <bindir>bin</bindir>
+  <docdir>doc</docdir>
+  <depdir>dep</depdir>
+  <test>
+    <srcdir>src</srcdir>
+    <bindir>bin</bindir>
+  </test>
+  
+  <!-- Output jar -->
+  <jar>
+    <filename>../mtnp.jar</filename>
+    <withdoc>false</withdoc>
+  </jar>
+  
+  <!--
+    Write JAR dependencies here.
+  -->
+  <dependencies>
+    <dependency>
+    <!-- json-lif. Used to parse JSON messages -->
+      <name>MTNP</name>
+      <classname>ca.uqac.lif.mtnp.DataFormatter</classname>
+      <files>
+        <zip>https://github.com/liflab/mtnp/releases/download/v0.1.4-alpha/mtnp-0.1.4-alpha.zip</zip>
+      </files>
+    </dependency>
+  </dependencies>
+</build>
