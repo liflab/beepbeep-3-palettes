@@ -23,15 +23,31 @@
   
   <!-- The project's display name -->
   <property name="build.name" value="BeepBeep 3 Palettes"/>
+
+  <!-- The base name of the big ZIP file -->
+  <property name="build.zip.basename" value="beepbeep-3-palettes"/>
+
+  <!-- Run the Ant timestamp task -->
+  <tstamp/>
   
   <!-- The project's version number -->
-  <property name="build.version" value="1.0"/>
+  <property name="build.version" value="${DSTAMP}"/>
   
   <!-- The project's author -->
   <property name="build.author" value="Laboratoire d'informatique formelle"/>
   
   <!-- The folder where the Javadoc files should go -->
   <property name="build.docdir" value="doc"/>
+
+  <!-- Target: zip
+       Zips all compiled JARs, except beepbeep-3.jar -->
+  <target name="zip" description="Zip all the JARs">
+    <zip basedir="."
+         destfile="${build.zip.basename}-v${build.version}.zip"
+         filesonly="true"
+         includes="*.jar"
+         excludes="beepbeep-3.jar" />
+  </target>
 
   <!-- Target: javadoc
        Generates the javadoc associated to each project

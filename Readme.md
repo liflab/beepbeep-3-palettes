@@ -13,11 +13,19 @@ Available palettes
 
 At the moment, the folder contains the following palettes:
 
+- `Apache`: for parsing Apache log files
+- `Concurrency`: for using multi-threading in processors
+- `Diagnostics`: to help debugging processor chains
 - `Fol`: for manipulation of first-order logic statements
 - `Fsm`: for manipulation of extended finite-state machines
 - `Gnuplot`: for drawing plots from event streams
+- `Http`: send and receive events over a network
 - `Json`: to read and write events in the JSON format
 - `Ltl`: to express properties in Linear Temporal Logic
+- `Mtnp`: front-end to the MTNP library to manipulate tables and plots
+- `Provenance`: traceability in processor chains
+- `Serialization`: serialize/deserialize objects with the
+   [Azrael](https://github.com/sylvainhalle/Azrael) library
 - `Sets`: to manipulate streams of sets
 - `Signal`: basic signal processing functions (peak detection, etc.)
 - `Tuples`: for manipulating tuples and using BeepBeep as a JDBC driver
@@ -35,7 +43,7 @@ Building the palettes
 ### tl;dr
 
 1. Build or download `beepbeep-3.jar` and put it in the root of this
-   repository,
+   repository.
 2. Run the script `build-all.sh` to build all palettes in succession.
 3. If everything goes well, all the resulting jars will be created at the
    root of the repository. Move them around and enjoy.
@@ -102,6 +110,18 @@ these tests in HTML format is availble in the folder `tests/junit`, which
 is automatically created. Code coverage is also computed with
 [JaCoCo](http://www.eclemma.org/jacoco/); a detailed report is available
 in the folder `tests/coverage`.
+
+### Creating a fat Zip file
+
+Once all the palettes have been built, a (fat) zip file containing all the
+generated JARs can be creating by typing:
+
+    ant zip
+
+in the root folder of this repository. The resulting file will be called
+`beepbeep-3-palettes-vYYYYMMDD.zip`, where `YYYYMMDD` is the current date.
+Some precompiled bundles are available in GitHub's *Releases* page, but they
+may not contain the latest version of each palette. Use at your own risk!
 
 Warning                                                          {#warning}
 -------
