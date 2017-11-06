@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2017 Sylvain HallÃ©
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -32,9 +32,14 @@ import ca.uqac.lif.cep.SingleProcessor;
  * Accumulates events that are being pushed, and sends them in a burst
  * into a list at predefined time intervals.
  * <p>
- * This processor only works in <strong>push</strong> mode.
+ * This processor only works in <strong>push</strong> mode. It is represented
+ * graphically as follows:
+ * <p>
+ * <a href="{@docRoot}/doc-files/ListPacker.png"><img
+ *   src="{@docRoot}/doc-files/ListPacker.png"
+ *   alt="Processor graph"></a>
  * 
- * @author Sylvain Hallé
+ * @author Sylvain HallÃ©
  */
 public class ListPackerPush extends SingleProcessor 
 {	

@@ -31,6 +31,15 @@ import ca.uqac.lif.jerrydog.RequestCallback;
 import ca.uqac.lif.jerrydog.RequestCallback.Method;
 import ca.uqac.lif.jerrydog.Server;
 
+/**
+ * Sends character strings over the network through HTTP requests.
+ * Graphically, this processor is represented as:
+ * <p>
+ * <a href="{@docRoot}/doc-files/HttpUpstreamGateway.png"><img
+ *   src="{@docRoot}/doc-files/HttpUpstreamGateway.png"
+ *   alt="Processor graph"></a>
+ * @author Sylvain Hallé
+ */
 public class HttpUpstreamGateway extends Sink
 {
 

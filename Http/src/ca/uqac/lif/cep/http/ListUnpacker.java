@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2017 Sylvain Hallï¿½
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -25,7 +25,13 @@ import ca.uqac.lif.cep.SingleProcessor;
 
 /**
  * Unpacks a list of objects by outputting its contents as separate events.
- * @author Sylvain Hallé
+ * This processor is represented graphically as follows:
+ * <p>
+ * <a href="{@docRoot}/doc-files/ListUnpacker.png"><img
+ *   src="{@docRoot}/doc-files/ListUnpacker.png"
+ *   alt="Processor graph"></a>
+ * 
+ * @author Sylvain HallÃ©
  */
 public class ListUnpacker extends SingleProcessor 
 {

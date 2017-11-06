@@ -28,6 +28,16 @@ import ca.uqac.lif.cep.functions.FunctionException;
 
 /**
  * Function that applies a serializer to its input argument.
+ * A {@link ca.uqac.lif.cep.functions.FunctionProcessor FunctionProcessor}
+ * that applies a serialization function will be depicted graphically by
+ * this pictogram:
+ * <p>
+ * <a href="{@docRoot}/doc-files/Serialization.png"><img
+ *   src="{@docRoot}/doc-files/Serialization.png"
+ *   alt="Processor graph"></a>
+ * <p>
+ * The picture represents an event that is "packed" into a box with a
+ * barcode, representing its serialized form.
  * @author Sylvain Hallé
  *
  * @param <T> The type of the serialized objects

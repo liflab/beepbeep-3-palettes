@@ -40,6 +40,11 @@ import ca.uqac.lif.jerrydog.Server;
  * HTTP requests on a given TCP port. When such a request comes in, it
  * extracts the payload from that request, and pushes it downstream as
  * a String event.
+ * Graphically, this processor is represented as:
+ * <p>
+ * <a href="{@docRoot}/doc-files/HttpDownstreamGateway.png"><img
+ *   src="{@docRoot}/doc-files/HttpDownstreamGateway.png"
+ *   alt="Processor graph"></a>
  * <p>
  * This processor can also be pulled; in such a case, if a pull URL has
  * been specified, the processor sends an HTTP request to that URL, and

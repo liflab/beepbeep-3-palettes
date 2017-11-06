@@ -27,6 +27,16 @@ import ca.uqac.lif.cep.functions.FunctionException;
 
 /**
  * Function that applies a deserializer to its input argument.
+ * A {@link ca.uqac.lif.cep.functions.FunctionProcessor FunctionProcessor}
+ * that applies a serialization function will be depicted graphically by
+ * this pictogram:
+ * <p>
+ * <a href="{@docRoot}/doc-files/Deserialization.png"><img
+ *   src="{@docRoot}/doc-files/Deserialization.png"
+ *   alt="Processor graph"></a>
+ * <p>
+ * The picture represents an event that is "unpacked" from a box with a
+ * barcode, representing its serialized form.
  * @author Sylvain Hallé
  *
  * @param <T> The type of the deserialized objects
