@@ -20,7 +20,6 @@ import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tmf.QueueSource.QueueFunction;
 import ca.uqac.lif.cep.tmf.Trim;
-import ca.uqac.lif.petitpoucet.BrokenChain;
 import ca.uqac.lif.petitpoucet.NodeFunction;
 import ca.uqac.lif.petitpoucet.ProvenanceNode;
 

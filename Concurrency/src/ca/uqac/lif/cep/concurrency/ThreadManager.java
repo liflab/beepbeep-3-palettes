@@ -308,5 +308,24 @@ public class ThreadManager implements Runnable
 	{
 		return m_threadsGranted;
 	}
+	
+	/**
+	 * Waits until all managed threads are done
+	 */
+	public void waitForAll()
+	{
+		for (ManagedThread mt : m_threads)
+		{
+			try 
+			{
+				mt.join();
+			}
+			catch (InterruptedException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 
 }

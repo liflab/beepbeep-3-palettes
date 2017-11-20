@@ -17,6 +17,8 @@
  */
 package ca.uqac.lif.cep.tuples;
 
+import ca.uqac.lif.cep.util.StringUtils;
+
 /**
  * Utility class to create instances of tuples with a fixed
  * schema
@@ -27,13 +29,13 @@ public final class FixedTupleBuilder
 {
 	private final String[] m_names;
 	
-	public FixedTupleBuilder(String[] names)
+	public FixedTupleBuilder(String ... names)
 	{
 		super();
 		m_names = names;
 	}
 	
-	public final TupleFixed createTuple(Object[] values)
+	public final TupleFixed createTuple(Object ... values)
 	{
 		return new TupleFixed(m_names, values);
 	}
@@ -43,30 +45,8 @@ public final class FixedTupleBuilder
 		Object[] eml_values = new Object[values.length];
 		for (int i = 0; i < values.length; i++)
 		{
-			eml_values[i] = createConstantFromString(values[i]);
+			eml_values[i] = StringUtils.createConstantFromString(values[i]);
 		}
 		return new TupleFixed(m_names, eml_values);
-	}	
-	
-	/**
-	 * Attempts to create a constant based on the contents of a string.
-	 * That is, if the string contains only digits, it will create an
-	 * number instead of a string.
-	 * @param s The string to read from
-	 * @return The constant
-	 */
-	public static Object createConstantFromString(String s)
-	{
-		int n = 0;
-		try
-		{
-			n = Integer.parseInt(s);
-		}
-		catch (NumberFormatException nfe)
-		{
-			// This is a string
-			return s;
-		}
-		return (Integer) n;
 	}
 }

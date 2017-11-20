@@ -37,10 +37,15 @@ public class TupleFeeder extends TokenFeeder
 	
 	public TupleFeeder()
 	{
+		this(null);
+	}
+	
+	public TupleFeeder(FixedTupleBuilder builder)
+	{
 		super();
 		m_separatorBegin = "";
 		m_separatorEnd = System.getProperty("line.separator");
-		m_builder = null;
+		m_builder = builder;
 	}
 	
 	@Override
