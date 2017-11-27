@@ -22,7 +22,6 @@ import java.util.ArrayDeque;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.UnaryFunction;
-import ca.uqac.lif.cep.util.Arrays;
 
 /**
  * Implementation of a three-valued logic. The "Troolean" type
@@ -279,11 +278,10 @@ public class Troolean extends Constant
 	 */
 	public static Value[] trooleanValues(Object[] values)
 	{
-		Object[] o_values = Arrays.toObjectArray(values);
-		Value[] out_values = new Value[o_values.length];
-		for (int i = 0; i < o_values.length; i++)
+		Value[] out_values = new Value[values.length];
+		for (int i = 0; i < values.length; i++)
 		{
-			out_values[i] = trooleanValue(o_values[i]);
+			out_values[i] = trooleanValue(values[i]);
 		}
 		return out_values;
 	}

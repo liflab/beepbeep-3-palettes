@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2016 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -15,19 +15,9 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.xml;
-
-import ca.uqac.lif.cep.Palette;
 
 /**
- * Palette object for the processor included in this package.
+ * Some examples of ESQL queries.
  * @author Sylvain Hallé
  */
-public class PackageExtension extends Palette
-{
-	public PackageExtension()
-	{
-		super(PackageExtension.class, "XML extension\n"
-				+ "(C) 2016 Sylvain Hallé, Université du Québec à Chicoutimi");
-	}
-}
+package queries;

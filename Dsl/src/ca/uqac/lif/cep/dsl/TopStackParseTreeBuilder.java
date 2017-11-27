@@ -15,19 +15,45 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.apache;
+package ca.uqac.lif.cep.dsl;
 
-import ca.uqac.lif.cep.Palette;
+import java.util.Stack;
+
+import ca.uqac.lif.bullwinkle.ParseNode;
 
 /**
- * Palette object for the processor included in this package.
+ * Expression parser that returns the top of the stack when the
+ * traversal of the parse tree is over.
  * @author Sylvain Hallé
+ *
+ * @param <T> The type of the object being returned
  */
-public class PackageExtension extends Palette
+public abstract class TopStackParseTreeBuilder<T> extends ExpressionParser<T>
 {
-	public PackageExtension()
+	@Override
+	public T build(ParseNode tree)
 	{
-		super(PackageExtension.class, "Apache log palette\n"
-				+ "(C) 2017 Sylvain Hallé, Université du Québec à Chicoutim");
+		m_stack = new Stack<Object>();
+		preVisit();
+		tree.postfixAccept(this);
+		m_builtObject = postVisit(m_stack);
+		return m_builtObject;
+	}
+	
+	@Override
+	public void preVisit()
+	{
+		// Nothing to do
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public T postVisit(Stack<Object> stack)
+	{
+		if (stack.isEmpty())
+		{
+			return null;
+		}
+		return (T) stack.peek();
 	}
 }

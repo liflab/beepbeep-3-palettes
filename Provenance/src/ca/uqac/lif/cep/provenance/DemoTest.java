@@ -29,9 +29,9 @@ public class DemoTest
 		FunctionProcessor add = new FunctionProcessor(Addition.instance);
 		IndexEventTracker it = new IndexEventTracker();
 		it.setTo(s1, s2, dec, add);
-		Connector.connect(s1, OUTPUT, add, LEFT, it);
-		Connector.connect(s2, OUTPUT, dec, INPUT, it);
-		Connector.connect(dec, OUTPUT, add, RIGHT, it);
+		Connector.connect(it, s1, OUTPUT, add, LEFT);
+		Connector.connect(it, s2, OUTPUT, dec, INPUT);
+		Connector.connect(it, dec, OUTPUT, add, RIGHT);
 		Pullable p = add.getPullableOutput();
 		p.pull();
 		p.pull();
