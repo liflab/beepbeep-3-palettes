@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep.ltl;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
@@ -29,9 +28,13 @@ import ca.uqac.lif.cep.tmf.Slicer;
 
 public abstract class FirstOrderSlicer extends GroupProcessor
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7575806838408310970L;
 	protected String m_variableName;
 	
-	FirstOrderSlicer(String variable_name, Function slicing_function, Processor p) throws ConnectorException
+	FirstOrderSlicer(String variable_name, Function slicing_function, Processor p) 
 	{
 		super(1, 1);
 		m_variableName = variable_name;
@@ -43,7 +46,7 @@ public abstract class FirstOrderSlicer extends GroupProcessor
 		associateOutput(0, merge, 0);
 	}
 	
-	FirstOrderSlicer(Function slicing_function, Processor p) throws ConnectorException
+	FirstOrderSlicer(Function slicing_function, Processor p) 
 	{
 		this(null, slicing_function, p);
 	}
@@ -52,6 +55,11 @@ public abstract class FirstOrderSlicer extends GroupProcessor
 	
 	protected class ContextSlicer extends Slicer
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 2022890932100571839L;
+
 		public ContextSlicer(Function func, Processor proc) 
 		{
 			super(func, proc);
@@ -67,7 +75,7 @@ public abstract class FirstOrderSlicer extends GroupProcessor
 		}
 		
 		@Override
-		public ContextSlicer clone()
+		public ContextSlicer duplicate()
 		{
 			return new ContextSlicer(getMergeFunction(), m_processor);
 		}

@@ -20,7 +20,6 @@ package ca.uqac.lif.cep.signal;
 import java.util.Queue;
 import java.util.ArrayDeque;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.numbers.NumberCast;
 
@@ -31,6 +30,11 @@ import ca.uqac.lif.cep.numbers.NumberCast;
  */
 public class Limiter extends SingleProcessor
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4340299428481717138L;
+
 	protected final int m_limit;
 	
 	protected int m_counter;
@@ -63,13 +67,13 @@ public class Limiter extends SingleProcessor
 		return true;
 	}
 
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) 
 	{
 		// TODO Auto-generated method stub
 	}
 	
 	@Override
-	public Limiter clone()
+	public Limiter duplicate()
 	{
 		return new Limiter(m_limit);
 	}

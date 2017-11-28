@@ -6,15 +6,14 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.EventFunction.InputValue;
-import ca.uqac.lif.cep.EventFunction.OutputValue;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.CumulativeProcessor;
 import ca.uqac.lif.cep.functions.CumulativeProcessor.StartValue;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.functions.Negation;
 import ca.uqac.lif.cep.numbers.Addition;
+import ca.uqac.lif.cep.provenance.EventFunction.InputValue;
+import ca.uqac.lif.cep.provenance.EventFunction.OutputValue;
 import ca.uqac.lif.cep.tmf.CountDecimate;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSource;
@@ -26,7 +25,7 @@ import ca.uqac.lif.petitpoucet.ProvenanceNode;
 public class IndexEventTrackerTest 
 {
 	@Test
-	public void testFunctionUnary() throws ConnectorException
+	public void testFunctionUnary() 
 	{
 		IndexEventTracker tracker = new IndexEventTracker();
 		FunctionProcessor add = new FunctionProcessor(Negation.instance);
@@ -45,7 +44,7 @@ public class IndexEventTrackerTest
 	}
 	
 	@Test
-	public void testFunctionBinary() throws ConnectorException
+	public void testFunctionBinary() 
 	{
 		IndexEventTracker tracker = new IndexEventTracker();
 		FunctionProcessor add = new FunctionProcessor(Addition.instance);
@@ -67,7 +66,7 @@ public class IndexEventTrackerTest
 	}
 	
 	@Test
-	public void testFunctionCumulative() throws ConnectorException
+	public void testFunctionCumulative() 
 	{
 		IndexEventTracker tracker = new IndexEventTracker();
 		CumulativeProcessor add = new CumulativeProcessor(new CumulativeFunction<Number>(Addition.instance));
@@ -108,7 +107,7 @@ public class IndexEventTrackerTest
 	}
 	
 	@Test
-	public void testCountDecimate() throws ConnectorException
+	public void testCountDecimate() 
 	{
 		int decimate_interval = 3;
 		QueueSource source = new QueueSource(1);
@@ -137,7 +136,7 @@ public class IndexEventTrackerTest
 	}
 	
 	@Test
-	public void testUnaryChain1() throws ConnectorException
+	public void testUnaryChain1() 
 	{
 		IndexEventTracker tracker = new IndexEventTracker();
 		FunctionProcessor add = new FunctionProcessor(Negation.instance);
@@ -162,7 +161,7 @@ public class IndexEventTrackerTest
 	}
 	
 	@Test
-	public void testUnaryChain2() throws ConnectorException
+	public void testUnaryChain2() 
 	{
 		IndexEventTracker tracker = new IndexEventTracker();
 		FunctionProcessor add = new FunctionProcessor(Negation.instance);

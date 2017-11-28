@@ -45,6 +45,11 @@ import ca.uqac.lif.cep.functions.FunctionException;
 public class MooreMachine extends UniformProcessor
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4726516823799558602L;
+
+	/**
 	 * A map from a state to the list of transitions from that
 	 * state
 	 */
@@ -279,7 +284,7 @@ public class MooreMachine extends UniformProcessor
 		}
 
 		@Override
-		public Transition clone()
+		public Transition duplicate()
 		{
 			Transition out = new Transition(this);
 			return out;
@@ -323,7 +328,7 @@ public class MooreMachine extends UniformProcessor
 		}
 
 		@Override
-		public TransitionOtherwise clone()
+		public TransitionOtherwise duplicate()
 		{
 			return new TransitionOtherwise(this);
 		}
@@ -336,7 +341,7 @@ public class MooreMachine extends UniformProcessor
 	}
 
 	@Override
-	public MooreMachine clone()
+	public MooreMachine duplicate()
 	{
 		MooreMachine out = new MooreMachine(getInputArity(), getOutputArity());
 		out.m_initialState = m_initialState;
@@ -348,7 +353,7 @@ public class MooreMachine extends UniformProcessor
 			List<Transition> new_lt = new ArrayList<Transition>();
 			for (Transition t : lt)
 			{
-				new_lt.add(t.clone());
+				new_lt.add(t.duplicate());
 			}
 			out.m_relation.put(k, new_lt);
 		}

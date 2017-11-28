@@ -22,7 +22,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.tmf.QueueSource;
@@ -30,7 +29,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
 public class SerializationTest
 {
 	@Test
-	public void testNumber1() throws ConnectorException
+	public void testNumber1() 
 	{
 		QueueSource source = new QueueSource();
 		source.addEvent(1.3f);
@@ -54,7 +53,7 @@ public class SerializationTest
 	}
 	
 	@Test
-	public void testCompound1() throws ConnectorException
+	public void testCompound1() 
 	{
 		QueueSource source = new QueueSource();
 		CompoundObject c1 = new CompoundObject(3, "foo", null);
@@ -81,7 +80,7 @@ public class SerializationTest
 	}
 	
 	@Test
-	public void testCompoundString1() throws ConnectorException
+	public void testCompoundString1() 
 	{
 		QueueSource source = new QueueSource();
 		CompoundObject c1 = new CompoundObject(3, "foo", null);

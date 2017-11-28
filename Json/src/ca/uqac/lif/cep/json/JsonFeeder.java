@@ -28,6 +28,11 @@ import ca.uqac.lif.json.JsonParser.JsonParseException;
  */
 public class JsonFeeder extends FunctionProcessor
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3128217070911763187L;
+
 	public JsonFeeder()
 	{
 		super(JsonParsingFunction.instance);

@@ -20,9 +20,6 @@ package ca.uqac.lif.cep.jdbc;
 import java.sql.ResultSet;
 
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.interpreter.Interpreter;
-import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
-import ca.uqac.lif.cep.io.PackageExtension;
 
 public class BeepBeepStatement extends EmptyStatement
 {

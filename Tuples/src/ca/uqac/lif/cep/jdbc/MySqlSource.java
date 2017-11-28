@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Queue;
 import java.util.ArrayDeque;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.tmf.Source;
 import ca.uqac.lif.cep.tuples.TupleMap;
 
@@ -40,6 +39,11 @@ import ca.uqac.lif.cep.tuples.TupleMap;
  */
 public class MySqlSource extends Source 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8364534944150327841L;
+
 	/**
 	 * The name of the database table to read from. Actually, this does not need
 	 * to be a table name, as any SQL expression that returns a table (e.g.
@@ -191,7 +195,7 @@ public class MySqlSource extends Source
 		return false;
 	}
 
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException 
+	public static void build(ArrayDeque<Object> stack) 
 	{
 		String password = (String) stack.pop();
 		stack.pop(); // PASSWORD
@@ -209,7 +213,7 @@ public class MySqlSource extends Source
 	}
 	
 	@Override
-	public MySqlSource clone()
+	public MySqlSource duplicate()
 	{
 		return new MySqlSource(m_username, m_password, m_databaseName, m_tableName);
 	}

@@ -20,6 +20,10 @@ import ca.uqac.lif.cep.numbers.NumberCast;
 public class PeakFinderTravelRise extends WindowProcessor
 {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8486306579411486021L;
 	protected static final float s_k = 1f;
 	
 	public PeakFinderTravelRise(int width)
@@ -66,7 +70,7 @@ public class PeakFinderTravelRise extends WindowProcessor
 	}
 	
 	@Override
-	public PeakFinderTravelRise clone()
+	public PeakFinderTravelRise duplicate()
 	{
 		return new PeakFinderTravelRise(m_windowWidth);
 	}

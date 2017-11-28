@@ -110,7 +110,7 @@ public class ExpandAsColumns extends UnaryFunction<Tuple, Tuple>
 	}
 	
 	@Override
-	public ExpandAsColumns clone()
+	public ExpandAsColumns duplicate()
 	{
 		return new ExpandAsColumns(m_columnName, m_columnValue);
 	}

@@ -23,7 +23,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.functions.Constant;
-import ca.uqac.lif.cep.functions.SimpleFunction;
 
 public class Predicate extends SimpleFunction
 {
@@ -141,7 +140,7 @@ public class Predicate extends SimpleFunction
 	}
 
 	@Override
-	public Predicate clone() 
+	public Predicate duplicate() 
 	{
 		Predicate pred = new Predicate(m_name, m_domainNames);
 		pred.m_definition.putAll(m_definition);
@@ -149,7 +148,7 @@ public class Predicate extends SimpleFunction
 	}
 
 	@Override
-	public Predicate clone(Context context) 
+	public Predicate duplicate(Context context) 
 	{
 		Predicate pred = new Predicate(m_name, m_domainNames);
 		pred.m_definition.putAll(m_definition);
@@ -293,7 +292,7 @@ public class Predicate extends SimpleFunction
 		}
 		
 		@Override
-		public Wildcard clone()
+		public Wildcard duplicate()
 		{
 			return this;
 		}

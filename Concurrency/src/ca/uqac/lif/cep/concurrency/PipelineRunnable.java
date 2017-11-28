@@ -21,15 +21,12 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Level;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.concurrency.ThreadManager.ManagedThread;
 import ca.uqac.lif.cep.tmf.QueueSource;
-import ca.uqac.lif.cep.util.BeepBeepLogger;
 
 /**
  * Computes all the outputs of a
@@ -117,7 +114,7 @@ class PipelineRunnable implements Runnable
 			m_managedThread.dispose();
 		}
 	}
-	
+
 	/**
 	 * Gets the processor instance associated to this pipeline runnable
 	 * @return The processor
@@ -177,21 +174,14 @@ class PipelineRunnable implements Runnable
 		QueueSource qs = new QueueSource();
 		qs.loop(false);
 		qs.addEvent(m_inputs[0]);
-		try
+		Connector.connect(qs, m_processor);
+		Pullable pullable = m_processor.getPullableOutput();
+		while (pullable.hasNext())
 		{
-			Connector.connect(qs, m_processor);
-			Pullable pullable = m_processor.getPullableOutput();
-			while (pullable.hasNext())
-			{
-				Object o = pullable.pull();
-				m_outQueueLock.lock();
-				m_outQueue.add(o);
-				m_outQueueLock.unlock();
-			}
-		}
-		catch (ConnectorException e)
-		{
-			BeepBeepLogger.logger.log(Level.SEVERE, "", e);
+			Object o = pullable.pull();
+			m_outQueueLock.lock();
+			m_outQueue.add(o);
+			m_outQueueLock.unlock();
 		}
 		m_done = true;
 		dispose();

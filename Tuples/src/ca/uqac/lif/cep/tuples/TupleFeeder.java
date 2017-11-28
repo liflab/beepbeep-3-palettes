@@ -20,7 +20,6 @@ package ca.uqac.lif.cep.tuples;
 import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.input.TokenFeeder;
 
@@ -33,6 +32,10 @@ import ca.uqac.lif.cep.input.TokenFeeder;
  */
 public class TupleFeeder extends TokenFeeder
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6864690824383779454L;
 	protected FixedTupleBuilder m_builder;
 	
 	public TupleFeeder()
@@ -68,7 +71,7 @@ public class TupleFeeder extends TokenFeeder
 		return m_builder.createTupleFromString(parts);
 	}
 
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) 
 	{
 		Object o;
 		Processor p; 
@@ -91,7 +94,7 @@ public class TupleFeeder extends TokenFeeder
 	}
 	
 	@Override
-	public TupleFeeder clone()
+	public TupleFeeder duplicate()
 	{
 		return new TupleFeeder();
 	}

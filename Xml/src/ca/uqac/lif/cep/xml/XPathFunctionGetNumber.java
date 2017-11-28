@@ -32,7 +32,7 @@ public class XPathFunctionGetNumber extends XPathFunctionGet<Number>
 	}
 	
 	@Override
-	public XPathFunctionGetNumber clone(Context context)
+	public XPathFunctionGetNumber duplicate(Context context)
 	{
 		XPathExpression exp = XPathFunction.evaluatePlaceholders(m_expression, context);
 		XPathFunctionGetNumber out = new XPathFunctionGetNumber(exp);

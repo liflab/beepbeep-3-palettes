@@ -32,6 +32,11 @@ import ca.uqac.lif.cep.concurrency.ThreadManager.ManagedThread;
 public class NonBlockingPusher extends Processor
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7009126214831783678L;
+
+	/**
 	 * The processor to which events will be pushed
 	 */
 	protected final Processor m_processor;
@@ -143,9 +148,9 @@ public class NonBlockingPusher extends Processor
 	}
 
 	@Override
-	public synchronized NonBlockingPusher clone()
+	public synchronized NonBlockingPusher duplicate()
 	{
-		Processor new_processor = m_processor.clone();
+		Processor new_processor = m_processor.duplicate();
 		NonBlockingPusher nbp = new NonBlockingPusher(new_processor, m_threadManager);
 		nbp.setContext(m_context);
 		return nbp;

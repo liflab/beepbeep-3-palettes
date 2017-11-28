@@ -100,7 +100,7 @@ public class FunctionTransition extends Transition
 	}
 	
 	@Override
-	public FunctionTransition clone()
+	public FunctionTransition duplicate()
 	{
 		FunctionTransition out = new FunctionTransition(m_function, m_destination);
 		out.m_assignments.addAll(m_assignments);

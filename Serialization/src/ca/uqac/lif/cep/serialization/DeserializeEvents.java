@@ -119,7 +119,7 @@ public class DeserializeEvents<T,U> extends Function
 	}
 
 	@Override
-	public DeserializeEvents<T,U> clone()
+	public DeserializeEvents<T,U> duplicate()
 	{
 		return new DeserializeEvents<T,U>(m_serializer, m_inputType, m_outputType);
 	}

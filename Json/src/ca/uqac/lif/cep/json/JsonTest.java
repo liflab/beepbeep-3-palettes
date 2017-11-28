@@ -26,7 +26,6 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.tmf.SinkLast;
 import ca.uqac.lif.json.JsonList;
@@ -43,7 +42,7 @@ public class JsonTest extends BeepBeepUnitTest
 	protected static JsonParser s_parser = new JsonParser();
 	
 	@Test
-	public void testSingle1() throws ConnectorException
+	public void testSingle1() 
 	{
 		JsonFeeder feeder = new JsonFeeder();
 		Pushable in = feeder.getPushableInput(0);
@@ -58,7 +57,7 @@ public class JsonTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testSingle2() throws ConnectorException
+	public void testSingle2() 
 	{
 		JsonFeeder feeder = new JsonFeeder();
 		Pushable in = feeder.getPushableInput(0);
@@ -71,7 +70,7 @@ public class JsonTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testJPath1() throws JsonParseException, ConnectorException
+	public void testJPath1() throws JsonParseException
 	{
 		JPathEvaluator jpath = new JPathEvaluator("a.b");
 		Pushable in = jpath.getPushableInput(0);

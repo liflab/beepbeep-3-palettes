@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep.fol;
 
 import ca.uqac.lif.cep.fol.Predicate.PredicateArgument;
-import ca.uqac.lif.cep.util.Arrays;
 
 /**
  * An assertion defining the truth value of a predicate

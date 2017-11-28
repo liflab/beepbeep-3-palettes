@@ -78,7 +78,7 @@ public class FromFunction extends Function
 	}
 
 	@Override
-	public FromFunction clone() 
+	public FromFunction duplicate() 
 	{
 		return new FromFunction(m_traceNames);
 	}

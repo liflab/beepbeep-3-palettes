@@ -20,8 +20,6 @@ package queries;
 import java.io.InputStream;
 
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.interpreter.Interpreter;
-import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 
 /**
  * Use a placeholder to refer to an external source of events.

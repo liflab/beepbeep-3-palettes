@@ -1,7 +1,6 @@
 package ca.uqac.lif.cep.xml;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.input.TokenFeeder;
 
@@ -12,6 +11,11 @@ import ca.uqac.lif.cep.input.TokenFeeder;
  */
 public class XmlReader extends GroupProcessor
 {
+	/**
+	 * Dummy UID
+	 */
+	private static final long serialVersionUID = -1444635792420830597L;
+
 	/**
 	 * Processor responsible for splitting the string into chunks
 	 */
@@ -36,21 +40,13 @@ public class XmlReader extends GroupProcessor
 		addProcessor(m_tokenFeeder);
 		m_xmlFeeder  = new XmlFeeder();
 		addProcessor(m_xmlFeeder);
-		try 
-		{
-			Connector.connect(m_tokenFeeder, m_xmlFeeder);
-		} 
-		catch (ConnectorException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Connector.connect(m_tokenFeeder, m_xmlFeeder);
 		associateInput(0, m_tokenFeeder, 0);
 		associateOutput(0, m_xmlFeeder, 0);
 	}
 
 	@Override
-	public XmlReader clone() 
+	public XmlReader duplicate() 
 	{
 		return new XmlReader(m_tokenFeeder.getSeparatorBegin(), m_tokenFeeder.getSeparatorEnd());
 	}
@@ -61,6 +57,11 @@ public class XmlReader extends GroupProcessor
 	 */
 	protected static class XmlTokenFeeder extends TokenFeeder
 	{
+		/**
+		 * Dummy UID
+		 */
+		private static final long serialVersionUID = 6658632788873940899L;
+
 		public XmlTokenFeeder(String sep_begin, String sep_end)
 		{
 			super();
@@ -75,7 +76,7 @@ public class XmlReader extends GroupProcessor
 		}
 
 		@Override
-		public XmlTokenFeeder clone() 
+		public XmlTokenFeeder duplicate() 
 		{
 			return new XmlTokenFeeder(getSeparatorBegin(), getSeparatorEnd());
 		}

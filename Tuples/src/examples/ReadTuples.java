@@ -20,7 +20,6 @@ package examples;
 import java.io.InputStream;
 
 import static ca.uqac.lif.cep.Connector.connect;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.io.LineReader;
 import ca.uqac.lif.cep.tuples.Tuple;
@@ -33,7 +32,7 @@ import ca.uqac.lif.cep.tuples.TupleFeeder;
  */
 public class ReadTuples
 {
-	public static void main(String[] args) throws ConnectorException
+	public static void main(String[] args) 
 	{
 		InputStream is = ReadTuples.class.getResourceAsStream("tuples.csv");
 		LineReader lr = new LineReader(is);

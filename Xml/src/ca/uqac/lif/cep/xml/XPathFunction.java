@@ -79,7 +79,7 @@ public class XPathFunction extends UnaryFunction<XmlElement,Collection<XmlElemen
 	}
 	
 	@Override
-	public XPathFunction clone(Context context)
+	public XPathFunction duplicate(Context context)
 	{
 		XPathExpression exp = XPathFunction.evaluatePlaceholders(m_expression, context);
 		XPathFunction out = new XPathFunction(exp);

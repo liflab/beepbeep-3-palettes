@@ -38,7 +38,7 @@ public class PredicateTupleConversion extends UnaryFunction<Object,PredicateTupl
 	}
 
 	@Override
-	public PredicateTupleConversion clone()
+	public PredicateTupleConversion duplicate()
 	{
 		return this;
 	}

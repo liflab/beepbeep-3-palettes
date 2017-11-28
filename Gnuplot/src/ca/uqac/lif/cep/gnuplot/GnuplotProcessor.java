@@ -31,6 +31,11 @@ import ca.uqac.lif.cep.sets.Multiset;
 public abstract class GnuplotProcessor extends SingleProcessor 
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1189974393230353650L;
+
+	/**
 	 * The graph's title
 	 */
 	protected String m_title;

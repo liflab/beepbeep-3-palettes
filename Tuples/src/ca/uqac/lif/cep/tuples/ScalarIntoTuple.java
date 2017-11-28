@@ -52,7 +52,7 @@ public class ScalarIntoTuple extends UnaryFunction<Object,TupleFixed>
 	}
 	
 	@Override
-	public ScalarIntoTuple clone()
+	public ScalarIntoTuple duplicate()
 	{
 		return new ScalarIntoTuple(m_keyName);
 	}

@@ -18,8 +18,6 @@
 package queries;
 
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.interpreter.Interpreter;
-import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 
 /**
  * Use the <code>APPLY</code> keyword to apply a

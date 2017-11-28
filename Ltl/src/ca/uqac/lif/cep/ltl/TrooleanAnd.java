@@ -30,12 +30,17 @@ import ca.uqac.lif.cep.Processor;
  */
 public class TrooleanAnd extends FunctionProcessor 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4149405049559397971L;
+
 	public TrooleanAnd()
 	{
 		super(Troolean.AND_FUNCTION);
 	}
 	
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException 
+	public static void build(ArrayDeque<Object> stack)  
 	{
 		stack.pop(); // (
 		Processor right = (Processor) stack.pop();
@@ -51,7 +56,7 @@ public class TrooleanAnd extends FunctionProcessor
 	}
 
 	@Override
-	public TrooleanAnd clone()
+	public TrooleanAnd duplicate()
 	{
 		return new TrooleanAnd();
 	}

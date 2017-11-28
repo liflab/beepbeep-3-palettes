@@ -24,6 +24,11 @@ import ca.uqac.lif.cep.SingleProcessor;
 public abstract class WindowProcessor extends SingleProcessor
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6108931890601948922L;
+
+	/**
 	 * The precision used to for the equality between double precision
 	 * numbers
 	 */

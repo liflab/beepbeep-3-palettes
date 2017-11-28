@@ -21,13 +21,17 @@ package ca.uqac.lif.cep.xml;
 import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.xml.XPathExpression;
 
 public class XPathEvaluator extends FunctionProcessor
 {	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2833883754337673025L;
+
 	public XPathEvaluator(String exp)
 	{
 		super(new XPathFunction(exp));
@@ -38,7 +42,7 @@ public class XPathEvaluator extends FunctionProcessor
 		super(new XPathFunction(exp));
 	}
 	
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) 
 	{
 		Processor p = (Processor) stack.pop();
 		stack.pop(); // ON

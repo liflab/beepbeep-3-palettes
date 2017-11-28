@@ -21,7 +21,6 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.sets.Multiset;
 import ca.uqac.lif.cep.tuples.Tuple;
@@ -49,6 +48,11 @@ import ca.uqac.lif.cep.numbers.NumberCast;
  */
 public class GnuplotHeatMap extends GnuplotProcessor 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3788011217816603537L;
+
 	/**
 	 * The preconfigured minimum value of the generated heat map
 	 * along the x axis
@@ -199,7 +203,7 @@ public class GnuplotHeatMap extends GnuplotProcessor
 		return out;
 	}
 
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException, ConnectorException 
+	public static void build(ArrayDeque<Object> stack) 
 	{
 		Processor p = (Processor) stack.pop();
 		stack.pop(); // OF
@@ -211,7 +215,7 @@ public class GnuplotHeatMap extends GnuplotProcessor
 	}
 	
 	@Override
-	public GnuplotHeatMap clone()
+	public GnuplotHeatMap duplicate()
 	{
 		return new GnuplotHeatMap();
 	}

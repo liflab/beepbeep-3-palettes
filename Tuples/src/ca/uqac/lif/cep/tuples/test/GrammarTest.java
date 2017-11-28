@@ -25,12 +25,8 @@ import org.junit.Test;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Connector.ConnectorException;
-import ca.uqac.lif.cep.interpreter.Interpreter;
-import ca.uqac.lif.cep.interpreter.UserDefinition;
-import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tuples.AttributeGroup;
-import ca.uqac.lif.cep.tuples.PackageExtension;
 import ca.uqac.lif.cep.tuples.Tuple;
 import ca.uqac.lif.cep.tuples.TupleFixed;
 
@@ -202,7 +198,7 @@ public class GrammarTest
 	}
 	
 	@Test
-	public void testSelectFrom4() throws ParseException, ConnectorException
+	public void testSelectFrom4() throws ParseException
 	{
 		QueueSource qs = new QueueSource();
 		qs.addEvent(new TupleFixed(new String[]{"a"}, new Object[]{0}));
@@ -224,7 +220,7 @@ public class GrammarTest
 	}
 	
 	@Test
-	public void testSelectInside() throws ParseException, ConnectorException
+	public void testSelectInside() throws ParseException
 	{
 		QueueSource qs = new QueueSource();
 		qs.addEvent(new TupleFixed(new String[]{"a"}, new Object[]{0}));
@@ -261,7 +257,7 @@ public class GrammarTest
 	}
 	
 	@Test
-	public void testDefinition2() throws ParseException, ConnectorException
+	public void testDefinition2() throws ParseException
 	{
 		String expression = "WHEN @P IS A PROCESSOR: THE COUNT OF @P IS THE PROCESSOR COMBINE SELECT 1 FROM @P WITH ADDITION";
 		Object o = m_interpreter.parseQuery(expression);

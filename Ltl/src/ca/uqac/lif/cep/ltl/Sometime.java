@@ -27,6 +27,11 @@ import ca.uqac.lif.cep.ltl.Troolean.Value;
  */
 public class Sometime extends CumulativeProcessor 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 73075509560406886L;
+
 	public Sometime()
 	{
 		super(new CumulativeFunction<Value>(Troolean.OR_FUNCTION));

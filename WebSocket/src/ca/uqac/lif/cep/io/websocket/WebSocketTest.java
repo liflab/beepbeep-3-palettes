@@ -54,7 +54,7 @@ public class WebSocketTest extends BeepBeepUnitTest
 	protected static final int s_waitTime = 250;
 	
 	@Test
-	public void testRead1() throws URISyntaxException, InterruptedException, IOException, ConnectorException
+	public void testRead1() throws URISyntaxException, InterruptedException, IOException
 	{
 		WebSocketReader wsr = new WebSocketReader(new URI("ws://localhost:51234"));
 		QueueSink sink = new QueueSink(1);

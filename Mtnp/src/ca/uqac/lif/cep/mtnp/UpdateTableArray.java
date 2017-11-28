@@ -5,6 +5,11 @@ import ca.uqac.lif.mtnp.table.TableEntry;
 
 public class UpdateTableArray extends UpdateTable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7999135598399855143L;
+
 	public UpdateTableArray(String ... column_names)
 	{
 		super(1, column_names);
@@ -27,7 +32,7 @@ public class UpdateTableArray extends UpdateTable
 	}
 	
 	@Override
-	public UpdateTableArray clone()
+	public UpdateTableArray duplicate()
 	{
 		return new UpdateTableArray(m_table.getColumnNames());
 	}

@@ -32,6 +32,11 @@ import ca.uqac.lif.cep.concurrency.ThreadManager.ManagedThread;
 public class PullPipeline extends Processor implements Runnable
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5112343398946470042L;
+
+	/**
 	 * A queue of incoming messages
 	 */
 	private volatile Queue<Object> m_inQueue;
@@ -181,9 +186,9 @@ public class PullPipeline extends Processor implements Runnable
 	}
 
 	@Override
-	synchronized public PullPipeline clone()
+	synchronized public PullPipeline duplicate()
 	{
-		PullPipeline p = new PullPipeline(m_processor.clone());
+		PullPipeline p = new PullPipeline(m_processor.duplicate());
 		p.setContext(m_context);
 		p.m_threadManager = m_threadManager;
 		return p;
@@ -605,7 +610,7 @@ public class PullPipeline extends Processor implements Runnable
 		{
 			Object[] inputs = new Object[1];
 			inputs[0] = event;
-			PipelineRunnable new_pipeline = new PipelineRunnable(m_processor.clone(), inputs, is_pulled);			
+			PipelineRunnable new_pipeline = new PipelineRunnable(m_processor.duplicate(), inputs, is_pulled);			
 			m_pipelinesLock.lock();
 			m_pipelines.add(new_pipeline);
 			m_pipelinesLock.unlock();

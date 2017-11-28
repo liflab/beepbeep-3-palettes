@@ -21,13 +21,16 @@ import java.util.Queue;
 import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.numbers.NumberCast;
 
 public class Threshold extends SingleProcessor
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6886631947455229034L;
 	/**
 	 * The threshold to cut values
 	 */
@@ -52,7 +55,7 @@ public class Threshold extends SingleProcessor
 		return true;
 	}
 
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) 
 	{
 		float t_value = NumberCast.getNumber(stack.pop()).floatValue();
 		stack.pop(); // THRESHOLD
@@ -65,7 +68,7 @@ public class Threshold extends SingleProcessor
 	}
 	
 	@Override
-	public Threshold clone()
+	public Threshold duplicate()
 	{
 		return new Threshold(m_threshold);
 	}

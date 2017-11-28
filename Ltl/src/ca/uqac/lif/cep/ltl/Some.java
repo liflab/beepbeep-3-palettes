@@ -26,6 +26,11 @@ import ca.uqac.lif.cep.functions.Function;
  */
 public class Some extends TrooleanQuantifier
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7859549401363791301L;
+
 	Some()
 	{
 		super();
@@ -39,7 +44,7 @@ public class Some extends TrooleanQuantifier
 	}
 
 	@Override
-	public Some clone() 
+	public Some duplicate() 
 	{
 		Some out = new Some();
 		super.cloneInto(out);

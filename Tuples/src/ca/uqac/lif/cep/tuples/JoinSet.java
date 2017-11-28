@@ -88,7 +88,7 @@ public class JoinSet extends UnaryFunction<Multiset,Multiset>
 	}
 	
 	@Override
-	public JoinSet clone()
+	public JoinSet duplicate()
 	{
 		return new JoinSet(m_joinAttribute);
 	}

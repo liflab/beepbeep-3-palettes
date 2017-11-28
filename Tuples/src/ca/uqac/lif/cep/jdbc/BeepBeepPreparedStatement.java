@@ -21,8 +21,6 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
-import ca.uqac.lif.cep.interpreter.Interpreter;
-
 public class BeepBeepPreparedStatement extends BeepBeepStatement implements PreparedStatement
 {
 	protected final String m_query;

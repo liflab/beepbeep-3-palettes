@@ -20,7 +20,6 @@ package ca.uqac.lif.cep.ltl;
 import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.tmf.Trim;
 import ca.uqac.lif.cep.Processor;
 
@@ -30,12 +29,17 @@ import ca.uqac.lif.cep.Processor;
  */
 public class Next extends Trim
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6235426679854510634L;
+
 	public Next()
 	{
 		super(1);
 	}
 	
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException 
+	public static void build(ArrayDeque<Object> stack) 
 	{
 		stack.pop(); // (
 		Processor p = (Processor) stack.pop();
@@ -47,7 +51,7 @@ public class Next extends Trim
 	}
 	
 	@Override
-	public Next clone()
+	public Next duplicate()
 	{
 		return new Next();
 	}

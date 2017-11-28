@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pullable;
@@ -15,7 +14,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
 public class PullPipelineTest 
 {
 	@Test(timeout=10000)
-	public void testWithoutThreads1() throws ConnectorException
+	public void testWithoutThreads1() 
 	{
 		ThreadManager tm = new ThreadManager(0);
 		QueueSource qs = new QueueSource(1);
@@ -39,7 +38,7 @@ public class PullPipelineTest
 	}
 	
 	@Test(timeout=10000)
-	public void testWithUnlimitedThreads1() throws ConnectorException
+	public void testWithUnlimitedThreads1() 
 	{
 		ThreadManager tm = new ThreadManager(-1); // Unlimited threads
 		QueueSource qs = new QueueSource(1);
@@ -63,7 +62,7 @@ public class PullPipelineTest
 	}
 	
 	@Test(timeout=10000)
-	public void testWithTwoThreads1() throws ConnectorException
+	public void testWithTwoThreads1() 
 	{
 		ThreadManager tm = new ThreadManager(4);
 		QueueSource qs = new QueueSource(1);
@@ -89,7 +88,7 @@ public class PullPipelineTest
 	}
 	
 	@Test(timeout=12000)
-	public void test2() throws ConnectorException
+	public void test2()
 	{
 		QueueSource qs = new QueueSource(1);
 		qs.addEvent(0);
@@ -109,7 +108,7 @@ public class PullPipelineTest
 	}
 	
 	@Test(timeout=10000)
-	public void testClone1() throws ConnectorException, ProcessorException
+	public void testClone1() throws ProcessorException
 	{
 		GroupProcessor gp = new GroupProcessor(0, 1);
 		QueueSource qs = new QueueSource(1);
@@ -119,7 +118,7 @@ public class PullPipelineTest
 		Connector.connect(qs, pp);
 		gp.addProcessors(qs, pp);
 		gp.associateOutput(0, pp, 0);
-		GroupProcessor gp2 = gp.clone();
+		GroupProcessor gp2 = gp.duplicate();
 		Pullable p = gp2.getPullableOutput();
 		gp2.start();
 		Object o = p.pull();

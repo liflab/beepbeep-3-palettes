@@ -221,7 +221,7 @@ public final class TupleFixed extends Tuple
 	}
 	
 	@Override
-	public TupleFixed clone()
+	public TupleFixed duplicate()
 	{
 		return new TupleFixed(m_names, m_values);
 	}

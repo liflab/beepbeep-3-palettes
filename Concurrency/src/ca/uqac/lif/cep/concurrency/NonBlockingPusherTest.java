@@ -24,7 +24,6 @@ import java.util.Queue;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.concurrency.ThreadPullableTest.DelayProcessor;
@@ -33,7 +32,7 @@ import ca.uqac.lif.cep.tmf.QueueSink;
 public class NonBlockingPusherTest 
 {
 	@Test
-	public void testPushableWithoutThreads1() throws ConnectorException, ProcessorException
+	public void testPushableWithoutThreads1() throws ProcessorException
 	{
 		int max_procs = 5;
 		ThreadManager tm = new ThreadManager(0); // No threads
@@ -76,7 +75,7 @@ public class NonBlockingPusherTest
 	}
 	
 	@Test
-	public void testPushableWithOneThread1() throws ConnectorException, ProcessorException
+	public void testPushableWithOneThread1() throws ProcessorException
 	{
 		int max_procs = 5;
 		ThreadManager tm = new ThreadManager(1); // 1 thread
@@ -119,7 +118,7 @@ public class NonBlockingPusherTest
 	}
 	
 	@Test
-	public void testPushableWithOneThread2() throws ConnectorException, ProcessorException
+	public void testPushableWithOneThread2() throws ProcessorException
 	{
 		int max_procs = 5;
 		ThreadManager tm = new ThreadManager(1); // 1 thread

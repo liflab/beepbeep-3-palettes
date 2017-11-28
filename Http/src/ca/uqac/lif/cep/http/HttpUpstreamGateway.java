@@ -44,6 +44,11 @@ public class HttpUpstreamGateway extends Sink
 {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6825922864415082332L;
+
+	/**
 	 * The URL that will be called when events are pushed
 	 * to this gateway
 	 */
@@ -183,7 +188,7 @@ public class HttpUpstreamGateway extends Sink
 	}
 
 	@Override
-	public HttpUpstreamGateway clone() 
+	public HttpUpstreamGateway duplicate() 
 	{
 		// It doesn't make much sense to clone a network processor
 		throw new UnsupportedOperationException();

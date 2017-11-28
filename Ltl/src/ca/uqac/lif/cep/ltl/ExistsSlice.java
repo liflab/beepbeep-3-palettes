@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.ltl;
 
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.Function;
@@ -25,12 +24,17 @@ import ca.uqac.lif.cep.ltl.Troolean.Value;
 
 public class ExistsSlice extends FirstOrderSlicer
 {
-	public ExistsSlice(String variable_name, Function slice_function, Processor p) throws ConnectorException 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3414469225320738737L;
+
+	public ExistsSlice(String variable_name, Function slice_function, Processor p) 
 	{
 		super(slice_function, p);
 	}
 	
-	public ExistsSlice(Function slice_function, Processor p) throws ConnectorException 
+	public ExistsSlice(Function slice_function, Processor p) 
 	{
 		super(slice_function, p);
 	}

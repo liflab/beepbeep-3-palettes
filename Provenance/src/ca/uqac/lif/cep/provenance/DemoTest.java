@@ -5,7 +5,6 @@ import static ca.uqac.lif.cep.Connector.LEFT;
 import static ca.uqac.lif.cep.Connector.OUTPUT;
 import static ca.uqac.lif.cep.Connector.RIGHT;
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.numbers.Addition;
@@ -19,7 +18,7 @@ import ca.uqac.lif.petitpoucet.ProvenanceNode;
  */
 public class DemoTest 
 {
-	public static void main(String[] args) throws ConnectorException
+	public static void main(String[] args) 
 	{
 		QueueSource s1 = new QueueSource(1);
 		s1.addEvent(2).addEvent(5).addEvent(4).addEvent(6);

@@ -66,7 +66,7 @@ public class TransposePair extends UnaryFunction<Tuple,Tuple>
 	}
 	
 	@Override
-	public TransposePair clone()
+	public TransposePair duplicate()
 	{
 		return new TransposePair(m_columnHeader, m_columnValue);
 	}

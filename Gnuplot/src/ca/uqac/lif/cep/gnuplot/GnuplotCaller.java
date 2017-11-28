@@ -20,7 +20,6 @@ package ca.uqac.lif.cep.gnuplot;
 import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.io.Caller;
 
@@ -37,12 +36,17 @@ import ca.uqac.lif.cep.io.Caller;
  */
 public class GnuplotCaller extends Caller
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9108891341149112079L;
+
 	public GnuplotCaller()
 	{
 		super("gnuplot");
 	}
 	
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) 
 	{
 		Processor p = (Processor) stack.pop();
 		stack.pop(); // ON

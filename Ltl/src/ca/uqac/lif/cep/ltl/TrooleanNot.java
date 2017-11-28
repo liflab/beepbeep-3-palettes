@@ -20,7 +20,6 @@ package ca.uqac.lif.cep.ltl;
 import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.Processor;
 
@@ -30,12 +29,17 @@ import ca.uqac.lif.cep.Processor;
  */
 public class TrooleanNot extends FunctionProcessor 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 221814881923341180L;
+
 	public TrooleanNot()
 	{
 		super(Troolean.NOT_FUNCTION);
 	}
 	
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException 
+	public static void build(ArrayDeque<Object> stack) 
 	{
 		stack.pop(); // (
 		Processor p = (Processor) stack.pop();
@@ -47,7 +51,7 @@ public class TrooleanNot extends FunctionProcessor
 	}
 	
 	@Override
-	public TrooleanNot clone()
+	public TrooleanNot duplicate()
 	{
 		return new TrooleanNot();
 	}

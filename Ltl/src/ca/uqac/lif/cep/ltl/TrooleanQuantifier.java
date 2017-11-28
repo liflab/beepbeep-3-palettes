@@ -22,33 +22,36 @@ import java.util.Queue;
 import java.util.Set;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.functions.Function;
-import ca.uqac.lif.cep.functions.SimpleFunction;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
 import ca.uqac.lif.cep.tmf.Passthrough;
 
 public abstract class TrooleanQuantifier extends GroupProcessor 
 {
+	/**
+	 * Dummy UID
+	 */
+	private static final long serialVersionUID = -2377779429724083557L;
+
 	protected String m_variableName;
-	
+
 	protected SentinelIn m_sentinelIn;
-	
+
 	protected FirstOrderSpawn m_spawn;
-	
+
 	protected SentinelOut m_sentinelOut;
-	
+
 	protected Troolean.Value m_valueIfEmptyDomain;
-	
+
 	TrooleanQuantifier()
 	{
 		super(1, 1);
 		m_valueIfEmptyDomain = Troolean.Value.TRUE;
 	}
-	
+
 	public TrooleanQuantifier(String var_name, Function split_function, Processor p, Function combine_function, Object value_empty)
 	{
 		super(1, 1);
@@ -59,20 +62,12 @@ public abstract class TrooleanQuantifier extends GroupProcessor
 		addProcessor(m_spawn);
 		m_sentinelOut = new SentinelOut();
 		addProcessor(m_sentinelOut);
-		try 
-		{
-			Connector.connect(m_sentinelIn, m_spawn);
-			Connector.connect(m_spawn, m_sentinelOut);
-		} 
-		catch (ConnectorException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Connector.connect(m_sentinelIn, m_spawn);
+		Connector.connect(m_spawn, m_sentinelOut);
 		associateInput(0, m_sentinelIn, 0);
 		associateOutput(0, m_sentinelOut, 0);
 	}
-	
+
 	public Map<Integer,Processor> cloneInto(TrooleanQuantifier q)
 	{
 		Map<Integer,Processor> map = super.cloneInto(q);
@@ -80,23 +75,20 @@ public abstract class TrooleanQuantifier extends GroupProcessor
 		q.m_sentinelOut = (SentinelOut) map.get(m_sentinelOut.getId());
 		q.m_spawn = (FirstOrderSpawn) map.get(m_spawn.getId());
 		q.m_variableName = m_variableName;
-		try 
-		{
-			Connector.connect(q.m_sentinelIn, q.m_spawn);
-			Connector.connect(q.m_spawn, q.m_sentinelOut);
-		} 
-		catch (ConnectorException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Connector.connect(q.m_sentinelIn, q.m_spawn);
+		Connector.connect(q.m_spawn, q.m_sentinelOut);
 		q.associateInput(0, q.m_sentinelIn, 0);
 		q.associateOutput(0, q.m_sentinelOut, 0);
 		return map;
 	}
-	
+
 	protected class FirstOrderSpawn extends Spawn
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -4696197706177090086L;
+
 		public FirstOrderSpawn(String var_name, Function split_function, Processor p, Function combine_function, Object value_empty)
 		{
 			super(p, split_function, combine_function);
@@ -114,30 +106,40 @@ public abstract class TrooleanQuantifier extends GroupProcessor
 		}
 
 		@Override
-		public FirstOrderSpawn clone()
+		public FirstOrderSpawn duplicate()
 		{
-			return new FirstOrderSpawn(m_variableName, m_splitFunction.clone(m_context), m_processor.clone(), m_combineProcessor.getFunction().clone(m_context), m_valueIfEmptyDomain);
+			return new FirstOrderSpawn(m_variableName, m_splitFunction.duplicate(), m_processor.duplicate(), m_combineProcessor.getFunction().duplicate(), m_valueIfEmptyDomain);
 		}
 	}
-	
+
 	protected class SentinelIn extends Passthrough
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 5156902632111554267L;
+
 		public SentinelIn()
 		{
 			super(1);
 		}
 
 		@Override
-		public SentinelIn clone() 
+		public SentinelIn duplicate() 
 		{
 			return new SentinelIn();
 		}
 	}
-	
+
 	protected class SentinelOut extends SingleProcessor
 	{
+		/**
+		 * Dummy UID
+		 */
+		private static final long serialVersionUID = 4189761303827986538L;
+
 		protected Troolean.Value m_definiteValue = Value.INCONCLUSIVE;
-		
+
 		public SentinelOut()
 		{
 			super(1, 1);
@@ -157,15 +159,7 @@ public abstract class TrooleanQuantifier extends GroupProcessor
 				// Bypass the first-order quantifier once a definite
 				// value was obtained. This is done by repiping the "in" sentinel
 				// directly to the "out" sentinel
-				try 
-				{
-					Connector.connect(m_sentinelIn, this);
-				} 
-				catch (ConnectorException e) 
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				Connector.connect(m_sentinelIn, this);
 				outputs.add(wrapObject(m_definiteValue));
 				return true;
 			}
@@ -173,13 +167,13 @@ public abstract class TrooleanQuantifier extends GroupProcessor
 		}
 
 		@Override
-		public SentinelOut clone() 
+		public SentinelOut duplicate() 
 		{
 			return new SentinelOut();
 		}
 	}
-	
-	public static abstract class ArrayTroolean extends SimpleFunction
+
+	public static abstract class ArrayTroolean extends Function
 	{
 		@Override
 		public int getInputArity() 

@@ -48,7 +48,7 @@ public class Blow extends UnaryFunction<Tuple,Multiset>
 	}
 	
 	@Override
-	public Blow clone()
+	public Blow duplicate()
 	{
 		return this;
 	}

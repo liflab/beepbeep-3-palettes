@@ -8,6 +8,11 @@ import ca.uqac.lif.cep.tmf.Sink;
 
 public class ThroughputMeter extends Sink
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7118159590756138543L;
+
 	protected DiagnosticsCallback m_callback;
 	
 	protected long m_refreshInterval;
@@ -46,7 +51,7 @@ public class ThroughputMeter extends Sink
 	}
 
 	@Override
-	public Processor clone() 
+	public Processor duplicate() 
 	{
 		return new ThroughputMeter(m_callback, m_refreshInterval);
 	}

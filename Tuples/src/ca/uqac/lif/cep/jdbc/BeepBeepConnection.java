@@ -21,8 +21,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import ca.uqac.lif.cep.interpreter.Interpreter;
-
 public class BeepBeepConnection extends EmptyConnection
 {
 	protected Interpreter m_interpreter;

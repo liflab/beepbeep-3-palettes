@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2017 Sylvain Hallï¿½
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -26,7 +26,6 @@ import java.util.Queue;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.tmf.QueueSink;
@@ -35,7 +34,7 @@ public class PackerTest
 {
 	@SuppressWarnings("unchecked")
 	@Test
-	public void listPackerTest1() throws ConnectorException, ProcessorException, InterruptedException
+	public void listPackerTest1() throws ProcessorException, InterruptedException
 	{
 		ListPackerPush lpp = new ListPackerPush(1000);
 		QueueSink sink = new QueueSink();
@@ -63,7 +62,7 @@ public class PackerTest
 	}
 	
 	@Test
-	public void unpackerTest() throws ConnectorException
+	public void unpackerTest() 
 	{
 		ListUnpacker lup = new ListUnpacker();
 		QueueSink sink = new QueueSink();

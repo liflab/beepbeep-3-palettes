@@ -30,6 +30,11 @@ import ca.uqac.lif.cep.ltl.Troolean.Value;
 public class After extends SingleProcessor 
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2998022956437851414L;
+
+	/**
 	 * The number of events received so far
 	 */
 	private int m_eventCount = 0;
@@ -71,7 +76,7 @@ public class After extends SingleProcessor
 	}
 
 	@Override
-	public Processor clone() 
+	public Processor duplicate() 
 	{
 		return new After();
 	}

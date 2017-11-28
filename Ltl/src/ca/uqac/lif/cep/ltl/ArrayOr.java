@@ -15,7 +15,7 @@ public class ArrayOr extends ArrayTroolean
 	}
 
 	@Override
-	public Function clone()
+	public Function duplicate()
 	{
 		return this;
 	}

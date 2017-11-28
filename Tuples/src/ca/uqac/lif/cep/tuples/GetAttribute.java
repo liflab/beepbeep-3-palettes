@@ -84,7 +84,7 @@ public class GetAttribute extends UnaryFunction<AttributeGroup,Object>
 	}
 	
 	@Override
-	public GetAttribute clone()
+	public GetAttribute duplicate()
 	{ 
 		return this;
 	}

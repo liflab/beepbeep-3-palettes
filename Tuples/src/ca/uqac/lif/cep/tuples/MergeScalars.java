@@ -83,7 +83,7 @@ public class MergeScalars extends Function
 	}
 
 	@Override
-	public Function clone() 
+	public Function duplicate() 
 	{
 		return new MergeScalars(m_attributeNames);
 	}

@@ -1,8 +1,6 @@
 package examples;
 
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.interpreter.Interpreter;
-import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 
 /**
  * Execute a <code>SELECT</code> statement on a stream of tuples to

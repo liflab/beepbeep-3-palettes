@@ -25,7 +25,6 @@ import java.util.Set;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.FunctionException;
@@ -65,7 +64,7 @@ public class TupleTest
 	public void testTupleFixed()
 	{
 		TupleFixed tuple = new TupleFixed(new String[]{"x", "q"}, new Object[]{4, "foo"});
-		TupleFixed tuple_clone = tuple.clone();
+		TupleFixed tuple_clone = tuple.duplicate();
 		assertEquals(2, tuple.size());
 		assertFalse(tuple.isEmpty());
 		assertFalse(tuple.containsKey(null));
@@ -92,7 +91,7 @@ public class TupleTest
 	public void testTupleMap()
 	{
 		TupleMap tuple = new TupleMap(new String[]{"x", "q"}, new Object[]{4, "foo"});
-		TupleMap tuple_clone = tuple.clone();
+		TupleMap tuple_clone = tuple.duplicate();
 		assertEquals(2, tuple.size());
 		assertFalse(tuple.isEmpty());
 		assertFalse(tuple.containsKey(null));
@@ -161,7 +160,7 @@ public class TupleTest
 	public void testFromFunction3()
 	{
 		FromFunction ff_o = new FromFunction("A", "B", "C");
-		FromFunction ff = ff_o.clone();
+		FromFunction ff = ff_o.duplicate();
 		ff.reset();
 		assertEquals(3, ff.getInputArity());
 		Object[] inputs = new Object[]
@@ -231,7 +230,7 @@ public class TupleTest
 	}
 	
 	@Test
-	public void testSelect() throws ConnectorException
+	public void testSelect() 
 	{
 		// SELECT A.y + C.q as p1, z - C.x as p2, t as p3
 		QueueSource source = createGroupSource();
@@ -256,7 +255,7 @@ public class TupleTest
 	}
 	
 	@Test
-	public void testWhere1() throws ConnectorException
+	public void testWhere1() 
 	{
 		QueueSource qs = createGroupSource();
 		FunctionTree condition = new FunctionTree(Or.instance,
@@ -278,7 +277,7 @@ public class TupleTest
 	}
 	
 	@Test
-	public void testWhere2() throws ConnectorException
+	public void testWhere2() 
 	{
 		QueueSource qs = createGroupSource();
 		FunctionTree condition = new FunctionTree(Or.instance,
@@ -290,7 +289,7 @@ public class TupleTest
 						new Constant(9))
 				);
 		Where w_old = new Where(condition);
-		Where w = w_old.clone();
+		Where w = w_old.duplicate();
 		Connector.connect(qs, w);
 		Pullable p = w.getPullableOutput();
 		Object o = p.pull();

@@ -93,7 +93,7 @@ public class MergeTuples extends Function
 	}
 
 	@Override
-	public MergeTuples clone() 
+	public MergeTuples duplicate() 
 	{
 		return new MergeTuples(m_inputArity);
 	}

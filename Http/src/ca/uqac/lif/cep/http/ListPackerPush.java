@@ -44,6 +44,11 @@ import ca.uqac.lif.cep.SingleProcessor;
 public class ListPackerPush extends SingleProcessor 
 {	
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2283808956868084228L;
+
+	/**
 	 * The list of events accumulated since the last output
 	 */
 	protected List<Object> m_packedEvents;
@@ -168,7 +173,7 @@ public class ListPackerPush extends SingleProcessor
 	}
 
 	@Override
-	public ListPackerPush clone() 
+	public ListPackerPush duplicate() 
 	{
 		return new ListPackerPush();
 	}

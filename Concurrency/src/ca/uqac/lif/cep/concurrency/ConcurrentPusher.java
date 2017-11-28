@@ -5,7 +5,6 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
@@ -13,6 +12,11 @@ import ca.uqac.lif.cep.tmf.SinkLast;
 
 public class ConcurrentPusher extends Processor
 {
+	/**
+	 * Dummy UID
+	 */
+	private static final long serialVersionUID = 7549780851237238814L;
+	
 	private Processor m_processor;
 	private Pushable m_processorPushable;
 
@@ -29,14 +33,7 @@ public class ConcurrentPusher extends Processor
 		super(1, 1);
 		m_processor = p;
 		m_sink = new SinkLast();
-		try 
-		{
-			Connector.connect(m_processor, m_sink);
-		} 
-		catch (ConnectorException e) 
-		{
-			e.printStackTrace();
-		}
+		Connector.connect(m_processor, m_sink);
 		m_processorPushable = p.getPushableInput();
 		m_pollers = new QueuePoller[num_threads];
 		m_threads = new Thread[num_threads];
@@ -90,7 +87,7 @@ public class ConcurrentPusher extends Processor
 	}
 
 	@Override
-	public Processor clone() 
+	public Processor duplicate() 
 	{
 		// Don't clone processors that manage threads
 		throw new UnsupportedOperationException();

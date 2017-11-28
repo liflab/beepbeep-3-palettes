@@ -21,7 +21,6 @@ import java.util.Queue;
 import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.numbers.NumberCast;
 
@@ -51,6 +50,11 @@ import ca.uqac.lif.cep.numbers.NumberCast;
  */
 public class PeakFinderLocalMaximum extends WindowProcessor
 {	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 471291918195344660L;
+
 	/**
 	 * The position in the window where the highest value is
 	 */
@@ -168,7 +172,7 @@ public class PeakFinderLocalMaximum extends WindowProcessor
 		return peak_pos;
 	}
 
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException 
+	public static void build(ArrayDeque<Object> stack) 
 	{
 		Processor p = (Processor) stack.pop();
 		stack.pop(); // OF
@@ -180,7 +184,7 @@ public class PeakFinderLocalMaximum extends WindowProcessor
 	}
 	
 	@Override
-	public PeakFinderLocalMaximum clone()
+	public PeakFinderLocalMaximum duplicate()
 	{
 		return new PeakFinderLocalMaximum(m_windowWidth);
 	}

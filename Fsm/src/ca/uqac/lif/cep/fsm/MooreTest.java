@@ -26,7 +26,6 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
 import ca.uqac.lif.cep.functions.Constant;
@@ -47,7 +46,7 @@ public class MooreTest extends BeepBeepUnitTest
 	public static final int ST_3 = 3;
 	
 	@Test
-	public void testMoore1() throws ConnectorException
+	public void testMoore1() 
 	{
 		// Setup event source
 		QueueSource source = new QueueSource(1);

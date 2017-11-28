@@ -122,7 +122,7 @@ public class GnuplotHistogram extends TwoDimensionalPlotFunction
 	}
 
 	@Override
-	public GnuplotHistogram clone() 
+	public GnuplotHistogram duplicate() 
 	{
 		return new GnuplotHistogram(m_lineAttribute);
 	}

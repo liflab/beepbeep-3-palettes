@@ -3,7 +3,6 @@ package ca.uqac.lif.cep.provenance;
 import java.util.HashMap;
 import java.util.Map;
 
-import ca.uqac.lif.cep.EventFunction;
 import ca.uqac.lif.petitpoucet.AggregateFunction;
 import ca.uqac.lif.petitpoucet.BrokenChain;
 import ca.uqac.lif.petitpoucet.InfiniteLoop;

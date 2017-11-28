@@ -59,6 +59,11 @@ import ca.uqac.lif.jerrydog.Server;
 public class HttpDownstreamGateway extends Source
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 964642059008858163L;
+
+	/**
 	 * A queue of character strings received over the network
 	 */
 	protected Queue<String> m_receivedStrings;
@@ -199,7 +204,7 @@ public class HttpDownstreamGateway extends Source
 	}
 
 	@Override
-	public HttpDownstreamGateway clone()
+	public HttpDownstreamGateway duplicate()
 	{
 		// It doesn't make much sense to clone a network processor
 		throw new UnsupportedOperationException();

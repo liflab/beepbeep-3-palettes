@@ -11,15 +11,15 @@ public class ForAllFunction extends QuantifierFunction
 	}
 
 	@Override
-	public ForAllFunction clone() 
+	public ForAllFunction duplicate() 
 	{
-		return new ForAllFunction(m_variableName, m_domainName, m_expression.clone());
+		return new ForAllFunction(m_variableName, m_domainName, m_expression.duplicate());
 	}
 	
 	@Override
-	public ForAllFunction clone(Context context) 
+	public ForAllFunction duplicate(Context context) 
 	{
-		return new ForAllFunction(m_variableName, m_domainName, m_expression.clone(context));
+		return new ForAllFunction(m_variableName, m_domainName, m_expression.duplicate(context));
 	}
 	
 	@Override

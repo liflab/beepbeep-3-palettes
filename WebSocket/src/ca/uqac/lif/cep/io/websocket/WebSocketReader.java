@@ -64,7 +64,7 @@ public class WebSocketReader extends SingleProcessor
 	}
 
 	@Override
-	public Processor clone() 
+	public Processor duplicate() 
 	{
 		return new WebSocketReader(m_serverUri);
 	}

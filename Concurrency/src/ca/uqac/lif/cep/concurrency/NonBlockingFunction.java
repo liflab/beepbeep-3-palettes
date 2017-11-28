@@ -117,9 +117,9 @@ public class NonBlockingFunction extends Function implements Runnable
 	}
 
 	@Override
-	public Function clone()
+	public Function duplicate()
 	{
-		return new NonBlockingFunction(m_function.clone(), m_manager);
+		return new NonBlockingFunction(m_function.duplicate(), m_manager);
 	}
 
 	@Override

@@ -21,7 +21,6 @@ import java.util.Collection;
 import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.FunctionException;
@@ -36,6 +35,11 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  */
 public class Select extends FunctionProcessor
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 470219095196495161L;
+
 	public Select(SelectFunction comp) 
 	{
 		super(comp);
@@ -158,7 +162,7 @@ public class Select extends FunctionProcessor
 		}
 	}
 	
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) 
 	{
 		Processor from = (Processor) stack.pop();
 		AttributeExpressionList ael = (AttributeExpressionList) stack.pop();

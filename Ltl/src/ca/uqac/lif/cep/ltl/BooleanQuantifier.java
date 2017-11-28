@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
@@ -16,6 +15,11 @@ import ca.uqac.lif.cep.tmf.QueueSink;
 
 public class BooleanQuantifier extends SingleProcessor 
 {
+	/**
+	 * Dummy UID
+	 */
+	private static final long serialVersionUID = 5088200702916725567L;
+
 	/**
 	 * The internal processor
 	 */
@@ -80,20 +84,12 @@ public class BooleanQuantifier extends SingleProcessor
 	@Override
 	synchronized protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
 	{
-		Processor new_spawn = m_spawn.clone();
+		Processor new_spawn = m_spawn.duplicate();
 		new_spawn.setContext(m_context);
 		m_instances.add(new_spawn);
 		m_instancePushables.add(new_spawn.getPushableInput(0));
 		QueueSink new_sink = new QueueSink(1);
-		try 
-		{
-			Connector.connect(new_spawn, new_sink);
-		} 
-		catch (ConnectorException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Connector.connect(new_spawn, new_sink); 
 		m_sinks.add(new_sink);
 		m_queues.add(new_sink.getQueue(0));
 		// Push event to all instances
@@ -151,9 +147,9 @@ public class BooleanQuantifier extends SingleProcessor
 	}
 
 	@Override
-	synchronized public BooleanQuantifier clone() 
+	synchronized public BooleanQuantifier duplicate() 
 	{
-		Processor new_spawn = m_spawn.clone(); 
+		Processor new_spawn = m_spawn.duplicate(); 
 		new_spawn.setContext(m_context);
 		BooleanQuantifier bq = new BooleanQuantifier(new_spawn);
 		if (m_context != null)
@@ -165,6 +161,11 @@ public class BooleanQuantifier extends SingleProcessor
 
 	public static class FirstOrderSpawn extends Spawn
 	{
+		/**
+		 * Dummy UID
+		 */
+		private static final long serialVersionUID = 9146900876821607511L;
+		
 		protected String m_variableName;
 		
 		public FirstOrderSpawn(String var_name, Function split_function, Processor p, Function combine_function, Object value_empty)
@@ -184,10 +185,10 @@ public class BooleanQuantifier extends SingleProcessor
 		}
 
 		@Override
-		public synchronized FirstOrderSpawn clone()
+		public synchronized FirstOrderSpawn duplicate()
 		{
-			Processor new_p = m_processor.clone();
-			FirstOrderSpawn fos = new FirstOrderSpawn(m_variableName, m_splitFunction.clone(m_context), new_p, m_combineProcessor.getFunction().clone(m_context), m_valueIfEmptyDomain);
+			Processor new_p = m_processor.duplicate();
+			FirstOrderSpawn fos = new FirstOrderSpawn(m_variableName, m_splitFunction.duplicate(), new_p, m_combineProcessor.getFunction().duplicate(), m_valueIfEmptyDomain);
 			fos.setContext(m_context);
 			return fos;
 		}

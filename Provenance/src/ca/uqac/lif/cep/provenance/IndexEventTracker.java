@@ -20,10 +20,9 @@ package ca.uqac.lif.cep.provenance;
 import java.util.HashMap;
 import java.util.Map;
 
-import ca.uqac.lif.cep.EventFunction;
 import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.EventFunction.InputValue;
+import ca.uqac.lif.cep.provenance.EventFunction.InputValue;
 import ca.uqac.lif.petitpoucet.BrokenChain;
 import ca.uqac.lif.petitpoucet.NodeFunction;
 import ca.uqac.lif.petitpoucet.ProvenanceNode;

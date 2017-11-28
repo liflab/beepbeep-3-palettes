@@ -107,23 +107,23 @@ public class PredicateAssertion extends Function
 	}
 
 	@Override
-	public Function clone() 
+	public Function duplicate() 
 	{
 		Function[] arguments = new Function[m_arguments.length];
 		for (int i = 0; i < m_arguments.length; i++)
 		{
-			arguments[i] = m_arguments[i].clone();
+			arguments[i] = m_arguments[i].duplicate();
 		}
 		return new PredicateAssertion(m_predicateName, arguments);
 	}
 	
 	@Override
-	public Function clone(Context context) 
+	public Function duplicate(Context context) 
 	{
 		Function[] arguments = new Function[m_arguments.length];
 		for (int i = 0; i < m_arguments.length; i++)
 		{
-			arguments[i] = m_arguments[i].clone(context);
+			arguments[i] = m_arguments[i].duplicate(context);
 		}
 		return new PredicateAssertion(m_predicateName, arguments);
 	}

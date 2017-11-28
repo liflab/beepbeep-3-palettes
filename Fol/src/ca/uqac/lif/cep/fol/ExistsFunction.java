@@ -11,15 +11,15 @@ public class ExistsFunction extends QuantifierFunction
 	}
 
 	@Override
-	public ExistsFunction clone() 
+	public ExistsFunction duplicate() 
 	{
-		return new ExistsFunction(m_variableName, m_domainName, m_expression.clone());
+		return new ExistsFunction(m_variableName, m_domainName, m_expression.duplicate());
 	}
 	
 	@Override
-	public ExistsFunction clone(Context context) 
+	public ExistsFunction duplicate(Context context) 
 	{
-		return new ExistsFunction(m_variableName, m_domainName, m_expression.clone(context));
+		return new ExistsFunction(m_variableName, m_domainName, m_expression.duplicate(context));
 	}
 	
 	@Override

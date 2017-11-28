@@ -33,10 +33,15 @@ import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.tmf.NaryToArray;
-import ca.uqac.lif.cep.tmf.SmartFork;
+import ca.uqac.lif.cep.tmf.Fork;
 
 class Spawn extends Processor
 {	
+	/**
+	 * Dummy UID
+	 */
+	private static final long serialVersionUID = 19158492243042142L;
+
 	/**
 	 * The internal processor to evaluate the quantifier on
 	 */
@@ -60,7 +65,7 @@ class Spawn extends Processor
 	 * The fork used to split the input to the multiple instances of the
 	 * processor
 	 */
-	protected SmartFork m_fork;
+	protected Fork m_fork;
 
 	/**
 	 * The passthrough synchronizing the output of each processor instance
@@ -136,7 +141,6 @@ class Spawn extends Processor
 	{
 		super.setContext(context);
 		m_combineProcessor.setContext(context);
-		m_splitFunction.setContext(context);
 		if (m_instances != null)
 		{
 			for (Processor p : m_instances)
@@ -151,7 +155,6 @@ class Spawn extends Processor
 	{
 		super.setContext(key, value);
 		m_combineProcessor.setContext(key, value);
-		m_splitFunction.setContext(key, value);
 		if (m_instances != null)
 		{
 			for (Processor p : m_instances)
@@ -479,7 +482,7 @@ class Spawn extends Processor
 			else
 			{
 				// Create a fork for as many values in the domain
-				m_fork = new SmartFork(values.size());
+				m_fork = new Fork(values.size());
 				m_inputPushable.setPushable(m_fork.getPushableInput(0));
 				m_instances = new Processor[size];
 				// Create a join to collate the output of each spawned instance
@@ -489,17 +492,17 @@ class Spawn extends Processor
 				int i = 0;
 				for (Object slice : values)
 				{
-					Processor new_p = m_processor.clone();
+					Processor new_p = m_processor.duplicate();
 					new_p.setContext(m_context);
 					addContextFromSlice(new_p, slice);
 					m_instances[i] = new_p;
 					// Connect its input to the fork
-					Connector.connect(m_fork, new_p, i, 0);
+					Connector.connect(m_fork, i, new_p, 0);
 					// Connect its output to the join
-					Connector.connect(new_p, m_joinProcessor, 0, i);
+					Connector.connect(new_p, 0, m_joinProcessor, i);
 					i++;
 				}
-				Connector.connect(m_joinProcessor, m_combineProcessor, 0, 0);
+				Connector.connect(m_joinProcessor, 0, m_combineProcessor, 0);
 				m_outputPullable.setPullable(m_combineProcessor.getPullableOutput(0));
 				for (i = 0; i < size; i++)
 				{
@@ -507,10 +510,6 @@ class Spawn extends Processor
 				}
 			}
 		}
-		catch (ConnectorException e) 
-		{
-			throw new ProcessorException(e); 
-		} 
 		catch (FunctionException e)
 		{
 			throw new ProcessorException(e);
@@ -559,11 +558,11 @@ class Spawn extends Processor
 	}
 
 	@Override
-	public synchronized Spawn clone()
+	public synchronized Spawn duplicate()
 	{
-		Processor new_p = m_processor.clone();
+		Processor new_p = m_processor.duplicate();
 		new_p.setContext(m_context);
-		Spawn out = new Spawn(new_p, m_splitFunction.clone(m_context), m_combineProcessor.getFunction().clone(m_context));
+		Spawn out = new Spawn(new_p, m_splitFunction.duplicate(), m_combineProcessor.getFunction().duplicate());
 		out.setContext(m_context);
 		out.m_valueIfEmptyDomain = m_valueIfEmptyDomain;
 		return out;

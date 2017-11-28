@@ -20,7 +20,6 @@ package ca.uqac.lif.cep.diagnostics;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pushable;
@@ -28,6 +27,11 @@ import ca.uqac.lif.cep.SingleProcessor;
 
 public class Derivation extends SingleProcessor
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1121376586520794583L;
+
 	protected Processor[] m_processors;
 	
 	protected Pushable[] m_pushables;
@@ -68,10 +72,8 @@ public class Derivation extends SingleProcessor
 	 * @param p1 The first processor
 	 * @param p2 The second processor
 	 * @return This derivation
-	 * @throws ConnectorException If an error occurs while attempting to
-	 *   reconnect the processors
 	 */
-	public Derivation reconnect(Processor p1, Processor p2) throws ConnectorException
+	public Derivation reconnect(Processor p1, Processor p2)
 	{
 		Connector.connect(p1, this);
 		Connector.connect(this, p2);
@@ -119,12 +121,12 @@ public class Derivation extends SingleProcessor
 	}
 
 	@Override
-	public Derivation clone()
+	public Derivation duplicate()
 	{
 		Processor[] clones = new Processor[m_processors.length];
 		for (int i = 0; i < m_processors.length; i++)
 		{
-			clones[i] = m_processors[i].clone();
+			clones[i] = m_processors[i].duplicate();
 		}
 		return new Derivation(clones);
 	}

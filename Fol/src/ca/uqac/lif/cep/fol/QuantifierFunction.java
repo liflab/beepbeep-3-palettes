@@ -45,7 +45,7 @@ public abstract class QuantifierFunction extends Function
 		for (Object value : values)
 		{
 			Object[] return_values = new Object[1];
-			Function exp = m_expression.clone();
+			Function exp = m_expression.duplicate();
 			all_vals.add(return_values);
 			all_expressions.add(exp);
 			dom_count++;

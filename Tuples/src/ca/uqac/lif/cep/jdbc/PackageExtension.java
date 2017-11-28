@@ -17,8 +17,6 @@
  */
 package ca.uqac.lif.cep.jdbc;
 
-import ca.uqac.lif.cep.Palette;
-
 /**
  * Palette object for the processor included in this package.
  * @author Sylvain Hallé

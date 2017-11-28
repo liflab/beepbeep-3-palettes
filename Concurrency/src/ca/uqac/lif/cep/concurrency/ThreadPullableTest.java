@@ -25,7 +25,6 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.ProcessorException;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.SingleProcessor;
 
@@ -138,10 +137,9 @@ public class ThreadPullableTest
 	/**
 	 * Same as {@link #testContinuousChain1()}, but with the processor
 	 * encased in a GroupProcessor.
-	 * @throws ConnectorException 
 	 */
 	@Test(timeout=10000)
-	public void testContinuousGroup1() throws ConnectorException, ProcessorException
+	public void testContinuousGroup1() throws ProcessorException
 	{
 		DelayProcessor delay_1 = new DelayProcessor(0, 500);
 		PullThreadGroup group = new PullThreadGroup(0, 1);
@@ -183,6 +181,10 @@ public class ThreadPullableTest
 	 */
 	public static class DelayProcessor extends SingleProcessor
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 2275276909898478791L;
 		protected final long m_waitInterval;
 		
 		public DelayProcessor(int in_arity, long wait_interval)
@@ -211,7 +213,7 @@ public class ThreadPullableTest
 		}
 
 		@Override
-		public DelayProcessor clone() 
+		public DelayProcessor duplicate() 
 		{
 			return new DelayProcessor(getInputArity(), m_waitInterval);
 		}

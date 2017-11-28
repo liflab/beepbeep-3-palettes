@@ -28,7 +28,6 @@ import ca.uqac.lif.cep.numbers.IsLessThan;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
-import ca.uqac.lif.cep.tmf.SmartFork;
 
 /**
  * Unit tests for quantifiers
@@ -37,7 +36,7 @@ import ca.uqac.lif.cep.tmf.SmartFork;
 public class QuantifierTest 
 {
 	@Test
-	public void testEveryPush1() throws ConnectorException
+	public void testEveryPush1() 
 	{
 		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
 		tree.setChild(0, new ArgumentPlaceholder(0));
@@ -57,7 +56,7 @@ public class QuantifierTest
 	}
 	
 	@Test
-	public void testEveryPull1() throws ConnectorException
+	public void testEveryPull1() 
 	{
 		QueueSource source = new QueueSource(1);
 		source.addEvent(0);
@@ -75,7 +74,7 @@ public class QuantifierTest
 	}
 	
 	@Test
-	public void testEvery2() throws ConnectorException
+	public void testEvery2() 
 	{
 		FunctionTree tree = new FunctionTree(IsLessThan.instance); 
 		tree.setChild(0, new ArgumentPlaceholder(0));
@@ -99,7 +98,7 @@ public class QuantifierTest
 	}
 	
 	@Test
-	public void testEvery3() throws ConnectorException
+	public void testEvery3() 
 	{
 		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
 		tree.setChild(0, new ContextPlaceholder("x"));
@@ -120,7 +119,7 @@ public class QuantifierTest
 	}
 	
 	@Test
-	public void testEveryPull3() throws ConnectorException
+	public void testEveryPull3() 
 	{
 		QueueSource source = new QueueSource(1);
 		source.addEvent(0);
@@ -139,7 +138,7 @@ public class QuantifierTest
 	}
 	
 	@Test
-	public void testEvery4() throws ConnectorException
+	public void testEvery4() 
 	{
 		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
 		tree.setChild(0, new ContextPlaceholder("y"));
@@ -160,7 +159,7 @@ public class QuantifierTest
 	}
 	
 	@Test
-	public void testEveryPull5() throws ConnectorException
+	public void testEveryPull5() 
 	{
 		QueueSource source = new QueueSource(1);
 		source.addEvent(0);
@@ -179,7 +178,7 @@ public class QuantifierTest
 	}
 	
 	@Test
-	public void testSome1() throws ConnectorException
+	public void testSome1() 
 	{
 		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
 		tree.setChild(0, new ArgumentPlaceholder(0));
@@ -199,7 +198,7 @@ public class QuantifierTest
 	}
 
 	@Test
-	public void testSome2() throws ConnectorException
+	public void testSome2() 
 	{
 		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
 		tree.setChild(0, new ArgumentPlaceholder(0));
@@ -219,7 +218,7 @@ public class QuantifierTest
 	}
 	
 	@Test
-	public void testGroupClone1() throws ConnectorException
+	public void testGroupClone1() 
 	{
 		Pullable p;
 		Object o;
@@ -243,7 +242,7 @@ public class QuantifierTest
 		o = p.pull();
 		assertEquals(o, Troolean.Value.TRUE);
 		// Now clone and re-check
-		GroupProcessor gp_clone = gp.clone();
+		GroupProcessor gp_clone = gp.duplicate();
 		QueueSource source2 = new QueueSource(1);
 		source2.addEvent(0);
 		Connector.connect(source2, gp_clone);
@@ -253,7 +252,7 @@ public class QuantifierTest
 	}
 	
 	@Test
-	public void testGroupClone2() throws ConnectorException
+	public void testGroupClone2() 
 	{
 		Pullable p;
 		Object o;
@@ -278,7 +277,7 @@ public class QuantifierTest
 		o = p.pull();
 		assertEquals(o, Troolean.Value.FALSE);
 		// Now clone and re-check
-		Every gp_clone = fa.clone();
+		Every gp_clone = fa.duplicate();
 		QueueSource source2 = new QueueSource(1);
 		source2.addEvent(0);
 		Connector.connect(source2, gp_clone);
@@ -288,7 +287,7 @@ public class QuantifierTest
 	}
 	
 	@Test
-	public void testGroupClone3() throws ConnectorException
+	public void testGroupClone3() 
 	{
 		Pullable p;
 		Object o;
@@ -308,7 +307,7 @@ public class QuantifierTest
 		o = p.pull();
 		assertEquals(o, Troolean.Value.TRUE);
 		// Now clone and re-check
-		Every gp_clone = fa.clone();
+		Every gp_clone = fa.duplicate();
 		QueueSource source2 = new QueueSource(1);
 		source2.addEvent(0);
 		Connector.connect(source2, gp_clone);
@@ -321,7 +320,7 @@ public class QuantifierTest
 	
 	@SuppressWarnings("unused")
 	@Test
-	public void testForAll1() throws ConnectorException
+	public void testForAll1() 
 	{
 		ThreadManager tm = new ThreadManager(-1); // Unlimited threads
 		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ArgumentPlaceholder(0), new ArgumentPlaceholder(0))), 0);
@@ -338,7 +337,7 @@ public class QuantifierTest
 	
 	@SuppressWarnings("unused")
 	@Test
-	public void testForAll2() throws ConnectorException
+	public void testForAll2() 
 	{
 		ThreadManager tm = new ThreadManager(-1); // Unlimited threads
 		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ArgumentPlaceholder(0), new ArgumentPlaceholder(0))), 0);
@@ -356,7 +355,7 @@ public class QuantifierTest
 	}
 	
 	@Test
-	public void testForAll3() throws ConnectorException, ProcessorException
+	public void testForAll3() throws ProcessorException
 	{
 		ThreadManager tm = new ThreadManager(-1); // Unlimited threads
 		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ContextPlaceholder("x"), new ContextPlaceholder("z"))), 0);
@@ -377,7 +376,7 @@ public class QuantifierTest
 	}
 	
 	@Test
-	public void testNonBlockingInQuantifier() throws ConnectorException
+	public void testNonBlockingInQuantifier() 
 	{
 		ThreadManager tm = new ThreadManager(-1); // Unlimited threads
 		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ArgumentPlaceholder(0), new ArgumentPlaceholder(0))), 1000);
@@ -447,6 +446,11 @@ public class QuantifierTest
 	
 	public static class IsEvenProcessor extends FunctionProcessor
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -6420277285437205365L;
+
 		public IsEvenProcessor()
 		{
 			super(new DummyBooleanFunction());
@@ -458,6 +462,10 @@ public class QuantifierTest
 	 */
 	public static class SlowFunctionProcessor extends FunctionProcessor
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -2059186525886337465L;
 		protected long m_waitInterval;
 
 		public SlowFunctionProcessor(Function comp, long wait_interval)
@@ -474,9 +482,9 @@ public class QuantifierTest
 		}
 
 		@Override
-		public SlowFunctionProcessor clone()
+		public SlowFunctionProcessor duplicate()
 		{
-			SlowFunctionProcessor sfp = new SlowFunctionProcessor(getFunction().clone(m_context), m_waitInterval);
+			SlowFunctionProcessor sfp = new SlowFunctionProcessor(getFunction().duplicate(m_context), m_waitInterval);
 			return sfp;
 		}
 	}

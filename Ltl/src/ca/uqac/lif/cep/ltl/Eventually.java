@@ -21,7 +21,6 @@ import java.util.Queue;
 import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
@@ -32,6 +31,10 @@ import ca.uqac.lif.cep.ltl.Troolean.Value;
  */
 public class Eventually extends SingleProcessor 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3621139669780986836L;
 	protected int m_notTrueCount = 0;
 	
 	public Eventually()
@@ -46,7 +49,7 @@ public class Eventually extends SingleProcessor
 		m_notTrueCount = 0;
 	}
 	
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException 
+	public static void build(ArrayDeque<Object> stack) 
 	{
 		stack.pop(); // (
 		Processor p = (Processor) stack.pop();
@@ -58,7 +61,7 @@ public class Eventually extends SingleProcessor
 	}
 	
 	@Override
-	public Eventually clone()
+	public Eventually duplicate()
 	{
 		return new Eventually();
 	}

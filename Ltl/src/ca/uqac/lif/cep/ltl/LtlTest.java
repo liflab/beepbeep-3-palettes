@@ -30,8 +30,6 @@ import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.interpreter.Interpreter;
-import ca.uqac.lif.cep.interpreter.Interpreter.ParseException;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
 import ca.uqac.lif.cep.tmf.QueueSource;
 
@@ -51,7 +49,7 @@ public class LtlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testGlobally1() throws ConnectorException
+	public void testGlobally1() 
 	{
 		QueueSource src = new QueueSource(1);
 		Vector<Object> input_events = new Vector<Object>();
@@ -75,7 +73,7 @@ public class LtlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testAlways1() throws ConnectorException
+	public void testAlways1() 
 	{
 		QueueSource src = new QueueSource(1);
 		Vector<Object> input_events = new Vector<Object>();
@@ -99,7 +97,7 @@ public class LtlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testEventually1() throws ConnectorException
+	public void testEventually1() 
 	{
 		QueueSource src = new QueueSource(1);
 		Vector<Object> input_events = new Vector<Object>();
@@ -124,7 +122,7 @@ public class LtlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testSometime1() throws ConnectorException
+	public void testSometime1() 
 	{
 		QueueSource src = new QueueSource(1);
 		Vector<Object> input_events = new Vector<Object>();
@@ -148,7 +146,7 @@ public class LtlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testNext1() throws ConnectorException
+	public void testNext1() 
 	{
 		QueueSource src = new QueueSource(1);
 		Vector<Object> input_events = new Vector<Object>();
@@ -171,7 +169,7 @@ public class LtlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testNext2() throws ConnectorException
+	public void testNext2() 
 	{
 		QueueSource src = new QueueSource(1);
 		Vector<Object> input_events = new Vector<Object>();
@@ -192,7 +190,7 @@ public class LtlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testNot() throws ConnectorException
+	public void testNot() 
 	{
 		QueueSource src = new QueueSource(1);
 		Vector<Object> input_events = new Vector<Object>();
@@ -216,7 +214,7 @@ public class LtlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testAnd1() throws ConnectorException
+	public void testAnd1() 
 	{
 		QueueSource src_left = new QueueSource(1);
 		QueueSource src_right = new QueueSource(1);
@@ -252,7 +250,7 @@ public class LtlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testAnd2() throws ConnectorException
+	public void testAnd2() 
 	{
 		QueueSource src_left = new QueueSource(1);
 		QueueSource src_right = new QueueSource(1);
@@ -280,7 +278,7 @@ public class LtlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testOr() throws ConnectorException
+	public void testOr() 
 	{
 		QueueSource src_left = new QueueSource(1);
 		QueueSource src_right = new QueueSource(1);
@@ -316,7 +314,7 @@ public class LtlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testUntil1() throws ConnectorException
+	public void testUntil1() 
 	{
 		QueueSource src_left = new QueueSource(1);
 		QueueSource src_right = new QueueSource(1);
@@ -352,7 +350,7 @@ public class LtlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testUntil2() throws ConnectorException
+	public void testUntil2() 
 	{
 		QueueSource src_left = new QueueSource(1);
 		QueueSource src_right = new QueueSource(1);
@@ -388,7 +386,7 @@ public class LtlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testUpTo1() throws ConnectorException
+	public void testUpTo1() 
 	{
 		QueueSource src_left = new QueueSource(1);
 		QueueSource src_right = new QueueSource(1);
@@ -424,7 +422,7 @@ public class LtlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testUpTo2() throws ConnectorException
+	public void testUpTo2() 
 	{
 		QueueSource src_left = new QueueSource(1);
 		QueueSource src_right = new QueueSource(1);
@@ -460,7 +458,7 @@ public class LtlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testExpression1() throws ConnectorException, ParseException
+	public void testExpression1() throws ParseException
 	{
 		String expression = "(@T) AND (@U)";
 		{
@@ -497,7 +495,7 @@ public class LtlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testExpression2() throws ConnectorException, ParseException
+	public void testExpression2() throws ParseException
 	{
 		String expression = "(@T) AND (X (@U))";
 		{
@@ -530,7 +528,7 @@ public class LtlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testExpression3() throws ConnectorException, ParseException
+	public void testExpression3() throws ParseException
 	{
 		String expression = "X (@U)";
 		{
@@ -553,77 +551,77 @@ public class LtlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testGrammarConstant1() throws ConnectorException, ParseException
+	public void testGrammarConstant1() throws ParseException
 	{
 		Pullable p = m_interpreter.executeQuery("CONSTANT (true)");
 		assertNotNull(p);
 	}
 	
 	@Test
-	public void testGrammarConstant2() throws ConnectorException, ParseException
+	public void testGrammarConstant2() throws ParseException
 	{
 		Pullable p = m_interpreter.executeQuery("CONSTANT (⊥)");
 		assertNotNull(p);
 	}
 	
 	@Test
-	public void testGrammarConnectives1() throws ConnectorException, ParseException
+	public void testGrammarConnectives1() throws ParseException
 	{
 		Pullable p = m_interpreter.executeQuery("(CONSTANT (⊥)) AND (CONSTANT (⊥))");
 		assertNotNull(p);
 	}
 	
 	@Test
-	public void testGrammarConnectives2() throws ConnectorException, ParseException
+	public void testGrammarConnectives2() throws ParseException
 	{
 		Pullable p = m_interpreter.executeQuery("(CONSTANT (⊥)) OR (CONSTANT (⊥))");
 		assertNotNull(p);
 	}
 	
 	@Test
-	public void testGrammarConnectives3() throws ConnectorException, ParseException
+	public void testGrammarConnectives3() throws ParseException
 	{
 		Pullable p = m_interpreter.executeQuery("NOT (CONSTANT(⊥))");
 		assertNotNull(p);
 	}
 	
 	@Test
-	public void testGrammarConnectives4() throws ConnectorException, ParseException
+	public void testGrammarConnectives4() throws ParseException
 	{
 		Pullable p = m_interpreter.executeQuery("X (CONSTANT(⊥))");
 		assertNotNull(p);
 	}
 	
 	@Test
-	public void testGrammarConnectives5() throws ConnectorException, ParseException
+	public void testGrammarConnectives5() throws ParseException
 	{
 		Pullable p = m_interpreter.executeQuery("G (CONSTANT(⊥))");
 		assertNotNull(p);
 	}
 	
 	@Test
-	public void testGrammarConnectives6() throws ConnectorException, ParseException
+	public void testGrammarConnectives6() throws ParseException
 	{
 		Pullable p = m_interpreter.executeQuery("F (CONSTANT(⊥))");
 		assertNotNull(p);
 	}
 	
 	@Test
-	public void testGrammarConnectives7() throws ConnectorException, ParseException
+	public void testGrammarConnectives7() throws ParseException
 	{
 		Pullable p = m_interpreter.executeQuery("(CONSTANT(⊥)) U (CONSTANT(⊥))");
 		assertNotNull(p);
 	}
 	
 	@Test
-	public void testGrammarConnectives8() throws ConnectorException, ParseException
+	public void testGrammarConnectives8() throws ParseException
 	{
 		Pullable p = m_interpreter.executeQuery("(X ((CONSTANT(⊥)) U (CONSTANT(⊥)))) AND (NOT (F (CONSTANT(⊥))))");
 		assertNotNull(p);
 	}
 	
 	@Test
-	public void testGrammarMultiline() throws ConnectorException, ParseException
+	public void testGrammarMultiline() throws ParseException
 	{
 		String expression = "(CONSTANT(⊥))\nAND\n(X (CONSTANT(⊥)))";
 		{
@@ -641,7 +639,7 @@ public class LtlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testMultipleQueries2() throws ParseException, IOException, ConnectorException
+	public void testMultipleQueries2() throws ParseException, IOException
 	{
 		InputStream is = this.getClass().getResourceAsStream("test2.esql");
 		m_interpreter.executeQueries(is);

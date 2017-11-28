@@ -20,7 +20,6 @@ package ca.uqac.lif.cep.xml;
 import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.functions.UnaryFunction;
@@ -32,6 +31,11 @@ import ca.uqac.lif.xml.XmlElement.XmlParseException;
  */
 public class XmlFeeder extends FunctionProcessor
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5527196983530487846L;
+
 	public XmlFeeder()
 	{
 		super(XmlParsingFunction.instance);
@@ -67,7 +71,7 @@ public class XmlFeeder extends FunctionProcessor
 		}
 	}
 	
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) 
 	{
 		Processor p = (Processor) stack.pop();
 		stack.pop(); // OF

@@ -21,7 +21,6 @@ import java.util.Queue;
 import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
@@ -32,6 +31,10 @@ import ca.uqac.lif.cep.ltl.Troolean.Value;
  */
 public class Globally extends SingleProcessor 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8837177543781985148L;
 	protected int m_notFalseCount = 0;
 	
 	public Globally()
@@ -46,7 +49,7 @@ public class Globally extends SingleProcessor
 		m_notFalseCount = 0;
 	}
 	
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException, ConnectorException 
+	public static void build(ArrayDeque<Object> stack) 
 	{
 		stack.pop(); // (
 		Processor p = (Processor) stack.pop();
@@ -58,7 +61,7 @@ public class Globally extends SingleProcessor
 	}
 	
 	@Override
-	public Globally clone()
+	public Globally duplicate()
 	{
 		return new Globally();
 	}

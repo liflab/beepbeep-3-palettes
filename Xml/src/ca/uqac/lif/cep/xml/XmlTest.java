@@ -28,7 +28,6 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.tmf.SinkLast;
 import ca.uqac.lif.xml.XPathExpression;
@@ -44,7 +43,7 @@ public class XmlTest extends BeepBeepUnitTest
 {
 
 	@Test
-	public void testSingle1() throws ConnectorException
+	public void testSingle1() 
 	{
 		XmlFeeder feeder = new XmlFeeder();
 		Pushable in = feeder.getPushableInput(0);
@@ -59,7 +58,7 @@ public class XmlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testSingle2() throws ConnectorException
+	public void testSingle2() 
 	{
 		XmlFeeder feeder = new XmlFeeder();
 		Pushable in = feeder.getPushableInput(0);
@@ -72,7 +71,7 @@ public class XmlTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testXPath1() throws XPathParseException, XmlParseException, ConnectorException
+	public void testXPath1() throws XPathParseException, XmlParseException
 	{
 		XPathEvaluator xpath = new XPathEvaluator(XPathExpression.parse("a/b/text()"));
 		Pushable in = xpath.getPushableInput(0);

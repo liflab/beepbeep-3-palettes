@@ -21,7 +21,6 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.SingleProcessor;
@@ -36,6 +35,10 @@ import ca.uqac.lif.cep.functions.FunctionException;
  */
 public class Where extends SingleProcessor
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -790959172981094782L;
 	/**
 	 * The condition to evaluate. Based on its return value on a given
 	 * attribute group, the group will be returned or discarded.
@@ -80,12 +83,12 @@ public class Where extends SingleProcessor
 	}
 
 	@Override
-	public Where clone()
+	public Where duplicate()
 	{
-		return new Where(m_condition.clone());
+		return new Where(m_condition.duplicate());
 	}
 	
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) 
 	{
 		Object o;
 		Function f;

@@ -20,7 +20,6 @@ package ca.uqac.lif.cep.tuples;
 import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 
 /**
@@ -37,12 +36,17 @@ import ca.uqac.lif.cep.functions.FunctionProcessor;
  */
 public class From extends FunctionProcessor 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1466950333570084483L;
+
 	public From(FromFunction comp) 
 	{
 		super(comp);
 	}
 	
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) 
 	{
 		TupleExpressionList tel = (TupleExpressionList) stack.pop();
 		stack.pop(); // FROM

@@ -26,7 +26,6 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.tmf.QueueSource;
 
@@ -37,7 +36,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
 public class SignalTest extends BeepBeepUnitTest
 {
 	@Test
-	public void testPeakFinder1() throws ConnectorException
+	public void testPeakFinder1() 
 	{
 		QueueSource qs = new QueueSource(1);
 		Vector<Object> values = new Vector<Object>();
@@ -67,7 +66,7 @@ public class SignalTest extends BeepBeepUnitTest
 	}
 	
 	@Test
-	public void testPeakFinder2() throws ConnectorException
+	public void testPeakFinder2() 
 	{
 		QueueSource qs = new QueueSource(1);
 		Vector<Object> values = new Vector<Object>();
@@ -100,7 +99,7 @@ public class SignalTest extends BeepBeepUnitTest
 
 	
 	@Test
-	public void testPlateauFinder1() throws ConnectorException
+	public void testPlateauFinder1() 
 	{
 		QueueSource qs = new QueueSource(1);
 		Vector<Object> values = new Vector<Object>();

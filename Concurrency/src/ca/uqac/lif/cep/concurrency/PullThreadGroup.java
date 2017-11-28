@@ -24,6 +24,11 @@ import ca.uqac.lif.cep.Pullable;
 public class PullThreadGroup extends GroupProcessor
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3500506570902464346L;
+
+	/**
 	 * A (potentially non-blocking) pullable for the first
 	 * output of the group
 	 */
@@ -81,7 +86,7 @@ public class PullThreadGroup extends GroupProcessor
 	}
 
 	@Override
-	public PullThreadGroup clone()
+	public PullThreadGroup duplicate()
 	{
 		PullThreadGroup ptg = new PullThreadGroup(getInputArity(), getOutputArity());
 		super.cloneInto(ptg);

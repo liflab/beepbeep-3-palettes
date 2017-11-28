@@ -25,7 +25,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 
@@ -43,6 +42,11 @@ import ca.uqac.lif.cep.SingleProcessor;
  */
 public class RegexTupleBuilder extends SingleProcessor 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1807857234142327323L;
+
 	/**
 	 * The regex pattern to look for
 	 */
@@ -100,7 +104,7 @@ public class RegexTupleBuilder extends SingleProcessor
 		return true;
 	}
 
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException
+	public static void build(ArrayDeque<Object> stack) 
 	{
 		stack.pop(); // )
 		Processor p = (Processor) stack.pop();
@@ -128,7 +132,7 @@ public class RegexTupleBuilder extends SingleProcessor
 			super();
 		}
 
-		public static void build(ArrayDeque<Object> stack) throws ConnectorException
+		public static void build(ArrayDeque<Object> stack) 
 		{
 			Object top = stack.peek();
 			RegexAttributeNameList ranl = new RegexAttributeNameList();
@@ -153,7 +157,7 @@ public class RegexTupleBuilder extends SingleProcessor
 	}
 	
 	@Override
-	public RegexTupleBuilder clone()
+	public RegexTupleBuilder duplicate()
 	{
 		RegexTupleBuilder out = new RegexTupleBuilder();
 		out.m_pattern = m_pattern;

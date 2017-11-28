@@ -59,7 +59,7 @@ public class FetchAttribute extends UnaryFunction<Tuple,Object>
 	}
 	
 	@Override
-	public FetchAttribute clone()
+	public FetchAttribute duplicate()
 	{ 
 		return new FetchAttribute(m_attributeName);
 	}

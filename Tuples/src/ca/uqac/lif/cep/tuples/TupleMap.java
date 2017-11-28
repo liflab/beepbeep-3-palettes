@@ -205,7 +205,7 @@ public class TupleMap extends Tuple
 	}
 	
 	@Override
-	public TupleMap clone()
+	public TupleMap duplicate()
 	{
 		return new TupleMap(this);
 	}

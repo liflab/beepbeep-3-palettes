@@ -79,7 +79,7 @@ public class LazyBooleanFunction extends Function
 		}
 		
 		@Override
-		public DummyInterpretationFunction clone()
+		public DummyInterpretationFunction duplicate()
 		{
 			return this;
 		}
@@ -99,15 +99,15 @@ public class LazyBooleanFunction extends Function
 		}
 		
 		@Override
-		public And clone(Context context)
+		public And duplicate(Context context)
 		{
-			return new And(m_left.clone(context), m_right.clone(context));
+			return new And(m_left.duplicate(context), m_right.duplicate(context));
 		}
 		
 		@Override
-		public And clone()
+		public And duplicate()
 		{
-			return clone(null);
+			return duplicate(null);
 		}
 
 	}
@@ -126,15 +126,15 @@ public class LazyBooleanFunction extends Function
 		}
 		
 		@Override
-		public Or clone(Context context)
+		public Or duplicate(Context context)
 		{
-			return new Or(m_left.clone(context), m_right.clone(context));
+			return new Or(m_left.duplicate(context), m_right.duplicate(context));
 		}
 		
 		@Override
-		public Or clone()
+		public Or duplicate()
 		{
-			return clone(null);
+			return duplicate(null);
 		}
 	}
 	
@@ -152,15 +152,15 @@ public class LazyBooleanFunction extends Function
 		}
 		
 		@Override
-		public Implies clone(Context context)
+		public Implies duplicate(Context context)
 		{
-			return new Implies(m_left.clone(context), m_right.clone(context));
+			return new Implies(m_left.duplicate(context), m_right.duplicate(context));
 		}
 		
 		@Override
-		public Implies clone()
+		public Implies duplicate()
 		{
-			return clone(null);
+			return duplicate(null);
 		}
 
 	}
@@ -172,7 +172,7 @@ public class LazyBooleanFunction extends Function
 	}
 
 	@Override
-	public Function clone() {
+	public Function duplicate() {
 		// TODO Auto-generated method stub
 		return null;
 	}

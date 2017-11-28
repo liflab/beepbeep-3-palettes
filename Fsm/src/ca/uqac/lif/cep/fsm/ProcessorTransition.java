@@ -23,7 +23,6 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.functions.EmlBoolean;
 
@@ -67,9 +66,9 @@ public class ProcessorTransition extends MooreMachine.Transition
 	 */
 	final int m_destination;
 	
-	public ProcessorTransition(ProcessorTransition pt) throws ConnectorException
+	public ProcessorTransition(ProcessorTransition pt) 
 	{
-		this(pt.m_destination, pt.m_condition.clone());
+		this(pt.m_destination, pt.m_condition.duplicate());
 	}
 	
 	/**
@@ -78,7 +77,7 @@ public class ProcessorTransition extends MooreMachine.Transition
 	 * @param destination The state one will be in if the condition 
 	 *   evaluates to true
 	 */
-	public ProcessorTransition(int destination, Processor condition) throws ConnectorException
+	public ProcessorTransition(int destination, Processor condition) 
 	{
 		super();
 		m_destination = destination;

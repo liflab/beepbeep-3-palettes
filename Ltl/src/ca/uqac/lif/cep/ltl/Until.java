@@ -21,7 +21,6 @@ import java.util.Queue;
 import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
@@ -32,6 +31,10 @@ import ca.uqac.lif.cep.ltl.Troolean.Value;
  */
 public class Until extends SingleProcessor 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6258256725632822526L;
 	protected int m_eventCount = 0;
 	
 	public Until()
@@ -78,7 +81,7 @@ public class Until extends SingleProcessor
 		return false;
 	}
 	
-	public static void build(ArrayDeque<Object> stack) throws ConnectorException 
+	public static void build(ArrayDeque<Object> stack) 
 	{
 		stack.pop(); // (
 		Processor right = (Processor) stack.pop();
@@ -88,13 +91,13 @@ public class Until extends SingleProcessor
 		Processor left = (Processor) stack.pop();
 		stack.pop(); // )
 		Until op = new Until();
-		Connector.connect(left, op, 0, 0);
-		Connector.connect(right, op, 0, 1);
+		Connector.connect(left, 0, op, 0);
+		Connector.connect(right, 0, op, 1);
 		stack.push(op);
 	}
 
 	@Override
-	public Until clone()
+	public Until duplicate()
 	{
 		return new Until();
 	}

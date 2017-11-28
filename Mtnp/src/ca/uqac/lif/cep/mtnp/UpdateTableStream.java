@@ -5,6 +5,11 @@ import ca.uqac.lif.mtnp.table.TableEntry;
 
 public class UpdateTableStream extends UpdateTable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5638730474856725000L;
+
 	public UpdateTableStream(String ... column_names)
 	{
 		super(column_names.length, column_names);
@@ -20,7 +25,7 @@ public class UpdateTableStream extends UpdateTable
 	}
 	
 	@Override
-	public UpdateTableStream clone()
+	public UpdateTableStream duplicate()
 	{
 		return new UpdateTableStream(m_table.getColumnNames());
 	}
