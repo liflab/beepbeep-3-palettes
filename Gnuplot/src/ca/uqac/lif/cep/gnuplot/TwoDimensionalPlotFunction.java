@@ -24,6 +24,11 @@ package ca.uqac.lif.cep.gnuplot;
 public abstract class TwoDimensionalPlotFunction extends PlotFunction
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3856986619628694581L;
+
+	/**
 	 * The label given to the x axis
 	 */
 	protected String m_labelX = "";

@@ -27,6 +27,10 @@ import ca.uqac.lif.cep.sets.Multiset;
  */
 public class Blow extends UnaryFunction<Tuple,Multiset>
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5638490095330260150L;
 	public static final Blow instance = new Blow();
 	
 	Blow()

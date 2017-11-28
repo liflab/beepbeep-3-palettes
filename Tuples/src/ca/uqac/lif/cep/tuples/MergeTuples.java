@@ -36,6 +36,11 @@ import ca.uqac.lif.cep.functions.Function;
 public class MergeTuples extends Function
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4867604025354644106L;
+
+	/**
 	 * The number of input tuples to merge
 	 */
 	protected int m_inputArity;

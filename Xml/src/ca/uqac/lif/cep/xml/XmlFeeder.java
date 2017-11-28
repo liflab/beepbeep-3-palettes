@@ -47,6 +47,10 @@ public class XmlFeeder extends FunctionProcessor
 	public static class XmlParsingFunction extends UnaryFunction<String,XmlElement> 
 	{
 		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -7664988036885406089L;
+		/**
 		 * Instance of the function
 		 */
 		public static XmlParsingFunction instance = new XmlParsingFunction();

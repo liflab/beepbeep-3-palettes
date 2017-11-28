@@ -21,6 +21,11 @@ import java.util.ArrayDeque;
 
 class GetAttributeQualified extends GetAttribute
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5547231071258883200L;
+
 	public GetAttributeQualified(String attribute_name) 
 	{
 		super(attribute_name);

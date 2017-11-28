@@ -44,6 +44,11 @@ import ca.uqac.lif.cep.functions.FunctionException;
 public class DeserializeEvents<T,U> extends Function 
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -447778753993013862L;
+
+	/**
 	 * The serializer
 	 */
 	protected transient Serializer<T> m_serializer;

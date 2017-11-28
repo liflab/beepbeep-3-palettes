@@ -24,6 +24,10 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  */
 public class PredicateTupleConversion extends UnaryFunction<Object,PredicateTuple>
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6036066394847115298L;
 	public static final transient PredicateTupleConversion instance = new PredicateTupleConversion();
 
 	private PredicateTupleConversion()

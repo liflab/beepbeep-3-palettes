@@ -30,6 +30,11 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 public class TransposePair extends UnaryFunction<Tuple,Tuple> 
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2542179999653186085L;
+
+	/**
 	 * The key associated to the tuple's header
 	 */
 	protected String m_columnHeader;

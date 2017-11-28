@@ -21,7 +21,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.Pullable.NextStatus;
+import ca.uqac.lif.cep.NextStatus;
 
 class ContinuousPoller implements Poller
 {

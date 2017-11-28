@@ -14,6 +14,10 @@ import ca.uqac.lif.xml.XmlElement;
 public abstract class XPathFunctionGet<T> extends UnaryFunction<XmlElement,T>
 {	
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3970074539692281999L;
+	/**
 	 * The expression to evaluate
 	 */
 	protected XPathExpression m_expression;

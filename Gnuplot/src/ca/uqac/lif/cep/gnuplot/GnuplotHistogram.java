@@ -30,6 +30,11 @@ import ca.uqac.lif.cep.tuples.TupleComparator;
 public class GnuplotHistogram extends TwoDimensionalPlotFunction 
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7261854378181577894L;
+
+	/**
 	 * The attribute used to group the values in the histogram
 	 */
 	protected String m_lineAttribute;

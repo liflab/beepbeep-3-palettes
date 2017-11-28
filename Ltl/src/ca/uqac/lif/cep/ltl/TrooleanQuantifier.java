@@ -175,6 +175,11 @@ public abstract class TrooleanQuantifier extends GroupProcessor
 
 	public static abstract class ArrayTroolean extends Function
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 7631562577540522347L;
+
 		@Override
 		public int getInputArity() 
 		{

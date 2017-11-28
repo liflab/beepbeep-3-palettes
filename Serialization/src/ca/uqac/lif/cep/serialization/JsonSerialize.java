@@ -29,6 +29,11 @@ import ca.uqac.lif.json.JsonElement;
  */
 public class JsonSerialize extends SerializeEvents<JsonElement>
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6534858392550945680L;
+
 	public JsonSerialize()
 	{
 		super(new JsonSerializer(), JsonElement.class);

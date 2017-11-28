@@ -5,6 +5,10 @@ import ca.uqac.lif.cep.ltl.TrooleanQuantifier.ArrayTroolean;
 
 public class ArrayOr extends ArrayTroolean
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6482501708683581617L;
 	public static final transient ArrayOr instance = new ArrayOr();
 	
 	@Override

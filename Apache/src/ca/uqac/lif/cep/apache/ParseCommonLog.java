@@ -35,6 +35,11 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  */
 public class ParseCommonLog extends UnaryFunction<String, HttpRequest>
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2476570927200778696L;
+
 	public static final ParseCommonLog instance = new ParseCommonLog();
 
 	/**

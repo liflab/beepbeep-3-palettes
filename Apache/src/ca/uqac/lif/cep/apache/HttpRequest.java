@@ -196,6 +196,10 @@ public class HttpRequest
 	 */
 	public static class GetPath extends UnaryFunction<HttpRequest,String>
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -8849415117343674576L;
 		public static final GetPath instance = new GetPath();
 
 		GetPath()
@@ -215,6 +219,10 @@ public class HttpRequest
 	 */
 	public static class GetParameter extends UnaryFunction<HttpRequest,String>
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -2817837681887462025L;
 		/**
 		 * The name of the parameter to get
 		 */
@@ -241,6 +249,10 @@ public class HttpRequest
 	 */
 	public static class GetTimestamp extends UnaryFunction<HttpRequest,Long>
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -3005483750338368268L;
 		public static final GetTimestamp instance = new GetTimestamp();
 
 		GetTimestamp()
@@ -260,6 +272,10 @@ public class HttpRequest
 	 */
 	public static class RequestIsAfter extends BinaryFunction<HttpRequest,Number,Boolean>
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -6445484355821936616L;
 		public static final RequestIsAfter instance = new RequestIsAfter();
 
 		RequestIsAfter()

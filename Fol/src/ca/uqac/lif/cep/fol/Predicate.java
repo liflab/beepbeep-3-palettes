@@ -278,6 +278,10 @@ public class Predicate extends SimpleFunction
 	 */
 	public static class Wildcard extends Constant
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 8316809576940654252L;
 		public static final transient Wildcard instance = new Wildcard();
 		
 		Wildcard()

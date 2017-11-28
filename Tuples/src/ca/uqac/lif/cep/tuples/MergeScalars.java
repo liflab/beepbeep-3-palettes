@@ -39,6 +39,11 @@ import ca.uqac.lif.cep.functions.Function;
 public class MergeScalars extends Function 
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2997999297120718635L;
+
+	/**
 	 * The names given to the attributes corresponding to each scalar
 	 */
 	protected String[] m_attributeNames;

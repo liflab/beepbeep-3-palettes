@@ -10,6 +10,11 @@ public class BooleanFunction
 	
 	public static class And extends BinaryFunction<Boolean,Boolean,Boolean>
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -8470141062728908938L;
+
 		And()
 		{
 			super(Boolean.class, Boolean.class, Boolean.class);
@@ -30,6 +35,11 @@ public class BooleanFunction
 	
 	public static class Or extends BinaryFunction<Boolean,Boolean,Boolean>
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -1223847601828113416L;
+
 		Or()
 		{
 			super(Boolean.class, Boolean.class, Boolean.class);
@@ -50,6 +60,11 @@ public class BooleanFunction
 	
 	public static class Implies extends BinaryFunction<Boolean,Boolean,Boolean>
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -852550864158965530L;
+
 		Implies()
 		{
 			super(Boolean.class, Boolean.class, Boolean.class);

@@ -11,6 +11,11 @@ import ca.uqac.lif.xml.XmlElement;
  */
 public class XPathFunctionGetText extends XPathFunctionGet<String>
 {	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3787970637779756779L;
+
 	public XPathFunctionGetText(String exp)
 	{
 		super(exp, String.class);

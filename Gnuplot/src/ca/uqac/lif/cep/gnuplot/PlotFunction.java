@@ -28,6 +28,11 @@ import ca.uqac.lif.cep.sets.Multiset;
 public abstract class PlotFunction extends UnaryFunction<Multiset,String> 
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6759055518507152630L;
+
+	/**
 	 * The possible types of image produced by a plot function
 	 */
 	public static enum Terminal {PNG, PDF};

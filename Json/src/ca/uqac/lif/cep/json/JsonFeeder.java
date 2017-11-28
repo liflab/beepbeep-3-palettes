@@ -44,6 +44,11 @@ public class JsonFeeder extends FunctionProcessor
 	public static class JsonParsingFunction extends UnaryFunction<String,JsonElement> 
 	{
 		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -3483795390556098246L;
+
+		/**
 		 * Instance of the function
 		 */
 		public static JsonParsingFunction instance = new JsonParsingFunction();

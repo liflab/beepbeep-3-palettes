@@ -46,6 +46,10 @@ public class JPathEvaluator extends FunctionProcessor
 	public static class JPathFunction extends UnaryFunction<JsonElement,JsonElement> 
 	{
 		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -4581485995622146296L;
+		/**
 		 * The JPath expression this function evaluates
 		 */
 		private final List<PathElement> m_path;

@@ -34,6 +34,10 @@ import ca.uqac.lif.cep.sets.Multiset;
 public class JoinSet extends UnaryFunction<Multiset,Multiset>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6739343371520180037L;
+	/**
 	 * The attribute over which to perform the join
 	 */
 	protected String m_joinAttribute;

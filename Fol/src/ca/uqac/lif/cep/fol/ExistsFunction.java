@@ -5,6 +5,11 @@ import ca.uqac.lif.cep.functions.Function;
 
 public class ExistsFunction extends QuantifierFunction
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8298279942590556740L;
+
 	public ExistsFunction(String variable_name, String domain_name, Function expression)
 	{
 		super(variable_name, domain_name, expression, true);

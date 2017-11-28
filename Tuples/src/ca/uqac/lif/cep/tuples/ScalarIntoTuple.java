@@ -26,6 +26,10 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 public class ScalarIntoTuple extends UnaryFunction<Object,TupleFixed>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 458145883514203961L;
+	/**
 	 * The name given to the key for the resulting tuple
 	 */
 	protected String m_keyName;

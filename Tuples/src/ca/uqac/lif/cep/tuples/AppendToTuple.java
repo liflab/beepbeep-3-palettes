@@ -21,6 +21,11 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 
 public class AppendToTuple extends UnaryFunction<Tuple,TupleMap>
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3500406547661646995L;
+
 	String[] m_names;
 	
 	Object[] m_values;

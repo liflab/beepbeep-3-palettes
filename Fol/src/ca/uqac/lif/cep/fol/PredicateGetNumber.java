@@ -26,6 +26,10 @@ import ca.uqac.lif.cep.numbers.NumberCast;
  */
 public class PredicateGetNumber extends UnaryFunction<PredicateTuple,Number>
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3298023325452552445L;
 	protected int m_position;
 
 	public PredicateGetNumber(int position)

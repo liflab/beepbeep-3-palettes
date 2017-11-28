@@ -12,6 +12,10 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 public class GetDomain extends UnaryFunction<Interpretation,Set>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5812468213644567902L;
+	/**
 	 * The name of the domain to fetch from the interpretation
 	 */
 	protected String m_domainName;

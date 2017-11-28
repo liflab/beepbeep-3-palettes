@@ -25,6 +25,10 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 public class PredicateGet extends UnaryFunction<PredicateTuple,Object>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7356240946465982879L;
+	/**
 	 * The position to extract from each tuple
 	 */
 	protected int m_position;

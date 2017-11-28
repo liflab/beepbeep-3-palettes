@@ -5,6 +5,11 @@ import ca.uqac.lif.cep.functions.Function;
 
 public class ForAllFunction extends QuantifierFunction
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2588269178944223114L;
+
 	public ForAllFunction(String variable_name, String domain_name, Function expression)
 	{
 		super(variable_name, domain_name, expression, false);

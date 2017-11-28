@@ -29,6 +29,10 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 public class FetchAttribute extends UnaryFunction<Tuple,Object>
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5959720463353323055L;
+	/**
 	 * The name of the attribute to get
 	 */
 	private final String m_attributeName;

@@ -18,7 +18,7 @@
 package ca.uqac.lif.cep.concurrency;
 
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.Pullable.NextStatus;
+import ca.uqac.lif.cep.NextStatus;
 
 class OnDemandPoller implements Poller
 {
