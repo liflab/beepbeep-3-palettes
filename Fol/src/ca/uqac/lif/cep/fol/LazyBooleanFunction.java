@@ -45,7 +45,7 @@ public class LazyBooleanFunction extends Function
 	}
 	
 	@Override
-	public void evaluate(Object[] inputs, Object[] out, Context context) throws FunctionException
+	public void evaluate(Object[] inputs, Object[] out, Context context) 
 	{
 		// Evaluate LHS
 		m_left.evaluate(inputs, out, context);
@@ -63,7 +63,7 @@ public class LazyBooleanFunction extends Function
 	}
 	
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs) throws FunctionException
+	public void evaluate(Object[] inputs, Object[] outputs) 
 	{
 		evaluate(inputs, outputs, null);
 	}

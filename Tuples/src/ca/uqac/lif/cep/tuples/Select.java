@@ -23,7 +23,6 @@ import java.util.ArrayDeque;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 
@@ -102,7 +101,7 @@ public class Select extends FunctionProcessor
 		}
 
 		@Override
-		public Object getValue(AttributeGroup group) throws FunctionException
+		public Object getValue(AttributeGroup group) 
 		{
 			String[] names = new String[m_expressions.length];
 			Object[] values = new Object[m_expressions.length];

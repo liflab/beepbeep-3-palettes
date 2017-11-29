@@ -62,7 +62,7 @@ public class PredicateAssertion extends Function
 	}
 
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs, Context context) throws FunctionException
+	public void evaluate(Object[] inputs, Object[] outputs, Context context) 
 	{
 		Interpretation inter = (Interpretation) inputs[0];
 		if (!inter.containsPredicate(m_predicateName))
@@ -83,7 +83,7 @@ public class PredicateAssertion extends Function
 	}
 
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs) throws FunctionException
+	public void evaluate(Object[] inputs, Object[] outputs) 
 	{
 		evaluate(inputs, outputs, null);
 	}

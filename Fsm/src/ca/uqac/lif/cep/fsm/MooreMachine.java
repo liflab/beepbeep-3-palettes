@@ -196,10 +196,10 @@ public class MooreMachine extends UniformProcessor
 	 * @param outputs Any output symbol associated with the destination state,
 	 *   {@code null} otherwise
 	 * @return {@code false} if nothing fired, {@code true} otherwise
-	 * @throws FunctionException If an error occurred in the evaluation
+	 * @ If an error occurred in the evaluation
 	 *   of the transition
 	 */
-	protected boolean fire(Transition t, Object[] inputs, Object[] outputs) throws FunctionException
+	protected boolean fire(Transition t, Object[] inputs, Object[] outputs) 
 	{
 		m_currentState = t.getDestination();
 		t.modifyContext(inputs, outputs, this);
@@ -248,10 +248,10 @@ public class MooreMachine extends UniformProcessor
 		 * @param context The context for the evaluation
 		 * @return <code>true</code> if the transition fires, <code>false</code>
 		 *   otherwise
-		 * @throws FunctionException If an error occurred in the evaluation
+		 * @ If an error occurred in the evaluation
 		 *   of the transition
 		 */
-		public boolean isFired(Object[] inputs, Context context) throws FunctionException
+		public boolean isFired(Object[] inputs, Context context) 
 		{
 			return false;
 		}
@@ -266,10 +266,10 @@ public class MooreMachine extends UniformProcessor
 
 		/**
 		 * Modifies the context of the state machine
-		 * @throws FunctionException  If an error occurs in the modification of
+		 * @  If an error occurs in the modification of
 		 *   the context
 		 */
-		public void modifyContext(Object[] inputs, Object[] outputs, MooreMachine machine) throws FunctionException
+		public void modifyContext(Object[] inputs, Object[] outputs, MooreMachine machine) 
 		{
 			// Do nothing
 		}

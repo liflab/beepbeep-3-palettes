@@ -23,7 +23,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import ca.uqac.lif.cep.sets.Multiset;
 import ca.uqac.lif.cep.tuples.Tuple;
 import ca.uqac.lif.cep.tuples.TupleComparator;
 

@@ -15,46 +15,11 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.tuples;
-
-import ca.uqac.lif.cep.functions.UnaryFunction;
 
 /**
- * Breaks a single tuple into multiple tuples, one for each key-value
- * pair of the original tuple.
+ * Processors and functions for event traces made of sets or other
+ * collections of objects.
+ * 
  * @author Sylvain Hallé
  */
-public class Blow extends UnaryFunction<Tuple,Multiset>
-{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5638490095330260150L;
-	public static final Blow instance = new Blow();
-	
-	Blow()
-	{
-		super(Tuple.class, Multiset.class);
-	}
-
-	@Override
-	public Multiset getValue(Tuple x)
-	{
-		Multiset out = new Multiset();
-		for (String key : x.keySet())
-		{
-			Tuple t = new TupleMap();
-			t.put(key, x.get(key));
-			out.add(t);
-		}
-		return out;
-	}
-	
-	@Override
-	public Blow duplicate()
-	{
-		return this;
-	}
-	
-	
-}
+package ca.uqac.lif.cep.sets;

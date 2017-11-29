@@ -23,12 +23,10 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.functions.FunctionException;
-
 public class ParseCommonLogTest 
 {
 	@Test
-	public void test1() throws FunctionException
+	public void test1() 
 	{
 		String line = "::1 - - [01/Mar/2017:09:02:10 -0500] \"GET / HTTP/1.1\" 200 5693 \"-\" \"Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36\"";
 		ParseCommonLog pcl = ParseCommonLog.instance;
@@ -46,7 +44,7 @@ public class ParseCommonLogTest
 	}
 	
 	@Test
-	public void test2() throws FunctionException
+	public void test2() 
 	{
 		String line = "::1 - - [01/Mar/2017:09:02:10 -0500] \"POST /blabla.php HTTP/1.1\" 200 5693 \"-\" \"Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36\"";
 		ParseCommonLog pcl = ParseCommonLog.instance;
@@ -62,7 +60,7 @@ public class ParseCommonLogTest
 	}
 	
 	@Test
-	public void test3() throws FunctionException
+	public void test3() 
 	{
 		String line = "::1 - - [01/Mar/2017:09:02:10 -0500] \"GET /blabla.php?foo=bar HTTP/1.1\" 200 5693 \"-\" \"Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36\"";
 		ParseCommonLog pcl = ParseCommonLog.instance;

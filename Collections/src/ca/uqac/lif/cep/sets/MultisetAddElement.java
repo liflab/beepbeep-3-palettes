@@ -15,46 +15,48 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.tuples;
+package ca.uqac.lif.cep.sets;
 
-import ca.uqac.lif.cep.functions.UnaryFunction;
+import ca.uqac.lif.cep.functions.BinaryFunction;
 
 /**
- * Breaks a single tuple into multiple tuples, one for each key-value
- * pair of the original tuple.
+ * Adds an element to a multiset. This function <em>modifies</em>
+ * the multiset and returns it.
+ * 
  * @author Sylvain Hallé
  */
-public class Blow extends UnaryFunction<Tuple,Multiset>
+public class MultisetAddElement extends BinaryFunction<Multiset,Object,Multiset>
 {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5638490095330260150L;
-	public static final Blow instance = new Blow();
-	
-	Blow()
+	private static final long serialVersionUID = 893561486871547176L;
+	/**
+	 * A static instance of the function
+	 */
+	public static final transient MultisetAddElement instance = new MultisetAddElement();
+
+	private MultisetAddElement()
 	{
-		super(Tuple.class, Multiset.class);
+		super(Multiset.class, Object.class, Multiset.class);
 	}
 
 	@Override
-	public Multiset getValue(Tuple x)
+	public Multiset getValue(Multiset x, Object y)
 	{
-		Multiset out = new Multiset();
-		for (String key : x.keySet())
-		{
-			Tuple t = new TupleMap();
-			t.put(key, x.get(key));
-			out.add(t);
-		}
-		return out;
+		x.add(y);
+		return x;
 	}
-	
+
 	@Override
-	public Blow duplicate()
+	public Multiset getStartValue()
 	{
-		return this;
+		return new Multiset();
 	}
-	
-	
+
+	@Override
+	public String toString()
+	{
+		return " += ";
+	}
 }

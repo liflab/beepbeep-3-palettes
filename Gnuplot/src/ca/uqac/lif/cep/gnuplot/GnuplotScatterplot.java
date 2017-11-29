@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import ca.uqac.lif.cep.sets.Multiset;
 import ca.uqac.lif.cep.tuples.Tuple;
 import ca.uqac.lif.cep.tuples.TupleComparator;
 

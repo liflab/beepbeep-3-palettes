@@ -24,7 +24,6 @@ import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.fsm.MooreMachine.Transition;
 import ca.uqac.lif.cep.functions.ContextAssignment;
 import ca.uqac.lif.cep.functions.Function;
-import ca.uqac.lif.cep.functions.FunctionException;
 
 /**
  * Transition for a Moore Machine where the guard is a function
@@ -76,7 +75,7 @@ public class FunctionTransition extends Transition
 	}
 
 	@Override
-	public boolean isFired(Object[] input, Context context) throws FunctionException
+	public boolean isFired(Object[] input, Context context) 
 	{
 		Object[] values = new Object[1];
 		m_function.evaluate(input, values, context);
@@ -91,7 +90,7 @@ public class FunctionTransition extends Transition
 	}
 	
 	@Override
-	public void modifyContext(Object[] inputs, Object[] outputs, MooreMachine machine) throws FunctionException
+	public void modifyContext(Object[] inputs, Object[] outputs, MooreMachine machine) 
 	{
 		for (ContextAssignment asg : m_assignments)
 		{

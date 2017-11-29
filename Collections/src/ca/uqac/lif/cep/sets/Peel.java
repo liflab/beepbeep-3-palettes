@@ -15,46 +15,44 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.tuples;
+package ca.uqac.lif.cep.sets;
+
+import java.util.Collection;
 
 import ca.uqac.lif.cep.functions.UnaryFunction;
 
 /**
- * Breaks a single tuple into multiple tuples, one for each key-value
- * pair of the original tuple.
+ * If the input is a singleton, extracts the element of that singleton.
+ * In all other cases, returns the input as is.
  * @author Sylvain Hallé
  */
-public class Blow extends UnaryFunction<Tuple,Multiset>
+public class Peel extends UnaryFunction<Object,Object>
 {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5638490095330260150L;
-	public static final Blow instance = new Blow();
-	
-	Blow()
+	private static final long serialVersionUID = -3131574650958399872L;
+	/**
+	 * An instance of the peel function
+	 */
+	public static final transient Peel instance = new Peel();
+
+	private Peel()
 	{
-		super(Tuple.class, Multiset.class);
+		super(Object.class, Object.class);
 	}
 
+	@SuppressWarnings({"rawtypes", "squid:S1751"})
 	@Override
-	public Multiset getValue(Tuple x)
+	public Object getValue(Object x)
 	{
-		Multiset out = new Multiset();
-		for (String key : x.keySet())
+		if (x instanceof Collection)
 		{
-			Tuple t = new TupleMap();
-			t.put(key, x.get(key));
-			out.add(t);
+			for (Object o : (Collection) x)
+			{
+				return o;
+			}
 		}
-		return out;
+		return x;
 	}
-	
-	@Override
-	public Blow duplicate()
-	{
-		return this;
-	}
-	
-	
 }

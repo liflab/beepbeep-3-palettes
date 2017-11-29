@@ -18,7 +18,6 @@
 package ca.uqac.lif.cep.gnuplot;
 
 import ca.uqac.lif.cep.functions.UnaryFunction;
-import ca.uqac.lif.cep.sets.Multiset;
 
 /**
  * Function that takes as input a multiset of objects, and produces a text

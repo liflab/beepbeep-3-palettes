@@ -15,46 +15,38 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.tuples;
+package ca.uqac.lif.cep.sets;
 
-import ca.uqac.lif.cep.functions.UnaryFunction;
+import ca.uqac.lif.cep.functions.CumulativeFunction;
 
 /**
- * Breaks a single tuple into multiple tuples, one for each key-value
- * pair of the original tuple.
+ * Accumulates the received events cumulatively into a multiset.
+ * <p>
+ * <b>Example:</b> suppose the input events are integers. From the input
+ * trace
+ * <pre>
+ * 0, 1, 2, 1, 3, ...
+ * </pre>
+ * the processor will produce the output trace
+ * <pre>
+ * {0}, {0, 1}, {0, 1, 2}, {0, 1, 1, 2}, {0, 1, 1, 2, 3}, ...
+ * </pre>
  * @author Sylvain Hallé
  */
-public class Blow extends UnaryFunction<Tuple,Multiset>
+public class BagUnion extends CumulativeFunction<Multiset>
 {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5638490095330260150L;
-	public static final Blow instance = new Blow();
-	
-	Blow()
+	private static final long serialVersionUID = -7459604471060231209L;
+
+	/**
+	 * Note that BagUnion <strong>cannot</strong> have a single static
+	 * instance, as a cumulative function has a memory
+	 */
+	public BagUnion()
 	{
-		super(Tuple.class, Multiset.class);
+		super(MultisetUnion.instance);
 	}
 
-	@Override
-	public Multiset getValue(Tuple x)
-	{
-		Multiset out = new Multiset();
-		for (String key : x.keySet())
-		{
-			Tuple t = new TupleMap();
-			t.put(key, x.get(key));
-			out.add(t);
-		}
-		return out;
-	}
-	
-	@Override
-	public Blow duplicate()
-	{
-		return this;
-	}
-	
-	
 }

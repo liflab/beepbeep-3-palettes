@@ -20,7 +20,6 @@ package ca.uqac.lif.cep.gnuplot;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.SingleProcessor;
-import ca.uqac.lif.cep.sets.Multiset;
 
 /**
  * Generic processor configuring basic parameters about the generation

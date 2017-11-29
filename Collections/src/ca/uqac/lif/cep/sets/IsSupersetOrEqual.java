@@ -15,46 +15,27 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.tuples;
+package ca.uqac.lif.cep.sets;
 
-import ca.uqac.lif.cep.functions.UnaryFunction;
+import java.util.Set;
 
 /**
- * Breaks a single tuple into multiple tuples, one for each key-value
- * pair of the original tuple.
+ * Evaluates if the first set is a superset or is equal to the second set.
+ * 
  * @author Sylvain Hallé
  */
-public class Blow extends UnaryFunction<Tuple,Multiset>
+public class IsSupersetOrEqual extends IsSubsetOrEqual
 {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5638490095330260150L;
-	public static final Blow instance = new Blow();
-	
-	Blow()
-	{
-		super(Tuple.class, Multiset.class);
-	}
+	private static final long serialVersionUID = -6500907866238095705L;
+	public static final transient IsSupersetOrEqual instance = new IsSupersetOrEqual();
 
+	@SuppressWarnings("rawtypes")
 	@Override
-	public Multiset getValue(Tuple x)
+	public Boolean getValue(Set x, Set y)
 	{
-		Multiset out = new Multiset();
-		for (String key : x.keySet())
-		{
-			Tuple t = new TupleMap();
-			t.put(key, x.get(key));
-			out.add(t);
-		}
-		return out;
+		return super.getValue(y, x);
 	}
-	
-	@Override
-	public Blow duplicate()
-	{
-		return this;
-	}
-	
-	
 }

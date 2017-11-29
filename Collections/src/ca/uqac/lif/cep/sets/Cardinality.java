@@ -15,46 +15,34 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.tuples;
+package ca.uqac.lif.cep.sets;
+
+import java.util.Set;
 
 import ca.uqac.lif.cep.functions.UnaryFunction;
 
 /**
- * Breaks a single tuple into multiple tuples, one for each key-value
- * pair of the original tuple.
+ * Evaluates the cardinality of a set or a multiset
+ * 
  * @author Sylvain Hallé
  */
-public class Blow extends UnaryFunction<Tuple,Multiset>
+@SuppressWarnings("rawtypes")
+public class Cardinality extends UnaryFunction<Set, Integer>
 {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5638490095330260150L;
-	public static final Blow instance = new Blow();
-	
-	Blow()
+	private static final long serialVersionUID = 3469690418825982252L;
+	public static final transient Cardinality instance = new Cardinality();
+
+	protected Cardinality()
 	{
-		super(Tuple.class, Multiset.class);
+		super(Set.class, Integer.class);
 	}
 
 	@Override
-	public Multiset getValue(Tuple x)
+	public Integer getValue(Set x)
 	{
-		Multiset out = new Multiset();
-		for (String key : x.keySet())
-		{
-			Tuple t = new TupleMap();
-			t.put(key, x.get(key));
-			out.add(t);
-		}
-		return out;
+		return x.size();
 	}
-	
-	@Override
-	public Blow duplicate()
-	{
-		return this;
-	}
-	
-	
 }

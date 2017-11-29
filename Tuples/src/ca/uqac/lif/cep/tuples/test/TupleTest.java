@@ -27,7 +27,6 @@ import org.junit.Test;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.Constant;
-import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.functions.Or;
 import ca.uqac.lif.cep.numbers.Addition;
@@ -183,7 +182,7 @@ public class TupleTest
 	}
 	
 	@Test
-	public void testAttributeExpression1() throws FunctionException
+	public void testAttributeExpression1() 
 	{
 		FunctionTree ft = new FunctionTree(Addition.instance, new GetAttribute("A", "y"), new GetAttribute("C", "q"));
 		AttributeGroup group = new AttributeGroup(new String[]{"A", "B", "C"});
@@ -199,7 +198,7 @@ public class TupleTest
 	}
 	
 	@Test
-	public void testSelectFunction1() throws FunctionException
+	public void testSelectFunction1() 
 	{
 		AttributeGroup group = new AttributeGroup(new String[]{"A", "B", "C"});
 		group.add(0, new TupleFixed(new String[]{"x", "y"}, new Integer[]{0, 1}));
@@ -300,7 +299,7 @@ public class TupleTest
 	}
 	
 	@Test
-	public void testExpand1() throws FunctionException
+	public void testExpand1() 
 	{
 		Tuple t = new TupleFixed(new String[]{"foo", "bar", "baz"}, new String[]{"a", "b", "c"});
 		ExpandAsColumns eac = new ExpandAsColumns("foo", "bar");
@@ -314,7 +313,7 @@ public class TupleTest
 	}
 	
 	@Test
-	public void testExpand2() throws FunctionException
+	public void testExpand2() 
 	{
 		Tuple t = new TupleFixed(new String[]{"foo", "bar", "baz"}, new Integer[]{1, 2, 3});
 		ExpandAsColumns eac = new ExpandAsColumns("foo", "bar");

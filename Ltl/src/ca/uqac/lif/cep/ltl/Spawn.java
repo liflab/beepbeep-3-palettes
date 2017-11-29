@@ -518,7 +518,7 @@ class Spawn extends Processor
 	}
 
 	@SuppressWarnings("unchecked")
-	protected synchronized /*@NotNull*/ Collection<Object> getDomain(Object o) throws FunctionException
+	protected synchronized /*@NotNull*/ Collection<Object> getDomain(Object o) 
 	{
 		/* TODO: there are *lots* of null checks in this method, just to
 		 * fend off whatever the split function returns. A couple of these

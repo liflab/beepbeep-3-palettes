@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Set;
 
 import ca.uqac.lif.cep.functions.UnaryFunction;
-import ca.uqac.lif.cep.sets.Multiset;
 
 /**
  * Merges all tuples in a set with the same value for a given attribute.

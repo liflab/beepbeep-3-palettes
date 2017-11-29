@@ -76,13 +76,13 @@ public class SerializeEvents<T> extends Function
 	}
 
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs, Context context) throws FunctionException 
+	public void evaluate(Object[] inputs, Object[] outputs, Context context)  
 	{
 		evaluate(inputs, outputs);
 	}
 
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs) throws FunctionException
+	public void evaluate(Object[] inputs, Object[] outputs) 
 	{
 		try 
 		{

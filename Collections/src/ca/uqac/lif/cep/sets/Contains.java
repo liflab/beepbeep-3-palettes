@@ -15,46 +15,44 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.tuples;
+package ca.uqac.lif.cep.sets;
 
-import ca.uqac.lif.cep.functions.UnaryFunction;
+import java.util.Set;
+
+import ca.uqac.lif.cep.functions.BinaryFunction;
 
 /**
- * Breaks a single tuple into multiple tuples, one for each key-value
- * pair of the original tuple.
+ * Checks if a multiset contains an element.
+ * 
  * @author Sylvain Hallé
  */
-public class Blow extends UnaryFunction<Tuple,Multiset>
+@SuppressWarnings("rawtypes")
+public class Contains extends BinaryFunction<Set, Object, Boolean>
 {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5638490095330260150L;
-	public static final Blow instance = new Blow();
-	
-	Blow()
+	private static final long serialVersionUID = 3805319331641617083L;
+	public static final transient Contains instance = new Contains();
+
+	private Contains()
 	{
-		super(Tuple.class, Multiset.class);
+		super(Set.class, Object.class, Boolean.class);
 	}
 
 	@Override
-	public Multiset getValue(Tuple x)
+	public Boolean getValue(Set x, Object y)
 	{
-		Multiset out = new Multiset();
-		for (String key : x.keySet())
+		if (x == null || y == null)
 		{
-			Tuple t = new TupleMap();
-			t.put(key, x.get(key));
-			out.add(t);
+			return false;
 		}
-		return out;
+		return x.contains(y);
 	}
-	
+
 	@Override
-	public Blow duplicate()
+	public String toString()
 	{
-		return this;
+		return "contains";
 	}
-	
-	
 }

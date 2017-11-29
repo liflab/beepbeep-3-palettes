@@ -85,13 +85,13 @@ public class DeserializeEvents<T,U> extends Function
 	}
 
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs, Context context) throws FunctionException 
+	public void evaluate(Object[] inputs, Object[] outputs, Context context)  
 	{
 		evaluate(inputs, outputs);
 	}
 
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs) throws FunctionException
+	public void evaluate(Object[] inputs, Object[] outputs) 
 	{
 		try 
 		{
