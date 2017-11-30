@@ -23,10 +23,6 @@ import ca.uqac.lif.cep.SingleProcessor;
 
 public class InterpretationBuilder extends SingleProcessor 
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6250219954166978909L;
 	protected Interpretation m_interpretation;
 	
 	public InterpretationBuilder()

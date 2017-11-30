@@ -26,11 +26,6 @@ import ca.uqac.lif.cep.functions.Function;
  */
 public class Some extends TrooleanQuantifier
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7859549401363791301L;
-
 	Some()
 	{
 		super();

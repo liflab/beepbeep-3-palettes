@@ -31,10 +31,6 @@ import ca.uqac.lif.cep.functions.Function;
 public class FromFunction extends Function
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5054558141692805159L;
-	/**
 	 * The name associated to each input trace in the <code>FROM</code>
 	 * clause
 	 */

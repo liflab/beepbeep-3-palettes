@@ -46,11 +46,6 @@ import ca.uqac.lif.cep.functions.FunctionException;
 public class MooreMachine extends UniformProcessor
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4726516823799558602L;
-
-	/**
 	 * A map from a state to the list of transitions from that
 	 * state
 	 */

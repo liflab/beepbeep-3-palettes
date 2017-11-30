@@ -31,11 +31,6 @@ import ca.uqac.lif.cep.tmf.Passthrough;
 
 public abstract class TrooleanQuantifier extends GroupProcessor 
 {
-	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = -2377779429724083557L;
-
 	protected String m_variableName;
 
 	protected SentinelIn m_sentinelIn;
@@ -84,11 +79,6 @@ public abstract class TrooleanQuantifier extends GroupProcessor
 
 	protected class FirstOrderSpawn extends Spawn
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -4696197706177090086L;
-
 		public FirstOrderSpawn(String var_name, Function split_function, Processor p, Function combine_function, Object value_empty)
 		{
 			super(p, split_function, combine_function);
@@ -114,11 +104,6 @@ public abstract class TrooleanQuantifier extends GroupProcessor
 
 	protected class SentinelIn extends Passthrough
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 5156902632111554267L;
-
 		public SentinelIn()
 		{
 			super(1);
@@ -133,11 +118,6 @@ public abstract class TrooleanQuantifier extends GroupProcessor
 
 	protected class SentinelOut extends SingleProcessor
 	{
-		/**
-		 * Dummy UID
-		 */
-		private static final long serialVersionUID = 4189761303827986538L;
-
 		protected Troolean.Value m_definiteValue = Value.INCONCLUSIVE;
 
 		public SentinelOut()
@@ -175,11 +155,6 @@ public abstract class TrooleanQuantifier extends GroupProcessor
 
 	public static abstract class ArrayTroolean extends Function
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 7631562577540522347L;
-
 		@Override
 		public int getInputArity() 
 		{

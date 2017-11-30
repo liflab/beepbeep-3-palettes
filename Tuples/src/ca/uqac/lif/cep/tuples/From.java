@@ -36,11 +36,6 @@ import ca.uqac.lif.cep.functions.FunctionProcessor;
  */
 public class From extends FunctionProcessor 
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1466950333570084483L;
-
 	public From(FromFunction comp) 
 	{
 		super(comp);

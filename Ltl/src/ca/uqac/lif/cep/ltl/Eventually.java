@@ -31,10 +31,6 @@ import ca.uqac.lif.cep.ltl.Troolean.Value;
  */
 public class Eventually extends SingleProcessor 
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3621139669780986836L;
 	protected int m_notTrueCount = 0;
 	
 	public Eventually()

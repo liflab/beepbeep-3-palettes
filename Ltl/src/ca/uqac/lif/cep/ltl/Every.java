@@ -26,11 +26,6 @@ import ca.uqac.lif.cep.functions.Function;
  */
 public class Every extends TrooleanQuantifier
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -9053721277361695003L;
-
 	Every()
 	{
 		super();

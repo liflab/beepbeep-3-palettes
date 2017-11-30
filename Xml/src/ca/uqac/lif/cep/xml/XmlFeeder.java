@@ -31,11 +31,6 @@ import ca.uqac.lif.xml.XmlElement.XmlParseException;
  */
 public class XmlFeeder extends FunctionProcessor
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5527196983530487846L;
-
 	public XmlFeeder()
 	{
 		super(XmlParsingFunction.instance);
@@ -46,10 +41,6 @@ public class XmlFeeder extends FunctionProcessor
 	 */
 	public static class XmlParsingFunction extends UnaryFunction<String,XmlElement> 
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -7664988036885406089L;
 		/**
 		 * Instance of the function
 		 */

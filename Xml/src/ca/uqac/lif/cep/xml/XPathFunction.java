@@ -21,10 +21,6 @@ import ca.uqac.lif.xml.XPathExpression.XPathParseException;
 public class XPathFunction extends UnaryFunction<XmlElement,Collection<XmlElement>> 
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -302336777341204255L;
-	/**
 	 * The XPath expression this function evaluates
 	 */
 	private final XPathExpression m_expression;

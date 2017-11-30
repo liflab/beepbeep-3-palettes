@@ -34,11 +34,6 @@ import ca.uqac.lif.mtnp.table.Table;
  */
 public class DrawPlot extends UniformProcessor
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2423160661874841222L;
-
 	protected Plot m_plot;
 	
 	protected ImageType m_type;

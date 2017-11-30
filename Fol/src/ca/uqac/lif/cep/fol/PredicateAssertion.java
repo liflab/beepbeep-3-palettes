@@ -35,11 +35,6 @@ import ca.uqac.lif.cep.functions.FunctionException;
 public class PredicateAssertion extends Function
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1270928560557072159L;
-
-	/**
 	 * The name of the predicate to evaluate
 	 */
 	protected String m_predicateName;

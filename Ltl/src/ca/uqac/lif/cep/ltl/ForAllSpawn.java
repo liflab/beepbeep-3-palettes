@@ -6,11 +6,6 @@ import ca.uqac.lif.cep.ltl.BooleanQuantifier.FirstOrderSpawn;
 
 public class ForAllSpawn extends FirstOrderSpawn 
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1018215433009006656L;
-
 	public ForAllSpawn(String variable_name, Processor p, Function split_function) 
 	{
 		super(variable_name, split_function, p, ArrayAnd.instance, Troolean.Value.TRUE);

@@ -16,11 +16,6 @@ import ca.uqac.lif.cep.tmf.QueueSink;
 public class BooleanQuantifier extends SingleProcessor 
 {
 	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = 5088200702916725567L;
-
-	/**
 	 * The internal processor
 	 */
 	protected Processor m_spawn;
@@ -161,11 +156,6 @@ public class BooleanQuantifier extends SingleProcessor
 
 	public static class FirstOrderSpawn extends Spawn
 	{
-		/**
-		 * Dummy UID
-		 */
-		private static final long serialVersionUID = 9146900876821607511L;
-		
 		protected String m_variableName;
 		
 		public FirstOrderSpawn(String var_name, Function split_function, Processor p, Function combine_function, Object value_empty)

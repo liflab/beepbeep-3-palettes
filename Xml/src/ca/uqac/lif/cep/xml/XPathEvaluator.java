@@ -27,11 +27,6 @@ import ca.uqac.lif.xml.XPathExpression;
 
 public class XPathEvaluator extends FunctionProcessor
 {	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2833883754337673025L;
-
 	public XPathEvaluator(String exp)
 	{
 		super(new XPathFunction(exp));

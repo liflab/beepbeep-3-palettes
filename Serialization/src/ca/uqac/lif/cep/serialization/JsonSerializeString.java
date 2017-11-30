@@ -27,11 +27,6 @@ import ca.uqac.lif.cep.Connector.Variant;
  */
 public class JsonSerializeString extends SerializeEvents<String>
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -114255450878538951L;
-
 	public JsonSerializeString()
 	{
 		super(new JsonStringSerializer(), String.class);

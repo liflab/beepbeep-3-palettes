@@ -31,11 +31,6 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 public class Troolean extends Constant
 {	
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -57101286792914456L;
-
-	/**
 	 * The three possible values of a Troolean
 	 */
 	public static enum Value {TRUE, FALSE, INCONCLUSIVE};
@@ -296,11 +291,6 @@ public class Troolean extends Constant
 	 */
 	private static class TrooleanAnd extends BinaryFunction<Value,Value,Value>
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 7758263978685908982L;
-
 		TrooleanAnd()
 		{
 			super(Value.class, Value.class, Value.class);
@@ -325,11 +315,6 @@ public class Troolean extends Constant
 	 */
 	private static class TrooleanOr extends BinaryFunction<Value,Value,Value>
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 4895221371672321414L;
-
 		TrooleanOr()
 		{
 			super(Value.class, Value.class, Value.class);
@@ -353,11 +338,6 @@ public class Troolean extends Constant
 	 */
 	private static class TrooleanImplies extends BinaryFunction<Value,Value,Value>
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -7326383428172520621L;
-
 		TrooleanImplies()
 		{
 			super(Value.class, Value.class, Value.class);
@@ -381,11 +361,6 @@ public class Troolean extends Constant
 	 */
 	private static class TrooleanNot extends UnaryFunction<Value,Value>
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -6795119239606230865L;
-
 		TrooleanNot()
 		{
 			super(Value.class, Value.class);

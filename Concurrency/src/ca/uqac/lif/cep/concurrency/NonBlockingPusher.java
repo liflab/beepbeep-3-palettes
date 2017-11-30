@@ -32,11 +32,6 @@ import ca.uqac.lif.cep.concurrency.ThreadManager.ManagedThread;
 public class NonBlockingPusher extends Processor
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7009126214831783678L;
-
-	/**
 	 * The processor to which events will be pushed
 	 */
 	protected final Processor m_processor;

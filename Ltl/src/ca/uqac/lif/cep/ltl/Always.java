@@ -27,11 +27,6 @@ import ca.uqac.lif.cep.ltl.Troolean.Value;
  */
 public class Always extends CumulativeProcessor 
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5782769334294362731L;
-
 	public Always()
 	{
 		super(new CumulativeFunction<Value>(Troolean.AND_FUNCTION));

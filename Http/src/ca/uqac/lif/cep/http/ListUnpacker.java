@@ -36,11 +36,6 @@ import ca.uqac.lif.cep.SingleProcessor;
 public class ListUnpacker extends SingleProcessor 
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1525732315904272528L;
-
-	/**
 	 * Creates a new list unpacker
 	 */
 	public ListUnpacker()

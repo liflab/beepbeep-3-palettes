@@ -30,11 +30,6 @@ import ca.uqac.lif.cep.numbers.NumberCast;
  */
 public class Limiter extends SingleProcessor
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4340299428481717138L;
-
 	protected final int m_limit;
 	
 	protected int m_counter;

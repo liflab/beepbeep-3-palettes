@@ -29,11 +29,6 @@ import ca.uqac.lif.cep.Processor;
  */
 public class TrooleanNot extends FunctionProcessor 
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 221814881923341180L;
-
 	public TrooleanNot()
 	{
 		super(Troolean.NOT_FUNCTION);

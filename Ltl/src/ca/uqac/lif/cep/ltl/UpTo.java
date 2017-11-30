@@ -32,11 +32,6 @@ import ca.uqac.lif.cep.ltl.Troolean.Value;
  */
 public class UpTo extends SingleProcessor 
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4636887345962567286L;
-
 	protected CumulativeFunction<Value> m_left;
 
 	protected CumulativeFunction<Value> m_right;

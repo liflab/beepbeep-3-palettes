@@ -31,10 +31,6 @@ import ca.uqac.lif.cep.ltl.Troolean.Value;
  */
 public class Until extends SingleProcessor 
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6258256725632822526L;
 	protected int m_eventCount = 0;
 	
 	public Until()

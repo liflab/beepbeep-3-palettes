@@ -30,11 +30,6 @@ import ca.uqac.lif.json.JsonPath.PathElement;
  */
 public class JPathEvaluator extends FunctionProcessor
 {	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1384972586625529514L;
-
 	public JPathEvaluator(String path)
 	{
 		super(new JPathFunction(path));
@@ -45,10 +40,6 @@ public class JPathEvaluator extends FunctionProcessor
 	 */
 	public static class JPathFunction extends UnaryFunction<JsonElement,JsonElement> 
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -4581485995622146296L;
 		/**
 		 * The JPath expression this function evaluates
 		 */

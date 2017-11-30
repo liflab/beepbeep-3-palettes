@@ -26,10 +26,6 @@ import ca.uqac.lif.cep.ltl.Troolean.Value;
  */
 public class TrooleanCast extends UnaryFunction<Object,Troolean.Value>
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8433956049190845098L;
 	public static final transient TrooleanCast instance = new TrooleanCast();
 	
 	private TrooleanCast()

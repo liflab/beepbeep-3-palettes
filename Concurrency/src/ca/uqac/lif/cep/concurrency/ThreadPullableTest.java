@@ -181,10 +181,6 @@ public class ThreadPullableTest
 	 */
 	public static class DelayProcessor extends SingleProcessor
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 2275276909898478791L;
 		protected final long m_waitInterval;
 		
 		public DelayProcessor(int in_arity, long wait_interval)

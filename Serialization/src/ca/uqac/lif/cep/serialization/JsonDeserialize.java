@@ -29,11 +29,6 @@ import ca.uqac.lif.json.JsonElement;
  */
 public class JsonDeserialize<U> extends DeserializeEvents<JsonElement,U>
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5105850280906728339L;
-
 	public JsonDeserialize(Class<U> output_type)
 	{
 		super(new JsonSerializer(), JsonElement.class, output_type);

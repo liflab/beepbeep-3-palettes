@@ -27,11 +27,6 @@ import ca.uqac.lif.cep.functions.FunctionProcessor;
  */
 public class ApacheLogFeeder extends FunctionProcessor 
 {
-	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = -7433933568281937835L;
-
 	public ApacheLogFeeder()
 	{
 		super(ParseCommonLog.instance);

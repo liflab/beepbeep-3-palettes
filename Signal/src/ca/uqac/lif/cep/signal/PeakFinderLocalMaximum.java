@@ -51,11 +51,6 @@ import ca.uqac.lif.cep.numbers.NumberCast;
 public class PeakFinderLocalMaximum extends WindowProcessor
 {	
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 471291918195344660L;
-
-	/**
 	 * The position in the window where the highest value is
 	 */
 	protected int m_peakPosition;

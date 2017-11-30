@@ -36,10 +36,6 @@ import ca.uqac.lif.cep.functions.FunctionException;
 public class Where extends SingleProcessor
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -790959172981094782L;
-	/**
 	 * The condition to evaluate. Based on its return value on a given
 	 * attribute group, the group will be returned or discarded.
 	 */

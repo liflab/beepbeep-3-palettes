@@ -28,10 +28,6 @@ import ca.uqac.lif.cep.numbers.NumberCast;
 public class Threshold extends SingleProcessor
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6886631947455229034L;
-	/**
 	 * The threshold to cut values
 	 */
 	protected final float m_threshold;

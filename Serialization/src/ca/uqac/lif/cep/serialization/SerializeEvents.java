@@ -45,11 +45,6 @@ import ca.uqac.lif.cep.functions.FunctionException;
 public class SerializeEvents<T> extends Function 
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5255746247992573726L;
-
-	/**
 	 * The serializer
 	 */
 	protected transient Serializer<T> m_serializer;

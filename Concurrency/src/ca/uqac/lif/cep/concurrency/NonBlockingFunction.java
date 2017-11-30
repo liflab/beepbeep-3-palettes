@@ -8,11 +8,6 @@ import ca.uqac.lif.cep.functions.Function;
 
 public class NonBlockingFunction extends Function implements Runnable
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8993131940904994368L;
-
 	protected Function m_function;
 	
 	protected ThreadManager m_manager;

@@ -59,11 +59,6 @@ import ca.uqac.lif.jerrydog.Server;
 public class HttpDownstreamGateway extends Source
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 964642059008858163L;
-
-	/**
 	 * A queue of character strings received over the network
 	 */
 	protected Queue<String> m_receivedStrings;

@@ -398,10 +398,6 @@ public class QuantifierTest
 	@SuppressWarnings("rawtypes")
 	public static class DummyCollectionFunction extends UnaryFunction<Object,Set>
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 618272652793483911L;
 		Set<Integer> m_values = new HashSet<Integer>();
 		
 		public DummyCollectionFunction(Integer ... values)
@@ -422,11 +418,6 @@ public class QuantifierTest
 	
 	public static class DummyDomainFunction extends UnaryFunction<Integer,Integer>
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -707417108577904086L;
-
 		public DummyDomainFunction()
 		{
 			super(Integer.class, Integer.class);
@@ -441,11 +432,6 @@ public class QuantifierTest
 	
 	public static class DummyBooleanFunction extends UnaryFunction<Integer,Boolean>
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 2295933169759115345L;
-
 		public DummyBooleanFunction()
 		{
 			super(Integer.class, Boolean.class);
@@ -460,11 +446,6 @@ public class QuantifierTest
 	
 	public static class IsEvenProcessor extends FunctionProcessor
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -6420277285437205365L;
-
 		public IsEvenProcessor()
 		{
 			super(new DummyBooleanFunction());
@@ -476,10 +457,6 @@ public class QuantifierTest
 	 */
 	public static class SlowFunctionProcessor extends FunctionProcessor
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -2059186525886337465L;
 		protected long m_waitInterval;
 
 		public SlowFunctionProcessor(Function comp, long wait_interval)

@@ -25,11 +25,6 @@ import ca.uqac.lif.cep.functions.FunctionProcessor;
  */
 public class PredicateTupleReader extends FunctionProcessor
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4697659003745233776L;
-
 	public PredicateTupleReader()
 	{
 		super(PredicateTupleConversion.instance);

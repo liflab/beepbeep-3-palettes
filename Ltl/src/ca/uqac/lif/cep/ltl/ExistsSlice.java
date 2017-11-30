@@ -24,11 +24,6 @@ import ca.uqac.lif.cep.ltl.Troolean.Value;
 
 public class ExistsSlice extends FirstOrderSlicer
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3414469225320738737L;
-
 	public ExistsSlice(String variable_name, Function slice_function, Processor p) 
 	{
 		super(slice_function, p);

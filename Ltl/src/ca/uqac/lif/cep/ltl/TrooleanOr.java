@@ -29,11 +29,6 @@ import ca.uqac.lif.cep.Processor;
  */
 public class TrooleanOr extends FunctionProcessor 
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3719573808768719739L;
-
 	public TrooleanOr()
 	{
 		super(Troolean.OR_FUNCTION);

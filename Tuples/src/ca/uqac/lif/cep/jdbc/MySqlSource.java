@@ -40,11 +40,6 @@ import ca.uqac.lif.cep.tuples.TupleMap;
 public class MySqlSource extends Source 
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8364534944150327841L;
-
-	/**
 	 * The name of the database table to read from. Actually, this does not need
 	 * to be a table name, as any SQL expression that returns a table (e.g.
 	 * a <code>SELECT</code> statement) can do.

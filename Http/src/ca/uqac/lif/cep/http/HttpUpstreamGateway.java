@@ -44,11 +44,6 @@ public class HttpUpstreamGateway extends Sink
 {
 
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6825922864415082332L;
-
-	/**
 	 * The URL that will be called when events are pushed
 	 * to this gateway
 	 */

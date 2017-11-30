@@ -24,11 +24,6 @@ import ca.uqac.lif.cep.ltl.Troolean.Value;
 
 public class ForAllSlices extends FirstOrderSlicer
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5288770980753666950L;
-
 	public ForAllSlices(String variable_name, Function slice_function, Processor p) 
 	{
 		super(variable_name, slice_function, p);

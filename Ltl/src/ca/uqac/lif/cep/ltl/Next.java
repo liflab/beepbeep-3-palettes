@@ -29,11 +29,6 @@ import ca.uqac.lif.cep.Processor;
  */
 public class Next extends Trim
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6235426679854510634L;
-
 	public Next()
 	{
 		super(1);

@@ -8,10 +8,6 @@ import ca.uqac.lif.cep.ltl.TrooleanQuantifier.ArrayTroolean;
 
 public class ArrayAnd extends ArrayTroolean
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8673959388909177337L;
 	public static final transient ArrayAnd instance = new ArrayAnd();
 	
 	@Override

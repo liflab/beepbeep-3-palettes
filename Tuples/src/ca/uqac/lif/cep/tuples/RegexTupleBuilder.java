@@ -43,11 +43,6 @@ import ca.uqac.lif.cep.SingleProcessor;
 public class RegexTupleBuilder extends SingleProcessor 
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1807857234142327323L;
-
-	/**
 	 * The regex pattern to look for
 	 */
 	protected Pattern m_pattern;

@@ -23,10 +23,6 @@ import ca.uqac.lif.mtnp.table.TableEntry;
 
 public abstract class UpdateTable extends UniformProcessor
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7669189093805393696L;
 	protected HardTable m_table;
 
 	public UpdateTable(int in_arity, String ... column_names)

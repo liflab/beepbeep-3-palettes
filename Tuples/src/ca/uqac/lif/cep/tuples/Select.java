@@ -34,11 +34,6 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  */
 public class Select extends FunctionProcessor
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 470219095196495161L;
-
 	public Select(SelectFunction comp) 
 	{
 		super(comp);
@@ -62,10 +57,6 @@ public class Select extends FunctionProcessor
 	 */
 	public static class SelectFunction extends UnaryFunction<AttributeGroup,Object>
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -2060797582460694573L;
 		/**
 		 * The expressions used to build the output tuple
 		 */

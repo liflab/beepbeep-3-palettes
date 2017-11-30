@@ -27,10 +27,6 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  */
 public class MapToTuple extends UnaryFunction<Object,Tuple>
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2429600471348223741L;
 	public static final MapToTuple instance = new MapToTuple();
 	
 	MapToTuple()

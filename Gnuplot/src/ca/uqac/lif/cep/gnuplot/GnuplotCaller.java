@@ -36,11 +36,6 @@ import ca.uqac.lif.cep.io.Caller;
  */
 public class GnuplotCaller extends Caller
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 9108891341149112079L;
-
 	public GnuplotCaller()
 	{
 		super("gnuplot");

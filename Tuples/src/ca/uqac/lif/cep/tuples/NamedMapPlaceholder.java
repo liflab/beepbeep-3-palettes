@@ -4,11 +4,6 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 
 public class NamedMapPlaceholder extends UnaryFunction<Object,Object>
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6733058391827585996L;
-
 	protected int m_lastIndex = -1;
 
 	protected String m_name;

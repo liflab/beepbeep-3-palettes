@@ -42,11 +42,6 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 public class ExpandAsColumns extends UnaryFunction<Tuple, Tuple>
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2539465393775283419L;
-
-	/**
 	 * The name of the column whose value will be used as a column
 	 * header
 	 */

@@ -29,11 +29,6 @@ import ca.uqac.lif.cep.Processor;
  */
 public class TrooleanImplies extends FunctionProcessor 
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4482052803756998218L;
-
 	public TrooleanImplies()
 	{
 		super(Troolean.IMPLIES_FUNCTION);

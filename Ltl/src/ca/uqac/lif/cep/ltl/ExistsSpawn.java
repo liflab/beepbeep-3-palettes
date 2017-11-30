@@ -6,11 +6,6 @@ import ca.uqac.lif.cep.ltl.BooleanQuantifier.FirstOrderSpawn;
 
 public class ExistsSpawn extends FirstOrderSpawn 
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -390584934164081505L;
-
 	public ExistsSpawn(String variable_name, Processor p, Function split_function) 
 	{
 		super(variable_name, split_function, p, ArrayOr.instance, Troolean.Value.FALSE);

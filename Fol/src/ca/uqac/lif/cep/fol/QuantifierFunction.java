@@ -10,11 +10,6 @@ import ca.uqac.lif.cep.functions.Function;
 
 public abstract class QuantifierFunction extends Function
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5376610712284976331L;
-
 	protected String m_variableName;
 	
 	protected String m_domainName;

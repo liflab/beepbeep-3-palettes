@@ -33,11 +33,6 @@ import ca.uqac.lif.cep.concurrency.ThreadManager.ManagedThread;
 public class PullPipeline extends Processor implements Runnable
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5112343398946470042L;
-
-	/**
 	 * A queue of incoming messages
 	 */
 	private volatile Queue<Object> m_inQueue;

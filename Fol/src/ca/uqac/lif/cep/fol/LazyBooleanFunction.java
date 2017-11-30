@@ -12,11 +12,6 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 
 public class LazyBooleanFunction extends Function
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2430811692164189912L;
-
 	protected boolean m_stopValue;
 	
 	protected Function m_left;
@@ -70,10 +65,6 @@ public class LazyBooleanFunction extends Function
 	
 	protected static class DummyInterpretationFunction extends UnaryFunction<Interpretation,Boolean>
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -4273604125396770265L;
 		public static final transient DummyInterpretationFunction instance = new DummyInterpretationFunction();
 		
 		DummyInterpretationFunction()
@@ -96,11 +87,6 @@ public class LazyBooleanFunction extends Function
 	
 	public static class And extends LazyBooleanFunction
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 4882254633876108192L;
-
 		public And(Function left, Function right)
 		{
 			super(false, left, right);
@@ -128,11 +114,6 @@ public class LazyBooleanFunction extends Function
 	
 	public static class Or extends LazyBooleanFunction
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -5496411914578972818L;
-
 		public Or(Function left, Function right)
 		{
 			super(true, left, right);
@@ -159,11 +140,6 @@ public class LazyBooleanFunction extends Function
 	
 	public static class Implies extends LazyBooleanFunction
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 6000993291490349986L;
-
 		public Implies(Function left, Function right)
 		{
 			super(true, new FunctionTree(Negation.instance, left), right);

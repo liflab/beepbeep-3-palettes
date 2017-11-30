@@ -26,11 +26,6 @@ import java.util.Set;
  */
 public class JsonDeserializeString<U> extends DeserializeEvents<String,U>
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7571195469655533582L;
-
 	public JsonDeserializeString(Class<U> output_type)
 	{
 		super(new JsonStringSerializer(), String.class, output_type);

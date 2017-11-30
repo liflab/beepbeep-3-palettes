@@ -29,11 +29,6 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 public class GetAttribute extends UnaryFunction<AttributeGroup,Object>
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2349300758629613283L;
-
-	/**
 	 * The name of the trace to get the attribute from
 	 */
 	private final String m_traceName;

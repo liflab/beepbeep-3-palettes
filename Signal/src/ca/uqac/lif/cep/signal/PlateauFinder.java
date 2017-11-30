@@ -48,11 +48,6 @@ import ca.uqac.lif.cep.numbers.NumberCast;
 public class PlateauFinder extends WindowProcessor
 {	
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -749746626100458782L;
-
-	/**
 	 * The range all values should lie in
 	 */
 	protected float m_range;

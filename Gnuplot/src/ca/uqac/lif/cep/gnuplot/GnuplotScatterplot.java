@@ -31,11 +31,6 @@ import ca.uqac.lif.cep.tuples.TupleComparator;
 public class GnuplotScatterplot extends TwoDimensionalPlotFunction
 {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1092510159329816142L;
-
-	/**
 	 * The name of the column containing the <i>x</i> values of the
 	 * plot
 	 */

@@ -31,10 +31,6 @@ import ca.uqac.lif.cep.ltl.Troolean.Value;
  */
 public class Globally extends SingleProcessor 
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8837177543781985148L;
 	protected int m_notFalseCount = 0;
 	
 	public Globally()

@@ -30,11 +30,6 @@ import ca.uqac.lif.cep.Processor;
  */
 public class TrooleanAnd extends FunctionProcessor 
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4149405049559397971L;
-
 	public TrooleanAnd()
 	{
 		super(Troolean.AND_FUNCTION);

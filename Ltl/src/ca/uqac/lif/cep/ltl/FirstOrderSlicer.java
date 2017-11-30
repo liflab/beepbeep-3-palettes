@@ -28,10 +28,6 @@ import ca.uqac.lif.cep.tmf.Slicer;
 
 public abstract class FirstOrderSlicer extends GroupProcessor
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7575806838408310970L;
 	protected String m_variableName;
 	
 	FirstOrderSlicer(String variable_name, Function slicing_function, Processor p) 
@@ -55,11 +51,6 @@ public abstract class FirstOrderSlicer extends GroupProcessor
 	
 	protected class ContextSlicer extends Slicer
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 2022890932100571839L;
-
 		public ContextSlicer(Function func, Processor proc) 
 		{
 			super(func, proc);

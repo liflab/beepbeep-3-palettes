@@ -13,11 +13,6 @@ import ca.uqac.lif.cep.tmf.SinkLast;
 
 public class ConcurrentPusher extends Processor
 {
-	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = 7549780851237238814L;
-	
 	private Processor m_processor;
 	private Pushable m_processorPushable;
 

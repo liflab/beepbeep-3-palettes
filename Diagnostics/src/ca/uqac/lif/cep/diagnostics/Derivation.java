@@ -27,11 +27,6 @@ import ca.uqac.lif.cep.SingleProcessor;
 
 public class Derivation extends SingleProcessor
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1121376586520794583L;
-
 	protected Processor[] m_processors;
 	
 	protected Pushable[] m_pushables;

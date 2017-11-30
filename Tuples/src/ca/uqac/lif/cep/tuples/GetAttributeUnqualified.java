@@ -21,11 +21,6 @@ import java.util.ArrayDeque;
 
 class GetAttributeUnqualified extends GetAttribute
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6486055076400518493L;
-
 	public GetAttributeUnqualified(String attribute_name) 
 	{
 		super(attribute_name);

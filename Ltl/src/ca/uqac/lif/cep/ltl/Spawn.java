@@ -38,11 +38,6 @@ import ca.uqac.lif.cep.tmf.Fork;
 class Spawn extends Processor
 {	
 	/**
-	 * Dummy UID
-	 */
-	private static final long serialVersionUID = 19158492243042142L;
-
-	/**
 	 * The internal processor to evaluate the quantifier on
 	 */
 	protected Processor m_processor;
