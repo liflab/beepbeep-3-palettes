@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.concurrency;
 
 import java.util.Iterator;
 
+import ca.uqac.lif.cep.NextStatus;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.concurrency.Poller.Call;

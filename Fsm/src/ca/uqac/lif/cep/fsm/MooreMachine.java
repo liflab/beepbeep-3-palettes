@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.Duplicable;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.cep.functions.FunctionException;
@@ -223,7 +224,7 @@ public class MooreMachine extends UniformProcessor
 	 * @author Sylvain Hallé
 	 *
 	 */
-	public static class Transition
+	public static class Transition implements Duplicable
 	{
 		/**
 		 * Creates a new transition
