@@ -32,8 +32,8 @@ import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
-import ca.uqac.lif.cep.tmf.NaryToArray;
 import ca.uqac.lif.cep.tmf.Fork;
+import ca.uqac.lif.cep.util.ToArray;
 
 class Spawn extends Processor
 {	
@@ -65,7 +65,7 @@ class Spawn extends Processor
 	/**
 	 * The passthrough synchronizing the output of each processor instance
 	 */
-	protected NaryToArray m_joinProcessor;
+	protected ToArray m_joinProcessor;
 
 	/**
 	 * The function processor used to combine the values of each
@@ -481,7 +481,7 @@ class Spawn extends Processor
 				m_inputPushable.setPushable(m_fork.getPushableInput(0));
 				m_instances = new Processor[size];
 				// Create a join to collate the output of each spawned instance
-				m_joinProcessor = new NaryToArray(size);
+				m_joinProcessor = new ToArray(size);
 				m_joinProcessor.setContext(m_context);
 				// Spawn one new internal processor per value
 				int i = 0;
