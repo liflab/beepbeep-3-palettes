@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import ca.uqac.lif.cep.Duplicable;
+
 
 /**
  * Implementation of a named tuple. Contrarily to a {@link TupleMap},
@@ -57,7 +59,7 @@ import java.util.Set;
  * @author Sylvain Hallé
  *
  */
-public final class TupleFixed extends Tuple
+public final class TupleFixed extends Tuple implements Duplicable
 {
 	private final String[] m_names;
 	

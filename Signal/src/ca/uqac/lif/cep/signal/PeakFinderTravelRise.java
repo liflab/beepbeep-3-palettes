@@ -2,7 +2,7 @@ package ca.uqac.lif.cep.signal;
 
 import java.util.Queue;
 
-import ca.uqac.lif.cep.numbers.NumberCast;
+import ca.uqac.lif.cep.util.Numbers.NumberCast;
 
 /**
  * Finds peaks in a sequence of numerical values using the "travel-rise"

@@ -24,8 +24,6 @@ import java.sql.Statement;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.BeepBeepUnitTest;
-
 /**
  * This set of tests shows how BeepBeep can be used as a drop-in replacement
  * in any existing code that uses JDBC. The examples below are all copy-pasted
@@ -34,7 +32,7 @@ import ca.uqac.lif.cep.BeepBeepUnitTest;
  * 
  * @author Sylvain Hallé
  */
-public class JdbcTest extends BeepBeepUnitTest
+public class JdbcTest
 {
 
 	/**

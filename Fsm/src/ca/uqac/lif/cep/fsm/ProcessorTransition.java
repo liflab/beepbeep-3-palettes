@@ -24,7 +24,7 @@ import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.tmf.QueueSink;
-import ca.uqac.lif.cep.functions.EmlBoolean;
+import ca.uqac.lif.cep.util.Booleans;
 
 /**
  * Represents a transition in the Moore machine.  
@@ -114,7 +114,7 @@ public class ProcessorTransition extends MooreMachine.Transition
 			return false;
 		}
 		// Try to do something with the first output
-		return EmlBoolean.parseBoolValue(output);
+		return Booleans.parseBoolValue(output);
 	}
 	
 	@Override

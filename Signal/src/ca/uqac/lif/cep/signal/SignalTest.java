@@ -24,7 +24,6 @@ import java.util.Vector;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.tmf.QueueSource;
@@ -33,7 +32,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
  * Unit tests for the signal processing processors (!)
  * @author Sylvain Hallé
  */
-public class SignalTest extends BeepBeepUnitTest
+public class SignalTest
 {
 	@Test
 	public void testPeakFinder1() 

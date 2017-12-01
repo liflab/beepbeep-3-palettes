@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.tuples;
 
-import ca.uqac.lif.cep.util.StringUtils;
+import ca.uqac.lif.cep.util.Strings;
 
 /**
  * Utility class to create instances of tuples with a fixed
@@ -45,7 +45,7 @@ public final class FixedTupleBuilder
 		Object[] eml_values = new Object[values.length];
 		for (int i = 0; i < values.length; i++)
 		{
-			eml_values[i] = StringUtils.createConstantFromString(values[i]);
+			eml_values[i] = Strings.createConstantFromString(values[i]);
 		}
 		return new TupleFixed(m_names, eml_values);
 	}

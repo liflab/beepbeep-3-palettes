@@ -26,7 +26,7 @@ import java.util.Vector;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.uqac.lif.cep.BeepBeepUnitTest;
+import ca.uqac.lif.bullwinkle.BnfParser.ParseException;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.Pullable;
@@ -37,7 +37,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
  * Unit tests for the LTL operators
  * @author Sylvain Hallé
  */
-public class LtlTest extends BeepBeepUnitTest 
+public class LtlTest 
 {
 	protected Interpreter m_interpreter;
 
@@ -267,8 +267,8 @@ public class LtlTest extends BeepBeepUnitTest
 			src_right.setEvents(input_events);
 		}
 		TrooleanAnd g = new TrooleanAnd();
-		Connector.connect(src_left, g, 0, 0);
-		Connector.connect(src_right, g, 0, 1);
+		Connector.connect(src_left, 0, g, 0);
+		Connector.connect(src_right, 0, g, 1);
 		Pullable p = g.getPullableOutput(0);
 		Value b;
 		b = (Value) p.pullSoft();
@@ -299,8 +299,8 @@ public class LtlTest extends BeepBeepUnitTest
 			src_right.setEvents(input_events);
 		}
 		TrooleanOr g = new TrooleanOr();
-		Connector.connect(src_left, g, 0, 0);
-		Connector.connect(src_right, g, 0, 1);
+		Connector.connect(src_left, 0, g, 0);
+		Connector.connect(src_right, 0, g, 1);
 		Pullable p = g.getPullableOutput(0);
 		Value b;
 		b = (Value) p.pullSoft();
@@ -335,8 +335,8 @@ public class LtlTest extends BeepBeepUnitTest
 			src_right.setEvents(input_events);
 		}
 		Until g = new Until();
-		Connector.connect(src_left, g, 0, 0);
-		Connector.connect(src_right, g, 0, 1);
+		Connector.connect(src_left, 0, g, 0);
+		Connector.connect(src_right, 0, g, 1);
 		Pullable p = g.getPullableOutput(0);
 		Value b;
 		b = (Value) p.pullSoft();
@@ -371,8 +371,8 @@ public class LtlTest extends BeepBeepUnitTest
 			src_right.setEvents(input_events);
 		}
 		Until g = new Until();
-		Connector.connect(src_left, g, 0, 0);
-		Connector.connect(src_right, g, 0, 1);
+		Connector.connect(src_left, 0, g, 0);
+		Connector.connect(src_right, 0, g, 1);
 		Pullable p = g.getPullableOutput(0);
 		Value b;
 		b = (Value) p.pullSoft();
@@ -407,8 +407,8 @@ public class LtlTest extends BeepBeepUnitTest
 			src_right.setEvents(input_events);
 		}
 		UpTo g = new UpTo();
-		Connector.connect(src_left, g, 0, 0);
-		Connector.connect(src_right, g, 0, 1);
+		Connector.connect(src_left, 0, g, 0);
+		Connector.connect(src_right, 0, g, 1);
 		Pullable p = g.getPullableOutput(0);
 		Value b;
 		b = (Value) p.pullSoft();
@@ -443,8 +443,8 @@ public class LtlTest extends BeepBeepUnitTest
 			src_right.setEvents(input_events);
 		}
 		UpTo g = new UpTo();
-		Connector.connect(src_left, g, 0, 0);
-		Connector.connect(src_right, g, 0, 1);
+		Connector.connect(src_left, 0, g, 0);
+		Connector.connect(src_right, 0, g, 1);
 		Pullable p = g.getPullableOutput(0);
 		Value b;
 		b = (Value) p.pullSoft();

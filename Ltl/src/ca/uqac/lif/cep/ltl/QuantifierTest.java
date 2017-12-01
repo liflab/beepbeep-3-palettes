@@ -13,18 +13,17 @@ import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
-import ca.uqac.lif.cep.Connector.ConnectorException;
 import ca.uqac.lif.cep.concurrency.NonBlockingPusher;
 import ca.uqac.lif.cep.concurrency.ThreadManager;
 import ca.uqac.lif.cep.functions.ContextPlaceholder;
-import ca.uqac.lif.cep.functions.Equals;
+import ca.uqac.lif.cep.util.Equals;
+import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionProcessor;
 import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
 import ca.uqac.lif.cep.functions.UnaryFunction;
-import ca.uqac.lif.cep.numbers.IsGreaterThan;
-import ca.uqac.lif.cep.numbers.IsLessThan;
+import ca.uqac.lif.cep.tmf.Fork;
 import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.cep.tmf.QueueSource;
@@ -38,7 +37,7 @@ public class QuantifierTest
 	@Test
 	public void testEveryPush1() 
 	{
-		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
+		FunctionTree tree = new FunctionTree(Numbers.isGreaterThan); 
 		tree.setChild(0, new ArgumentPlaceholder(0));
 		tree.setChild(1, new ContextPlaceholder("x"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
@@ -60,7 +59,7 @@ public class QuantifierTest
 	{
 		QueueSource source = new QueueSource(1);
 		source.addEvent(0);
-		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
+		FunctionTree tree = new FunctionTree(Numbers.isGreaterThan); 
 		tree.setChild(0, new ArgumentPlaceholder(0));
 		tree.setChild(1, new ContextPlaceholder("x"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
@@ -76,7 +75,7 @@ public class QuantifierTest
 	@Test
 	public void testEvery2() 
 	{
-		FunctionTree tree = new FunctionTree(IsLessThan.instance); 
+		FunctionTree tree = new FunctionTree(Numbers.isLessThan); 
 		tree.setChild(0, new ArgumentPlaceholder(0));
 		tree.setChild(1, new ContextPlaceholder("x"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
@@ -100,7 +99,7 @@ public class QuantifierTest
 	@Test
 	public void testEvery3() 
 	{
-		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
+		FunctionTree tree = new FunctionTree(Numbers.isGreaterThan); 
 		tree.setChild(0, new ContextPlaceholder("x"));
 		tree.setChild(1, new ContextPlaceholder("y"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
@@ -123,7 +122,7 @@ public class QuantifierTest
 	{
 		QueueSource source = new QueueSource(1);
 		source.addEvent(0);
-		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
+		FunctionTree tree = new FunctionTree(Numbers.isGreaterThan); 
 		tree.setChild(0, new ContextPlaceholder("x"));
 		tree.setChild(1, new ContextPlaceholder("y"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
@@ -140,7 +139,7 @@ public class QuantifierTest
 	@Test
 	public void testEvery4() 
 	{
-		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
+		FunctionTree tree = new FunctionTree(Numbers.isGreaterThan); 
 		tree.setChild(0, new ContextPlaceholder("y"));
 		tree.setChild(1, new ContextPlaceholder("x"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
@@ -163,7 +162,7 @@ public class QuantifierTest
 	{
 		QueueSource source = new QueueSource(1);
 		source.addEvent(0);
-		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
+		FunctionTree tree = new FunctionTree(Numbers.isGreaterThan); 
 		tree.setChild(0, new ContextPlaceholder("y"));
 		tree.setChild(1, new ContextPlaceholder("x"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
@@ -180,7 +179,7 @@ public class QuantifierTest
 	@Test
 	public void testSome1() 
 	{
-		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
+		FunctionTree tree = new FunctionTree(Numbers.isGreaterThan); 
 		tree.setChild(0, new ArgumentPlaceholder(0));
 		tree.setChild(1, new ContextPlaceholder("x"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
@@ -200,7 +199,7 @@ public class QuantifierTest
 	@Test
 	public void testSome2() 
 	{
-		FunctionTree tree = new FunctionTree(IsGreaterThan.instance); 
+		FunctionTree tree = new FunctionTree(Numbers.isGreaterThan); 
 		tree.setChild(0, new ArgumentPlaceholder(0));
 		tree.setChild(1, new ContextPlaceholder("x"));
 		FunctionProcessor gt = new FunctionProcessor(tree);
@@ -223,13 +222,13 @@ public class QuantifierTest
 		Pullable p;
 		Object o;
 		TrooleanImplies imp = new TrooleanImplies();
-		SmartFork fork = new SmartFork(2);
+		Fork fork = new Fork(2);
 		FunctionProcessor left = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ArgumentPlaceholder(0), new ArgumentPlaceholder(0))));
 		FunctionProcessor right = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ArgumentPlaceholder(0), new ArgumentPlaceholder(0))));
-		Connector.connect(fork, left, 0, 0);
-		Connector.connect(fork, right, 1, 0);
-		Connector.connect(left, imp, 0, 0);
-		Connector.connect(right, imp, 0, 1);
+		Connector.connect(fork, 0, left, 0);
+		Connector.connect(fork, 1, right, 0);
+		Connector.connect(left, 0, imp, 0);
+		Connector.connect(right, 0, imp, 1);
 		GroupProcessor gp = new GroupProcessor(1, 1);
 		gp.addProcessors(imp, fork, left, right);
 		gp.associateInput(0, fork, 0);
@@ -257,13 +256,13 @@ public class QuantifierTest
 		Pullable p;
 		Object o;
 		TrooleanImplies imp = new TrooleanImplies();
-		SmartFork fork = new SmartFork(2);
+		Fork fork = new Fork(2);
 		FunctionProcessor left = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ArgumentPlaceholder(0), new ArgumentPlaceholder(0))));
 		FunctionProcessor right = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ArgumentPlaceholder(0), new ContextPlaceholder("x"))));
-		Connector.connect(fork, left, 0, 0);
-		Connector.connect(fork, right, 1, 0);
-		Connector.connect(left, imp, 0, 0);
-		Connector.connect(right, imp, 0, 1);
+		Connector.connect(fork, 0, left, 0);
+		Connector.connect(fork, 1, right, 0);
+		Connector.connect(left, 0, imp, 0);
+		Connector.connect(right, 0, imp, 1);
 		GroupProcessor gp = new GroupProcessor(1, 1);
 		gp.addProcessors(imp, fork, left, right);
 		gp.associateInput(0, fork, 0);
@@ -475,7 +474,7 @@ public class QuantifierTest
 		@Override
 		public SlowFunctionProcessor duplicate()
 		{
-			SlowFunctionProcessor sfp = new SlowFunctionProcessor(getFunction().duplicate(m_context), m_waitInterval);
+			SlowFunctionProcessor sfp = new SlowFunctionProcessor(getFunction().duplicate(), m_waitInterval);
 			return sfp;
 		}
 	}

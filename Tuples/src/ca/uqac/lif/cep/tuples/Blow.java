@@ -17,6 +17,9 @@
  */
 package ca.uqac.lif.cep.tuples;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import ca.uqac.lif.cep.functions.UnaryFunction;
 
 /**
@@ -24,23 +27,20 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  * pair of the original tuple.
  * @author Sylvain Hallé
  */
-public class Blow extends UnaryFunction<Tuple,Multiset>
+@SuppressWarnings("rawtypes")
+public class Blow extends UnaryFunction<Tuple,Set>
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5638490095330260150L;
 	public static final Blow instance = new Blow();
 	
-	Blow()
+	protected Blow()
 	{
-		super(Tuple.class, Multiset.class);
+		super(Tuple.class, Set.class);
 	}
 
 	@Override
-	public Multiset getValue(Tuple x)
+	public Set<?> getValue(Tuple x)
 	{
-		Multiset out = new Multiset();
+		Set<Tuple> out = new HashSet<Tuple>();
 		for (String key : x.keySet())
 		{
 			Tuple t = new TupleMap();

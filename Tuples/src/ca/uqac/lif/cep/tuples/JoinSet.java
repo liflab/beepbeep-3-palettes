@@ -30,12 +30,9 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  * another multiset of tuples.
  * @author Sylvain Hallé
  */
-public class JoinSet extends UnaryFunction<Multiset,Multiset>
+@SuppressWarnings("rawtypes")
+public class JoinSet extends UnaryFunction<Set,Set>
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6739343371520180037L;
 	/**
 	 * The attribute over which to perform the join
 	 */
@@ -49,16 +46,15 @@ public class JoinSet extends UnaryFunction<Multiset,Multiset>
 	 */
 	public JoinSet(String join_attribute)
 	{
-		super(Multiset.class, Multiset.class);
+		super(Set.class, Set.class);
 		m_joinAttribute = join_attribute;
 	}
 
 	@Override
-	public Multiset getValue(Multiset x)
+	public Set<?> getValue(Set x)
 	{
 		Map<Object,Set<Tuple>> map = new HashMap<Object,Set<Tuple>>();
-		Set<Object> set = x.keySet();
-		for (Object o : set)
+		for (Object o : x)
 		{
 			if (o instanceof Tuple)
 			{
@@ -77,7 +73,7 @@ public class JoinSet extends UnaryFunction<Multiset,Multiset>
 				set_tuples.add(tup);
 			}
 		}
-		Multiset new_set = new Multiset();
+		Set<Tuple> new_set = new HashSet<Tuple>();
 		for (Map.Entry<Object,Set<Tuple>> entry : map.entrySet())
 		{
 			TupleMap tm = new TupleMap();

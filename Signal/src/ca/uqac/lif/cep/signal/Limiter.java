@@ -21,7 +21,7 @@ import java.util.Queue;
 import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.SingleProcessor;
-import ca.uqac.lif.cep.numbers.NumberCast;
+import ca.uqac.lif.cep.util.Numbers.NumberCast;
 
 /**
  * Outputs at most one non-zero event in an interval of width <i>n</i>.

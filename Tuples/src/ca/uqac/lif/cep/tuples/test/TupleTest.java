@@ -28,10 +28,6 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.FunctionTree;
-import ca.uqac.lif.cep.functions.Or;
-import ca.uqac.lif.cep.numbers.Addition;
-import ca.uqac.lif.cep.numbers.IsGreaterThan;
-import ca.uqac.lif.cep.numbers.Subtraction;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tuples.AttributeExpression;
 import ca.uqac.lif.cep.tuples.AttributeGroup;
@@ -45,6 +41,8 @@ import ca.uqac.lif.cep.tuples.Tuple;
 import ca.uqac.lif.cep.tuples.TupleFixed;
 import ca.uqac.lif.cep.tuples.TupleMap;
 import ca.uqac.lif.cep.tuples.Where;
+import ca.uqac.lif.cep.util.Booleans;
+import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.tuples.Select.SelectFunction;
 
 public class TupleTest 
@@ -184,7 +182,7 @@ public class TupleTest
 	@Test
 	public void testAttributeExpression1() 
 	{
-		FunctionTree ft = new FunctionTree(Addition.instance, new GetAttribute("A", "y"), new GetAttribute("C", "q"));
+		FunctionTree ft = new FunctionTree(Numbers.addition, new GetAttribute("A", "y"), new GetAttribute("C", "q"));
 		AttributeGroup group = new AttributeGroup(new String[]{"A", "B", "C"});
 		group.add(0, new TupleFixed(new String[]{"x", "y"}, new Integer[]{0, 1}));
 		group.add(1, new TupleFixed(new String[]{"z", "t"}, new Object[]{2, "foo"}));
@@ -206,8 +204,8 @@ public class TupleTest
 		group.add(2, new TupleFixed(new String[]{"x", "q"}, new Integer[]{4, 5}));
 		// SELECT A.y + C.q as p1, z - C.x as p2, t as p3
 		SelectFunction sel_f = new SelectFunction(new AttributeExpression[]{
-				new AttributeExpression(new FunctionTree(Addition.instance, new GetAttribute("A", "y"), new GetAttribute("C", "q")), "p1"),
-				new AttributeExpression(new FunctionTree(Subtraction.instance, new GetAttribute("z"), new GetAttribute("C", "x")), "p2"),
+				new AttributeExpression(new FunctionTree(Numbers.addition, new GetAttribute("A", "y"), new GetAttribute("C", "q")), "p1"),
+				new AttributeExpression(new FunctionTree(Numbers.subtraction, new GetAttribute("z"), new GetAttribute("C", "x")), "p2"),
 				new AttributeExpression(new GetAttribute("t"), "p3")
 		});
 		Object[] values = new Object[1];
@@ -234,8 +232,8 @@ public class TupleTest
 		// SELECT A.y + C.q as p1, z - C.x as p2, t as p3
 		QueueSource source = createGroupSource();
 		Select sel = new Select(new AttributeExpression[]{
-				new AttributeExpression(new FunctionTree(Addition.instance, new GetAttribute("A", "y"), new GetAttribute("C", "q")), "p1"),
-				new AttributeExpression(new FunctionTree(Subtraction.instance, new GetAttribute("z"), new GetAttribute("C", "x")), "p2"),
+				new AttributeExpression(new FunctionTree(Numbers.addition, new GetAttribute("A", "y"), new GetAttribute("C", "q")), "p1"),
+				new AttributeExpression(new FunctionTree(Numbers.subtraction, new GetAttribute("z"), new GetAttribute("C", "x")), "p2"),
 				new AttributeExpression(new GetAttribute("t"), "p3")});
 		Connector.connect(source, sel);
 		Pullable p = sel.getPullableOutput();
@@ -257,11 +255,11 @@ public class TupleTest
 	public void testWhere1() 
 	{
 		QueueSource qs = createGroupSource();
-		FunctionTree condition = new FunctionTree(Or.instance,
-				new FunctionTree(IsGreaterThan.instance,
+		FunctionTree condition = new FunctionTree(Booleans.or,
+				new FunctionTree(Numbers.isGreaterThan,
 						new GetAttribute("A", "x"),
 						new Constant(0)),
-				new FunctionTree(IsGreaterThan.instance,
+				new FunctionTree(Numbers.isGreaterThan,
 						new GetAttribute("C", "q"),
 						new Constant(9))
 				);
@@ -279,11 +277,11 @@ public class TupleTest
 	public void testWhere2() 
 	{
 		QueueSource qs = createGroupSource();
-		FunctionTree condition = new FunctionTree(Or.instance,
-				new FunctionTree(IsGreaterThan.instance,
+		FunctionTree condition = new FunctionTree(Booleans.or,
+				new FunctionTree(Numbers.isGreaterThan,
 						new GetAttribute("A", "x"),
 						new Constant(0)),
-				new FunctionTree(IsGreaterThan.instance,
+				new FunctionTree(Numbers.isGreaterThan,
 						new GetAttribute("C", "q"),
 						new Constant(9))
 				);

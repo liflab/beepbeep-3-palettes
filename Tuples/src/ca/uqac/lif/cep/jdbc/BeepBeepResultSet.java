@@ -18,8 +18,8 @@
 package ca.uqac.lif.cep.jdbc;
 
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.numbers.NumberCast;
 import ca.uqac.lif.cep.tuples.Tuple;
+import ca.uqac.lif.cep.util.Numbers.NumberCast;
 
 public class BeepBeepResultSet extends EmptyResultSet
 {

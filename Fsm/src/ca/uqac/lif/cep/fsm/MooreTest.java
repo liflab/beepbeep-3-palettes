@@ -24,7 +24,6 @@ import java.util.Vector;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
@@ -37,7 +36,7 @@ import ca.uqac.lif.cep.util.Equals;
 /**
  * Unit tests for the Moore Machine processor
  */
-public class MooreTest extends BeepBeepUnitTest
+public class MooreTest
 {
 	// State names; this is just to improve readability
 	public static final int ST_0 = 0;

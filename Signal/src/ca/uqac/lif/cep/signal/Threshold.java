@@ -23,7 +23,7 @@ import java.util.ArrayDeque;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
-import ca.uqac.lif.cep.numbers.NumberCast;
+import ca.uqac.lif.cep.util.Numbers.NumberCast;
 
 public class Threshold extends SingleProcessor
 {

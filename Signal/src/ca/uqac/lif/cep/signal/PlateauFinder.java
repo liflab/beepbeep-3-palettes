@@ -22,7 +22,7 @@ import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.numbers.NumberCast;
+import ca.uqac.lif.cep.util.Numbers.NumberCast;
 
 /**
  * Finds a plateau in a data stream. A plateau is found when all

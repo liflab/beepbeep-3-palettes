@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import ca.uqac.lif.cep.Duplicable;
+
 
 /**
  * Implementation of a named tuple based on the <code>Map</code> class.
@@ -33,7 +35,7 @@ import java.util.Set;
  * @author Sylvain Hallé
  *
  */
-public class TupleMap extends Tuple 
+public class TupleMap extends Tuple implements Duplicable 
 {
 	/**
 	 * The contents of the named tuple
