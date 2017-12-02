@@ -9,9 +9,7 @@ import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.CumulativeProcessor;
 import ca.uqac.lif.cep.functions.CumulativeProcessor.StartValue;
-import ca.uqac.lif.cep.functions.FunctionProcessor;
-import ca.uqac.lif.cep.functions.Negation;
-import ca.uqac.lif.cep.numbers.Addition;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.provenance.EventFunction.InputValue;
 import ca.uqac.lif.cep.provenance.EventFunction.OutputValue;
 import ca.uqac.lif.cep.tmf.CountDecimate;
@@ -19,6 +17,8 @@ import ca.uqac.lif.cep.tmf.Passthrough;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.tmf.QueueSource.QueueFunction;
 import ca.uqac.lif.cep.tmf.Trim;
+import ca.uqac.lif.cep.util.Booleans;
+import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.petitpoucet.NodeFunction;
 import ca.uqac.lif.petitpoucet.ProvenanceNode;
 
@@ -28,7 +28,7 @@ public class IndexEventTrackerTest
 	public void testFunctionUnary() 
 	{
 		IndexEventTracker tracker = new IndexEventTracker();
-		FunctionProcessor add = new FunctionProcessor(Negation.instance);
+		ApplyFunction add = new ApplyFunction(Booleans.not);
 		QueueSource source = new QueueSource(1);
 		source.addEvent(true);
 		Connector.connect(source, add);
@@ -47,7 +47,7 @@ public class IndexEventTrackerTest
 	public void testFunctionBinary() 
 	{
 		IndexEventTracker tracker = new IndexEventTracker();
-		FunctionProcessor add = new FunctionProcessor(Addition.instance);
+		ApplyFunction add = new ApplyFunction(Numbers.addition);
 		QueueSource source1 = new QueueSource(1);
 		source1.addEvent(1).addEvent(2);
 		QueueSource source2 = new QueueSource(1);
@@ -69,7 +69,7 @@ public class IndexEventTrackerTest
 	public void testFunctionCumulative() 
 	{
 		IndexEventTracker tracker = new IndexEventTracker();
-		CumulativeProcessor add = new CumulativeProcessor(new CumulativeFunction<Number>(Addition.instance));
+		CumulativeProcessor add = new CumulativeProcessor(new CumulativeFunction<Number>(Numbers.addition));
 		QueueSource source = new QueueSource(1);
 		source.addEvent(1);
 		Connector.connect(source, add);
@@ -139,7 +139,7 @@ public class IndexEventTrackerTest
 	public void testUnaryChain1() 
 	{
 		IndexEventTracker tracker = new IndexEventTracker();
-		FunctionProcessor add = new FunctionProcessor(Negation.instance);
+		ApplyFunction add = new ApplyFunction(Booleans.not);
 		QueueSource source = new QueueSource(1);
 		Passthrough pt = new Passthrough(1);
 		source.addEvent(true);
@@ -164,7 +164,7 @@ public class IndexEventTrackerTest
 	public void testUnaryChain2() 
 	{
 		IndexEventTracker tracker = new IndexEventTracker();
-		FunctionProcessor add = new FunctionProcessor(Negation.instance);
+		ApplyFunction add = new ApplyFunction(Booleans.not);
 		QueueSource source = new QueueSource(1);
 		int delay = 3;
 		Trim pt = new Trim(delay);

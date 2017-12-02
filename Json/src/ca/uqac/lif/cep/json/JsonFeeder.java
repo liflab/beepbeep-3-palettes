@@ -17,7 +17,7 @@
  */
 package ca.uqac.lif.cep.json;
 
-import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.json.JsonElement;
 import ca.uqac.lif.json.JsonParser;
@@ -26,7 +26,7 @@ import ca.uqac.lif.json.JsonParser.JsonParseException;
 /**
  * Processor that turns input strings into output JSON documents
  */
-public class JsonFeeder extends FunctionProcessor
+public class JsonFeeder extends ApplyFunction
 {
 	public JsonFeeder()
 	{

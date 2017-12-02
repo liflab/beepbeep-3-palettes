@@ -16,7 +16,7 @@ public class ExistsSpawn extends FirstOrderSpawn
 	{
 		Processor new_proc = m_processor.duplicate();
 		new_proc.setContext(m_context);
-		ExistsSpawn new_spawn = new ExistsSpawn(m_variableName, new_proc, m_splitFunction.duplicate(m_context));
+		ExistsSpawn new_spawn = new ExistsSpawn(m_variableName, new_proc, m_splitFunction.duplicate());
 		new_spawn.setContext(m_context);
 		return new_spawn;
 	}

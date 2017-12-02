@@ -23,7 +23,7 @@ import java.util.ArrayDeque;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 
 /**
@@ -32,7 +32,7 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  * 
  * @author Sylvain Hallé
  */
-public class Select extends FunctionProcessor
+public class Select extends ApplyFunction
 {
 	public Select(SelectFunction comp) 
 	{

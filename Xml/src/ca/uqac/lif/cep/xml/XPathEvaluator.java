@@ -22,10 +22,10 @@ import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.xml.XPathExpression;
 
-public class XPathEvaluator extends FunctionProcessor
+public class XPathEvaluator extends ApplyFunction
 {	
 	public XPathEvaluator(String exp)
 	{

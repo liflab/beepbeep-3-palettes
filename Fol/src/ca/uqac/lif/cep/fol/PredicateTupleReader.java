@@ -17,13 +17,13 @@
  */
 package ca.uqac.lif.cep.fol;
 
-import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 
 /**
  * Processor receiving objects as input and outputting
  * predicate tuples as its output
  */
-public class PredicateTupleReader extends FunctionProcessor
+public class PredicateTupleReader extends ApplyFunction
 {
 	public PredicateTupleReader()
 	{

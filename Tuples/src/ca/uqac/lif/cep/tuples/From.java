@@ -20,7 +20,7 @@ package ca.uqac.lif.cep.tuples;
 import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 
 /**
  * Creates an {@link TupleExpression} from a set of input tuples and an
@@ -34,7 +34,7 @@ import ca.uqac.lif.cep.functions.FunctionProcessor;
  * 
  * @author Sylvain Hallé
  */
-public class From extends FunctionProcessor 
+public class From extends ApplyFunction 
 {
 	public From(FromFunction comp) 
 	{

@@ -20,14 +20,14 @@ package ca.uqac.lif.cep.ltl;
 import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.Processor;
 
 /**
  * Troolean implementation of logical implication.
  * @author Sylvain Hallé
  */
-public class TrooleanImplies extends FunctionProcessor 
+public class TrooleanImplies extends ApplyFunction 
 {
 	public TrooleanImplies()
 	{

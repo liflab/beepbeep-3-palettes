@@ -18,14 +18,14 @@
 package ca.uqac.lif.cep.apache;
 
 import ca.uqac.lif.cep.functions.Function;
-import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 
 /**
  * Converts a stream of lines from an Apache log into a stream of
  * HTTP request objects
  * @author Sylvain Hallé
  */
-public class ApacheLogFeeder extends FunctionProcessor 
+public class ApacheLogFeeder extends ApplyFunction 
 {
 	public ApacheLogFeeder()
 	{

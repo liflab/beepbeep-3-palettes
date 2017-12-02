@@ -23,6 +23,7 @@ import java.util.Iterator;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.NextStatus;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Connector.ConnectorException;
@@ -31,9 +32,9 @@ import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionException;
-import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.tmf.Fork;
-import ca.uqac.lif.cep.util.ToArray;
+import ca.uqac.lif.cep.util.ToCollection.ToArray;
 
 class Spawn extends Processor
 {	
@@ -65,13 +66,13 @@ class Spawn extends Processor
 	/**
 	 * The passthrough synchronizing the output of each processor instance
 	 */
-	protected ToArray m_joinProcessor;
+	protected Processor m_joinProcessor;
 
 	/**
 	 * The function processor used to combine the values of each
 	 * instance 
 	 */
-	protected FunctionProcessor m_combineProcessor;
+	protected ApplyFunction m_combineProcessor;
 
 	/**
 	 * The pushable that will detect when the first event comes
@@ -103,7 +104,7 @@ class Spawn extends Processor
 		super(1, 1);
 		m_processor = p;
 		m_splitFunction = split_function;
-		m_combineProcessor = new FunctionProcessor(combine_function);
+		m_combineProcessor = new ApplyFunction(combine_function);
 		m_combineProcessor.setContext(m_context);
 		m_instances = null;
 		m_fork = null;
@@ -468,7 +469,7 @@ class Spawn extends Processor
 			if (size == 0)
 			{
 				// Domain is empty: processor returns a fixed value
-				FunctionProcessor mutator = new FunctionProcessor(new Constant(m_valueIfEmptyDomain));
+				ApplyFunction mutator = new ApplyFunction(new Constant(m_valueIfEmptyDomain));
 				m_inputPushable.setPushable(mutator.getPushableInput(0));
 				mutator.setPullableInput(0, m_inputPushable.getPullable());
 				m_outputPullable.setPullable(mutator.getPullableOutput(0));
@@ -481,7 +482,7 @@ class Spawn extends Processor
 				m_inputPushable.setPushable(m_fork.getPushableInput(0));
 				m_instances = new Processor[size];
 				// Create a join to collate the output of each spawned instance
-				m_joinProcessor = new ToArray(size);
+				m_joinProcessor = new ApplyFunction(new ToArray(size));
 				m_joinProcessor.setContext(m_context);
 				// Spawn one new internal processor per value
 				int i = 0;

@@ -19,7 +19,7 @@ package ca.uqac.lif.cep.json;
 
 import java.util.List;
 
-import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.json.JsonElement;
 import ca.uqac.lif.json.JsonPath;
@@ -28,7 +28,7 @@ import ca.uqac.lif.json.JsonPath.PathElement;
 /**
  * Evaluates a JPath expression on a trace of JSON elements.
  */
-public class JPathEvaluator extends FunctionProcessor
+public class JPathEvaluator extends ApplyFunction
 {	
 	public JPathEvaluator(String path)
 	{

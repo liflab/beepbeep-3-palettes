@@ -26,7 +26,6 @@ import java.util.Collection;
 
 import org.junit.Test;
 
-import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.tmf.SinkLast;
@@ -39,7 +38,7 @@ import ca.uqac.lif.xml.XmlElement.XmlParseException;
  * Unit tests for the XML processors
  * @author Sylvain Hallé
  */
-public class XmlTest extends BeepBeepUnitTest
+public class XmlTest
 {
 
 	@Test

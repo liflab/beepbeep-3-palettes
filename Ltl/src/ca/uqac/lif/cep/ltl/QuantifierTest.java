@@ -15,13 +15,13 @@ import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.concurrency.NonBlockingPusher;
 import ca.uqac.lif.cep.concurrency.ThreadManager;
-import ca.uqac.lif.cep.functions.ContextPlaceholder;
+import ca.uqac.lif.cep.functions.ContextVariable;
 import ca.uqac.lif.cep.util.Equals;
 import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.functions.Function;
-import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.functions.FunctionTree;
-import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
+import ca.uqac.lif.cep.functions.StreamVariable;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.tmf.Fork;
 import ca.uqac.lif.cep.tmf.Passthrough;
@@ -38,9 +38,9 @@ public class QuantifierTest
 	public void testEveryPush1() 
 	{
 		FunctionTree tree = new FunctionTree(Numbers.isGreaterThan); 
-		tree.setChild(0, new ArgumentPlaceholder(0));
-		tree.setChild(1, new ContextPlaceholder("x"));
-		FunctionProcessor gt = new FunctionProcessor(tree);
+		tree.setChild(0, StreamVariable.X);
+		tree.setChild(1, new ContextVariable("x"));
+		ApplyFunction gt = new ApplyFunction(tree);
 		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), gt);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(fa, sink);
@@ -60,9 +60,9 @@ public class QuantifierTest
 		QueueSource source = new QueueSource(1);
 		source.addEvent(0);
 		FunctionTree tree = new FunctionTree(Numbers.isGreaterThan); 
-		tree.setChild(0, new ArgumentPlaceholder(0));
-		tree.setChild(1, new ContextPlaceholder("x"));
-		FunctionProcessor gt = new FunctionProcessor(tree);
+		tree.setChild(0, StreamVariable.X);
+		tree.setChild(1, new ContextVariable("x"));
+		ApplyFunction gt = new ApplyFunction(tree);
 		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), gt);
 		Connector.connect(source, fa);
 		Pullable out = fa.getPullableOutput(0);
@@ -76,9 +76,9 @@ public class QuantifierTest
 	public void testEvery2() 
 	{
 		FunctionTree tree = new FunctionTree(Numbers.isLessThan); 
-		tree.setChild(0, new ArgumentPlaceholder(0));
-		tree.setChild(1, new ContextPlaceholder("x"));
-		FunctionProcessor gt = new FunctionProcessor(tree);
+		tree.setChild(0, StreamVariable.X);
+		tree.setChild(1, new ContextVariable("x"));
+		ApplyFunction gt = new ApplyFunction(tree);
 		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), gt);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(fa, sink);
@@ -100,9 +100,9 @@ public class QuantifierTest
 	public void testEvery3() 
 	{
 		FunctionTree tree = new FunctionTree(Numbers.isGreaterThan); 
-		tree.setChild(0, new ContextPlaceholder("x"));
-		tree.setChild(1, new ContextPlaceholder("y"));
-		FunctionProcessor gt = new FunctionProcessor(tree);
+		tree.setChild(0, new ContextVariable("x"));
+		tree.setChild(1, new ContextVariable("y"));
+		ApplyFunction gt = new ApplyFunction(tree);
 		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), gt);
 		Some fa2 = new Some("y", new DummyCollectionFunction(1, 2, 3), fa);
 		QueueSink sink = new QueueSink(1);
@@ -123,9 +123,9 @@ public class QuantifierTest
 		QueueSource source = new QueueSource(1);
 		source.addEvent(0);
 		FunctionTree tree = new FunctionTree(Numbers.isGreaterThan); 
-		tree.setChild(0, new ContextPlaceholder("x"));
-		tree.setChild(1, new ContextPlaceholder("y"));
-		FunctionProcessor gt = new FunctionProcessor(tree);
+		tree.setChild(0, new ContextVariable("x"));
+		tree.setChild(1, new ContextVariable("y"));
+		ApplyFunction gt = new ApplyFunction(tree);
 		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), gt);
 		Some fa2 = new Some("y", new DummyCollectionFunction(1, 2, 3), fa);
 		Connector.connect(source, fa2);
@@ -140,9 +140,9 @@ public class QuantifierTest
 	public void testEvery4() 
 	{
 		FunctionTree tree = new FunctionTree(Numbers.isGreaterThan); 
-		tree.setChild(0, new ContextPlaceholder("y"));
-		tree.setChild(1, new ContextPlaceholder("x"));
-		FunctionProcessor gt = new FunctionProcessor(tree);
+		tree.setChild(0, new ContextVariable("y"));
+		tree.setChild(1, new ContextVariable("x"));
+		ApplyFunction gt = new ApplyFunction(tree);
 		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), gt);
 		Some fa2 = new Some("y", new DummyCollectionFunction(2, 3, 4), fa);
 		QueueSink sink = new QueueSink(1);
@@ -163,9 +163,9 @@ public class QuantifierTest
 		QueueSource source = new QueueSource(1);
 		source.addEvent(0);
 		FunctionTree tree = new FunctionTree(Numbers.isGreaterThan); 
-		tree.setChild(0, new ContextPlaceholder("y"));
-		tree.setChild(1, new ContextPlaceholder("x"));
-		FunctionProcessor gt = new FunctionProcessor(tree);
+		tree.setChild(0, new ContextVariable("y"));
+		tree.setChild(1, new ContextVariable("x"));
+		ApplyFunction gt = new ApplyFunction(tree);
 		Every fa = new Every("x", new DummyCollectionFunction(2), gt);
 		Every fa2 = new Every("y", new DummyCollectionFunction(1), fa);
 		Connector.connect(source, fa2);
@@ -180,9 +180,9 @@ public class QuantifierTest
 	public void testSome1() 
 	{
 		FunctionTree tree = new FunctionTree(Numbers.isGreaterThan); 
-		tree.setChild(0, new ArgumentPlaceholder(0));
-		tree.setChild(1, new ContextPlaceholder("x"));
-		FunctionProcessor gt = new FunctionProcessor(tree);
+		tree.setChild(0, StreamVariable.X);
+		tree.setChild(1, new ContextVariable("x"));
+		ApplyFunction gt = new ApplyFunction(tree);
 		Some fa = new Some("x", new DummyCollectionFunction(1, 2, 3), gt);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(fa, sink);
@@ -200,9 +200,9 @@ public class QuantifierTest
 	public void testSome2() 
 	{
 		FunctionTree tree = new FunctionTree(Numbers.isGreaterThan); 
-		tree.setChild(0, new ArgumentPlaceholder(0));
-		tree.setChild(1, new ContextPlaceholder("x"));
-		FunctionProcessor gt = new FunctionProcessor(tree);
+		tree.setChild(0, StreamVariable.X);
+		tree.setChild(1, new ContextVariable("x"));
+		ApplyFunction gt = new ApplyFunction(tree);
 		Some fa = new Some("x", new DummyCollectionFunction(1, 2, 3), gt);
 		QueueSink sink = new QueueSink(1);
 		Connector.connect(fa, sink);
@@ -223,8 +223,8 @@ public class QuantifierTest
 		Object o;
 		TrooleanImplies imp = new TrooleanImplies();
 		Fork fork = new Fork(2);
-		FunctionProcessor left = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ArgumentPlaceholder(0), new ArgumentPlaceholder(0))));
-		FunctionProcessor right = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ArgumentPlaceholder(0), new ArgumentPlaceholder(0))));
+		ApplyFunction left = new ApplyFunction(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, StreamVariable.X, StreamVariable.X)));
+		ApplyFunction right = new ApplyFunction(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, StreamVariable.X, StreamVariable.X)));
 		Connector.connect(fork, 0, left, 0);
 		Connector.connect(fork, 1, right, 0);
 		Connector.connect(left, 0, imp, 0);
@@ -257,8 +257,8 @@ public class QuantifierTest
 		Object o;
 		TrooleanImplies imp = new TrooleanImplies();
 		Fork fork = new Fork(2);
-		FunctionProcessor left = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ArgumentPlaceholder(0), new ArgumentPlaceholder(0))));
-		FunctionProcessor right = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ArgumentPlaceholder(0), new ContextPlaceholder("x"))));
+		ApplyFunction left = new ApplyFunction(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, StreamVariable.X, StreamVariable.X)));
+		ApplyFunction right = new ApplyFunction(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, StreamVariable.X, new ContextVariable("x"))));
 		Connector.connect(fork, 0, left, 0);
 		Connector.connect(fork, 1, right, 0);
 		Connector.connect(left, 0, imp, 0);
@@ -291,7 +291,7 @@ public class QuantifierTest
 		Pullable p;
 		Object o;
 		Passthrough pt = new Passthrough(1);
-		FunctionProcessor left = new FunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ArgumentPlaceholder(0), new ArgumentPlaceholder(0))));
+		ApplyFunction left = new ApplyFunction(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, StreamVariable.X, StreamVariable.X)));
 		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), left);
 		Connector.connect(pt, fa);
 		GroupProcessor gp = new GroupProcessor(1, 1);
@@ -322,7 +322,7 @@ public class QuantifierTest
 	public void testForAll1() 
 	{
 		ThreadManager tm = new ThreadManager(-1); // Unlimited threads
-		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ArgumentPlaceholder(0), new ArgumentPlaceholder(0))), 0);
+		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, StreamVariable.X, StreamVariable.X)), 0);
 		BooleanQuantifier fa = new BooleanQuantifier(new ForAllSpawn("x", left, new DummyCollectionFunction(1, 2, 3)));
 		QueueSource source1 = new QueueSource(1);
 		source1.addEvent(0);
@@ -339,7 +339,7 @@ public class QuantifierTest
 	public void testForAll2() 
 	{
 		ThreadManager tm = new ThreadManager(-1); // Unlimited threads
-		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ArgumentPlaceholder(0), new ArgumentPlaceholder(0))), 0);
+		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, StreamVariable.X, StreamVariable.X)), 0);
 		ForAllSpawn fas = new ForAllSpawn("x", left, new DummyCollectionFunction(1, 2, 3));
 		NonBlockingPusher nbp = new NonBlockingPusher(fas);
 		BooleanQuantifier fa = new BooleanQuantifier(nbp);
@@ -357,7 +357,7 @@ public class QuantifierTest
 	public void testForAll3() throws ProcessorException
 	{
 		ThreadManager tm = new ThreadManager(-1); // Unlimited threads
-		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ContextPlaceholder("x"), new ContextPlaceholder("z"))), 0);
+		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ContextVariable("x"), new ContextVariable("z"))), 0);
 		ForAllSpawn fas = new ForAllSpawn("x", left, new DummyCollectionFunction(1, 2, 3));
 		NonBlockingPusher nbp = new NonBlockingPusher(fas, tm);
 		nbp.start();
@@ -378,7 +378,7 @@ public class QuantifierTest
 	public void testNonBlockingInQuantifier() 
 	{
 		ThreadManager tm = new ThreadManager(-1); // Unlimited threads
-		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ArgumentPlaceholder(0), new ArgumentPlaceholder(0))), 1000);
+		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, StreamVariable.X, StreamVariable.X)), 1000);
 		ForAllSpawn fas = new ForAllSpawn("x", left, new DummyCollectionFunction(1, 2, 3));
 		NonBlockingPusher pp = new NonBlockingPusher(fas, tm);
 		BooleanQuantifier fa = new BooleanQuantifier(pp);
@@ -443,7 +443,7 @@ public class QuantifierTest
 		}
 	}
 	
-	public static class IsEvenProcessor extends FunctionProcessor
+	public static class IsEvenProcessor extends ApplyFunction
 	{
 		public IsEvenProcessor()
 		{
@@ -454,7 +454,7 @@ public class QuantifierTest
 	/**
 	 * Like a function processor, but waits before returning its answer
 	 */
-	public static class SlowFunctionProcessor extends FunctionProcessor
+	public static class SlowFunctionProcessor extends ApplyFunction
 	{
 		protected long m_waitInterval;
 

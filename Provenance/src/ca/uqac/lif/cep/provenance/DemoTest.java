@@ -6,10 +6,10 @@ import static ca.uqac.lif.cep.Connector.OUTPUT;
 import static ca.uqac.lif.cep.Connector.RIGHT;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.functions.FunctionProcessor;
-import ca.uqac.lif.cep.numbers.Addition;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.tmf.CountDecimate;
 import ca.uqac.lif.cep.tmf.QueueSource;
+import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.petitpoucet.ProvenanceNode;
 
 /**
@@ -25,7 +25,7 @@ public class DemoTest
 		QueueSource s2 = new QueueSource(1);
 		s2.addEvent(0).addEvent(1).addEvent(1);
 		CountDecimate dec = new CountDecimate(2);
-		FunctionProcessor add = new FunctionProcessor(Addition.instance);
+		ApplyFunction add = new ApplyFunction(Numbers.addition);
 		IndexEventTracker it = new IndexEventTracker();
 		it.setTo(s1, s2, dec, add);
 		Connector.connect(it, s1, OUTPUT, add, LEFT);

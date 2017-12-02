@@ -21,7 +21,7 @@ import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.io.Caller;
+import ca.uqac.lif.cep.io.Call;
 
 /**
  * Processor taking as input a string containing a Gnuplot graph,
@@ -34,7 +34,7 @@ import ca.uqac.lif.cep.io.Caller;
  * @author Sylvain Hallé
  *
  */
-public class GnuplotCaller extends Caller
+public class GnuplotCaller extends Call
 {
 	public GnuplotCaller()
 	{

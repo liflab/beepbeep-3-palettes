@@ -23,7 +23,7 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.tmf.QueueSource;
 
 public class SerializationTest
@@ -35,8 +35,8 @@ public class SerializationTest
 		source.addEvent(1.3f);
 		source.addEvent(2.6f);
 		source.addEvent(3.9f);
-		FunctionProcessor ser = new FunctionProcessor(new JsonSerialize());
-		FunctionProcessor deser = new FunctionProcessor(new JsonDeserialize<Number>(Number.class));
+		ApplyFunction ser = new ApplyFunction(new JsonSerialize());
+		ApplyFunction deser = new ApplyFunction(new JsonDeserialize<Number>(Number.class));
 		Connector.connect(source, ser);
 		Connector.connect(ser, deser);
 		Pullable p = deser.getPullableOutput();
@@ -62,8 +62,8 @@ public class SerializationTest
 		source.addEvent(c1);
 		source.addEvent(c2);
 		source.addEvent(c3);
-		FunctionProcessor ser = new FunctionProcessor(new JsonSerialize());
-		FunctionProcessor deser = new FunctionProcessor(new JsonDeserialize<CompoundObject>(CompoundObject.class));
+		ApplyFunction ser = new ApplyFunction(new JsonSerialize());
+		ApplyFunction deser = new ApplyFunction(new JsonDeserialize<CompoundObject>(CompoundObject.class));
 		Connector.connect(source, ser);
 		Connector.connect(ser, deser);
 		Pullable p = deser.getPullableOutput();
@@ -89,8 +89,8 @@ public class SerializationTest
 		source.addEvent(c1);
 		source.addEvent(c2);
 		source.addEvent(c3);
-		FunctionProcessor ser = new FunctionProcessor(new JsonSerializeString());
-		FunctionProcessor deser = new FunctionProcessor(new JsonDeserializeString<CompoundObject>(CompoundObject.class));
+		ApplyFunction ser = new ApplyFunction(new JsonSerializeString());
+		ApplyFunction deser = new ApplyFunction(new JsonDeserializeString<CompoundObject>(CompoundObject.class));
 		Connector.connect(source, ser);
 		Connector.connect(ser, deser);
 		Pullable p = deser.getPullableOutput();

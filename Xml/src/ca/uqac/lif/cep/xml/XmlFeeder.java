@@ -21,7 +21,7 @@ import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.xml.XmlElement;
 import ca.uqac.lif.xml.XmlElement.XmlParseException;
@@ -29,7 +29,7 @@ import ca.uqac.lif.xml.XmlElement.XmlParseException;
 /**
  * Processor that turns input strings into output XML documents
  */
-public class XmlFeeder extends FunctionProcessor
+public class XmlFeeder extends ApplyFunction
 {
 	public XmlFeeder()
 	{

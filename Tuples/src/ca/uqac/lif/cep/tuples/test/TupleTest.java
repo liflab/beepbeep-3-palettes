@@ -258,7 +258,7 @@ public class TupleTest
 		FunctionTree condition = new FunctionTree(Booleans.or,
 				new FunctionTree(Numbers.isGreaterThan,
 						new GetAttribute("A", "x"),
-						new Constant(0)),
+						Constant.ZERO),
 				new FunctionTree(Numbers.isGreaterThan,
 						new GetAttribute("C", "q"),
 						new Constant(9))
@@ -280,7 +280,7 @@ public class TupleTest
 		FunctionTree condition = new FunctionTree(Booleans.or,
 				new FunctionTree(Numbers.isGreaterThan,
 						new GetAttribute("A", "x"),
-						new Constant(0)),
+						Constant.ZERO),
 				new FunctionTree(Numbers.isGreaterThan,
 						new GetAttribute("C", "q"),
 						new Constant(9))

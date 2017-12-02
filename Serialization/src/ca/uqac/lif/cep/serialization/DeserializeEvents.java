@@ -27,7 +27,7 @@ import ca.uqac.lif.cep.functions.FunctionException;
 
 /**
  * Function that applies a deserializer to its input argument.
- * A {@link ca.uqac.lif.cep.functions.FunctionProcessor FunctionProcessor}
+ * A {@link ca.uqac.lif.cep.functions.ApplyFunction FunctionProcessor}
  * that applies a serialization function will be depicted graphically by
  * this pictogram:
  * <p>

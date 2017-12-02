@@ -26,9 +26,9 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.functions.ArgumentPlaceholder;
+import ca.uqac.lif.cep.functions.StreamVariable;
 import ca.uqac.lif.cep.functions.Constant;
-import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.util.Equals;
@@ -57,12 +57,12 @@ public class MooreTest
 		MooreMachine m = new MooreMachine(1, 1);
 		m.addTransition(ST_0, new ProcessorTransition(ST_1,
 				// in state 0, event = 2, go to state 1
-				new FunctionProcessor(new FunctionTree(Equals.instance, 
-						new ArgumentPlaceholder(0), new Constant(2)))));
+				new ApplyFunction(new FunctionTree(Equals.instance, 
+						StreamVariable.X, new Constant(2)))));
 		m.addTransition(ST_0, new ProcessorTransition(ST_0,
 				// in state 0, event = 1, go to state 0
-				new FunctionProcessor(new FunctionTree(Equals.instance, 
-						new ArgumentPlaceholder(0), new Constant(1)))));
+				new ApplyFunction(new FunctionTree(Equals.instance, 
+						StreamVariable.X, new Constant(1)))));
 		m.addSymbol(0, "In zero");
 		m.addSymbol(1, "In one");
 		Connector.connect(source, m);

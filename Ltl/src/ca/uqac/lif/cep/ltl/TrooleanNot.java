@@ -20,14 +20,14 @@ package ca.uqac.lif.cep.ltl;
 import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.functions.FunctionProcessor;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.Processor;
 
 /**
  * Troolean implementation of logical negation.
  * @author Sylvain Hallé
  */
-public class TrooleanNot extends FunctionProcessor 
+public class TrooleanNot extends ApplyFunction 
 {
 	public TrooleanNot()
 	{

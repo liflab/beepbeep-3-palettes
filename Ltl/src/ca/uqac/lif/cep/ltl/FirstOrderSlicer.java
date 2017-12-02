@@ -24,7 +24,7 @@ import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.functions.CumulativeProcessor;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
-import ca.uqac.lif.cep.tmf.Slicer;
+import ca.uqac.lif.cep.tmf.Slice;
 
 public abstract class FirstOrderSlicer extends GroupProcessor
 {
@@ -49,7 +49,7 @@ public abstract class FirstOrderSlicer extends GroupProcessor
 	
 	protected abstract CumulativeFunction<Value> getMergeFunction();
 	
-	protected class ContextSlicer extends Slicer
+	protected class ContextSlicer extends Slice
 	{
 		public ContextSlicer(Function func, Processor proc) 
 		{
