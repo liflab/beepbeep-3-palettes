@@ -61,6 +61,13 @@ public class PeakFinderLocalMaximum extends WindowProcessor
 	 */
 	protected int m_numSincePeak;
 	
+	/**
+	 * Whether to invert the values before computing. Setting this to
+	 * true will make the processor detect drops (sudden decreases)
+	 * instead of peaks.
+	 */
+	protected boolean m_invert = false;
+	
 	public PeakFinderLocalMaximum()
 	{
 		this(5);
@@ -71,6 +78,17 @@ public class PeakFinderLocalMaximum extends WindowProcessor
 		super(width);
 		m_peakPosition = -1;
 		m_numSincePeak = 0;		
+	}
+	
+	/**
+	 * Sets whether the peak finder detects drops or peaks.
+	 * @param b Set to {@code true} to detect drops
+	 * @return This processor
+	 */
+	public PeakFinderLocalMaximum findDrops(boolean b)
+	{
+		m_invert = true;
+		return this;
 	}
 	
 	@Override
@@ -85,6 +103,10 @@ public class PeakFinderLocalMaximum extends WindowProcessor
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		float d = NumberCast.getNumber(inputs[0]).floatValue();
+		if (m_invert)
+		{
+			d = -d;
+		}
 		if (m_values.size() < m_windowWidth)
 		{
 			m_values.addElement(d);
@@ -133,9 +155,13 @@ public class PeakFinderLocalMaximum extends WindowProcessor
 				}
 				// Then, create output event with peak height (max - min)
 				float peak_height = m_maxValue - m_minValue;
+				if (m_invert)
+				{
+					peak_height = -peak_height;
+				}
 				Object[] out_vector = new Object[1];
 				out_vector[0] = peak_height;
-				outputs.add(out_vector);
+				outputs.add(new Object[]{peak_height});
 				// Reset everything
 				m_maxValue = getMaxValue();
 				m_minValue = getMinValue();

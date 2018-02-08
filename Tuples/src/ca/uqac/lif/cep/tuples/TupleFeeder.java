@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2018 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -17,25 +17,18 @@
  */
 package ca.uqac.lif.cep.tuples;
 
-import java.util.ArrayDeque;
+import java.util.Queue;
 
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.input.TokenFeeder;
+import ca.uqac.lif.cep.SingleProcessor;
 
 /**
  * Creates a feed of events from CRLF-separated string chunks.
  * Note that the input feed must have a trailing CRLF for all elements,
  * including the last. 
- * @author sylvain
- *
+ * @author Sylvain Hallé
  */
-public class TupleFeeder extends TokenFeeder
+public class TupleFeeder extends SingleProcessor
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6864690824383779454L;
 	protected FixedTupleBuilder m_builder;
 	
 	public TupleFeeder()
@@ -45,20 +38,24 @@ public class TupleFeeder extends TokenFeeder
 	
 	public TupleFeeder(FixedTupleBuilder builder)
 	{
-		super();
-		m_separatorBegin = "";
-		m_separatorEnd = System.getProperty("line.separator");
+		super(1, 1);
 		m_builder = builder;
 	}
 	
 	@Override
-	protected Object createTokenFromInput(String token)
+	public TupleFeeder duplicate()
 	{
-		token = token.trim();
+		return new TupleFeeder();
+	}
+
+	@Override
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
+	{
+		String token = ((String) inputs[0]).trim();
 		if (token.isEmpty() || token.startsWith("#"))
 		{
 			// Ignore comment and empty lines
-			return new TokenFeeder.NoToken();
+			return true;
 		}
 		String[] parts = token.split(",");
 		if (m_builder == null)
@@ -66,37 +63,10 @@ public class TupleFeeder extends TokenFeeder
 			// This is the first token we read; it contains the names
 			// of the arguments
 			m_builder = new FixedTupleBuilder(parts);
-			return new TokenFeeder.NoToken();
+			return true;
 		}
-		return m_builder.createTupleFromString(parts);
-	}
-
-	public static void build(ArrayDeque<Object> stack) 
-	{
-		Object o;
-		Processor p; 
-		o = stack.pop(); // ) ?
-		if (o instanceof String)
-		{
-			p = (Processor) stack.pop();
-			stack.pop(); // (
-		}
-		else
-		{
-			p = (Processor) o;
-		}
-		stack.pop(); // OF
-		stack.pop(); // TUPLES
-		stack.pop(); // THE
-		TupleFeeder tp = new TupleFeeder();
-		Connector.connect(p, tp);
-		stack.push(tp);
-	}
-	
-	@Override
-	public TupleFeeder duplicate()
-	{
-		return new TupleFeeder();
+		outputs.add(new Object[]{m_builder.createTupleFromString(parts)});
+		return true;
 	}
 
 }

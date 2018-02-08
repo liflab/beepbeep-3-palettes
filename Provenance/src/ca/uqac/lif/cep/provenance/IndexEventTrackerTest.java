@@ -7,8 +7,8 @@ import org.junit.Test;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
-import ca.uqac.lif.cep.functions.CumulativeProcessor;
-import ca.uqac.lif.cep.functions.CumulativeProcessor.StartValue;
+import ca.uqac.lif.cep.functions.Cumulate;
+import ca.uqac.lif.cep.functions.Cumulate.StartValue;
 import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.provenance.EventFunction.InputValue;
 import ca.uqac.lif.cep.provenance.EventFunction.OutputValue;
@@ -69,7 +69,7 @@ public class IndexEventTrackerTest
 	public void testFunctionCumulative() 
 	{
 		IndexEventTracker tracker = new IndexEventTracker();
-		CumulativeProcessor add = new CumulativeProcessor(new CumulativeFunction<Number>(Numbers.addition));
+		Cumulate add = new Cumulate(new CumulativeFunction<Number>(Numbers.addition));
 		QueueSource source = new QueueSource(1);
 		source.addEvent(1);
 		Connector.connect(source, add);

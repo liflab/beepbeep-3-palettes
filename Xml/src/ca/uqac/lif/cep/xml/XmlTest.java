@@ -28,6 +28,7 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pushable;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.tmf.SinkLast;
 import ca.uqac.lif.xml.XPathExpression;
 import ca.uqac.lif.xml.XPathExpression.XPathParseException;
@@ -44,7 +45,7 @@ public class XmlTest
 	@Test
 	public void testSingle1() 
 	{
-		XmlFeeder feeder = new XmlFeeder();
+		ApplyFunction feeder = new ApplyFunction(ParseXml.instance);
 		Pushable in = feeder.getPushableInput(0);
 		assertNotNull(in);
 		SinkLast sink = new SinkLast(1);
@@ -59,7 +60,7 @@ public class XmlTest
 	@Test
 	public void testSingle2() 
 	{
-		XmlFeeder feeder = new XmlFeeder();
+		ApplyFunction feeder = new ApplyFunction(ParseXml.instance);
 		Pushable in = feeder.getPushableInput(0);
 		assertNotNull(in);
 		SinkLast sink = new SinkLast(1);

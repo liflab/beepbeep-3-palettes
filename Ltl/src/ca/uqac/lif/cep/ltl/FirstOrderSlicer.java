@@ -21,7 +21,7 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
-import ca.uqac.lif.cep.functions.CumulativeProcessor;
+import ca.uqac.lif.cep.functions.Cumulate;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
 import ca.uqac.lif.cep.tmf.Slice;
@@ -35,7 +35,7 @@ public abstract class FirstOrderSlicer extends GroupProcessor
 		super(1, 1);
 		m_variableName = variable_name;
 		ContextSlicer slicer = new ContextSlicer(slicing_function, p);
-		CumulativeProcessor merge = new CumulativeProcessor(getMergeFunction());
+		Cumulate merge = new Cumulate(getMergeFunction());
 		Connector.connect(slicer, merge);
 		addProcessors(slicer, merge);
 		associateInput(0, slicer, 0);

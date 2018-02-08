@@ -18,14 +18,14 @@
 package ca.uqac.lif.cep.ltl;
 
 import ca.uqac.lif.cep.functions.CumulativeFunction;
-import ca.uqac.lif.cep.functions.CumulativeProcessor;
+import ca.uqac.lif.cep.functions.Cumulate;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
 
 /**
  * Troolean implementation of the LTL <b>F</b> processor
  * @author Sylvain Hallé
  */
-public class Sometime extends CumulativeProcessor 
+public class Sometime extends Cumulate 
 {
 	public Sometime()
 	{
