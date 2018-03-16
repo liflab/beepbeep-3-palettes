@@ -123,7 +123,7 @@
        default rt.jar present in the system. The "compile" task should
        depend on this. -->
   <target name="check-rt" depends="init">
-    <available file="../rt.jar" property="localrt.present"/>
+    <available file="rt.jar" filepath="../" property="localrt.present"/>
     <echo message="Local bootstrap JAR is present"/>
     <var name="java6.boot.classpath" unset="true"/>
     <property name="java6.boot.classpath" value="../rt.jar"/>
@@ -149,6 +149,7 @@
   -->
   <target name="compile" depends="init,junit,check-rt" description="Compile the sources">
     <mkdir dir="${build.bindir}"/>
+    <echo message="${java6.boot.classpath}"/>
     <javac
       target="1.6" source="1.6"
       bootclasspath="${java6.boot.classpath}"
@@ -348,7 +349,7 @@
   <!-- Target: show-properties
        Prints all the properties.
   -->
-  <target name="show-properties" depends="init" description="Print all properties">
+  <target name="show-properties" depends="check-rt" description="Print all properties">
       <echoproperties/>
   </target>
   
@@ -414,7 +415,7 @@
        Download boot classpath for Java 1.6 and put it in the root folder
   -->
   <target name="download-rt6">
-    <get src="http://sylvainhalle.github.io/AntRun/dependencies/1.6.0_45/rt.jar" dest="."/>
+    <get src="http://sylvainhalle.github.io/AntRun/dependencies/1.6.0_45/rt.jar" dest=".."/>
   </target>
 
   

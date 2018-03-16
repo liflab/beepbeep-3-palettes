@@ -12,3 +12,4 @@ lib/
 */.project
 /doc/
 .sonar/
+.metadata
