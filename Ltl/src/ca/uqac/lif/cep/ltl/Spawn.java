@@ -34,7 +34,6 @@ import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.tmf.Fork;
-import ca.uqac.lif.cep.util.ToCollection.ToArray;
 
 class Spawn extends Processor
 {	

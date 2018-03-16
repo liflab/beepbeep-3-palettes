@@ -23,7 +23,6 @@ import java.util.Queue;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.tuples.Tuple;
-import ca.uqac.lif.cep.numbers.NumberCast;
 
 /**
  * Generates a Gnuplot file from a 2D {@link ca.uqac.lif.cep.sets.Multiset}.

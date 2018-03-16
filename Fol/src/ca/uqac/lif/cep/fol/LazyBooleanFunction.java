@@ -4,9 +4,8 @@ import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.functions.Function;
-import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.functions.FunctionTree;
-import ca.uqac.lif.cep.functions.Negation;
+import ca.uqac.lif.cep.util.Booleans;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 
 
@@ -99,15 +98,9 @@ public class LazyBooleanFunction extends Function
 		}
 		
 		@Override
-		public And duplicate(Context context)
-		{
-			return new And(m_left.duplicate(context), m_right.duplicate(context));
-		}
-		
-		@Override
 		public And duplicate()
 		{
-			return duplicate(null);
+			return new And(m_left.duplicate(), m_right.duplicate());
 		}
 
 	}
@@ -126,15 +119,9 @@ public class LazyBooleanFunction extends Function
 		}
 		
 		@Override
-		public Or duplicate(Context context)
-		{
-			return new Or(m_left.duplicate(context), m_right.duplicate(context));
-		}
-		
-		@Override
 		public Or duplicate()
 		{
-			return duplicate(null);
+			return new Or(m_left.duplicate(), m_right.duplicate());
 		}
 	}
 	
@@ -142,7 +129,7 @@ public class LazyBooleanFunction extends Function
 	{
 		public Implies(Function left, Function right)
 		{
-			super(true, new FunctionTree(Negation.instance, left), right);
+			super(true, new FunctionTree(Booleans.not, left), right);
 		}
 		
 		@Override
@@ -152,17 +139,10 @@ public class LazyBooleanFunction extends Function
 		}
 		
 		@Override
-		public Implies duplicate(Context context)
-		{
-			return new Implies(m_left.duplicate(context), m_right.duplicate(context));
-		}
-		
-		@Override
 		public Implies duplicate()
 		{
-			return duplicate(null);
-		}
-
+			return new Implies(m_left.duplicate(), m_right.duplicate());
+		}		
 	}
 
 	@Override

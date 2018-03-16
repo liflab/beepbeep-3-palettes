@@ -23,8 +23,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.functions.Constant;
+import ca.uqac.lif.cep.functions.Function;
 
-public class Predicate extends SimpleFunction
+public class Predicate extends Function
 {
 	/**
 	 * The predicate's name
@@ -144,15 +145,6 @@ public class Predicate extends SimpleFunction
 	{
 		Predicate pred = new Predicate(m_name, m_domainNames);
 		pred.m_definition.putAll(m_definition);
-		return pred;
-	}
-
-	@Override
-	public Predicate duplicate(Context context) 
-	{
-		Predicate pred = new Predicate(m_name, m_domainNames);
-		pred.m_definition.putAll(m_definition);
-		pred.setContext(context);
 		return pred;
 	}
 
@@ -278,10 +270,6 @@ public class Predicate extends SimpleFunction
 	 */
 	public static class Wildcard extends Constant
 	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 8316809576940654252L;
 		public static final transient Wildcard instance = new Wildcard();
 		
 		Wildcard()

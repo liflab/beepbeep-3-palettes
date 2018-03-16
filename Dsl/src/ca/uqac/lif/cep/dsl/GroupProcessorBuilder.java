@@ -25,9 +25,12 @@ public class GroupProcessorBuilder extends GrammarObjectBuilder<GroupProcessor>
 		m_inputForks = new HashMap<Integer,Fork>();
 	}
 	
-	public void add(Processor p)
+	public void add(Processor ... procs)
 	{
-		m_processors.add(p);
+		for (Processor p : procs)
+		{
+			m_processors.add(p);
+		}
 	}
 	
 	@Override
