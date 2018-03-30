@@ -18,6 +18,7 @@
 package ca.uqac.lif.cep.fol;
 
 import ca.uqac.lif.cep.functions.UnaryFunction;
+import ca.uqac.lif.cep.util.Numbers.NumberCast;
 
 /**
  * Extracts the value at a specific position in the predicate tuple,

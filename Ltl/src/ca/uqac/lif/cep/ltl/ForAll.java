@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2018 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -17,48 +17,43 @@
  */
 package ca.uqac.lif.cep.ltl;
 
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.functions.Function;
 
 /**
- * Troolean implementation of logical implication.
+ * Boolean implementation of the universal first-order quantifier.
  * @author Sylvain Hallé
  */
-public class TrooleanImplies extends ApplyFunction 
+public class ForAll extends FirstOrderQuantifier 
 {
-	public TrooleanImplies()
+	public ForAll(String var_name, Function dom_function, Processor expression)
 	{
-		super(Troolean.IMPLIES_FUNCTION);
+		super(var_name, dom_function, expression);
 	}
 	
-	public static void build(ArrayDeque<Object> stack) 
+	protected ForAll(FirstOrderSlice fos)
 	{
-		stack.pop(); // (
-		Processor right = (Processor) stack.pop();
-		stack.pop(); // )
-		stack.pop(); // op
-		stack.pop(); // (
-		Processor left = (Processor) stack.pop();
-		stack.pop(); // )
-		TrooleanImplies op = new TrooleanImplies();
-		Connector.connect(left, 0, op, 0);
-		Connector.connect(right, 0, op, 1);
-		stack.push(op);
+		super(fos);
 	}
 	
 	@Override
-	public TrooleanImplies duplicate()
+	public ForAll duplicate()
 	{
-		return new TrooleanImplies();
-	}
-	
-	@Override
-	public String toString()
-	{
-		return "IMPLIES";
+		ForAll f = new ForAll(m_slicer.duplicate());
+		f.setContext(m_context);
+		return f;
 	}
 
+	@Override
+	public Object combineValues(Object[] values) 
+	{
+		for (Object o : values)
+		{
+			if (Troolean.trooleanValue(o) == Troolean.Value.FALSE)
+			{
+				return Troolean.Value.FALSE;
+			}
+		}
+		return null;
+	}
 }

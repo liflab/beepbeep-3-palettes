@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2018 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -21,34 +21,32 @@ import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.Function;
 
 /**
- * Troolean implementation of the first-order universal quantifier.
+ * Troolean implementation of the universal first-order quantifier.
  * @author Sylvain Hallé
  */
-public class Every extends TrooleanQuantifier
+public class Every extends FirstOrderQuantifier 
 {
-	Every()
+	public Every(String var_name, Function dom_function, Processor expression)
 	{
-		super();
-		m_valueIfEmptyDomain = Troolean.Value.TRUE;
+		super(var_name, dom_function, expression);
 	}
 	
-	public Every(String var_name, Function split_function, Processor p)
+	protected Every(FirstOrderSlice fos)
 	{
-		super(var_name, split_function, p, ArrayAnd.instance, Troolean.Value.TRUE);
-		m_valueIfEmptyDomain = Troolean.Value.TRUE;
+		super(fos);
+	}
+	
+	@Override
+	public Every duplicate()
+	{
+		Every f = new Every(m_slicer.duplicate());
+		f.setContext(m_context);
+		return f;
 	}
 
 	@Override
-	public Every duplicate() 
+	public Object combineValues(Object[] values) 
 	{
-		Every out = new Every();
-		super.cloneInto(out);
-		return out;
-	}
-	
-	@Override
-	public String toString()
-	{
-		return "every " + m_variableName + " in " + m_spawn.m_splitFunction.toString();
+		return Troolean.and((Troolean.Value[]) values);
 	}
 }

@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2018 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -17,37 +17,43 @@
  */
 package ca.uqac.lif.cep.ltl;
 
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.functions.Function;
 
 /**
- * Troolean implementation of logical negation.
+ * Boolean implementation of the existential first-order quantifier.
  * @author Sylvain Hallé
  */
-public class TrooleanNot extends ApplyFunction 
+public class Exists extends FirstOrderQuantifier 
 {
-	public TrooleanNot()
+	public Exists(String var_name, Function dom_function, Processor expression)
 	{
-		super(Troolean.NOT_FUNCTION);
+		super(var_name, dom_function, expression);
 	}
 	
-	public static void build(ArrayDeque<Object> stack) 
+	protected Exists(FirstOrderSlice fos)
 	{
-		stack.pop(); // (
-		Processor p = (Processor) stack.pop();
-		stack.pop(); // )
-		stack.pop(); // NOT
-		TrooleanNot op = new TrooleanNot();
-		Connector.connect(p, op);
-		stack.push(op);
+		super(fos);
 	}
 	
 	@Override
-	public TrooleanNot duplicate()
+	public Exists duplicate()
 	{
-		return new TrooleanNot();
+		Exists f = new Exists(m_slicer.duplicate());
+		f.setContext(m_context);
+		return f;
+	}
+
+	@Override
+	public Object combineValues(Object[] values) 
+	{
+		for (Object o : values)
+		{
+			if (Troolean.trooleanValue(o) == Troolean.Value.TRUE)
+			{
+				return Troolean.Value.TRUE;
+			}
+		}
+		return null;
 	}
 }

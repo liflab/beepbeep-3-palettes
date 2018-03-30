@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2018 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -16,8 +16,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package ca.uqac.lif.cep.ltl;
-
-import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.Constant;
@@ -76,23 +74,6 @@ public class Troolean extends Constant
 		super(o);
 	}
 	
-	public static void build(ArrayDeque<Object> stack)
-	{
-		String symbol = (String) stack.pop();
-		if (symbol.compareTo("⊤") == 0)
-		{
-			stack.push(TRUE);
-		}
-		else if (symbol.compareTo("⊥") == 0)
-		{
-			stack.push(FALSE);
-		}
-		else
-		{
-			stack.push(INCONCLUSIVE);
-		}
-	}
-
 	/**
 	 * Computes the logical conjunction of the values
 	 * @param values The values
@@ -372,5 +353,4 @@ public class Troolean extends Constant
 			return not(x);
 		}		
 	}
-
 }

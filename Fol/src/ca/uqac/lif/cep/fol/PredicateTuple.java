@@ -17,6 +17,8 @@
  */
 package ca.uqac.lif.cep.fol;
 
+import java.util.Arrays;
+
 import ca.uqac.lif.cep.fol.Predicate.PredicateArgument;
 
 /**

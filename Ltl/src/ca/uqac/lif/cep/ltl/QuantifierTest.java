@@ -221,7 +221,7 @@ public class QuantifierTest
 	{
 		Pullable p;
 		Object o;
-		TrooleanImplies imp = new TrooleanImplies();
+		ApplyFunction imp = new ApplyFunction(Troolean.IMPLIES_FUNCTION);
 		Fork fork = new Fork(2);
 		ApplyFunction left = new ApplyFunction(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, StreamVariable.X, StreamVariable.X)));
 		ApplyFunction right = new ApplyFunction(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, StreamVariable.X, StreamVariable.X)));
@@ -255,7 +255,7 @@ public class QuantifierTest
 	{
 		Pullable p;
 		Object o;
-		TrooleanImplies imp = new TrooleanImplies();
+		ApplyFunction imp = new ApplyFunction(Troolean.IMPLIES_FUNCTION);
 		Fork fork = new Fork(2);
 		ApplyFunction left = new ApplyFunction(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, StreamVariable.X, StreamVariable.X)));
 		ApplyFunction right = new ApplyFunction(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, StreamVariable.X, new ContextVariable("x"))));
@@ -323,7 +323,7 @@ public class QuantifierTest
 	{
 		ThreadManager tm = new ThreadManager(-1); // Unlimited threads
 		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, StreamVariable.X, StreamVariable.X)), 0);
-		BooleanQuantifier fa = new BooleanQuantifier(new ForAllSpawn("x", left, new DummyCollectionFunction(1, 2, 3)));
+		ForAll fa = new ForAll("x", new DummyCollectionFunction(1, 2, 3), left);
 		QueueSource source1 = new QueueSource(1);
 		source1.addEvent(0);
 		Connector.connect(source1, fa);
@@ -340,9 +340,8 @@ public class QuantifierTest
 	{
 		ThreadManager tm = new ThreadManager(-1); // Unlimited threads
 		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, StreamVariable.X, StreamVariable.X)), 0);
-		ForAllSpawn fas = new ForAllSpawn("x", left, new DummyCollectionFunction(1, 2, 3));
-		NonBlockingPusher nbp = new NonBlockingPusher(fas);
-		BooleanQuantifier fa = new BooleanQuantifier(nbp);
+		ForAll fa = new ForAll("x", new DummyCollectionFunction(1, 2, 3), left);
+		NonBlockingPusher nbp = new NonBlockingPusher(fa);
 		QueueSource source1 = new QueueSource(1);
 		source1.addEvent(0);
 		Connector.connect(source1, fa);
@@ -358,11 +357,10 @@ public class QuantifierTest
 	{
 		ThreadManager tm = new ThreadManager(-1); // Unlimited threads
 		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ContextVariable("x"), new ContextVariable("z"))), 0);
-		ForAllSpawn fas = new ForAllSpawn("x", left, new DummyCollectionFunction(1, 2, 3));
-		NonBlockingPusher nbp = new NonBlockingPusher(fas, tm);
+		ForAll fa = new ForAll("x", new DummyCollectionFunction(1, 2, 3), left);
+		NonBlockingPusher nbp = new NonBlockingPusher(fa, tm);
 		nbp.start();
-		BooleanQuantifier fa = new BooleanQuantifier(nbp);
-		ForAllSpawn fa2 = new ForAllSpawn("z", fa, new DummyCollectionFunction(1, 2, 3));
+		ForAll fa2 = new ForAll("z", new DummyCollectionFunction(1, 2, 3), fa);
 		QueueSource source1 = new QueueSource(1);
 		source1.addEvent(0);
 		Connector.connect(source1, fa2);
@@ -374,26 +372,6 @@ public class QuantifierTest
 		nbp.stop();
 	}
 	
-	@Test
-	public void testNonBlockingInQuantifier() 
-	{
-		ThreadManager tm = new ThreadManager(-1); // Unlimited threads
-		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, StreamVariable.X, StreamVariable.X)), 1000);
-		ForAllSpawn fas = new ForAllSpawn("x", left, new DummyCollectionFunction(1, 2, 3));
-		NonBlockingPusher pp = new NonBlockingPusher(fas, tm);
-		BooleanQuantifier fa = new BooleanQuantifier(pp);
-		QueueSource source1 = new QueueSource(1);
-		source1.addEvent(0);
-		Connector.connect(source1, fa);
-		Pullable p = fa.getPullableOutput(0);
-		long time_before = System.currentTimeMillis();
-		Object o = p.pull();
-		long time_after = System.currentTimeMillis();
-		System.out.println("TIME: " + (time_after - time_before));
-		assertNotNull(o);
-		assertEquals(o, Troolean.Value.TRUE);
-	}
-
 	@SuppressWarnings("rawtypes")
 	public static class DummyCollectionFunction extends UnaryFunction<Object,Set>
 	{

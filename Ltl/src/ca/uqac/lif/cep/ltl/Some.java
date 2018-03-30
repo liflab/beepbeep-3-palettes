@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hall�
+    Copyright (C) 2008-2018 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -21,36 +21,32 @@ import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.Function;
 
 /**
- * Troolean implementation of the first-order existential quantifier.
+ * Troolean implementation of the existential first-order quantifier.
  * @author Sylvain Hallé
  */
-public class Some extends TrooleanQuantifier
+public class Some extends FirstOrderQuantifier 
 {
-	Some()
+	public Some(String var_name, Function dom_function, Processor expression)
 	{
-		super();
-		m_valueIfEmptyDomain = Troolean.Value.FALSE;
+		super(var_name, dom_function, expression);
 	}
 	
-	public Some(String var_name, Function split_function, Processor p)
+	protected Some(FirstOrderSlice fos)
 	{
-		super(var_name, split_function, p, ArrayOr.instance, Troolean.Value.FALSE);
-		m_valueIfEmptyDomain = Troolean.Value.FALSE;
+		super(fos);
+	}
+	
+	@Override
+	public Some duplicate()
+	{
+		Some f = new Some(m_slicer.duplicate());
+		f.setContext(m_context);
+		return f;
 	}
 
 	@Override
-	public Some duplicate() 
+	public Object combineValues(Object[] values) 
 	{
-		Some out = new Some();
-		super.cloneInto(out);
-		out.m_variableName = m_variableName;
-		out.setContext(m_context);
-		return out;
-	}
-	
-	@Override
-	public String toString()
-	{
-		return "some " + m_variableName + " in " + m_spawn.m_splitFunction.toString();
+		return Troolean.or((Troolean.Value[]) values);
 	}
 }

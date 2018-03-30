@@ -25,6 +25,7 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
 import ca.uqac.lif.cep.tmf.QueueSource;
 
@@ -185,7 +186,7 @@ public class LtlTest
 		input_events.add(Value.TRUE);
 		input_events.add(Value.FALSE);
 		src.setEvents(input_events);
-		TrooleanNot g = new TrooleanNot();
+		ApplyFunction g = new ApplyFunction(Troolean.NOT_FUNCTION);
 		Connector.connect(src, g);
 		Pullable p = g.getPullableOutput(0);
 		Value b;
@@ -220,7 +221,7 @@ public class LtlTest
 			input_events.add(Value.TRUE);
 			src_right.setEvents(input_events);
 		}
-		TrooleanAnd g = new TrooleanAnd();
+		ApplyFunction g = new ApplyFunction(Troolean.AND_FUNCTION);
 		Connector.connect(src_left, 0, g, 0);
 		Connector.connect(src_right, 0, g, 1);
 		Pullable p = g.getPullableOutput(0);
@@ -252,7 +253,7 @@ public class LtlTest
 			input_events.add(Value.TRUE);
 			src_right.setEvents(input_events);
 		}
-		TrooleanAnd g = new TrooleanAnd();
+		ApplyFunction g = new ApplyFunction(Troolean.AND_FUNCTION);
 		Connector.connect(src_left, 0, g, 0);
 		Connector.connect(src_right, 0, g, 1);
 		Pullable p = g.getPullableOutput(0);
@@ -284,7 +285,7 @@ public class LtlTest
 			input_events.add(Value.TRUE);
 			src_right.setEvents(input_events);
 		}
-		TrooleanOr g = new TrooleanOr();
+		ApplyFunction g = new ApplyFunction(Troolean.OR_FUNCTION);
 		Connector.connect(src_left, 0, g, 0);
 		Connector.connect(src_right, 0, g, 1);
 		Pullable p = g.getPullableOutput(0);

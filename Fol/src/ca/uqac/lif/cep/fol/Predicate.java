@@ -107,7 +107,7 @@ public class Predicate extends Function
 	}
 
 	@Override
-	public void compute(Object[] inputs, Object[] outputs) 
+	public void evaluate(Object[] inputs, Object[] outputs) 
 	{
 		PredicateArgument arg = new PredicateArgument(inputs);
 		for (PredicateArgument def_arg : m_definition.keySet())
