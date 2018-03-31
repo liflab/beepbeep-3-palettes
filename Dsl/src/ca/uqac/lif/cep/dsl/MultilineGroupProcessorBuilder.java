@@ -32,10 +32,15 @@ public abstract class MultilineGroupProcessorBuilder extends GroupProcessorBuild
 			String line = scanner.nextLine();
 			if (line.trim().isEmpty())
 				continue;
-			super.build(line);
+			buildLine(line);
 		}
 		scanner.close();
 		return endOfFileVisit();
+	}
+	
+	public void buildLine(String line) throws BuildException
+	{
+		super.build(line);
 	}
 	
 	@Override

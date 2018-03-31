@@ -70,6 +70,7 @@ public class GroupProcessorBuilder extends GrammarObjectBuilder<GroupProcessor>
 		for (Map.Entry<Object,Fork> entry : m_inputForks.entrySet())
 		{
 			Fork f = entry.getValue();
+			gp.addProcessor(f);
 			if (f.getPullableInput(0).getProcessor() == null)
 			{
 				// This is an "internal" fork already connected to something inside
