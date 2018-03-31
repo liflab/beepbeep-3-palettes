@@ -48,7 +48,7 @@ public class XPathFunction extends UnaryFunction<XmlElement,Collection<XmlElemen
 	}
 	
 	@Override
-	public /*@NonNull*/ Collection<XmlElement> getValue(/*NonNull*/ XmlElement x)
+	public /*@NonNull*/ Collection<XmlElement> getValue(/*@NonNull*/ XmlElement x)
 	{
 		return m_expression.evaluate(x);
 	}

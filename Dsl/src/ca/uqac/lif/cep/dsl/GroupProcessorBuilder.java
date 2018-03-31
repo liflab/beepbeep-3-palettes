@@ -16,13 +16,13 @@ public class GroupProcessorBuilder extends GrammarObjectBuilder<GroupProcessor>
 {
 	protected Set<Processor> m_processors;
 	
-	protected Map<Integer,Fork> m_inputForks;
+	protected Map<Object,Fork> m_inputForks;
 	
 	public GroupProcessorBuilder()
 	{
 		super();
 		m_processors = new HashSet<Processor>();
-		m_inputForks = new HashMap<Integer,Fork>();
+		m_inputForks = new HashMap<Object,Fork>();
 	}
 	
 	public Processor add(Processor ... procs)
@@ -49,9 +49,17 @@ public class GroupProcessorBuilder extends GrammarObjectBuilder<GroupProcessor>
 		{
 			gp.addProcessor(in_p);
 		}
-		for (Map.Entry<Integer,Fork> entry : m_inputForks.entrySet())
+		int index = 0;
+		for (Map.Entry<Object,Fork> entry : m_inputForks.entrySet())
 		{
-			gp.associateInput(entry.getKey(), entry.getValue(), 0);
+			Fork f = entry.getValue();
+			if (f.getPullableInput(0).getProcessor() == null)
+			{
+				// This is an "internal" fork already connected to something inside
+				continue;
+			}
+			gp.associateInput(index, f, 0);
+			index++;
 		}
 		for (int i = 0; i < p.getOutputArity(); i++)
 		{
@@ -59,19 +67,25 @@ public class GroupProcessorBuilder extends GrammarObjectBuilder<GroupProcessor>
 		}
 		return gp;
 	}
-
-	public Passthrough forkInput(int n)
+	
+	public Fork getFork(Object name)
 	{
 		Fork f = null;
-		if (m_inputForks.containsKey(n))
+		if (m_inputForks.containsKey(name))
 		{
-			f = m_inputForks.get(n);
+			f = m_inputForks.get(name);
 		}
 		else
 		{
-			f = new Fork(1);
-			m_inputForks.put(n, f);
+			f = new Fork(0);
+			m_inputForks.put(name, f);
 		}
+		return f;
+	}
+
+	public Passthrough forkInput(Object name)
+	{
+		Fork f = getFork(name);
 		int f_arity = f.getInputArity();
 		f.extendOutputArity(f_arity + 1);
 		Passthrough pt = new Passthrough();
