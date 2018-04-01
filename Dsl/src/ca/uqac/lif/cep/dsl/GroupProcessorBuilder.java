@@ -104,7 +104,7 @@ public class GroupProcessorBuilder extends GrammarObjectBuilder<GroupProcessor>
 	public Passthrough forkInput(Object name)
 	{
 		Fork f = getFork(name);
-		int f_arity = f.getInputArity();
+		int f_arity = f.getOutputArity();
 		f.extendOutputArity(f_arity + 1);
 		Passthrough pt = new Passthrough();
 		Connector.connect(f, f_arity, pt, 0);
