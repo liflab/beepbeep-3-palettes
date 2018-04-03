@@ -16,6 +16,7 @@ At the moment, the folder contains the following palettes:
 - `Apache`: for parsing Apache log files
 - `Concurrency`: for using multi-threading in processors
 - `Diagnostics`: to help debugging processor chains
+- `Dsl`: for creating Domain Specific Languages
 - `Fol`: for manipulation of first-order logic statements
 - `Fsm`: for manipulation of extended finite-state machines
 - `Gnuplot`: for drawing plots from event streams
