@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2018 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -19,13 +19,17 @@ package ca.uqac.lif.cep.fsm;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Duplicable;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.UniformProcessor;
+import ca.uqac.lif.cep.functions.ContextAssignment;
+import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionException;
 
 /**
@@ -54,7 +58,7 @@ public class MooreMachine extends UniformProcessor
 	/**
 	 * Associates output symbols to the states of the machine
 	 */
-	protected Map<Integer,Object[]> m_outputSymbols;
+	protected Map<Integer,Function[]> m_outputSymbols;
 
 	/**
 	 * The current state the machine is in
@@ -65,14 +69,35 @@ public class MooreMachine extends UniformProcessor
 	 * The initial state of the machine
 	 */
 	protected int m_initialState;
+	
+	/**
+	 * The initial assignments given to each variable
+	 */
+	protected Set<ContextAssignment> m_initialAssignments;
 
 	public MooreMachine(int in_arity, int out_arity)
 	{
 		super(in_arity, out_arity);
 		m_relation = new HashMap<Integer,List<Transition>>();
-		m_outputSymbols = new HashMap<Integer,Object[]>();
+		m_outputSymbols = new HashMap<Integer,Function[]>();
+		m_initialAssignments = new HashSet<ContextAssignment>();
 		m_currentState = 0;
 		m_initialState = 0;
+	}
+	
+	public void addInitialAssignment(ContextAssignment asg)
+	{
+		m_initialAssignments.add(asg);
+		assignToContext(asg);
+	}
+	
+	protected void assignToContext(ContextAssignment asg)
+	{
+		Function f = asg.getAssignment();
+		Object[] in = new Object[]{f.getInputArity()};
+		Object[] out = new Object[1];
+		f.evaluate(in, out);
+		setContext(asg.getVariable(), out[0]);
 	}
 
 	@Override
@@ -89,6 +114,11 @@ public class MooreMachine extends UniformProcessor
 				t.reset();
 			}
 		}
+		// Initial context assignments
+		for (ContextAssignment ca : m_initialAssignments)
+		{
+			assignToContext(ca);
+		}
 	}
 
 	/**
@@ -101,7 +131,7 @@ public class MooreMachine extends UniformProcessor
 	 *   of the machine
 	 * @return A reference to the current Moore machine
 	 */
-	public MooreMachine addSymbols(int state, Object[] symbols)
+	public MooreMachine addSymbols(int state, Function ... symbols)
 	{
 		m_outputSymbols.put(state, symbols);
 		return this;
@@ -118,9 +148,9 @@ public class MooreMachine extends UniformProcessor
 	 *   Moore machine of output arity 1.
 	 * @return A reference to the current Moore machine
 	 */
-	public MooreMachine addSymbol(int state, Object symbol)
+	public MooreMachine addSymbol(int state, Function symbol)
 	{
-		Object[] symbols = new Object[1];
+		Function[] symbols = new Function[1];
 		symbols[0] = symbol;
 		return addSymbols(state, symbols);
 	}
@@ -204,10 +234,12 @@ public class MooreMachine extends UniformProcessor
 		// Anything to output?
 		if (m_outputSymbols.containsKey(m_currentState))
 		{
-			Object[] out = m_outputSymbols.get(m_currentState);
+			Function[] out = m_outputSymbols.get(m_currentState);
 			for (int i = 0; i < outputs.length; i++)
-			{				
-				outputs[i] = out[i];
+			{
+				Object[] o_val = new Object[out[i].getOutputArity()];
+				out[i].evaluate(inputs, o_val, m_context);
+				outputs[i] = o_val[0];
 			}
 			return true;
 		}
@@ -287,55 +319,6 @@ public class MooreMachine extends UniformProcessor
 		}
 	}
 
-	/**
-	 * Represents the "otherwise" transition in the Moore machine
-	 * @author Sylvain Hallé
-	 *
-	 */
-	public static final class TransitionOtherwise extends Transition
-	{
-		/**
-		 * The destination state of that transition
-		 */
-		private final int m_destination;
-
-		public TransitionOtherwise(TransitionOtherwise t)
-		{
-			super();
-			m_destination = t.m_destination;
-		}
-
-		public TransitionOtherwise(int destination)
-		{
-			super();
-			m_destination = destination;
-		}
-
-		@Override
-		public boolean isFired(Object[] inputs, Context context)
-		{
-			return true;
-		}
-
-		@Override
-		public int getDestination()
-		{
-			return m_destination;
-		}
-
-		@Override
-		public TransitionOtherwise duplicate()
-		{
-			return new TransitionOtherwise(this);
-		}
-
-		@Override
-		public String toString()
-		{
-			return "* -> " + m_destination;
-		}
-	}
-
 	@Override
 	public MooreMachine duplicate()
 	{
@@ -352,6 +335,10 @@ public class MooreMachine extends UniformProcessor
 				new_lt.add(t.duplicate());
 			}
 			out.m_relation.put(k, new_lt);
+		}
+		for (ContextAssignment ca : m_initialAssignments)
+		{
+			out.addInitialAssignment(ca);
 		}
 		return out;
 	}

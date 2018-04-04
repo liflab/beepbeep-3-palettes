@@ -43,6 +43,7 @@ public class FunctionTransition extends Transition
 	public FunctionTransition(FunctionTransition t)
 	{
 		this(t.m_function, t.m_destination);
+		m_assignments.addAll(t.m_assignments);
 	}
 	
 	public FunctionTransition(Function function, int destination, ContextAssignment asg)

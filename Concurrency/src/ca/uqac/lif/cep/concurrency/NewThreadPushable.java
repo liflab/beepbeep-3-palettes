@@ -133,4 +133,10 @@ public class NewThreadPushable implements Pushable
 		}
 	}
 
+	@Override
+	public void notifyEndOfTrace() throws PushableException {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

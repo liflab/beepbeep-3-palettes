@@ -63,8 +63,8 @@ public class MooreTest
 				// in state 0, event = 1, go to state 0
 				new ApplyFunction(new FunctionTree(Equals.instance, 
 						StreamVariable.X, new Constant(1)))));
-		m.addSymbol(0, "In zero");
-		m.addSymbol(1, "In one");
+		m.addSymbol(0, new Constant("In zero"));
+		m.addSymbol(1, new Constant("In one"));
 		Connector.connect(source, m);
 		Pullable p = m.getPullableOutput(0);
 		Object event = null;

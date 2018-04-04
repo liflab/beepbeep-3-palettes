@@ -24,18 +24,34 @@ import ca.uqac.lif.cep.GroupProcessor;
 
 public abstract class MultilineGroupProcessorBuilder extends GroupProcessorBuilder
 {
+	/**
+	 * A character used to mark comment lines
+	 */
+	protected String m_commentChar = "#";
+	
 	@Override
 	public GroupProcessor build(String expression) throws BuildException 
 	{
 		Scanner scanner = new Scanner(expression);
-		while (scanner.hasNextLine()) {
-			String line = scanner.nextLine();
-			if (line.trim().isEmpty())
+		while (scanner.hasNextLine()) 
+		{
+			String line = scanner.nextLine().trim();
+			if (line.isEmpty() || (!m_commentChar.isEmpty() && line.startsWith(m_commentChar)))
 				continue;
 			buildLine(line);
 		}
 		scanner.close();
 		return endOfFileVisit();
+	}
+	
+	/**
+	 * Sets the character used to mark comment lines
+	 * @param cc The character. Set it to the empty string to disable
+	 * comment characters
+	 */
+	public void setCommentChar(String cc)
+	{
+		m_commentChar = cc;
 	}
 	
 	public void buildLine(String line) throws BuildException
