@@ -95,10 +95,15 @@ public class GroupProcessorBuilder extends GrammarObjectBuilder<GroupProcessor>
 		}
 		else
 		{
-			f = new Fork(0);
+			f = newFork();
 			m_inputForks.put(name, f);
 		}
 		return f;
+	}
+	
+	public Fork newFork()
+	{
+		return new Fork(0);
 	}
 
 	public Passthrough forkInput(Object name)
