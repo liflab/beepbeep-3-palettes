@@ -101,7 +101,7 @@ public class GroupProcessorBuilder extends GrammarObjectBuilder<GroupProcessor>
 		return f;
 	}
 	
-	public Fork newFork()
+	protected Fork newFork()
 	{
 		return new Fork(0);
 	}
