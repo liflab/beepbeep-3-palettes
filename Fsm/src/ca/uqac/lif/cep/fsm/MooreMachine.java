@@ -310,9 +310,15 @@ public class MooreMachine extends UniformProcessor
 		{
 			return 0;
 		}
+		
+		@Override
+		public final Transition duplicate()
+		{
+			return duplicate(false);
+		}
 
 		@Override
-		public Transition duplicate()
+		public Transition duplicate(boolean with_state)
 		{
 			Transition out = new Transition(this);
 			return out;
@@ -320,7 +326,7 @@ public class MooreMachine extends UniformProcessor
 	}
 
 	@Override
-	public MooreMachine duplicate()
+	public MooreMachine duplicate(boolean with_state)
 	{
 		MooreMachine out = new MooreMachine(getInputArity(), getOutputArity());
 		out.m_initialState = m_initialState;
@@ -332,7 +338,7 @@ public class MooreMachine extends UniformProcessor
 			List<Transition> new_lt = new ArrayList<Transition>();
 			for (Transition t : lt)
 			{
-				new_lt.add(t.duplicate());
+				new_lt.add((Transition) t.duplicate(with_state));
 			}
 			out.m_relation.put(k, new_lt);
 		}

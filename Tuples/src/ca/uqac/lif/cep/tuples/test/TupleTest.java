@@ -61,7 +61,7 @@ public class TupleTest
 	public void testTupleFixed()
 	{
 		TupleFixed tuple = new TupleFixed(new String[]{"x", "q"}, new Object[]{4, "foo"});
-		TupleFixed tuple_clone = tuple.duplicate();
+		TupleFixed tuple_clone = (TupleFixed) tuple.duplicate();
 		assertEquals(2, tuple.size());
 		assertFalse(tuple.isEmpty());
 		assertFalse(tuple.containsKey(null));
@@ -88,7 +88,7 @@ public class TupleTest
 	public void testTupleMap()
 	{
 		TupleMap tuple = new TupleMap(new String[]{"x", "q"}, new Object[]{4, "foo"});
-		TupleMap tuple_clone = tuple.duplicate();
+		TupleMap tuple_clone = (TupleMap) tuple.duplicate();
 		assertEquals(2, tuple.size());
 		assertFalse(tuple.isEmpty());
 		assertFalse(tuple.containsKey(null));
@@ -157,7 +157,7 @@ public class TupleTest
 	public void testFromFunction3()
 	{
 		FromFunction ff_o = new FromFunction("A", "B", "C");
-		FromFunction ff = ff_o.duplicate();
+		FromFunction ff = (FromFunction) ff_o.duplicate();
 		ff.reset();
 		assertEquals(3, ff.getInputArity());
 		Object[] inputs = new Object[]
@@ -286,7 +286,7 @@ public class TupleTest
 						new Constant(9))
 				);
 		Where w_old = new Where(condition);
-		Where w = w_old.duplicate();
+		Where w = (Where) w_old.duplicate();
 		Connector.connect(qs, w);
 		Pullable p = w.getPullableOutput();
 		Object o = p.pull();

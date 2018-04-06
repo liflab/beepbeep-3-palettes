@@ -93,8 +93,13 @@ public class Until extends SingleProcessor
 	}
 
 	@Override
-	public Until duplicate()
+	public Until duplicate(boolean with_state)
 	{
-		return new Until();
+		Until u = new Until();
+		if (with_state)
+		{
+			u.m_eventCount = m_eventCount;
+		}
+		return u;
 	}
 }

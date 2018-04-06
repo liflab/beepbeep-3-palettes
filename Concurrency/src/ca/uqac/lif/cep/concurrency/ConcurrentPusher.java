@@ -83,7 +83,7 @@ public class ConcurrentPusher extends Processor
 	}
 
 	@Override
-	public Processor duplicate() 
+	public Processor duplicate(boolean with_state) 
 	{
 		// Don't clone processors that manage threads
 		throw new UnsupportedOperationException();
@@ -127,6 +127,12 @@ public class ConcurrentPusher extends Processor
 
 		@Override
 		public void dispose() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void notifyEndOfTrace() throws PushableException {
 			// TODO Auto-generated method stub
 			
 		}

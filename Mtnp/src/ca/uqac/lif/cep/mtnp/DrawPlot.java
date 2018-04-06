@@ -83,7 +83,7 @@ public class DrawPlot extends UniformProcessor
 	}
 
 	@Override
-	public Processor duplicate()
+	public Processor duplicate(boolean with_state)
 	{
 		// Does not make much sense to clone this
 		throw new UnsupportedOperationException();

@@ -11,9 +11,9 @@ public class ExistsFunction extends QuantifierFunction
 	}
 
 	@Override
-	public ExistsFunction duplicate() 
+	public ExistsFunction duplicate(boolean with_context) 
 	{
-		return new ExistsFunction(m_variableName, m_domainName, m_expression.duplicate());
+		return new ExistsFunction(m_variableName, m_domainName, m_expression.duplicate(with_context));
 	}
 	
 	@Override

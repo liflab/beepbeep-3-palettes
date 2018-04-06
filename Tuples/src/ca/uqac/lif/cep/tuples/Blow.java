@@ -51,7 +51,7 @@ public class Blow extends UnaryFunction<Tuple,Set>
 	}
 	
 	@Override
-	public Blow duplicate()
+	public Blow duplicate(boolean with_state)
 	{
 		return this;
 	}

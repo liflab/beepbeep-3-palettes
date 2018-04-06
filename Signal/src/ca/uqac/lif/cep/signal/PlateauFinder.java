@@ -206,11 +206,16 @@ public class PlateauFinder extends WindowProcessor
 	}
 
 	@Override
-	public PlateauFinder duplicate()
+	public PlateauFinder duplicate(boolean with_state)
 	{
 		PlateauFinder out = new PlateauFinder();
 		out.m_relative = m_relative;
 		out.m_range = m_range;
+		if (with_state)
+		{
+			out.m_lastPlateauFound = m_lastPlateauFound;
+			out.m_plateauFound = m_plateauFound;
+		}
 		return out;
 	}
 }

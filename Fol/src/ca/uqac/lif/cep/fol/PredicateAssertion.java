@@ -107,12 +107,12 @@ public class PredicateAssertion extends Function
 	}
 
 	@Override
-	public Function duplicate() 
+	public Function duplicate(boolean with_state) 
 	{
 		Function[] arguments = new Function[m_arguments.length];
 		for (int i = 0; i < m_arguments.length; i++)
 		{
-			arguments[i] = m_arguments[i].duplicate();
+			arguments[i] = m_arguments[i].duplicate(with_state);
 		}
 		return new PredicateAssertion(m_predicateName, arguments);
 	}

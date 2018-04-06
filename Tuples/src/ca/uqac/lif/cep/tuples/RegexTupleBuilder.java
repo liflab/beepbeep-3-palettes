@@ -152,7 +152,7 @@ public class RegexTupleBuilder extends SingleProcessor
 	}
 	
 	@Override
-	public RegexTupleBuilder duplicate()
+	public RegexTupleBuilder duplicate(boolean with_state)
 	{
 		RegexTupleBuilder out = new RegexTupleBuilder();
 		out.m_pattern = m_pattern;

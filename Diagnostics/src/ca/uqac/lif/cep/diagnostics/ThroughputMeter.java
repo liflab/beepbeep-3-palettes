@@ -46,9 +46,14 @@ public class ThroughputMeter extends Sink
 	}
 
 	@Override
-	public Processor duplicate() 
+	public Processor duplicate(boolean with_state) 
 	{
-		return new ThroughputMeter(m_callback, m_refreshInterval);
+		ThroughputMeter tm = new ThroughputMeter(m_callback, m_refreshInterval);
+		if (with_state)
+		{
+			tm.m_eventsReceived = m_eventsReceived;
+		}
+		return tm;
 	}
 	
 	protected class ThroughputCallback extends DiagnosticsCallback

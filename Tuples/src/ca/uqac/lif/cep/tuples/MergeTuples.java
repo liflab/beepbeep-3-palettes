@@ -93,7 +93,7 @@ public class MergeTuples extends Function
 	}
 
 	@Override
-	public MergeTuples duplicate() 
+	public MergeTuples duplicate(boolean with_state) 
 	{
 		return new MergeTuples(m_inputArity);
 	}

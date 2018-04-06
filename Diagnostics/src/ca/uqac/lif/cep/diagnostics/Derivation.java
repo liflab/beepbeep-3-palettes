@@ -116,12 +116,12 @@ public class Derivation extends SingleProcessor
 	}
 
 	@Override
-	public Derivation duplicate()
+	public Derivation duplicate(boolean with_state)
 	{
 		Processor[] clones = new Processor[m_processors.length];
 		for (int i = 0; i < m_processors.length; i++)
 		{
-			clones[i] = m_processors[i].duplicate();
+			clones[i] = m_processors[i].duplicate(with_state);
 		}
 		return new Derivation(clones);
 	}

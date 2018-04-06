@@ -46,8 +46,14 @@ public class Next extends Trim
 	}
 	
 	@Override
-	public Next duplicate()
+	public Next duplicate(boolean with_state)
 	{
-		return new Next();
+		Next n = new Next();
+		if (with_state)
+		{
+			n.m_eventsReceived = m_eventsReceived;
+			n.m_hasBeenNotifiedOfEndOfTrace = m_hasBeenNotifiedOfEndOfTrace;
+		}
+		return n;
 	}
 }

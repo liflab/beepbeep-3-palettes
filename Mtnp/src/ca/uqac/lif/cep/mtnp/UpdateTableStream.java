@@ -20,8 +20,13 @@ public class UpdateTableStream extends UpdateTable
 	}
 	
 	@Override
-	public UpdateTableStream duplicate()
+	public UpdateTableStream duplicate(boolean with_state)
 	{
-		return new UpdateTableStream(m_table.getColumnNames());
+		UpdateTableStream uta = new UpdateTableStream(m_table.getColumnNames());
+		if (with_state)
+		{
+			uta.m_table = m_table.getDataTable();
+		}
+		return uta;
 	}
 }

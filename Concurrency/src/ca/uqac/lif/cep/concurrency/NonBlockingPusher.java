@@ -143,7 +143,7 @@ public class NonBlockingPusher extends Processor
 	}
 
 	@Override
-	public synchronized NonBlockingPusher duplicate()
+	public synchronized NonBlockingPusher duplicate(boolean with_state)
 	{
 		Processor new_processor = m_processor.duplicate();
 		NonBlockingPusher nbp = new NonBlockingPusher(new_processor, m_threadManager);

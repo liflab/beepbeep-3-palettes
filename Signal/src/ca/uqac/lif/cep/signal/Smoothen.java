@@ -29,7 +29,7 @@ public class Smoothen extends WindowFunction
 		}
 		
 		@Override
-		public ArrayAverage duplicate()
+		public ArrayAverage duplicate(boolean with_state)
 		{
 			return this;
 		}

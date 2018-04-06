@@ -19,7 +19,6 @@ package ca.uqac.lif.cep.ltl;
 
 import java.util.Queue;
 
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
 
@@ -71,9 +70,15 @@ public class After extends SingleProcessor
 	}
 
 	@Override
-	public Processor duplicate() 
+	public After duplicate(boolean with_state) 
 	{
-		return new After();
+		After a = new After();
+		if (with_state)
+		{
+			a.m_eventCount = m_eventCount;
+			a.m_valueToReturn = m_valueToReturn;
+		}
+		return a;
 	}
 
 }

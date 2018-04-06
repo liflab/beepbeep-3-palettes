@@ -57,9 +57,14 @@ public class Eventually extends SingleProcessor
 	}
 	
 	@Override
-	public Eventually duplicate()
+	public Eventually duplicate(boolean with_state)
 	{
-		return new Eventually();
+		Eventually e = new Eventually();
+		if (with_state)
+		{
+			e.m_notTrueCount = m_notTrueCount;
+		}
+		return e;
 	}
 
 	@Override

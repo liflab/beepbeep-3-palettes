@@ -51,7 +51,7 @@ public final class TransitionOtherwise extends FunctionTransition
 	}
 
 	@Override
-	public TransitionOtherwise duplicate()
+	public TransitionOtherwise duplicate(boolean with_state)
 	{
 		return new TransitionOtherwise(this);
 	}

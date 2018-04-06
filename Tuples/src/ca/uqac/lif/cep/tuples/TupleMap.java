@@ -207,7 +207,7 @@ public class TupleMap extends Tuple implements Duplicable
 	}
 	
 	@Override
-	public TupleMap duplicate()
+	public TupleMap duplicate(boolean with_state)
 	{
 		return new TupleMap(this);
 	}

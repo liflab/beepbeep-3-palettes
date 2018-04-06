@@ -71,7 +71,7 @@ public class GroupProcessorBuilder extends GrammarObjectBuilder<GroupProcessor>
 		{
 			Fork f = entry.getValue();
 			gp.addProcessor(f);
-			if (f.getPullableInput(0).getProcessor() == null)
+			if (f.getPullableInput(0) != null)
 			{
 				// This is an "internal" fork already connected to something inside
 				continue;

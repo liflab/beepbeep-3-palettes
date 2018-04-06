@@ -38,9 +38,9 @@ public class ApacheLogFeeder extends ApplyFunction
 	}
 
 	@Override
-	public ApacheLogFeeder duplicate() 
+	public ApacheLogFeeder duplicate(boolean with_state) 
 	{
-		return new ApacheLogFeeder(getFunction().duplicate());
+		return new ApacheLogFeeder(getFunction().duplicate(with_state));
 	}
 
 }

@@ -51,7 +51,7 @@ public class PredicateGetNumber extends UnaryFunction<PredicateTuple,Number>
 	}
 
 	@Override
-	public PredicateGetNumber duplicate()
+	public PredicateGetNumber duplicate(boolean with_state)
 	{
 		return new PredicateGetNumber(m_position);
 	}		

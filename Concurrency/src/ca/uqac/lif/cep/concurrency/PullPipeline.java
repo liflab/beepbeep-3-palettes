@@ -182,9 +182,13 @@ public class PullPipeline extends Processor implements Runnable
 	}
 
 	@Override
-	synchronized public PullPipeline duplicate()
+	synchronized public PullPipeline duplicate(boolean with_state)
 	{
 		PullPipeline p = new PullPipeline(m_processor.duplicate());
+		if (with_state)
+		{
+			throw new UnsupportedOperationException("Copy with state not supported for this processor");
+		}
 		p.setContext(m_context);
 		p.m_threadManager = m_threadManager;
 		return p;
@@ -494,6 +498,12 @@ public class PullPipeline extends Processor implements Runnable
 			}
 			m_pipelines.clear();
 			m_pipelinesLock.unlock();
+		}
+
+		@Override
+		public void notifyEndOfTrace() throws PushableException 
+		{
+			// TODO Auto-generated method stub
 		}
 	}
 

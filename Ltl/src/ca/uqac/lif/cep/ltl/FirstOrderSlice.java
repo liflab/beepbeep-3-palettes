@@ -54,9 +54,14 @@ public class FirstOrderSlice extends SingleProcessor
 	}
 
 	@Override
-	public FirstOrderSlice duplicate() 
+	public FirstOrderSlice duplicate(boolean with_state) 
 	{
-		return new FirstOrderSlice(m_varName, m_function, m_expression);
+		FirstOrderSlice fos = new FirstOrderSlice(m_varName, m_function, m_expression);
+		if (with_state)
+		{
+			throw new UnsupportedOperationException("Duplication with state not supported yet on this processor");
+		}
+		return fos;
 	}
 	
 	@Override

@@ -205,9 +205,16 @@ public class PeakFinderLocalMaximum extends WindowProcessor
 	}
 	
 	@Override
-	public PeakFinderLocalMaximum duplicate()
+	public PeakFinderLocalMaximum duplicate(boolean with_state)
 	{
-		return new PeakFinderLocalMaximum(m_windowWidth);
+		PeakFinderLocalMaximum pflm = new PeakFinderLocalMaximum(m_windowWidth);
+		pflm.m_invert = m_invert;
+		if (with_state)
+		{
+			pflm.m_numSincePeak = m_numSincePeak;
+			pflm.m_peakPosition = m_peakPosition;
+		}
+		return pflm;
 	}
 
 }

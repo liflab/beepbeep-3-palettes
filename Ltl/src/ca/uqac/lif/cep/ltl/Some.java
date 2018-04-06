@@ -37,9 +37,9 @@ public class Some extends FirstOrderQuantifier
 	}
 	
 	@Override
-	public Some duplicate()
+	public Some duplicate(boolean with_state)
 	{
-		Some f = new Some(m_slicer.duplicate());
+		Some f = new Some(m_slicer.duplicate(with_state));
 		f.setContext(m_context);
 		return f;
 	}

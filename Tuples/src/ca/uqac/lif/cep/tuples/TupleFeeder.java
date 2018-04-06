@@ -43,7 +43,7 @@ public class TupleFeeder extends SingleProcessor
 	}
 	
 	@Override
-	public TupleFeeder duplicate()
+	public TupleFeeder duplicate(boolean with_state)
 	{
 		return new TupleFeeder();
 	}

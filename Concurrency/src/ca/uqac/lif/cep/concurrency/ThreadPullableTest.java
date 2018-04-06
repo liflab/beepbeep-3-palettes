@@ -207,12 +207,11 @@ public class ThreadPullableTest
 			outputs.add(inputs);
 			return true;
 		}
-
+		
 		@Override
-		public DelayProcessor duplicate() 
+		public DelayProcessor duplicate(boolean with_state)
 		{
 			return new DelayProcessor(getInputArity(), m_waitInterval);
 		}
-		
 	}
 }

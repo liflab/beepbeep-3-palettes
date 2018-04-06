@@ -41,7 +41,7 @@ public class CallGraphviz extends UniformProcessor
 	}
 
 	@Override
-	public CallGraphviz duplicate() 
+	public CallGraphviz duplicate(boolean with_state) 
 	{
 		return new CallGraphviz();
 	}

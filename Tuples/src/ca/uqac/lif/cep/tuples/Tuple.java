@@ -19,6 +19,8 @@ package ca.uqac.lif.cep.tuples;
 
 import java.util.Map;
 
+import ca.uqac.lif.cep.Duplicable;
+
 
 /**
  * A (named) tuple is a map between attribute names (character strings) and
@@ -36,7 +38,7 @@ import java.util.Map;
  * @author Sylvain Hallé
  *
  */
-public abstract class Tuple implements Map<String,Object>
+public abstract class Tuple implements Duplicable, Map<String,Object>
 {
 
 	/**
@@ -76,4 +78,13 @@ public abstract class Tuple implements Map<String,Object>
 	        return old;
 	    }
 	}
+	
+	@Override
+	public final Tuple duplicate()
+	{
+		return duplicate(false);
+	}
+	
+	@Override
+	public abstract Tuple duplicate(boolean with_state);
 }

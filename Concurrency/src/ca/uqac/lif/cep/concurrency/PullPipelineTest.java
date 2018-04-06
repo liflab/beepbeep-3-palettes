@@ -118,7 +118,7 @@ public class PullPipelineTest
 		Connector.connect(qs, pp);
 		gp.addProcessors(qs, pp);
 		gp.associateOutput(0, pp, 0);
-		GroupProcessor gp2 = gp.duplicate();
+		GroupProcessor gp2 = (GroupProcessor) gp.duplicate();
 		Pullable p = gp2.getPullableOutput();
 		gp2.start();
 		Object o = p.pull();

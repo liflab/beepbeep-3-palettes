@@ -51,9 +51,9 @@ public class UpdateGraph extends UniformProcessor
 	}
 
 	@Override
-	public Processor duplicate()
+	public Processor duplicate(boolean with_state)
 	{
-		return new UpdateGraph(m_graph.duplicate());
+		return new UpdateGraph(m_graph.duplicate(with_state));
 	}
 
 	@Override

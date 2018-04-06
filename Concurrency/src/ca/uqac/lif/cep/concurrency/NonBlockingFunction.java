@@ -109,7 +109,7 @@ public class NonBlockingFunction extends Function implements Runnable
 	}
 
 	@Override
-	public Function duplicate()
+	public Function duplicate(boolean with_state)
 	{
 		return new NonBlockingFunction(m_function.duplicate(), m_manager);
 	}

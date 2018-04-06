@@ -79,9 +79,9 @@ public class Where extends SingleProcessor
 	}
 
 	@Override
-	public Where duplicate()
+	public Where duplicate(boolean with_state)
 	{
-		return new Where(m_condition.duplicate());
+		return new Where(m_condition.duplicate(with_state));
 	}
 	
 	public static void build(ArrayDeque<Object> stack) 

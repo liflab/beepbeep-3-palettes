@@ -183,7 +183,7 @@ public class HttpUpstreamGateway extends Sink
 	}
 
 	@Override
-	public HttpUpstreamGateway duplicate() 
+	public HttpUpstreamGateway duplicate(boolean with_state) 
 	{
 		// It doesn't make much sense to clone a network processor
 		throw new UnsupportedOperationException();

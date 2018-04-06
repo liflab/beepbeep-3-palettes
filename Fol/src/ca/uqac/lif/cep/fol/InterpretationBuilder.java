@@ -48,11 +48,14 @@ public class InterpretationBuilder extends SingleProcessor
 	}
 	
 	@Override
-	public InterpretationBuilder duplicate()
+	public InterpretationBuilder duplicate(boolean with_state)
 	{
 		InterpretationBuilder out = new InterpretationBuilder();
 		out.setContext(m_context);
-		out.m_interpretation = new Interpretation(m_interpretation);
+		if (with_state)
+		{
+			out.m_interpretation = new Interpretation(m_interpretation);
+		}
 		return out;
 	}
 

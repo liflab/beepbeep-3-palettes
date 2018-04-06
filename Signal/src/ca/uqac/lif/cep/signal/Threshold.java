@@ -64,7 +64,7 @@ public class Threshold extends SingleProcessor
 	}
 	
 	@Override
-	public Threshold duplicate()
+	public Threshold duplicate(boolean with_state)
 	{
 		return new Threshold(m_threshold);
 	}

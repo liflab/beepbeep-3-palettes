@@ -68,9 +68,14 @@ public class Limiter extends SingleProcessor
 	}
 	
 	@Override
-	public Limiter duplicate()
+	public Limiter duplicate(boolean with_state)
 	{
-		return new Limiter(m_limit);
+		Limiter l = new Limiter(m_limit);
+		if (with_state)
+		{
+			l.m_counter = m_counter;
+		}
+		return l;
 	}
 
 }

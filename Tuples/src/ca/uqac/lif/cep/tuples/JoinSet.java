@@ -87,7 +87,7 @@ public class JoinSet extends UnaryFunction<Set,Set>
 	}
 	
 	@Override
-	public JoinSet duplicate()
+	public JoinSet duplicate(boolean with_state)
 	{
 		return new JoinSet(m_joinAttribute);
 	}

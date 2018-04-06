@@ -37,9 +37,9 @@ public class Every extends FirstOrderQuantifier
 	}
 	
 	@Override
-	public Every duplicate()
+	public Every duplicate(boolean with_state)
 	{
-		Every f = new Every(m_slicer.duplicate());
+		Every f = new Every((FirstOrderSlice) m_slicer.duplicate(with_state));
 		f.setContext(m_context);
 		return f;
 	}

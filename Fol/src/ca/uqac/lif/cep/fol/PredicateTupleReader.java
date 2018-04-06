@@ -31,7 +31,7 @@ public class PredicateTupleReader extends ApplyFunction
 	}
 
 	@Override
-	public PredicateTupleReader duplicate()
+	public PredicateTupleReader duplicate(boolean with_state)
 	{
 		return new PredicateTupleReader();
 	}

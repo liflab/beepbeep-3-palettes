@@ -199,7 +199,7 @@ public class HttpDownstreamGateway extends Source
 	}
 
 	@Override
-	public HttpDownstreamGateway duplicate()
+	public HttpDownstreamGateway duplicate(boolean with_state)
 	{
 		// It doesn't make much sense to clone a network processor
 		throw new UnsupportedOperationException();

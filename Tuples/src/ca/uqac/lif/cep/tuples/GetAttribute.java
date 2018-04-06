@@ -84,7 +84,7 @@ public class GetAttribute extends UnaryFunction<AttributeGroup,Object>
 	}
 	
 	@Override
-	public GetAttribute duplicate()
+	public GetAttribute duplicate(boolean with_state)
 	{ 
 		return this;
 	}

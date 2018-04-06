@@ -81,10 +81,10 @@ public class PullThreadGroup extends GroupProcessor
 	}
 
 	@Override
-	public PullThreadGroup duplicate()
+	public PullThreadGroup duplicate(boolean with_state)
 	{
 		PullThreadGroup ptg = new PullThreadGroup(getInputArity(), getOutputArity());
-		super.cloneInto(ptg);
+		super.cloneInto(ptg, with_state);
 		ptg.m_threadManager = m_threadManager;
 		return ptg;
 	}

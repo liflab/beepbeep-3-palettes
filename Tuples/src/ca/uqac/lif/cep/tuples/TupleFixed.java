@@ -223,7 +223,7 @@ public final class TupleFixed extends Tuple implements Duplicable
 	}
 	
 	@Override
-	public TupleFixed duplicate()
+	public TupleFixed duplicate(boolean with_state)
 	{
 		return new TupleFixed(m_names, m_values);
 	}

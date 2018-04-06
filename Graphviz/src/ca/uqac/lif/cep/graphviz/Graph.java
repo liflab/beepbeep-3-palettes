@@ -143,13 +143,23 @@ public class Graph
 	 */
 	public Graph duplicate()
 	{
+		return duplicate(false);
+	}
+	
+	/**
+	 * Creates a deep copy of the graph
+	 * @boolean with_state Has no effect
+	 * @return A copy of the graph
+	 */
+	public Graph duplicate(boolean with_state)
+	{
 		Graph g = new Graph();
 		for (Map.Entry<String, Set<Edge>> entry : m_edges.entrySet())
 		{
 			Set<Edge> new_edges = new HashSet<Edge>();
 			for (Edge e : entry.getValue())
 			{
-				new_edges.add(e.duplicate());
+				new_edges.add(e.duplicate(with_state));
 			}
 			g.m_edges.put(entry.getKey(), new_edges);
 		}
@@ -195,6 +205,16 @@ public class Graph
 		 * @return A copy of the edge
 		 */
 		public Edge duplicate()
+		{
+			return duplicate(false);
+		}
+		
+		/**
+		 * Creates a deep copy of the edge
+		 * @param with_state Has no effect
+		 * @return A copy of the edge
+		 */
+		public Edge duplicate(boolean with_state)
 		{
 			return new Edge(m_source, m_destination, m_weight);
 		}

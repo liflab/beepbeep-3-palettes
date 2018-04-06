@@ -109,7 +109,7 @@ public class SerializeEvents<T> extends Function
 	}
 
 	@Override
-	public SerializeEvents<T> duplicate()
+	public SerializeEvents<T> duplicate(boolean with_state)
 	{
 		return new SerializeEvents<T>(m_serializer, m_outputType);
 	}

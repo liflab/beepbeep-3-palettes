@@ -66,7 +66,7 @@ public class PeakFinderTravelRise extends WindowProcessor
 	}
 	
 	@Override
-	public PeakFinderTravelRise duplicate()
+	public PeakFinderTravelRise duplicate(boolean with_state)
 	{
 		return new PeakFinderTravelRise(m_windowWidth);
 	}

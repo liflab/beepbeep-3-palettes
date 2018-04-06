@@ -93,8 +93,15 @@ public class UpTo extends SingleProcessor
 	}
 
 	@Override
-	public Until duplicate()
+	public UpTo duplicate(boolean with_state)
 	{
-		return new Until();
+		UpTo u = new UpTo();
+		u.m_left = m_left.duplicate(with_state);
+		u.m_right = m_right.duplicate(with_state);
+		if (with_state)
+		{
+			u.m_currentValue = m_currentValue;
+		}
+		return u;
 	}
 }

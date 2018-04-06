@@ -27,8 +27,13 @@ public class UpdateTableArray extends UpdateTable
 	}
 	
 	@Override
-	public UpdateTableArray duplicate()
+	public UpdateTableArray duplicate(boolean with_state)
 	{
-		return new UpdateTableArray(m_table.getColumnNames());
+		UpdateTableArray uta = new UpdateTableArray(m_table.getColumnNames());
+		if (with_state)
+		{
+			uta.m_table = m_table.getDataTable();
+		}
+		return uta;
 	}
 }

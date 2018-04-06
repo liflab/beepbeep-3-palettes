@@ -37,9 +37,9 @@ public class Exists extends FirstOrderQuantifier
 	}
 	
 	@Override
-	public Exists duplicate()
+	public Exists duplicate(boolean with_state)
 	{
-		Exists f = new Exists(m_slicer.duplicate());
+		Exists f = new Exists((FirstOrderSlice) m_slicer.duplicate(with_state));
 		f.setContext(m_context);
 		return f;
 	}

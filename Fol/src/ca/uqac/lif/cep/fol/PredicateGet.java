@@ -55,7 +55,7 @@ public class PredicateGet extends UnaryFunction<PredicateTuple,Object>
 	}
 
 	@Override
-	public PredicateGet duplicate()
+	public PredicateGet duplicate(boolean with_state)
 	{
 		return new PredicateGet(m_position);
 	}

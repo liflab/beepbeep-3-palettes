@@ -34,7 +34,7 @@ public class GetDomain extends UnaryFunction<Interpretation,Set>
 	}
 	
 	@Override
-	public GetDomain duplicate()
+	public GetDomain duplicate(boolean with_context)
 	{
 		return new GetDomain(m_domainName);
 	}

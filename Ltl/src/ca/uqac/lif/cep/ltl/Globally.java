@@ -57,9 +57,14 @@ public class Globally extends SingleProcessor
 	}
 	
 	@Override
-	public Globally duplicate()
+	public Globally duplicate(boolean with_state)
 	{
-		return new Globally();
+		Globally g = new Globally();
+		if (with_state)
+		{
+			g.m_notFalseCount = m_notFalseCount;
+		}
+		return g;
 	}
 
 	@Override

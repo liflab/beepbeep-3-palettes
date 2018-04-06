@@ -141,7 +141,7 @@ public class Predicate extends Function
 	}
 
 	@Override
-	public Predicate duplicate() 
+	public Predicate duplicate(boolean with_state) 
 	{
 		Predicate pred = new Predicate(m_name, m_domainNames);
 		pred.m_definition.putAll(m_definition);
@@ -284,7 +284,7 @@ public class Predicate extends Function
 		}
 		
 		@Override
-		public Wildcard duplicate()
+		public Wildcard duplicate(boolean with_state)
 		{
 			return this;
 		}
