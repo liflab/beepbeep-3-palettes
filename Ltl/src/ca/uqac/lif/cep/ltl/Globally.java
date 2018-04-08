@@ -73,7 +73,7 @@ public class Globally extends SingleProcessor
 		Value v = Troolean.trooleanValue(inputs[0]);
 		if (v == Value.FALSE)
 		{
-			for (int i = 0; i < m_notFalseCount; i++)
+			for (int i = 0; i <= m_notFalseCount; i++)
 			{
 				Object[] e = new Object[1];
 				e[0] = Value.FALSE;

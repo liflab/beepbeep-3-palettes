@@ -73,7 +73,7 @@ public class Eventually extends SingleProcessor
 		Value v = Troolean.trooleanValue(inputs[0]);
 		if (v == Value.TRUE)
 		{
-			for (int i = 0; i < m_notTrueCount; i++)
+			for (int i = 0; i <= m_notTrueCount; i++)
 			{
 				Object[] e = new Object[1];
 				e[0] = Value.TRUE;

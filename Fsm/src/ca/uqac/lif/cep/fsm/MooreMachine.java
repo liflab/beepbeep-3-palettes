@@ -341,10 +341,18 @@ public class MooreMachine extends UniformProcessor
 				new_lt.add((Transition) t.duplicate(with_state));
 			}
 			out.m_relation.put(k, new_lt);
-		}
-		for (ContextAssignment ca : m_initialAssignments)
+		}		
+		if (with_state)
 		{
-			out.addInitialAssignment(ca);
+			out.setContext(m_context);
+			out.m_currentState = m_currentState;
+		}
+		else
+		{
+			for (ContextAssignment ca : m_initialAssignments)
+			{
+				out.addInitialAssignment(ca);
+			}	
 		}
 		return out;
 	}

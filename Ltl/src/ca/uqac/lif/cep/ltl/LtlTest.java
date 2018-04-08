@@ -60,6 +60,18 @@ public class LtlTest
 	}
 	
 	@Test
+	public void testGlobally2() 
+	{
+		QueueSource src = new QueueSource(1).setEvents(Value.FALSE);
+		Globally g = new Globally();
+		Connector.connect(src, g);
+		Pullable p = g.getPullableOutput(0);
+		Value b;
+		b = (Value) p.pullSoft();
+		assertEquals(Value.FALSE, b);
+	}
+	
+	@Test
 	public void testAlways1() 
 	{
 		QueueSource src = new QueueSource(1);
