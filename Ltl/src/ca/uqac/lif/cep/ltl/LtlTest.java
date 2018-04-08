@@ -96,6 +96,30 @@ public class LtlTest
 	}
 	
 	@Test
+	public void testCompoundTroolean1() 
+	{
+		QueueSource src = new QueueSource(1);
+		Vector<Object> input_events = new Vector<Object>();
+		input_events.add(Value.TRUE);
+		input_events.add(Value.TRUE);
+		input_events.add(Value.FALSE);
+		input_events.add(Value.TRUE);
+		src.setEvents(input_events);
+		Always g = new Always();
+		Connector.connect(src, g);
+		Pullable p = g.getPullableOutput(0);
+		Value b;
+		b = (Value) p.pullSoft();
+		assertEquals(Value.INCONCLUSIVE, b);
+		b = (Value) p.pullSoft();
+		assertEquals(Value.INCONCLUSIVE, b);
+		b = (Value) p.pullSoft();
+		assertEquals(Value.FALSE, b);
+		b = (Value) p.pullSoft();
+		assertEquals(Value.FALSE, b);
+	}
+	
+	@Test
 	public void testEventually1() 
 	{
 		QueueSource src = new QueueSource(1);

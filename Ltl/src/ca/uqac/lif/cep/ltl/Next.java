@@ -33,18 +33,7 @@ public class Next extends Trim
 	{
 		super(1);
 	}
-	
-	public static void build(ArrayDeque<Object> stack) 
-	{
-		stack.pop(); // (
-		Processor p = (Processor) stack.pop();
-		stack.pop(); // )
-		stack.pop(); // X
-		Next nx = new Next();
-		Connector.connect(p, nx);
-		stack.push(nx);
-	}
-	
+		
 	@Override
 	public Next duplicate(boolean with_state)
 	{

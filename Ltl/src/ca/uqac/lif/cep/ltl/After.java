@@ -50,6 +50,7 @@ public class After extends SingleProcessor
 		{
 			m_eventCount = 1;
 			outputs.add(wrapObject(Value.INCONCLUSIVE));
+			outputs.add(wrapObject(Troolean.trooleanValue(input[0])));
 			return true;
 		}
 		else if (m_eventCount == 1)

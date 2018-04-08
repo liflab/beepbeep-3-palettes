@@ -17,18 +17,49 @@
  */
 package ca.uqac.lif.cep.ltl;
 
-import ca.uqac.lif.cep.functions.CumulativeFunction;
-import ca.uqac.lif.cep.functions.Cumulate;
+import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
 
 /**
  * Troolean implementation of the LTL <b>F</b> processor
  * @author Sylvain Hallé
  */
-public class Sometime extends Cumulate 
+public class Sometime extends UniformProcessor 
 {
+	protected Value m_lastValue = Value.INCONCLUSIVE;
+	
 	public Sometime()
 	{
-		super(new CumulativeFunction<Value>(Troolean.OR_FUNCTION));
+		super(1, 1);
+	}
+
+	@Override
+	protected boolean compute(Object[] inputs, Object[] outputs) 
+	{
+		Value v = Troolean.trooleanValue(inputs[0]);
+		if (v == Value.TRUE || m_lastValue == Value.TRUE)
+		{
+			m_lastValue = Value.TRUE;
+		}
+		if (m_lastValue == Value.TRUE)
+		{
+			outputs[0] = Value.TRUE;
+		}
+		else
+		{
+			outputs[0] = Value.INCONCLUSIVE;
+		}
+		return true;
+	}
+
+	@Override
+	public Sometime duplicate(boolean with_state) 
+	{
+		Sometime st = new Sometime();
+		if (with_state)
+		{
+			st.m_lastValue = m_lastValue;
+		}
+		return st;
 	}
 }

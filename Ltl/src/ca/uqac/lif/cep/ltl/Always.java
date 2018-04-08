@@ -17,18 +17,49 @@
  */
 package ca.uqac.lif.cep.ltl;
 
-import ca.uqac.lif.cep.functions.CumulativeFunction;
-import ca.uqac.lif.cep.functions.Cumulate;
+import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
 
 /**
  * Troolean implementation of the LTL <b>G</b> operator
  * @author Sylvain Hallé
  */
-public class Always extends Cumulate 
+public class Always extends UniformProcessor 
 {
+	protected Value m_lastValue = Value.INCONCLUSIVE;
+	
 	public Always()
 	{
-		super(new CumulativeFunction<Value>(Troolean.AND_FUNCTION));
+		super(1, 1);
+	}
+	
+	@Override
+	protected boolean compute(Object[] inputs, Object[] outputs) 
+	{
+		Value v = Troolean.trooleanValue(inputs[0]);
+		if (v == Value.FALSE || m_lastValue == Value.FALSE)
+		{
+			m_lastValue = Value.FALSE;
+		}
+		if (m_lastValue == Value.FALSE)
+		{
+			outputs[0] = Value.FALSE;
+		}
+		else
+		{
+			outputs[0] = Value.INCONCLUSIVE;
+		}
+		return true;
+	}
+
+	@Override
+	public Always duplicate(boolean with_state) 
+	{
+		Always st = new Always();
+		if (with_state)
+		{
+			st.m_lastValue = m_lastValue;
+		}
+		return st;
 	}
 }
