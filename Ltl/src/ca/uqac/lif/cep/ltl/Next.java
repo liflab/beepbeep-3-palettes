@@ -17,11 +17,7 @@
  */
 package ca.uqac.lif.cep.ltl;
 
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.tmf.Trim;
-import ca.uqac.lif.cep.Processor;
 
 /**
  * Boolean implementation of the LTL <b>X</b> processor

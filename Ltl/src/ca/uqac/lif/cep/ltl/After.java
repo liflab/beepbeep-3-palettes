@@ -17,48 +17,49 @@
  */
 package ca.uqac.lif.cep.ltl;
 
-import java.util.Queue;
-
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
 
 /**
  * Troolean implementation of the LTL <b>X</b> operator
  * @author Sylvain Hallé
  */
-public class After extends SingleProcessor 
+public class After extends UnaryOperator 
 {
 	/**
 	 * The number of events received so far
 	 */
 	private int m_eventCount = 0;
 	
-	/**
-	 * The value to return (so far)
-	 */
-	private Value m_valueToReturn = Value.INCONCLUSIVE;
+	protected Value m_valueToReturn = Value.INCONCLUSIVE;
 	
-	public After()
+	public After(Processor p)
 	{
-		super(1, 1);
+		super(p);
+	}
+
+	public After() 
+	{
+		super();
 	}
 
 	@Override
-	protected boolean compute(Object[] input, Queue<Object[]> outputs) 
+	protected boolean compute(Object[] input, Object[] outputs) 
 	{
 		if (m_eventCount == 0)
 		{
+			spawn();
 			m_eventCount = 1;
-			outputs.add(wrapObject(Value.INCONCLUSIVE));
-			outputs.add(wrapObject(Troolean.trooleanValue(input[0])));
+			outputs[0] = Value.INCONCLUSIVE;
 			return true;
 		}
 		else if (m_eventCount == 1)
 		{
 			m_eventCount = 2;
-			m_valueToReturn = Troolean.trooleanValue(input[0]);
+			m_pushables.get(0).push(input[0]);
+			m_valueToReturn = (Value) m_sinks.get(0).getLast()[0];
 		}
-		outputs.add(wrapObject(m_valueToReturn));
+		outputs[0] = m_valueToReturn;
 		return true;
 	}
 	
@@ -73,11 +74,11 @@ public class After extends SingleProcessor
 	@Override
 	public After duplicate(boolean with_state) 
 	{
-		After a = new After();
+		After a = new After(m_processor.duplicate(with_state));
+		super.cloneInto(a, with_state);
 		if (with_state)
 		{
 			a.m_eventCount = m_eventCount;
-			a.m_valueToReturn = m_valueToReturn;
 		}
 		return a;
 	}

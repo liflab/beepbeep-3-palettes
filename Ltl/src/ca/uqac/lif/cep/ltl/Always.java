@@ -17,49 +17,68 @@
  */
 package ca.uqac.lif.cep.ltl;
 
-import ca.uqac.lif.cep.UniformProcessor;
+import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
+import ca.uqac.lif.cep.tmf.SinkLast;
 
 /**
  * Troolean implementation of the LTL <b>G</b> operator
  * @author Sylvain Hallé
  */
-public class Always extends UniformProcessor 
+public class Always extends UnaryOperator 
 {
-	protected Value m_lastValue = Value.INCONCLUSIVE;
+	public Always(Processor p)
+	{
+		super(p);
+	}
 	
 	public Always()
 	{
-		super(1, 1);
+		super();
 	}
-	
+
 	@Override
 	protected boolean compute(Object[] inputs, Object[] outputs) 
 	{
-		Value v = Troolean.trooleanValue(inputs[0]);
-		if (v == Value.FALSE || m_lastValue == Value.FALSE)
+		if (m_lastValue != Value.INCONCLUSIVE)
 		{
-			m_lastValue = Value.FALSE;
+			outputs[0] = m_lastValue;
+			return true;
 		}
-		if (m_lastValue == Value.FALSE)
+		spawn();
+		for (int i = 0; i < m_pushables.size(); i++)
 		{
-			outputs[0] = Value.FALSE;
+			Pushable p = m_pushables.get(i);
+			p.push(inputs[0]);
+			SinkLast sink = m_sinks.get(i);
+			Troolean.Value val = (Troolean.Value) sink.getLast()[0];
+			if (val == Value.FALSE)
+			{
+				m_lastValue = Value.FALSE;
+				m_sinks.clear();
+				m_processors.clear();
+				m_pushables.clear();
+				outputs[0] = m_lastValue;
+				return true;
+			}
+			if (val == Value.TRUE)
+			{
+				m_pushables.remove(i);
+				m_sinks.remove(i);
+				m_processors.remove(i);
+				i--;
+			}
 		}
-		else
-		{
-			outputs[0] = Value.INCONCLUSIVE;
-		}
+		outputs[0] = Value.INCONCLUSIVE;
 		return true;
 	}
 
 	@Override
 	public Always duplicate(boolean with_state) 
 	{
-		Always st = new Always();
-		if (with_state)
-		{
-			st.m_lastValue = m_lastValue;
-		}
+		Always st = new Always(m_processor.duplicate());
+		super.cloneInto(st, with_state);
 		return st;
 	}
 }

@@ -53,6 +53,14 @@ public class GroupProcessorBuilder extends GrammarObjectBuilder<GroupProcessor>
 		return last;
 	}
 	
+	public void remove(Processor ... procs)
+	{
+		for (Processor p : procs)
+		{
+			m_processors.remove(p);
+		}
+	}
+	
 	@Override
 	protected synchronized GroupProcessor postVisit(Deque<Object> stack)
 	{

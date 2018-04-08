@@ -27,6 +27,7 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
+import ca.uqac.lif.cep.tmf.Freeze;
 import ca.uqac.lif.cep.tmf.QueueSource;
 
 /**
@@ -81,7 +82,7 @@ public class LtlTest
 		input_events.add(Value.FALSE);
 		input_events.add(Value.TRUE);
 		src.setEvents(input_events);
-		Always g = new Always();
+		Always g = new Always(new Freeze());
 		Connector.connect(src, g);
 		Pullable p = g.getPullableOutput(0);
 		Value b;
@@ -105,7 +106,7 @@ public class LtlTest
 		input_events.add(Value.FALSE);
 		input_events.add(Value.TRUE);
 		src.setEvents(input_events);
-		Always g = new Always();
+		Always g = new Always(new Freeze());
 		Connector.connect(src, g);
 		Pullable p = g.getPullableOutput(0);
 		Value b;
@@ -154,7 +155,7 @@ public class LtlTest
 		input_events.add(Value.TRUE);
 		input_events.add(Value.FALSE);
 		src.setEvents(input_events);
-		Sometime g = new Sometime();
+		Sometime g = new Sometime(new Freeze());
 		Connector.connect(src, g);
 		Pullable p = g.getPullableOutput(0);
 		Value b;
