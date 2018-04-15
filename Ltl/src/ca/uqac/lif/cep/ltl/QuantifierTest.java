@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import java.util.HashSet;
 import java.util.Queue;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -14,8 +16,7 @@ import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
-import ca.uqac.lif.cep.concurrency.NonBlockingPusher;
-import ca.uqac.lif.cep.concurrency.ThreadManager;
+import ca.uqac.lif.cep.concurrency.NonBlockingPush;
 import ca.uqac.lif.cep.functions.ContextVariable;
 import ca.uqac.lif.cep.util.Equals;
 import ca.uqac.lif.cep.util.Numbers;
@@ -318,12 +319,10 @@ public class QuantifierTest
 		assertEquals(o, Troolean.Value.TRUE);
 	}
 	
-	@SuppressWarnings("unused")
 	@Test
 	@Ignore
 	public void testForAll1() 
 	{
-		ThreadManager tm = new ThreadManager(-1); // Unlimited threads
 		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, StreamVariable.X, StreamVariable.X)), 0);
 		ForAll fa = new ForAll("x", new DummyCollectionFunction(1, 2, 3), left);
 		QueueSource source1 = new QueueSource(1);
@@ -341,10 +340,10 @@ public class QuantifierTest
 	@Ignore
 	public void testForAll2() 
 	{
-		ThreadManager tm = new ThreadManager(-1); // Unlimited threads
+		ExecutorService service = Executors.newCachedThreadPool();
 		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, StreamVariable.X, StreamVariable.X)), 0);
 		ForAll fa = new ForAll("x", new DummyCollectionFunction(1, 2, 3), left);
-		NonBlockingPusher nbp = new NonBlockingPusher(fa);
+		NonBlockingPush nbp = new NonBlockingPush(fa, service);
 		QueueSource source1 = new QueueSource(1);
 		source1.addEvent(0);
 		Connector.connect(source1, fa);
@@ -359,10 +358,10 @@ public class QuantifierTest
 	@Ignore
 	public void testForAll3() throws ProcessorException
 	{
-		ThreadManager tm = new ThreadManager(-1); // Unlimited threads
+		ExecutorService service = Executors.newCachedThreadPool();
 		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ContextVariable("x"), new ContextVariable("z"))), 0);
 		ForAll fa = new ForAll("x", new DummyCollectionFunction(1, 2, 3), left);
-		NonBlockingPusher nbp = new NonBlockingPusher(fa, tm);
+		NonBlockingPush nbp = new NonBlockingPush(fa, service);
 		nbp.start();
 		ForAll fa2 = new ForAll("z", new DummyCollectionFunction(1, 2, 3), fa);
 		QueueSource source1 = new QueueSource(1);
@@ -449,7 +448,12 @@ public class QuantifierTest
 		@Override
 		public boolean compute(Object[] inputs, Object[] outputs) throws ProcessorException
 		{
-			ThreadManager.sleep(m_waitInterval);
+			try {
+				Thread.sleep(m_waitInterval);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return super.compute(inputs, outputs);
 		}
 
