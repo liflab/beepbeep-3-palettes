@@ -1,6 +1,5 @@
 package ca.uqac.lif.cep.fol;
 
-import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.functions.Function;
 
 public class ExistsFunction extends QuantifierFunction
@@ -11,15 +10,10 @@ public class ExistsFunction extends QuantifierFunction
 	}
 
 	@Override
-	public ExistsFunction duplicate(boolean with_context) 
+	public ExistsFunction duplicate(boolean with_state) 
 	{
-		return new ExistsFunction(m_variableName, m_domainName, m_expression.duplicate(with_context));
-	}
-	
-	@Override
-	public ExistsFunction duplicate(Context context) 
-	{
-		return new ExistsFunction(m_variableName, m_domainName, m_expression.duplicate(context));
+		ExistsFunction ef = new ExistsFunction(m_variableName, m_domainName, m_expression.duplicate(with_state));
+		return ef;
 	}
 	
 	@Override

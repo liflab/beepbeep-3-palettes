@@ -78,7 +78,7 @@ public class LazyBooleanFunction extends Function
 		}
 		
 		@Override
-		public DummyInterpretationFunction duplicate()
+		public DummyInterpretationFunction duplicate(boolean with_state)
 		{
 			return this;
 		}
@@ -98,9 +98,9 @@ public class LazyBooleanFunction extends Function
 		}
 		
 		@Override
-		public And duplicate()
+		public And duplicate(boolean with_state)
 		{
-			return new And(m_left.duplicate(), m_right.duplicate());
+			return new And(m_left.duplicate(with_state), m_right.duplicate(with_state));
 		}
 
 	}
@@ -119,9 +119,9 @@ public class LazyBooleanFunction extends Function
 		}
 		
 		@Override
-		public Or duplicate()
+		public Or duplicate(boolean with_state)
 		{
-			return new Or(m_left.duplicate(), m_right.duplicate());
+			return new Or(m_left.duplicate(with_state), m_right.duplicate(with_state));
 		}
 	}
 	
@@ -139,9 +139,9 @@ public class LazyBooleanFunction extends Function
 		}
 		
 		@Override
-		public Implies duplicate()
+		public Implies duplicate(boolean with_state)
 		{
-			return new Implies(m_left.duplicate(), m_right.duplicate());
+			return new Implies(m_left.duplicate(with_state), m_right.duplicate(with_state));
 		}		
 	}
 
@@ -152,7 +152,7 @@ public class LazyBooleanFunction extends Function
 	}
 
 	@Override
-	public Function duplicate() {
+	public Function duplicate(boolean with_state) {
 		// TODO Auto-generated method stub
 		return null;
 	}

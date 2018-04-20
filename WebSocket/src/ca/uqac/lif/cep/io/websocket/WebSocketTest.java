@@ -33,7 +33,6 @@ import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 import org.junit.Test;
 
-import ca.uqac.lif.cep.BeepBeepUnitTest;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.io.websocket.WebSocketReader;
 import ca.uqac.lif.cep.tmf.QueueSink;
@@ -42,7 +41,7 @@ import ca.uqac.lif.cep.tmf.QueueSink;
  * Unit tests for the WebSocket reader.
  * @author Sylvain Hallé
  */
-public class WebSocketTest extends BeepBeepUnitTest
+public class WebSocketTest
 {
 	/**
 	 * In this test, we insert sleep statements. If the operations are

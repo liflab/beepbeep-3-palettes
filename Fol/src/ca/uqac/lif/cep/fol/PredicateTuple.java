@@ -17,9 +17,8 @@
  */
 package ca.uqac.lif.cep.fol;
 
-import java.util.Arrays;
-
 import ca.uqac.lif.cep.fol.Predicate.PredicateArgument;
+import ca.uqac.lif.cep.util.Bags;
 
 /**
  * An assertion defining the truth value of a predicate
@@ -89,7 +88,7 @@ public class PredicateTuple
 	 */
 	public static PredicateTuple toPredicateTuple(Object x)
 	{
-		Object[] contents = Arrays.toObjectArray(x);
+		Object[] contents = Bags.toObjectArray(x);
 		String name = (String) contents[0];
 		int num_non_empty = 0;
 		for (int i = 1; i < contents.length; i++)
@@ -128,5 +127,4 @@ public class PredicateTuple
 		out.append(m_name).append("(").append(m_arguments).append(")");
 		return out.toString();
 	}
-
 }

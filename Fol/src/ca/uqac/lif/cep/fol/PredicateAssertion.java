@@ -21,7 +21,6 @@ import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.functions.Function;
-import ca.uqac.lif.cep.functions.FunctionException;
 
 /**
  * An assertion on the value of a predicate, to be evaluated on an
@@ -113,17 +112,6 @@ public class PredicateAssertion extends Function
 		for (int i = 0; i < m_arguments.length; i++)
 		{
 			arguments[i] = m_arguments[i].duplicate(with_state);
-		}
-		return new PredicateAssertion(m_predicateName, arguments);
-	}
-	
-	@Override
-	public Function duplicate(Context context) 
-	{
-		Function[] arguments = new Function[m_arguments.length];
-		for (int i = 0; i < m_arguments.length; i++)
-		{
-			arguments[i] = m_arguments[i].duplicate(context);
 		}
 		return new PredicateAssertion(m_predicateName, arguments);
 	}

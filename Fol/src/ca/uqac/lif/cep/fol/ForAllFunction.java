@@ -1,6 +1,5 @@
 package ca.uqac.lif.cep.fol;
 
-import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.functions.Function;
 
 public class ForAllFunction extends QuantifierFunction
@@ -11,17 +10,10 @@ public class ForAllFunction extends QuantifierFunction
 	}
 
 	@Override
-	public ForAllFunction duplicate() 
+	public ForAllFunction duplicate(boolean with_state) 
 	{
-		return new ForAllFunction(m_variableName, m_domainName, m_expression.duplicate());
+		return new ForAllFunction(m_variableName, m_domainName, m_expression.duplicate(with_state));
 	}
-	
-	@Override
-	public ForAllFunction duplicate(Context context) 
-	{
-		return new ForAllFunction(m_variableName, m_domainName, m_expression.duplicate(context));
-	}
-	
 	@Override
 	public String toString()
 	{
