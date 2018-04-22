@@ -23,7 +23,7 @@ public class XPathFunction extends UnaryFunction<XmlElement,Collection<XmlElemen
 	/**
 	 * The XPath expression this function evaluates
 	 */
-	private final XPathExpression m_expression;
+	protected final XPathExpression m_expression;
 	
 	@SuppressWarnings("unchecked")
 	public XPathFunction(String exp)
@@ -79,11 +79,9 @@ public class XPathFunction extends UnaryFunction<XmlElement,Collection<XmlElemen
 	}
 	
 	@Override
-	public XPathFunction duplicate(Context context)
+	public XPathFunction duplicate(boolean with_state)
 	{
-		XPathExpression exp = XPathFunction.evaluatePlaceholders(m_expression, context);
-		XPathFunction out = new XPathFunction(exp);
-		return out;
+		return new XPathFunction(m_expression.duplicate());
 	}
 	
 	/**

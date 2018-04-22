@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2018 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -17,34 +17,54 @@
  */
 package ca.uqac.lif.cep.xml;
 
-
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Processor;
+import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.xml.XPathExpression;
 
+/**
+ * Processor that evaluates an XPath expression. This processor differs from
+ * {@link ca.uqac.lif.cep.functions.ApplyFunction ApplyFunction} in that calls
+ * to {@link #setContext(Context) setContext()} trigger the replacement of
+ * placeholders in the underlying XPath expression by elements of the
+ * processor's context object.
+ * 
+ * @author Sylvain Hallé
+ */
 public class XPathEvaluator extends ApplyFunction
 {	
-	public XPathEvaluator(String exp)
+	/**
+	 * Creates a new XPath evaluator
+	 * @param expression A string representing an XPath expression to evaluate
+	 */
+	public XPathEvaluator(String expression)
 	{
-		super(new XPathFunction(exp));
+		super(new XPathFunction(expression));
 	}
-	
+
+	/**
+	 * Creates a new XPath evaluator
+	 * @param exp An XPath expression to evaluate
+	 */
 	public XPathEvaluator(XPathExpression exp)
 	{
 		super(new XPathFunction(exp));
 	}
-	
-	public static void build(ArrayDeque<Object> stack) 
+
+	@Override
+	public void setContext(Context c)
 	{
-		Processor p = (Processor) stack.pop();
-		stack.pop(); // ON
-		String expression = (String) stack.pop();
-		stack.pop(); // XPATH
-		XPathEvaluator xp = new XPathEvaluator(expression);
-		Connector.connect(p, xp);
-		stack.push(xp);
+		XPathFunction xpf = (XPathFunction) m_function;
+		XPathExpression n_xpe = XPathFunction.evaluatePlaceholders(xpf.m_expression, c);
+		m_function = new XPathFunction(n_xpe);
+	}
+	
+	@Override
+	public void setContext(String key, Object value)
+	{
+		XPathFunction xpf = (XPathFunction) m_function;
+		Context c = new Context();
+		c.put(key, value);
+		XPathExpression n_xpe = XPathFunction.evaluatePlaceholders(xpf.m_expression, c);
+		m_function = new XPathFunction(n_xpe);
 	}
 }

@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2018 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -19,7 +19,6 @@ package ca.uqac.lif.cep.xml;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
@@ -28,6 +27,7 @@ import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pushable;
+import ca.uqac.lif.cep.Pushable.PushableException;
 import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.tmf.SinkLast;
 import ca.uqac.lif.xml.XPathExpression;
@@ -57,17 +57,16 @@ public class XmlTest
 		assertTrue(os[0] instanceof XmlElement);
 	}
 	
-	@Test
+	@Test(expected=PushableException.class)
 	public void testSingle2() 
 	{
+		// This is an error since an XML element must have a single root
 		ApplyFunction feeder = new ApplyFunction(ParseXml.instance);
 		Pushable in = feeder.getPushableInput(0);
 		assertNotNull(in);
 		SinkLast sink = new SinkLast(1);
 		Connector.connect(feeder, sink);
 		in.push("<a>123</a><b></b>");
-		Object[] os = sink.getLast();
-		assertNull(os);
 	}
 	
 	@Test
