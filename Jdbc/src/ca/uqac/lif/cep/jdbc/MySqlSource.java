@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2018 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -26,7 +26,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
-import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.tmf.Source;
 import ca.uqac.lif.cep.tuples.TupleMap;
@@ -189,26 +188,9 @@ public class MySqlSource extends Source
 		}
 		return false;
 	}
-
-	public static void build(ArrayDeque<Object> stack) 
-	{
-		String password = (String) stack.pop();
-		stack.pop(); // PASSWORD
-		stack.pop(); // ,
-		String username = (String) stack.pop();
-		stack.pop(); // USER
-		stack.pop(); // ,
-		String databaseName = (String) stack.pop();
-		stack.pop(); // DATABASE
-		stack.pop(); // IN
-		String tableName = (String) stack.pop();
-		stack.pop(); // TABLE
-		MySqlSource source = new MySqlSource(username, password, databaseName, tableName);
-		stack.push(source);
-	}
 	
 	@Override
-	public MySqlSource duplicate()
+	public MySqlSource duplicate(boolean with_state)
 	{
 		return new MySqlSource(m_username, m_password, m_databaseName, m_tableName);
 	}
