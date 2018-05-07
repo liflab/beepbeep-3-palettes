@@ -25,9 +25,10 @@ import ca.uqac.lif.cep.tuples.Tuple;
 import ca.uqac.lif.cep.tuples.TupleComparator;
 
 /**
- * Generates a scatterplot from a {@link ca.uqac.lif.cep.sets.Multiset}
+ * Generates a scatterplot from a {@link ca.uqac.lif.cep.gnuplot.sets.Multiset}
  * of tuples.
  */
+@Deprecated
 public class GnuplotScatterplot extends TwoDimensionalPlotFunction
 {
 	/**

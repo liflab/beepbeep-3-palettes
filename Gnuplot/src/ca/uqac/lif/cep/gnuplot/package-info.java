@@ -19,7 +19,11 @@
 /**
  * Processors for generating realtime graphs with the help of
  * <a href="http://gnuplot.info/">Gnuplot</a>.
+ * <p>
+ * <strong>This palette is deprecated.</strong> It has been replaced with
+ * the MTNP palette, which provides much more (and better) functions. 
  * 
  * @author Sylvain Hallé
  */
+@Deprecated
 package ca.uqac.lif.cep.gnuplot;

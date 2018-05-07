@@ -24,13 +24,9 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
  * string suitable for sending into the Gnuplot software.
  * @author Sylvain Hallé
  */
+@Deprecated
 public abstract class PlotFunction extends UnaryFunction<Multiset,String> 
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6759055518507152630L;
-
 	/**
 	 * The possible types of image produced by a plot function
 	 */

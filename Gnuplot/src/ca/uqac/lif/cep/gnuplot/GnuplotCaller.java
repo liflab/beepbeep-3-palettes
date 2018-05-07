@@ -17,10 +17,6 @@
  */
 package ca.uqac.lif.cep.gnuplot;
 
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.io.Call;
 
 /**
@@ -34,6 +30,7 @@ import ca.uqac.lif.cep.io.Call;
  * @author Sylvain Hallé
  *
  */
+@Deprecated
 public class GnuplotCaller extends Call
 {
 	public GnuplotCaller()
@@ -41,12 +38,10 @@ public class GnuplotCaller extends Call
 		super("gnuplot");
 	}
 	
-	public static void build(ArrayDeque<Object> stack) 
-	{
-		Processor p = (Processor) stack.pop();
-		stack.pop(); // ON
-		stack.pop(); // GNUPLOT
-		GnuplotCaller caller = new GnuplotCaller();
-		Connector.connect(p, caller);
-	}
+	@Override
+  protected boolean compute(Object[] inputs, Object[] outputs)
+  {
+	  byte[] bytes = ((String) inputs[0]).getBytes();
+	  return super.compute(new Object[]{bytes}, outputs);
+  }
 }

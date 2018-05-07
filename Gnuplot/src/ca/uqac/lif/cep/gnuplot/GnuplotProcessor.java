@@ -27,6 +27,7 @@ import ca.uqac.lif.cep.SingleProcessor;
  * 
  * @author Sylvain Hallé
  */
+@Deprecated
 public abstract class GnuplotProcessor extends SingleProcessor 
 {
 	/**

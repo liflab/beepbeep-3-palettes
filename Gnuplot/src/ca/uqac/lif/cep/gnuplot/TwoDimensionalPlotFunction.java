@@ -21,6 +21,7 @@ package ca.uqac.lif.cep.gnuplot;
  * Common ancestor of all two-dimensional plot functions.
  * @author Sylvain Hallé
  */
+@Deprecated
 public abstract class TwoDimensionalPlotFunction extends PlotFunction
 {
 	/**

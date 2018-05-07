@@ -1,8 +1,0 @@
-# -----------------------------------------
-# Plot processors
-# -----------------------------------------
-
-<eml_expr>               := <gp_heatmap> | <gp_scatterplot> | <gp_caller>;
-<gp_heatmap>             := THE HEATMAP OF <processor> ;
-<gp_scatterplot>         := THE SCATTERPLOT OF <processor> ;
-<gp_caller>              := GNUPLOT ON <processor>  ;

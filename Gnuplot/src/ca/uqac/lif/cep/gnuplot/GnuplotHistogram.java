@@ -26,6 +26,7 @@ import java.util.Set;
 import ca.uqac.lif.cep.tuples.Tuple;
 import ca.uqac.lif.cep.tuples.TupleComparator;
 
+@Deprecated
 public class GnuplotHistogram extends TwoDimensionalPlotFunction 
 {
 	/**
@@ -121,7 +122,7 @@ public class GnuplotHistogram extends TwoDimensionalPlotFunction
 	}
 
 	@Override
-	public GnuplotHistogram duplicate() 
+	public GnuplotHistogram duplicate(boolean with_state) 
 	{
 		return new GnuplotHistogram(m_lineAttribute);
 	}

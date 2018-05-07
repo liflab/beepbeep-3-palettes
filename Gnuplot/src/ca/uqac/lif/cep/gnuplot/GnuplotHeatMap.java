@@ -17,15 +17,13 @@
  */
 package ca.uqac.lif.cep.gnuplot;
 
-import java.util.ArrayDeque;
 import java.util.Queue;
 
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.tuples.Tuple;
+import ca.uqac.lif.cep.util.Numbers.NumberCast;
 
 /**
- * Generates a Gnuplot file from a 2D {@link ca.uqac.lif.cep.sets.Multiset}.
+ * Generates a Gnuplot file from a 2D {@link ca.uqac.lif.cep.gnuplot.sets.Multiset}.
  * The keys of the heatmap
  * are {@link NamedTuple}s of integers representing (x,y) coordinates; the
  * values of the heatmap are integers. When its method {@link #compute(Object[], Queue)}
@@ -44,13 +42,9 @@ import ca.uqac.lif.cep.tuples.Tuple;
  * @author sylvain
  *
  */
+@Deprecated
 public class GnuplotHeatMap extends GnuplotProcessor 
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3788011217816603537L;
-
 	/**
 	 * The preconfigured minimum value of the generated heat map
 	 * along the x axis
@@ -200,20 +194,9 @@ public class GnuplotHeatMap extends GnuplotProcessor
 		out.append(getBoilerplateFooter());
 		return out;
 	}
-
-	public static void build(ArrayDeque<Object> stack) 
-	{
-		Processor p = (Processor) stack.pop();
-		stack.pop(); // OF
-		stack.pop(); // HEATMAP
-		stack.pop(); // THE
-		GnuplotHeatMap ghm = new GnuplotHeatMap();
-		Connector.connect(p, ghm);
-		stack.push(ghm);
-	}
 	
 	@Override
-	public GnuplotHeatMap duplicate()
+	public GnuplotHeatMap duplicate(boolean with_state)
 	{
 		return new GnuplotHeatMap();
 	}
