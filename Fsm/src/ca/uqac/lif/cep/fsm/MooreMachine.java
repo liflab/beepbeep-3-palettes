@@ -22,12 +22,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Duplicable;
 import ca.uqac.lif.cep.ProcessorException;
-import ca.uqac.lif.cep.UniformProcessor;
+import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.functions.ContextAssignment;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionException;
@@ -47,7 +48,7 @@ import ca.uqac.lif.cep.functions.FunctionException;
  * @author Sylvain Hallé
  *
  */
-public class MooreMachine extends UniformProcessor
+public class MooreMachine extends SingleProcessor
 {
 	/**
 	 * A map from a state to the list of transitions from that
@@ -173,7 +174,7 @@ public class MooreMachine extends UniformProcessor
 	}
 
 	@Override
-	protected boolean compute(Object[] inputs, Object[] outputs) throws ProcessorException
+	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) throws ProcessorException
 	{
 		List<Transition> transitions = m_relation.get(m_currentState);
 		Transition otherwise = null;
@@ -190,7 +191,10 @@ public class MooreMachine extends UniformProcessor
 					if (t.isFired(inputs, m_context))
 					{
 						// This transition fires: move to that state
-						return fire(t, inputs, outputs);
+					  Object[] out = new Object[m_outputArity];
+						boolean b = fire(t, inputs, out);
+						outputs.add(out);
+						return b;
 					}
 				}
 				catch (FunctionException e)
@@ -204,7 +208,10 @@ public class MooreMachine extends UniformProcessor
 			// No "normal" transition has fired, but we have an "otherwise": fire it
 			try
 			{
-				return fire(otherwise, inputs, outputs);
+			  Object[] out = new Object[m_outputArity];
+        boolean b = fire(otherwise, inputs, out);
+        outputs.add(out);
+        return b;
 			}
 			catch (FunctionException e)
 			{
