@@ -1,6 +1,7 @@
 package ca.uqac.lif.cep.concurrency;
 
 import java.util.ArrayDeque;
+import java.util.Iterator;
 import java.util.Queue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -83,10 +84,25 @@ public class ParallelWindow extends AbstractWindow
 
 
 	@Override
-	public Processor duplicate(boolean with_state)
+	public ParallelWindow duplicate(boolean with_state)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		ParallelWindow pw = new ParallelWindow(m_processor, m_width);
+		if (with_state)
+		{
+		  pw.m_eventCount = m_eventCount;
+		  Iterator<SinkLast> sink_it = m_sinks.iterator();
+		  for (Processor p : m_processors)
+		  {
+		    Processor new_p = p.duplicate(true);
+		    pw.m_processors.add(new_p);
+		    Pushable new_p_p = new_p.getPushableInput();
+		    pw.m_pushables.add(new_p_p);
+		    SinkLast new_p_s = sink_it.next().duplicate(true);
+		    pw.m_sinks.add(new_p_s);
+		    Connector.connect(new_p, new_p_s);
+		  }
+		}
+		return pw;
 	}
 	
 	@Override
