@@ -1,3 +1,20 @@
+/*
+    BeepBeep, an event stream processor
+    Copyright (C) 2008-2017 Sylvain Hallé
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package ca.uqac.lif.cep.fol;
 
 import java.util.Collection;
@@ -5,18 +22,16 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
-import ca.uqac.lif.cep.CompoundFuture;
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.functions.Function;
-import ca.uqac.lif.cep.functions.UnaryFunction;
 
-public abstract class QuantifierFunction extends Function
+public abstract class FirstOrderQuantifier extends Function
 {
 	protected String m_variable;
 	
-	protected UnaryFunction<?,Boolean> m_function;
+	protected Function m_function;
 	
-	public QuantifierFunction(String x, UnaryFunction<?,Boolean> f) 
+	public FirstOrderQuantifier(String x, Function f) 
 	{
 		super();
 		m_variable = x;
@@ -24,12 +39,12 @@ public abstract class QuantifierFunction extends Function
 	}
 
 	@Override
-	public Future<? extends Object[]> evaluateFast(Object[] inputs, Object[] outputs, Context context, ExecutorService service) 
+	/*@ non_null @*/ public Future<Object[]> evaluateFast(Object[] inputs, Object[] outputs, Context context, ExecutorService service) 
 	{
 		Collection<?> values = (Collection<?>) inputs[0];
 		Object[][] all_vals = new Object[values.size()][1];
 		@SuppressWarnings("unchecked")
-		Future<? extends Object[]>[] all_futures = new Future[values.size()];
+		Future<Object[]>[] all_futures = new Future[values.size()];
 		int dom_count = 0;
 		for (Object value : values)
 		{
@@ -55,11 +70,17 @@ public abstract class QuantifierFunction extends Function
 			Function exp = m_function.duplicate();
 			all_vals[dom_count] = new Object[1];
 			new_context.put(m_variable, value);
-			exp.evaluate(new Object[]{value}, all_vals[dom_count], new_context);
+			exp.evaluate(inputs, all_vals[dom_count], new_context);
 			dom_count++;
 		}
 		getVerdict(all_vals, outputs);
 	}
+	
+	@Override
+  public void evaluate(Object[] inputs, Object[] outputs)
+  {
+    evaluate(inputs, outputs, new Context());
+  }
 
 	@Override
 	public int getInputArity()
@@ -92,13 +113,8 @@ public abstract class QuantifierFunction extends Function
 		return null;
 	}
 	
-	public static abstract class QuantifierFunctionFuture extends CompoundFuture<Boolean,Boolean[]>
-	{
-		// Nothing here
-	}
+	protected abstract void getVerdict(Object[][] inputs, Object[] outputs);
 	
-	protected abstract void getVerdict(Object[] inputs, Object[] outputs);
-	
-	protected abstract Future<? extends Object[]> newFuture(Future<?>[] futures);
+	protected abstract Future<Object[]> newFuture(Future<Object[]>[] futures);
 	
 }
