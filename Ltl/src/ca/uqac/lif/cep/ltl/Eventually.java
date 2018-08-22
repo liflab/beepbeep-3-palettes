@@ -20,7 +20,6 @@ package ca.uqac.lif.cep.ltl;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.SingleProcessor;
-import ca.uqac.lif.cep.ltl.Troolean.Value;
 
 /**
  * Boolean implementation of the LTL <b>F</b> processor
@@ -56,13 +55,13 @@ public class Eventually extends SingleProcessor
 	@Override
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
 	{
-		Value v = Troolean.trooleanValue(inputs[0]);
-		if (v == Value.TRUE)
+		Boolean v = (Boolean) inputs[0];
+		if (v == true)
 		{
 			for (int i = 0; i <= m_notTrueCount; i++)
 			{
 				Object[] e = new Object[1];
-				e[0] = Value.TRUE;
+				e[0] = true;
 				outputs.add(e);
 			}
 			m_notTrueCount = 0;

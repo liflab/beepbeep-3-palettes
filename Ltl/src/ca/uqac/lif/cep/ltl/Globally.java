@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2018 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -18,12 +18,8 @@
 package ca.uqac.lif.cep.ltl;
 
 import java.util.Queue;
-import java.util.ArrayDeque;
 
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SingleProcessor;
-import ca.uqac.lif.cep.ltl.Troolean.Value;
 
 /**
  * Boolean implementation of the LTL <b>G</b> processor
@@ -45,17 +41,6 @@ public class Globally extends SingleProcessor
 		m_notFalseCount = 0;
 	}
 	
-	public static void build(ArrayDeque<Object> stack) 
-	{
-		stack.pop(); // (
-		Processor p = (Processor) stack.pop();
-		stack.pop(); // )
-		stack.pop(); // G
-		Globally op = new Globally();
-		Connector.connect(p, op);
-		stack.push(op);
-	}
-	
 	@Override
 	public Globally duplicate(boolean with_state)
 	{
@@ -70,13 +55,13 @@ public class Globally extends SingleProcessor
 	@Override
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
 	{
-		Value v = Troolean.trooleanValue(inputs[0]);
-		if (v == Value.FALSE)
+		Boolean v = (Boolean) inputs[0];
+		if (v == false)
 		{
 			for (int i = 0; i <= m_notFalseCount; i++)
 			{
 				Object[] e = new Object[1];
-				e[0] = Value.FALSE;
+				e[0] = false;
 				outputs.add(e);
 			}
 			m_notFalseCount = 0;
