@@ -23,7 +23,7 @@ import java.util.Queue;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionException;
 
@@ -33,7 +33,7 @@ import ca.uqac.lif.cep.functions.FunctionException;
  * 
  * @author Sylvain Hallé
  */
-public class Where extends SingleProcessor
+public class Where extends SynchronousProcessor
 {
 	/**
 	 * The condition to evaluate. Based on its return value on a given

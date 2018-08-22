@@ -19,9 +19,9 @@ package ca.uqac.lif.cep.fol;
 
 import java.util.Queue;
 
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 
-public class InterpretationBuilder extends SingleProcessor 
+public class InterpretationBuilder extends SynchronousProcessor 
 {
 	protected Interpretation m_interpretation;
 	
@@ -67,7 +67,7 @@ public class InterpretationBuilder extends SingleProcessor
 		{
 			m_interpretation.addPredicateTuple((PredicateTuple) o); 
 		}
-		outputs.add(wrapObject(m_interpretation));
+		outputs.add(new Object[] {m_interpretation});
 		return true;
 	}
 	

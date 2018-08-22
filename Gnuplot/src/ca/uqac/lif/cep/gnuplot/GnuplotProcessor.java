@@ -19,7 +19,7 @@ package ca.uqac.lif.cep.gnuplot;
 
 import java.util.Queue;
 
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 
 /**
  * Generic processor configuring basic parameters about the generation
@@ -28,7 +28,7 @@ import ca.uqac.lif.cep.SingleProcessor;
  * @author Sylvain Hallé
  */
 @Deprecated
-public abstract class GnuplotProcessor extends SingleProcessor 
+public abstract class GnuplotProcessor extends SynchronousProcessor 
 {
 	/**
 	 * The graph's title
@@ -128,7 +128,7 @@ public abstract class GnuplotProcessor extends SingleProcessor
 			StringBuilder plot_contents = computePlot(bag);
 			m_lastPlot = plot_contents.toString();
 		}
-		outputs.add(wrapObject(m_lastPlot));
+		outputs.add(new Object[] {m_lastPlot});
 		return true;
 	}
 	

@@ -22,7 +22,7 @@ import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 import ca.uqac.lif.cep.functions.CumulativeFunction;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
 
@@ -30,7 +30,7 @@ import ca.uqac.lif.cep.ltl.Troolean.Value;
  * Troolean version of the LTL <b>U</b> operator
  * @author Sylvain Hallé
  */
-public class UpTo extends SingleProcessor 
+public class UpTo extends SynchronousProcessor 
 {
 	protected CumulativeFunction<Value> m_left;
 
@@ -73,7 +73,7 @@ public class UpTo extends SingleProcessor
 				m_currentValue = Value.FALSE;
 			}
 		}
-		outputs.add(wrapObject(m_currentValue));
+		outputs.add(new Object[] {m_currentValue});
 		return true;
 	}
 

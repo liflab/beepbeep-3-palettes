@@ -24,11 +24,11 @@ import java.util.Queue;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.tmf.SinkLast;
 
-public class FirstOrderSlice extends SingleProcessor 
+public class FirstOrderSlice extends SynchronousProcessor 
 {
 	protected String m_varName;
 	

@@ -19,13 +19,13 @@ package ca.uqac.lif.cep.ltl;
 
 import java.util.Queue;
 
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 
 /**
  * Boolean implementation of the LTL <b>F</b> processor
  * @author Sylvain Hallé
  */
-public class Eventually extends SingleProcessor 
+public class Eventually extends SynchronousProcessor 
 {
 	protected int m_notTrueCount = 0;
 	

@@ -19,7 +19,7 @@ package ca.uqac.lif.cep.tuples;
 
 import java.util.Queue;
 
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 
 /**
  * Creates a feed of events from CRLF-separated string chunks.
@@ -27,7 +27,7 @@ import ca.uqac.lif.cep.SingleProcessor;
  * including the last. 
  * @author Sylvain Hallé
  */
-public class TupleFeeder extends SingleProcessor
+public class TupleFeeder extends SynchronousProcessor
 {
 	protected FixedTupleBuilder m_builder;
 	

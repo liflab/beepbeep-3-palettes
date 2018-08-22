@@ -22,11 +22,11 @@ import java.util.Queue;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.tmf.SinkLast;
 
-public abstract class FirstOrderQuantifier extends SingleProcessor
+public abstract class FirstOrderQuantifier extends SynchronousProcessor
 {
 	protected FirstOrderSlice m_slicer;
 	

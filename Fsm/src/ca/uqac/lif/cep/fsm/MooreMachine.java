@@ -28,7 +28,7 @@ import java.util.Set;
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Duplicable;
 import ca.uqac.lif.cep.ProcessorException;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 import ca.uqac.lif.cep.functions.ContextAssignment;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionException;
@@ -48,7 +48,7 @@ import ca.uqac.lif.cep.functions.FunctionException;
  * @author Sylvain Hallé
  *
  */
-public class MooreMachine extends SingleProcessor
+public class MooreMachine extends SynchronousProcessor
 {
 	/**
 	 * A map from a state to the list of transitions from that

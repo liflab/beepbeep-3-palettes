@@ -23,9 +23,9 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pushable;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 
-public class Derivation extends SingleProcessor
+public class Derivation extends SynchronousProcessor
 {
 	protected Processor[] m_processors;
 	

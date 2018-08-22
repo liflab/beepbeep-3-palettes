@@ -22,7 +22,7 @@ import java.util.Queue;
 
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -35,7 +35,7 @@ import org.java_websocket.handshake.ServerHandshake;
  * 
  * @author Sylvain Hallé
  */ 
-public class WebSocketReader extends SingleProcessor
+public class WebSocketReader extends SynchronousProcessor
 {
 	/**
 	 * The URI of the web socket server

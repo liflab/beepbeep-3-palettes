@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 
 /**
  * Builds a tuple out of parts of text. The parts of text to create
@@ -40,7 +40,7 @@ import ca.uqac.lif.cep.SingleProcessor;
  * renamed to arbitrary character strings.
  * 
  */
-public class RegexTupleBuilder extends SingleProcessor 
+public class RegexTupleBuilder extends SynchronousProcessor 
 {
 	/**
 	 * The regex pattern to look for

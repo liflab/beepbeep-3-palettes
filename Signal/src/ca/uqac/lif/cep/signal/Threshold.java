@@ -22,10 +22,10 @@ import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 import ca.uqac.lif.cep.util.Numbers.NumberCast;
 
-public class Threshold extends SingleProcessor
+public class Threshold extends SynchronousProcessor
 {
 	/**
 	 * The threshold to cut values
@@ -44,10 +44,10 @@ public class Threshold extends SingleProcessor
 		float value = NumberCast.getNumber(inputs[0]).floatValue();
 		if (Math.abs(value) > m_threshold)
 		{
-			outputs.add(wrapObject(value));
+			outputs.add(new Object[] {value});
 			return true;
 		}
-		outputs.add(wrapObject(0));
+		outputs.add(new Object[] {0});
 		return true;
 	}
 

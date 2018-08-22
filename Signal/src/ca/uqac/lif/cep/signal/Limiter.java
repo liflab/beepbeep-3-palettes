@@ -20,7 +20,7 @@ package ca.uqac.lif.cep.signal;
 import java.util.Queue;
 import java.util.ArrayDeque;
 
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 import ca.uqac.lif.cep.util.Numbers.NumberCast;
 
 /**
@@ -28,7 +28,7 @@ import ca.uqac.lif.cep.util.Numbers.NumberCast;
  * @author Sylvain Hallé
  *
  */
-public class Limiter extends SingleProcessor
+public class Limiter extends SynchronousProcessor
 {
 	protected final int m_limit;
 	
@@ -54,11 +54,11 @@ public class Limiter extends SingleProcessor
 		if (m_counter > 0 || value == 0)
 		{
 			// Ignore this event
-			outputs.add(wrapObject(0));
+			outputs.add(new Object[] {0});
 			return true;
 		}
 		m_counter = m_limit;
-		outputs.add(wrapObject(value));
+		outputs.add(new Object[] {value});
 		return true;
 	}
 

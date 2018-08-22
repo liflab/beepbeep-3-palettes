@@ -22,14 +22,14 @@ import java.util.ArrayDeque;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 import ca.uqac.lif.cep.ltl.Troolean.Value;
 
 /**
  * Boolean implementation of the LTL <b>U</b> processor
  * @author Sylvain Hallé
  */
-public class Until extends SingleProcessor 
+public class Until extends SynchronousProcessor 
 {
 	protected int m_eventCount = 0;
 	

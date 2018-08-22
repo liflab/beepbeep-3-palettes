@@ -19,9 +19,9 @@ package ca.uqac.lif.cep.signal;
 
 import java.util.Vector;
 
-import ca.uqac.lif.cep.SingleProcessor;
+import ca.uqac.lif.cep.SynchronousProcessor;
 
-public abstract class WindowProcessor extends SingleProcessor
+public abstract class WindowProcessor extends SynchronousProcessor
 {
 	/**
 	 * The precision used to for the equality between double precision
