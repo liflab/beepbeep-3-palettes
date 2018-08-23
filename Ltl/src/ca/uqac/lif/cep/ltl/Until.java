@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2018 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -18,12 +18,8 @@
 package ca.uqac.lif.cep.ltl;
 
 import java.util.Queue;
-import java.util.ArrayDeque;
 
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SynchronousProcessor;
-import ca.uqac.lif.cep.ltl.Troolean.Value;
 
 /**
  * Boolean implementation of the LTL <b>U</b> processor
@@ -49,47 +45,33 @@ public class Until extends SynchronousProcessor
 	@Override
 	protected boolean compute(Object[] input, Queue<Object[]> outputs)
 	{
-		Value left = Troolean.trooleanValue(input[0]);
-		Value right = Troolean.trooleanValue(input[1]);
+		Boolean left = (Boolean) input[0];
+		Boolean right = (Boolean) input[1];
 		m_eventCount++;
-		if (right == Value.TRUE)
+		if (right)
 		{
 			for (int i = 0; i < m_eventCount; i++)
 			{
 				Object[] e = new Object[1];
-				e[0] = Value.TRUE;
+				e[0] = true;
 				outputs.add(e);
-				m_eventCount = 0;
 			}
+			m_eventCount = 0;
 			return true;
 		}
-		if (left == Value.FALSE)
+		assert !right;
+		if (!left)
 		{
 			for (int i = 0; i < m_eventCount; i++)
 			{
 				Object[] e = new Object[1];
-				e[0] = Value.FALSE;
+				e[0] = false;
 				outputs.add(e);
-				m_eventCount = 0;
 			}
+			m_eventCount = 0;
 			return true;			
 		}
-		return false;
-	}
-	
-	public static void build(ArrayDeque<Object> stack) 
-	{
-		stack.pop(); // (
-		Processor right = (Processor) stack.pop();
-		stack.pop(); // )
-		stack.pop(); // U
-		stack.pop(); // (
-		Processor left = (Processor) stack.pop();
-		stack.pop(); // )
-		Until op = new Until();
-		Connector.connect(left, 0, op, 0);
-		Connector.connect(right, 0, op, 1);
-		stack.push(op);
+		return true;
 	}
 
 	@Override
