@@ -19,21 +19,22 @@ package ca.uqac.lif.cep.json;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pushable;
+import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.tmf.SinkLast;
 import ca.uqac.lif.json.JsonList;
 import ca.uqac.lif.json.JsonMap;
+import ca.uqac.lif.json.JsonNull;
 import ca.uqac.lif.json.JsonParser;
 import ca.uqac.lif.json.JsonParser.JsonParseException;
 
 /**
- * Unit tests for the {@link JsonFeeder} and {@link JPathEvaluator}
+ * Unit tests for the {@link ParseJson} and {@link JPathEvaluator}
  * @author Sylvain Hallé
  */
 public class JsonTest 
@@ -43,7 +44,7 @@ public class JsonTest
 	@Test
 	public void testSingle1() 
 	{
-		JsonFeeder feeder = new JsonFeeder();
+	  ApplyFunction feeder = new ApplyFunction(ParseJson.instance);
 		Pushable in = feeder.getPushableInput(0);
 		assertNotNull(in);
 		SinkLast sink = new SinkLast(1);
@@ -58,20 +59,20 @@ public class JsonTest
 	@Test
 	public void testSingle2() 
 	{
-		JsonFeeder feeder = new JsonFeeder();
+	  ApplyFunction feeder = new ApplyFunction(ParseJson.instance);
 		Pushable in = feeder.getPushableInput(0);
 		assertNotNull(in);
 		SinkLast sink = new SinkLast(1);
 		Connector.connect(feeder, sink);
-		in.push("{\"a\" : 123}b");
+		in.push("{\"a\" : 123}b"); // Parsing error
 		Object[] os = sink.getLast();
-		assertNull(os);
+		assertTrue(os[0] instanceof JsonNull);
 	}
 	
 	@Test
 	public void testJPath1() throws JsonParseException
 	{
-		JPathEvaluator jpath = new JPathEvaluator("a.b");
+	  ApplyFunction jpath = new ApplyFunction(new JPathFunction("a.b"));
 		Pushable in = jpath.getPushableInput(0);
 		assertNotNull(in);
 		SinkLast sink = new SinkLast(1);

@@ -17,55 +17,44 @@
  */
 package ca.uqac.lif.cep.json;
 
-import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.json.JsonElement;
+import ca.uqac.lif.json.JsonNull;
 import ca.uqac.lif.json.JsonParser;
 import ca.uqac.lif.json.JsonParser.JsonParseException;
 
 /**
- * Processor that turns input strings into output JSON documents
+ * Function that converts a string into a JSON element
  */
-public class JsonFeeder extends ApplyFunction
+public class ParseJson extends UnaryFunction<String,JsonElement> 
 {
-	public JsonFeeder()
-	{
-		super(JsonParsingFunction.instance);
-	}
-	
-	/**
-	 * Function that converts a string into a JSON element
-	 */
-	public static class JsonParsingFunction extends UnaryFunction<String,JsonElement> 
-	{
-		/**
-		 * Instance of the function
-		 */
-		public static JsonParsingFunction instance = new JsonParsingFunction();
-		
-		/**
-		 * The parser used to parse the elements. All instances of the
-		 * function share the same parser.
-		 */
-		protected static final JsonParser s_parser = new JsonParser();
-		
-		private JsonParsingFunction()
-		{
-			super(String.class, JsonElement.class);
-		}
-		
-		@Override
-		public /*@Nullable*/ JsonElement getValue(String x)
-		{
-			try 
-			{
-				return s_parser.parse(x);
-			} 
-			catch (JsonParseException e) 
-			{
-				// Do nothing
-			}
-			return null;
-		}
-	}
+  /**
+   * Instance of the function
+   */
+  public static ParseJson instance = new ParseJson();
+  
+  /**
+   * The parser used to parse the elements. All instances of the
+   * function share the same parser.
+   */
+  protected static final JsonParser s_parser = new JsonParser();
+  
+  private ParseJson()
+  {
+    super(String.class, JsonElement.class);
+  }
+  
+  @Override
+  public /*@ null @*/ JsonElement getValue(String x)
+  {
+    try 
+    {
+      return s_parser.parse(x);
+    } 
+    catch (JsonParseException e) 
+    {
+      // Do nothing
+    }
+    return JsonNull.instance;
+  }
 }
