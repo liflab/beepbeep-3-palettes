@@ -17,51 +17,42 @@
  */
 package ca.uqac.lif.cep.xml;
 
-import java.util.Collection;
-
-import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.xml.XPathExpression;
 import ca.uqac.lif.xml.XmlElement;
+import java.util.Collection;
 
 /**
  * Utility function to evaluate an XPath expression, ending with 
  * a <code>text()</code> element
  */
-public abstract class XPathFunctionGet<T> extends UnaryFunction<XmlElement,T>
+public abstract class XPathFunctionGet<T> extends XPathFunction
 {	
 	/**
-	 * The expression to evaluate
+	 * The type to cast the output to
 	 */
-	protected XPathExpression m_expression;
+	protected Class<T> m_outputType;
 	
 	public XPathFunctionGet(String exp, Class<T> clazz)
 	{
-		super(XmlElement.class, clazz);
-		m_expression = XPathFunction.parseExpression(exp);
+		super(exp);
+		m_outputType = clazz;
 	}
 	
 	public XPathFunctionGet(XPathExpression exp, Class<T> clazz)
 	{
-		super(XmlElement.class, clazz);
-		m_expression = exp;
-	}
-
-	@Override
-	public T getValue(XmlElement x)
-	{
-		Collection<XmlElement> col = m_expression.evaluate(x);
-		for (XmlElement xe : col)
-		{
-			return castValue(xe);
-		}
-		return null;
+		super(exp);
+		m_outputType = clazz;
 	}
 	
-	public abstract T castValue(XmlElement e);
-	
 	@Override
-	public String toString()
+	protected T postProcess(Collection<XmlElement> col)
 	{
-		return m_expression.toString();
+	  for (XmlElement e : col)
+	  {
+	    return castValue(e);
+	  }
+	  return null;
 	}
+	
+	protected abstract T castValue(XmlElement e);
 }

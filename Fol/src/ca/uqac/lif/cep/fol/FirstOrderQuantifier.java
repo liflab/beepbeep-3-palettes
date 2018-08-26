@@ -31,17 +31,35 @@ public abstract class FirstOrderQuantifier extends Function
 	
 	protected Function m_function;
 	
-	public FirstOrderQuantifier(String x, Function f) 
+	protected Function m_domainFunction;
+	
+	public FirstOrderQuantifier(String x, Function d, Function f) 
 	{
 		super();
 		m_variable = x;
 		m_function = f;
+		m_domainFunction = d;
 	}
+	
+	public FirstOrderQuantifier(String x, Function f) 
+  {
+    this(x, null, f);
+  }
 
 	@Override
 	/*@ non_null @*/ public Future<Object[]> evaluateFast(Object[] inputs, Object[] outputs, Context context, ExecutorService service) 
 	{
-		Collection<?> values = (Collection<?>) inputs[0];
+	  Collection<?> values;
+	  if (m_domainFunction == null)
+	  {
+	    values = (Collection<?>) inputs[0];
+	  }
+	  else
+	  {
+	    Object[] dom = new Object[m_domainFunction.getOutputArity()];
+	    m_domainFunction.evaluate(inputs, dom, context);
+	    values = (Collection<?>) dom[0];
+	  }
 		Object[][] all_vals = new Object[values.size()][1];
 		@SuppressWarnings("unchecked")
 		Future<Object[]>[] all_futures = new Future[values.size()];
@@ -52,7 +70,14 @@ public abstract class FirstOrderQuantifier extends Function
 			Function exp = m_function.duplicate();
 			all_vals[dom_count] = new Object[1];
 			new_context.put(m_variable, value);
-			all_futures[dom_count] = exp.evaluateFast(new Object[]{value}, all_vals[dom_count], new_context, service);
+			if (m_domainFunction == null)
+			{
+			  all_futures[dom_count] = exp.evaluateFast(new Object[]{value}, all_vals[dom_count], new_context, service);
+			}
+			else
+			{
+			  all_futures[dom_count] = exp.evaluateFast(inputs, all_vals[dom_count], new_context, service);
+			}
 			dom_count++;
 		}
 		return newFuture(all_futures); 
@@ -61,7 +86,17 @@ public abstract class FirstOrderQuantifier extends Function
 	@Override
 	public void evaluate(Object[] inputs, Object[] outputs, Context context)
 	{
-		Collection<?> values = (Collection<?>) inputs[0];
+	  Collection<?> values;
+    if (m_domainFunction == null)
+    {
+      values = (Collection<?>) inputs[0];
+    }
+    else
+    {
+      Object[] dom = new Object[m_domainFunction.getOutputArity()];
+      m_domainFunction.evaluate(inputs, dom, context);
+      values = (Collection<?>) dom[0];
+    }
 		Object[][] all_vals = new Object[values.size()][1];
 		int dom_count = 0;
 		for (Object value : values)
@@ -70,7 +105,14 @@ public abstract class FirstOrderQuantifier extends Function
 			Function exp = m_function.duplicate();
 			all_vals[dom_count] = new Object[1];
 			new_context.put(m_variable, value);
-			exp.evaluate(inputs, all_vals[dom_count], new_context);
+			if (m_domainFunction == null)
+			{
+			  exp.evaluate(new Object[]{value}, all_vals[dom_count], new_context);
+			}
+			else
+			{
+			  exp.evaluate(inputs, all_vals[dom_count], new_context);
+			}
 			dom_count++;
 		}
 		getVerdict(all_vals, outputs);

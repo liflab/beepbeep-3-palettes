@@ -33,6 +33,11 @@ public class Exists extends FirstOrderQuantifier
     super(x, f);
   }
   
+  public Exists(String x, Function d, Function f)
+  {
+    super(x, d, f);
+  }
+  
   @Override
   protected void getVerdict(Object[][] inputs, Object[] outputs)
   {

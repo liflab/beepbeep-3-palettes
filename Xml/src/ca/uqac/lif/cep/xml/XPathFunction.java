@@ -3,9 +3,9 @@ package ca.uqac.lif.cep.xml;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-
+import java.util.Set;
 import ca.uqac.lif.cep.Context;
-import ca.uqac.lif.cep.functions.UnaryFunction;
+import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.xml.Equality;
 import ca.uqac.lif.xml.Predicate;
 import ca.uqac.lif.xml.Segment;
@@ -18,17 +18,16 @@ import ca.uqac.lif.xml.XPathExpression.XPathParseException;
 /**
  * Function that converts a string into an XML element
  */
-public class XPathFunction extends UnaryFunction<XmlElement,Collection<XmlElement>> 
+public class XPathFunction extends Function 
 {
 	/**
 	 * The XPath expression this function evaluates
 	 */
 	protected final XPathExpression m_expression;
 	
-	@SuppressWarnings("unchecked")
 	public XPathFunction(String exp)
 	{
-		super(XmlElement.class, (Class<Collection<XmlElement>>) (Object) Collection.class);
+		super();
 		m_expression = parseExpression(exp);
 	}
 	
@@ -36,21 +35,10 @@ public class XPathFunction extends UnaryFunction<XmlElement,Collection<XmlElemen
 	 * Creates a new XPath function
 	 * @param exp The XPath expression to evaluate
 	 */
-	@SuppressWarnings("unchecked")
 	public XPathFunction(XPathExpression exp)
 	{
-		/* The double cast below is a bit of trickery to pass the
-		 * runtime type of the collection. It was found here:
-		 * http://stackoverflow.com/a/30754982
-		 */
-		super(XmlElement.class, (Class<Collection<XmlElement>>) (Object) Collection.class);
+		super();
 		m_expression = exp;
-	}
-	
-	@Override
-	public /*@NonNull*/ Collection<XmlElement> getValue(/*@NonNull*/ XmlElement x)
-	{
-		return m_expression.evaluate(x);
 	}
 	
 	/**
@@ -135,6 +123,10 @@ public class XPathFunction extends UnaryFunction<XmlElement,Collection<XmlElemen
 								{
 									new_right = ((TextElement) value).getText();
 								}
+								else
+								{
+								  new_right = value.toString();
+								}
 							}
 						}
 						Equality new_eq = new Equality(eq.getLeft(), new_right);
@@ -152,4 +144,68 @@ public class XPathFunction extends UnaryFunction<XmlElement,Collection<XmlElemen
 		XPathExpression exp = new XPathExpression(new_segments);
 		return exp;
 	}
+
+  @Override
+  public void evaluate(Object[] inputs, Object[] outputs, Context context)
+  {
+    XPathExpression n_exp;
+    if (context != null)
+    {
+      n_exp = evaluatePlaceholders(m_expression, context);
+    }
+    else
+    {
+      n_exp = m_expression;
+    }
+    Collection<XmlElement> col = n_exp.evaluate((XmlElement) inputs[0]);
+    outputs[0] = postProcess(col);
+  }
+  
+  @Override
+  public void evaluate(Object[] inputs, Object[] outputs)
+  {
+    evaluate(inputs, outputs, null);
+  }
+
+  @Override
+  public int getInputArity()
+  {
+    return 1;
+  }
+
+  @Override
+  public int getOutputArity()
+  {
+    return 1;
+  }
+
+  @Override
+  public void getInputTypesFor(Set<Class<?>> classes, int index)
+  {
+    if (index == 0)
+    {
+      classes.add(XmlElement.class);
+    }
+  }
+
+  @Override
+  public Class<?> getOutputTypeFor(int index)
+  {
+    if (index == 0)
+    {
+      /* The double cast below is a bit of trickery to pass the
+       * runtime type of the collection. It was found here:
+       * http://stackoverflow.com/a/30754982
+       */
+      @SuppressWarnings("unchecked")
+      Class<Collection<XmlElement>> class1 = (Class<Collection<XmlElement>>) (Object) Collection.class;
+      return class1;
+    }
+    return null;
+  }
+  
+  protected Object postProcess(Collection<XmlElement> col)
+  {
+    return col;
+  }
 }

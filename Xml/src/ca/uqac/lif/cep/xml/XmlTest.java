@@ -26,11 +26,11 @@ import java.util.Collection;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Pushable;
-import ca.uqac.lif.cep.Pushable.PushableException;
 import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.tmf.SinkLast;
-import ca.uqac.lif.xml.XPathExpression;
+import ca.uqac.lif.xml.TextElement;
 import ca.uqac.lif.xml.XPathExpression.XPathParseException;
 import ca.uqac.lif.xml.XmlElement;
 import ca.uqac.lif.xml.XmlElement.XmlParseException;
@@ -57,22 +57,10 @@ public class XmlTest
 		assertTrue(os[0] instanceof XmlElement);
 	}
 	
-	@Test(expected=PushableException.class)
-	public void testSingle2() 
-	{
-		// This is an error since an XML element must have a single root
-		ApplyFunction feeder = new ApplyFunction(ParseXml.instance);
-		Pushable in = feeder.getPushableInput(0);
-		assertNotNull(in);
-		SinkLast sink = new SinkLast(1);
-		Connector.connect(feeder, sink);
-		in.push("<a>123</a><b></b>");
-	}
-	
 	@Test
 	public void testXPath1() throws XPathParseException, XmlParseException
 	{
-		XPathEvaluator xpath = new XPathEvaluator(XPathExpression.parse("a/b/text()"));
+		ApplyFunction xpath = new ApplyFunction(new XPathFunction("a/b/text()"));
 		Pushable in = xpath.getPushableInput(0);
 		assertNotNull(in);
 		SinkLast sink = new SinkLast(1);
@@ -82,5 +70,24 @@ public class XmlTest
 		assertNotNull(os);
 		assertTrue(os[0] instanceof Collection<?>);
 	}
+	
+	@Test
+  public void testXPath2() throws XPathParseException, XmlParseException
+  {
+    XPathFunction xpath = new XPathFunction("a[b=$x]/c/text()");
+    Object[] out = new Object[1];
+    Context c = new Context();
+    c.put("x", "1");
+    xpath.evaluate(new Object[] {XmlElement.parse("<a><b>1</b><c>2</c></a>")}, out, c);
+    assert (out[0] instanceof Collection<?>);
+    @SuppressWarnings("unchecked")
+    Collection<XmlElement> col = (Collection<XmlElement>) out[0];
+    assertEquals(1, col.size());
+    for (XmlElement xe : col)
+    {
+      assertTrue(xe instanceof TextElement);
+      assertEquals("2", xe.toString());
+    }
+  }
 
 }

@@ -33,6 +33,11 @@ public class ForAll extends FirstOrderQuantifier
     super(x, f);
   }
   
+  public ForAll(String x, Function d, Function f)
+  {
+    super(x, d, f);
+  }
+  
   @Override
   protected void getVerdict(Object[][] inputs, Object[] outputs)
   {

@@ -26,7 +26,7 @@
   <name>XML palette for BeepBeep 3</name>
   
   <!-- The project's version number -->
-  <version>0.3-alpha</version>
+  <version>0.3.1-alpha</version>
   
   <!-- The project's author. Currently this only
   shows up in the footer of the Javadoc documentation. -->
@@ -61,7 +61,7 @@
       <name>xml-lif</name>
       <classname>ca.uqac.lif.xml.XmlElement</classname>
       <files>
-        <zip>https://github.com/liflab/xml-lif/releases/download/v1.2/xml-lif-1.2.zip</zip>
+        <zip>https://github.com/liflab/xml-lif/releases/download/v1.2.1/xml-lif-1.2.1.zip</zip>
       </files>
     </dependency>
   </dependencies>

@@ -1,6 +1,5 @@
 package ca.uqac.lif.cep.xml;
 
-import ca.uqac.lif.cep.functions.FunctionException;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.xml.XmlElement;
 import ca.uqac.lif.xml.XmlElement.XmlParseException;
@@ -29,7 +28,7 @@ public class ParseXml extends UnaryFunction<String,XmlElement>
 		} 
 		catch (XmlParseException e) 
 		{
-			throw new FunctionException(e);
+			return new XmlElement("");
 		}
 	}
 }
