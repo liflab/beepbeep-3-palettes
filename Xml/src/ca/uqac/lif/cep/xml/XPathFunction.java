@@ -166,6 +166,14 @@ public class XPathFunction extends Function
   {
     evaluate(inputs, outputs, null);
   }
+  
+  @SuppressWarnings("unchecked")
+  public Collection<XmlElement> getValue(XmlElement x)
+  {
+    Object[] out = new Object[1];
+    evaluate(new Object[] {x}, out);
+    return (Collection<XmlElement>) out[0];
+  }
 
   @Override
   public int getInputArity()
