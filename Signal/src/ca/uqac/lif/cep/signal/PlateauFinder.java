@@ -18,11 +18,6 @@
 package ca.uqac.lif.cep.signal;
 
 import java.util.Queue;
-import java.util.ArrayDeque;
-
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.util.Numbers.NumberCast;
 
 /**
  * Finds a plateau in a data stream. A plateau is found when all
@@ -116,58 +111,25 @@ public class PlateauFinder extends WindowProcessor
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		Object[] out_vector = new Object[1];
-		float d = NumberCast.getNumber(inputs[0]).floatValue();
+		float d = ((Number) (inputs[0])).floatValue();
+		m_values.addElement(d);
 		if (m_values.size() < m_windowWidth)
 		{
-			m_values.addElement(d);
-			if (m_values.size() == 1)
-			{
-				m_maxValue = d;
-				m_minValue = d;
-			}
-			else
-			{
-				if (d > m_maxValue)
-				{
-					m_maxValue = d;
-				}
-				if (d < m_minValue)
-				{
-					m_minValue = d;
-				}
-			}
-			if (m_values.size() < m_windowWidth)
-			{
-				// Window not filled yet: don't return anything
-				return true;
-			}
+			return true;
 		}
-		else
+		if (m_values.size() > m_windowWidth)
 		{
-			// Window is full
-			// Remove first element and put new at the end
-			double first_value = m_values.remove(0);
-			m_values.addElement(d);
-			if (doubleEquals(first_value, m_minValue))
-			{
-				// The element we removed was the minimum value; recompute min
-				m_minValue = getMinValue();
-			}
-			if (doubleEquals(first_value, m_maxValue))
-			{
-				// The element we removed was the maximum value; recompute max
-				m_maxValue = getMaxValue();
-			}			
+		  m_values.remove(0);
 		}
 		// Check range of values
-		double width = m_maxValue - m_minValue;
-		if (width < m_range)
+		Float f = computeOutputValue();
+		if (f != null)
 		{
 			if (!m_plateauFound)
 			{
 				// All values in the interval: create event with midpoint
-				out_vector[0] = m_minValue + width / 2;
-				m_plateauFound = true;				
+				out_vector[0] = (float) f;
+				m_plateauFound = true;			
 			}
 			else
 			{
@@ -194,15 +156,23 @@ public class PlateauFinder extends WindowProcessor
 		return true;
 	}
 	
-	public static void build(ArrayDeque<Object> stack) 
+	public Float computeOutputValue()
 	{
-		Processor p = (Processor) stack.pop();
-		stack.pop(); // OF
-		stack.pop(); // PLATEAU
-		stack.pop(); // THE
-		PlateauFinder pf = new PlateauFinder();
-		Connector.connect(p, pf);
-		stack.push(pf);
+	  float sum = 0;
+	  float min = Float.MAX_VALUE;
+	  float max = Float.MIN_VALUE;
+	  for (float f : m_values)
+	  {
+	    sum += f;
+	    min = Math.min(f, min);
+	    max = Math.max(f, max);
+	  }
+	  if (max - min > m_range)
+	  {
+	    return null;
+	  }
+	  return sum / (float) m_values.size();
+	  //return m_minValue + (m_maxValue - m_minValue) / 2;
 	}
 
 	@Override

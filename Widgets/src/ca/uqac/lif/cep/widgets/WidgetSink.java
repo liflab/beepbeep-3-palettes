@@ -4,6 +4,9 @@ import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.tmf.Sink;
 import java.awt.Component;
 import java.util.Queue;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JSlider;
 
 public class WidgetSink extends Sink
@@ -43,6 +46,20 @@ public class WidgetSink extends Sink
     if (c instanceof JSlider)
     {
       ((JSlider) c).setValue(((Number) inputs[0]).intValue()); 
+    }
+    if (c instanceof JLabel)
+    {
+      if (inputs[0].getClass().isArray())
+      {
+        // We assume array of bytes: set label to image
+        ((JLabel) c).setIcon(new ImageIcon((byte[]) inputs[0]));
+      }
+      else
+      {
+        // Set label to string of object
+        ((JLabel) c).setText(inputs[0].toString()); 
+      }
+      
     }
   }
 }
