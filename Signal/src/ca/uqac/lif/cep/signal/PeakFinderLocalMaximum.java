@@ -18,10 +18,7 @@
 package ca.uqac.lif.cep.signal;
 
 import java.util.Queue;
-import java.util.ArrayDeque;
 
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.util.Numbers.NumberCast;
 
 /**
@@ -192,17 +189,6 @@ public class PeakFinderLocalMaximum extends WindowProcessor
 		}
 		return peak_pos;
 	}
-
-	public static void build(ArrayDeque<Object> stack) 
-	{
-		Processor p = (Processor) stack.pop();
-		stack.pop(); // OF
-		stack.pop(); // PEAK
-		stack.pop(); // THE
-		PeakFinderLocalMaximum pflm = new PeakFinderLocalMaximum();
-		Connector.connect(p, pflm);
-		stack.push(pflm);
-	}
 	
 	@Override
 	public PeakFinderLocalMaximum duplicate(boolean with_state)
@@ -215,6 +201,12 @@ public class PeakFinderLocalMaximum extends WindowProcessor
 			pflm.m_peakPosition = m_peakPosition;
 		}
 		return pflm;
+	}
+	
+	@Override
+	public Float computeOutputValue()
+	{
+	  return null;
 	}
 
 }

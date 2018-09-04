@@ -49,10 +49,10 @@ public class WidgetSink extends Sink
     }
     if (c instanceof JLabel)
     {
-      if (inputs[0].getClass().isArray())
+      if (inputs[0] instanceof ImageIcon)
       {
         // We assume array of bytes: set label to image
-        ((JLabel) c).setIcon(new ImageIcon((byte[]) inputs[0]));
+        ((JLabel) c).setIcon((ImageIcon) inputs[0]);
       }
       else
       {

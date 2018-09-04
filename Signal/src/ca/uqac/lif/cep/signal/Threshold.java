@@ -18,12 +18,8 @@
 package ca.uqac.lif.cep.signal;
 
 import java.util.Queue;
-import java.util.ArrayDeque;
 
-import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.SynchronousProcessor;
-import ca.uqac.lif.cep.util.Numbers.NumberCast;
 
 public class Threshold extends SynchronousProcessor
 {
@@ -41,7 +37,7 @@ public class Threshold extends SynchronousProcessor
 	@Override
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
-		float value = NumberCast.getNumber(inputs[0]).floatValue();
+		float value = ((Number) inputs[0]).floatValue();
 		if (Math.abs(value) > m_threshold)
 		{
 			outputs.add(new Object[] {value});
@@ -49,18 +45,6 @@ public class Threshold extends SynchronousProcessor
 		}
 		outputs.add(new Object[] {0});
 		return true;
-	}
-
-	public static void build(ArrayDeque<Object> stack) 
-	{
-		float t_value = NumberCast.getNumber(stack.pop()).floatValue();
-		stack.pop(); // THRESHOLD
-		stack.pop(); // (
-		Processor p = (Processor) stack.pop();
-		stack.pop(); // )
-		Threshold t = new Threshold(t_value);
-		Connector.connect(p, t);
-		stack.push(t);		
 	}
 	
 	@Override

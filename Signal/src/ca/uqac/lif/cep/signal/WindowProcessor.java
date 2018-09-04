@@ -23,97 +23,98 @@ import ca.uqac.lif.cep.SynchronousProcessor;
 
 public abstract class WindowProcessor extends SynchronousProcessor
 {
-	/**
-	 * The precision used to for the equality between double precision
-	 * numbers
-	 */
-	protected static final double s_precision = 0.00001;
-	
-	/**
-	 * The window of values to remember
-	 */
-	protected Vector<Float> m_values;
-	
-	/**
-	 * The width of the window to process
-	 */
-	protected final int m_windowWidth;
-	
-	/**
-	 * The maximum value encountered so far
-	 */
-	protected float m_maxValue;
-	
-	/**
-	 * The minimum value encountered so far
-	 */
-	protected float m_minValue;
+  /**
+   * The precision used to for the equality between double precision
+   * numbers
+   */
+  protected static final double s_precision = 0.00001;
 
-	
-	public WindowProcessor()
-	{
-		this(5);
-	}
-	
-	public WindowProcessor(int width)
-	{
-		super(1, 1);
-		m_values = new Vector<Float>();
-		m_windowWidth = width;
-		m_maxValue = 0;
-		m_minValue = 0;		
-	}
-	
-	@Override
-	public void reset()
-	{
-		super.reset();
-		m_values = new Vector<Float>(m_windowWidth);
-		m_maxValue = 0;
-		m_minValue = 0;
-	}
-	
-	protected float getMaxValue()
-	{
-		float value = 0;
-		int pos = 0;
-		for (float d : m_values)
-		{
-			if (pos == 0)
-			{
-				value = d;
-			}
-			else
-			{
-				value = Math.max(value, d);
-			}
-			pos++;
-		}
-		return value;
-	}
-	
-	protected float getMinValue()
-	{
-		float value = 0;
-		int pos = 0;
-		for (float d : m_values)
-		{
-			if (pos == 0)
-			{
-				value = d;
-			}
-			else
-			{
-				value = Math.min(value, d);
-			}
-			pos++;
-		}
-		return value;
-	}
+  /**
+   * The window of values to remember
+   */
+  protected Vector<Float> m_values;
 
-	protected static boolean doubleEquals(double d1, double d2)
-	{
-		return Math.abs(d1 - d2) < s_precision;
-	}
+  /**
+   * The width of the window to process
+   */
+  protected final int m_windowWidth;
 
+  /**
+   * The maximum value encountered so far
+   */
+  protected float m_maxValue;
+
+  /**
+   * The minimum value encountered so far
+   */
+  protected float m_minValue;
+
+
+  public WindowProcessor()
+  {
+    this(5);
+  }
+
+  public WindowProcessor(int width)
+  {
+    super(1, 1);
+    m_values = new Vector<Float>();
+    m_windowWidth = width;
+    m_maxValue = 0;
+    m_minValue = 0;		
+  }
+
+  @Override
+  public void reset()
+  {
+    super.reset();
+    m_values = new Vector<Float>(m_windowWidth);
+    m_maxValue = 0;
+    m_minValue = 0;
+  }
+
+  protected float getMaxValue()
+  {
+    float value = 0;
+    int pos = 0;
+    for (float d : m_values)
+    {
+      if (pos == 0)
+      {
+        value = d;
+      }
+      else
+      {
+        value = Math.max(value, d);
+      }
+      pos++;
+    }
+    return value;
+  }
+
+  protected float getMinValue()
+  {
+    float value = 0;
+    int pos = 0;
+    for (float d : m_values)
+    {
+      if (pos == 0)
+      {
+        value = d;
+      }
+      else
+      {
+        value = Math.min(value, d);
+      }
+      pos++;
+    }
+    return value;
+  }
+
+  protected static boolean doubleEquals(double d1, double d2)
+  {
+    return Math.abs(d1 - d2) < s_precision;
+  }
+
+  protected abstract Float computeOutputValue();
 }

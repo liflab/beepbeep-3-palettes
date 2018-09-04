@@ -62,6 +62,7 @@ public class UpdateTableMap extends UniformProcessor
       te.put(s, map.get(s));
     }
     m_table.add(te);
+    outputs[0] = m_table;
     return true;
   }
 

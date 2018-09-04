@@ -28,18 +28,18 @@ import ca.uqac.lif.cep.util.Numbers.NumberCast;
  * @author Sylvain Hallé
  *
  */
-public class Limiter extends SynchronousProcessor
+public class Limit extends SynchronousProcessor
 {
 	protected final int m_limit;
 	
 	protected int m_counter;
 	
-	public Limiter()
+	public Limit()
 	{
 		this(5);
 	}
 	
-	public Limiter(int width)
+	public Limit(int width)
 	{
 		super(1, 1);
 		m_limit = width;
@@ -68,9 +68,9 @@ public class Limiter extends SynchronousProcessor
 	}
 	
 	@Override
-	public Limiter duplicate(boolean with_state)
+	public Limit duplicate(boolean with_state)
 	{
-		Limiter l = new Limiter(m_limit);
+		Limit l = new Limit(m_limit);
 		if (with_state)
 		{
 			l.m_counter = m_counter;

@@ -55,9 +55,8 @@ public class PeakFinderTravelRise extends WindowProcessor
 			float R = m_values.lastElement() - m_values.firstElement() + s_k;
 			if (T/R > 1)
 			{
-				System.out.print(T/R + " ");
 				// Declare a peak
-				outputs.add(new Object[]{getMaxValue() - getMinValue()});
+				outputs.add(new Object[]{computeOutputValue()});
 				return true;
 			}
 		}
@@ -71,4 +70,32 @@ public class PeakFinderTravelRise extends WindowProcessor
 		return new PeakFinderTravelRise(m_windowWidth);
 	}
 
+	@Override
+	public Float computeOutputValue()
+  {
+    float min = Float.MAX_VALUE;
+    float max = Float.MIN_VALUE;
+    int min_pos = 0;
+    int max_pos = 0;
+    int cnt = 0;
+    for (float f : m_values)
+    {
+      if (f < min)
+      {
+        min = f;
+        min_pos = cnt;
+      }
+      if (f > max)
+      {
+        max = f;
+        max_pos = cnt;
+      }
+      cnt++;
+    }
+    if (min_pos < max_pos)
+    {
+      return max - min;
+    }
+    return min - max;
+  }
 }

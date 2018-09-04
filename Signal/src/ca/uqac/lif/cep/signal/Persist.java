@@ -20,7 +20,7 @@ package ca.uqac.lif.cep.signal;
 import ca.uqac.lif.cep.UniformProcessor;
 
 /**
- * Persists a non-zero value for a certain amount of time.
+ * Persists a locally maximal value for a certain amount of time.
  * @author Sylvain Hallé
  */
 public class Persist extends UniformProcessor
@@ -49,7 +49,7 @@ public class Persist extends UniformProcessor
   {
     float f = ((Number) inputs[0]).floatValue();
     m_timeSinceLast++;
-    if (f != 0f)
+    if (f > m_lastValue)
     {
       m_lastValue = f;
       m_timeSinceLast = 0;

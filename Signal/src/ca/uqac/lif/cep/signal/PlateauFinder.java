@@ -67,14 +67,26 @@ public class PlateauFinder extends WindowProcessor
 	
 	/**
 	 * Instantiates a plateau finder with default settings
+	 * @param width The width of the window
 	 */
-	public PlateauFinder()
+	public PlateauFinder(int width)
 	{
-		super();
+		super(width);
 		m_range = 5;
 		m_plateauFound = false;
 		m_lastPlateauFound = 0;
 	}
+	
+	/**
+   * Instantiates a plateau finder with default settings
+   */
+  public PlateauFinder()
+  {
+    super();
+    m_range = 5;
+    m_plateauFound = false;
+    m_lastPlateauFound = 0;
+  }
 	
 	/**
 	 * Sets whether the height of the plateau should be relative to that of the
@@ -156,6 +168,7 @@ public class PlateauFinder extends WindowProcessor
 		return true;
 	}
 	
+	@Override
 	public Float computeOutputValue()
 	{
 	  float sum = 0;
