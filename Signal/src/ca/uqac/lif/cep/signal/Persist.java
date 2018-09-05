@@ -49,7 +49,7 @@ public class Persist extends UniformProcessor
   {
     float f = ((Number) inputs[0]).floatValue();
     m_timeSinceLast++;
-    if (f > m_lastValue)
+    if (Math.abs(f) > Math.abs(m_lastValue))
     {
       m_lastValue = f;
       m_timeSinceLast = 0;
