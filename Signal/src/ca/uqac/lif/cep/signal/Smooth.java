@@ -22,9 +22,9 @@ import java.util.Set;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.tmf.WindowFunction;
 
-public class Smoothen extends WindowFunction
+public class Smooth extends WindowFunction
 {
-	public Smoothen(int width)
+	public Smooth(int width)
 	{
 		super(new ArrayAverage(width));
 	}
