@@ -20,7 +20,8 @@ package ca.uqac.lif.cep.concurrency;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
-
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pullable;
@@ -37,6 +38,8 @@ public class NonBlockingPush extends Processor
 	protected Processor m_processor;
 	
 	protected ArraySink m_sink;
+	
+	protected Lock m_sinkLock = new ReentrantLock();
 	
 	public NonBlockingPush(Processor p, ExecutorService service) 
 	{
@@ -137,6 +140,7 @@ public class NonBlockingPush extends Processor
 		@Override
 		public Pushable call()
 		{
+		  m_sinkLock.lock();
 			m_pushable.push(m_event);
 			while (!m_sink.m_queue.isEmpty())
 			{
@@ -146,6 +150,7 @@ public class NonBlockingPush extends Processor
 					m_outputPushables[i].push(front[i]);
 				}
 			}
+			m_sinkLock.unlock();
 			return m_pushable;
 		}
 	}

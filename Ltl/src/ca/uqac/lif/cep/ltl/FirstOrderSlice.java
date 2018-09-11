@@ -18,10 +18,12 @@
 package ca.uqac.lif.cep.ltl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SynchronousProcessor;
@@ -30,75 +32,106 @@ import ca.uqac.lif.cep.tmf.SinkLast;
 
 public class FirstOrderSlice extends SynchronousProcessor 
 {
-	protected String m_varName;
-	
-	protected Function m_function;
-	
-	protected Processor m_expression;
-	
-	protected List<Processor> m_slices;
-	
-	protected List<Pushable> m_pushables;
-	
-	protected List<SinkLast> m_sinks;
-	
-	public FirstOrderSlice(String var_name, Function dom_function, Processor expression)
-	{
-		super(1, 1);
-		m_varName = var_name;
-		m_function = dom_function;
-		m_expression = expression;
-		m_slices = new ArrayList<Processor>();
-		m_pushables = new ArrayList<Pushable>();
-		m_sinks = new ArrayList<SinkLast>();
-	}
+  protected String m_varName;
 
-	@Override
-	public FirstOrderSlice duplicate(boolean with_state) 
-	{
-		FirstOrderSlice fos = new FirstOrderSlice(m_varName, m_function, m_expression);
-		if (with_state)
-		{
-			throw new UnsupportedOperationException("Duplication with state not supported yet on this processor");
-		}
-		return fos;
-	}
-	
-	@Override
-	public void reset()
-	{
-		m_slices.clear();
-		m_function.reset();
-	}
+  protected Function m_function;
 
-	@Override
-	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
-	{
-		// Evaluate domain function
-		Object[] values = new Object[1];
-		m_function.evaluate(inputs, values);
-		// Create new slice and set context
-		Processor new_p = m_expression.duplicate();
-		new_p.setContext(m_context);
-		new_p.setContext(m_varName, values[0]);
-		// Connect to sink, add to lists
-		m_slices.add(new_p);
-		m_pushables.add(new_p.getPushableInput());
-		SinkLast sink = new SinkLast();
-		Connector.connect(new_p, sink);
-		m_sinks.add(sink);
-		// Push inputs to all slices
-		for (Pushable p : m_pushables)
-		{
-			p.push(inputs[0]);
-		}
-		// Collect output into an array
-		Object[] out_vals = new Object[m_pushables.size()];
-		for (int i = 0; i < out_vals.length; i++)
-		{
-			out_vals[0] = m_sinks.get(0).getLast()[0];
-		}
-		outputs.add(new Object[]{out_vals});
-		return true;
-	}
+  protected Processor m_expression;
+
+  protected List<Processor> m_slices;
+
+  protected List<Pushable> m_pushables;
+
+  protected List<SinkLast> m_sinks;
+
+  public FirstOrderSlice(String var_name, Function dom_function, Processor expression)
+  {
+    super(1, 1);
+    m_varName = var_name;
+    m_function = dom_function;
+    m_expression = expression;
+    m_slices = new ArrayList<Processor>();
+    m_pushables = new ArrayList<Pushable>();
+    m_sinks = new ArrayList<SinkLast>();
+  }
+
+  @Override
+  public FirstOrderSlice duplicate(boolean with_state) 
+  {
+    FirstOrderSlice fos = new FirstOrderSlice(m_varName, m_function, m_expression);
+    fos.setContext(getContext());
+    if (with_state)
+    {
+      throw new UnsupportedOperationException("Duplication with state not supported yet on this processor");
+    }
+    return fos;
+  }
+  
+  @Override
+  public void setContext(String key, Object value)
+  {
+    super.setContext(key, value);
+    for (Processor p : m_slices)
+    {
+      p.setContext(key, value);
+    }
+  }
+  
+  @Override
+  public void setContext(Context c)
+  {
+    super.setContext(c);
+    for (Processor p : m_slices)
+    {
+      p.setContext(c);
+    }
+  }
+
+  @Override
+  public void reset()
+  {
+    m_slices.clear();
+    m_function.reset();
+  }
+
+  @Override
+  protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
+  {
+    // Evaluate domain function
+    Object[] values = new Object[1];
+    m_function.evaluate(inputs, values);
+    // Create new slice and set context
+    if (values[0] instanceof Collection<?>)
+    {
+      for (Object val : (Collection<?>) values[0])
+      {
+        Processor new_p = m_expression.duplicate();
+        new_p.setContext(m_context);
+        new_p.setContext(m_varName, val);
+        // Connect to sink, add to lists
+        m_slices.add(new_p);
+        m_pushables.add(new_p.getPushableInput());
+        SinkLast sink = new SinkLast();
+        Connector.connect(new_p, sink);
+        m_sinks.add(sink);
+      }      
+    }
+    // Push inputs to all slices
+    for (Pushable p : m_pushables)
+    {
+      p.push(inputs[0]);
+    }
+    // Collect output into a list
+    List<Object> out_vals = new ArrayList<Object>(m_pushables.size());
+    for (SinkLast sl : m_sinks)
+    {
+      Object[] oa = sl.getLast();
+      if (oa != null)
+      {
+        out_vals.add(oa[0]);
+      }
+    }
+    outputs.add(new Object[] {out_vals});
+    return true;
+  }
 }

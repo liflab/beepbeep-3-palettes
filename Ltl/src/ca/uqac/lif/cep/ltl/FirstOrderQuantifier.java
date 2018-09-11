@@ -17,9 +17,11 @@
  */
 package ca.uqac.lif.cep.ltl;
 
+import java.util.List;
 import java.util.Queue;
 
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SynchronousProcessor;
@@ -47,19 +49,44 @@ public abstract class FirstOrderQuantifier extends SynchronousProcessor
 	{
 		super(1, 1);
 		m_slicer = fos;
+		m_slicerPushable = m_slicer.getPushableInput();
+    m_sink = new SinkLast();
+    Connector.connect(m_slicer, m_sink);
 	}
+	
+	@Override
+	public void setContext(String key, Object value)
+	{
+	  super.setContext(key, value);
+	  m_slicer.setContext(key, value);
+	}
+	
+	@Override
+  public void setContext(Context c)
+  {
+    super.setContext(c);
+    m_slicer.setContext(c);
+  }
 	
 	@Override
 	public void reset()
 	{
 		m_slicer.reset();
 	}
+	
+	@Override
+	public void duplicateInto(Processor p)
+	{
+	  super.duplicateInto(p);
+	  FirstOrderQuantifier foq = (FirstOrderQuantifier) p;
+	  foq.m_slicer = (FirstOrderSlice) m_slicer.duplicate();
+	}
 
 	@Override
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
 		m_slicerPushable.push(inputs[0]);
-		Object[] vals = (Object[]) m_sink.getLast()[0];
+		List<?> vals = (List<?>) m_sink.getLast()[0];
 		Object value = combineValues(vals);
 		if (value != null)
 		{
@@ -68,5 +95,5 @@ public abstract class FirstOrderQuantifier extends SynchronousProcessor
 		return true;
 	}
 	
-	public abstract Object combineValues(Object[] values);
+	public abstract Object combineValues(List<?> values);
 }

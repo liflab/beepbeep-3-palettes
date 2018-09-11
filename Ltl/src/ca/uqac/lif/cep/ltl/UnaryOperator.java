@@ -45,6 +45,7 @@ public abstract class UnaryOperator extends UniformProcessor
 	protected void spawn()
 	{
 		Processor new_p = m_processor.duplicate();
+		new_p.setContext(m_context);
 		Pushable p = new_p.getPushableInput();
 		SinkLast sink = new SinkLast();
 		Connector.connect(new_p, sink);
