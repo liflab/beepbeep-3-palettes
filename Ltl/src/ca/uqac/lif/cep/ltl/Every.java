@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.ltl;
 
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.Function;
+import java.util.List;
 
 /**
  * Troolean implementation of the universal first-order quantifier.
@@ -26,27 +27,29 @@ import ca.uqac.lif.cep.functions.Function;
  */
 public class Every extends FirstOrderQuantifier 
 {
-	public Every(String var_name, Function dom_function, Processor expression)
-	{
-		super(var_name, dom_function, expression);
-	}
-	
-	protected Every(FirstOrderSlice fos)
-	{
-		super(fos);
-	}
-	
-	@Override
-	public Every duplicate(boolean with_state)
-	{
-		Every f = new Every((FirstOrderSlice) m_slicer.duplicate(with_state));
-		f.setContext(m_context);
-		return f;
-	}
+  public Every(String var_name, Function dom_function, Processor expression)
+  {
+    super(var_name, dom_function, expression);
+  }
 
-	@Override
-	public Object combineValues(Object[] values) 
-	{
-		return Troolean.and((Troolean.Value[]) values);
-	}
+  protected Every(FirstOrderSlice fos)
+  {
+    super(fos);
+  }
+
+  @Override
+  public Every duplicate(boolean with_state)
+  {
+    Every f = new Every((FirstOrderSlice) m_slicer.duplicate(with_state));
+    f.setContext(m_context);
+    return f;
+  }
+
+  @Override
+  public Object combineValues(List<?> values) 
+  {
+    @SuppressWarnings("unchecked")
+    List<Troolean.Value> values2 = (List<Troolean.Value>) values;
+    return Troolean.and(values2);
+  }
 }

@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.ltl;
 
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.Function;
+import java.util.List;
 
 /**
  * Troolean implementation of the existential first-order quantifier.
@@ -45,8 +46,10 @@ public class Some extends FirstOrderQuantifier
 	}
 
 	@Override
-	public Object combineValues(Object[] values) 
+	public Object combineValues(List<?> values) 
 	{
-		return Troolean.or((Troolean.Value[]) values);
+		@SuppressWarnings("unchecked")
+    List<Troolean.Value> values2 = (List<Troolean.Value>) values;
+    return Troolean.or(values2);
 	}
 }

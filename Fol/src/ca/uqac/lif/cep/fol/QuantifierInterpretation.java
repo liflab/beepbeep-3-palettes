@@ -53,12 +53,7 @@ public abstract class QuantifierInterpretation extends Function
 				System.out.println("Dom: " + dom_count);
 			}
 			new_context.put(m_variableName, value);
-			exp.evaluateFast(inputs, return_values, new_context);
-		}
-		// Now wait until the evaluation of each function is done
-		for (int i = 0; i < num_values; i++)
-		{
-			all_expressions.get(i).waitFor();
+			exp.evaluate(inputs, return_values, new_context);
 		}
 		out[0] = !m_stopValue;
 		for (int i = 0; i < num_values; i++)

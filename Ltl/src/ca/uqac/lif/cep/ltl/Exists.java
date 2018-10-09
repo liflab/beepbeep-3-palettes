@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.ltl;
 
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.functions.Function;
+import java.util.List;
 
 /**
  * Boolean implementation of the existential first-order quantifier.
@@ -45,7 +46,7 @@ public class Exists extends FirstOrderQuantifier
 	}
 
 	@Override
-	public Object combineValues(Object[] values) 
+	public Object combineValues(List<?> values) 
 	{
 		for (Object o : values)
 		{

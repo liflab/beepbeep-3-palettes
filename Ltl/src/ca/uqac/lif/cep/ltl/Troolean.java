@@ -20,6 +20,7 @@ package ca.uqac.lif.cep.ltl;
 import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.UnaryFunction;
+import java.util.Collection;
 
 /**
  * Implementation of a three-valued logic. The "Troolean" type
@@ -101,6 +102,32 @@ public class Troolean extends Constant
 	}
 	
 	/**
+   * Computes the logical conjunction of the values
+   * @param values The values
+   * @return The result
+   */
+  public static Value and(Collection<Value> values)
+  {
+    boolean inc_seen = false;
+    for (Value v : values)
+    {
+      if (v == Value.FALSE)
+      {
+        return Value.FALSE;
+      }
+      if (v == Value.INCONCLUSIVE)
+      {
+        inc_seen = true;
+      }
+    }
+    if (inc_seen)
+    {
+      return Value.INCONCLUSIVE;
+    }
+    return Value.TRUE;
+  }
+	
+	/**
 	 * Computes the logical disjunction of the values
 	 * @param values The values
 	 * @return The result
@@ -125,6 +152,32 @@ public class Troolean extends Constant
 		}
 		return Value.FALSE;
 	}
+	
+	/**
+   * Computes the logical disjunction of the values
+   * @param values The values
+   * @return The result
+   */
+  public static Value or(Collection<Value> values)
+  {
+    boolean inc_seen = false;
+    for (Value v : values)
+    {
+      if (v == Value.TRUE)
+      {
+        return Value.TRUE;
+      }
+      if (v == Value.INCONCLUSIVE)
+      {
+        inc_seen = true;
+      }
+    }
+    if (inc_seen)
+    {
+      return Value.INCONCLUSIVE;
+    }
+    return Value.FALSE;
+  }
 	
 	/**
 	 * Computes the logical implication of two values
@@ -163,6 +216,25 @@ public class Troolean extends Constant
 		}
 		return Value.FALSE;
 	}
+	
+	/*
+   * Implies does not make much sense with more than two arguments...
+   */
+  public static Value implies(Collection<Value> values)
+  {
+    for (Value v : values)
+    {
+      if (v == Value.FALSE)
+      {
+        return Value.TRUE;
+      }
+      if (v == Value.INCONCLUSIVE)
+      {
+        return Value.INCONCLUSIVE;
+      }
+    }
+    return Value.FALSE;
+  }
 	
 	/**
 	 * Computes the logical negation of a value
