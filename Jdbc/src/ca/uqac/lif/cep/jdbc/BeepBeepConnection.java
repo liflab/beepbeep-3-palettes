@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain HallÃ©
+    Copyright (C) 2008-2017 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -25,13 +25,10 @@ public class BeepBeepConnection extends EmptyConnection
 {
 	protected Interpreter m_interpreter;
 	
-	BeepBeepConnection(String url, String fileName, Properties prop)
+	BeepBeepConnection(Interpreter inter, String url, String fileName, Properties prop)
 	{
 		super();
-		m_interpreter = new Interpreter();
-		// Load the tuple palette, as obviously we'll be manipulating
-		// tuples in queries
-		m_interpreter.load(ca.uqac.lif.cep.tuples.PackageExtension.class);
+		m_interpreter = inter;
 	}
 	
 	@Override

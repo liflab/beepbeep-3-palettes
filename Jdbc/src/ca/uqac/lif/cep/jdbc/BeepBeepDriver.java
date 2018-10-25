@@ -104,7 +104,7 @@ public class BeepBeepDriver implements Driver
 	@Override
 	public Connection connect(String url, Properties info) throws SQLException 
 	{
-		return createConnection(url, info);
+		return createConnection(null, url, info);
 	}
 
 	/**
@@ -120,6 +120,7 @@ public class BeepBeepDriver implements Driver
 
 	/**
 	 * Creates a new database connection to a given URL.
+	 * @param inter An interpreter
 	 * @param url The connection URL
 	 * @param prop The properties
 	 * @return A <code>Connection</code> object that represents a connection
@@ -127,7 +128,7 @@ public class BeepBeepDriver implements Driver
 	 * @throws SQLException If the URL provided is invalid
 	 * @see java.sql.Driver#connect(java.lang.String, java.util.Properties)
 	 */
-	public static Connection createConnection(String url, Properties prop) throws SQLException 
+	public static Connection createConnection(Interpreter inter, String url, Properties prop) throws SQLException 
 	{
 		if (!isValidURL(url))
 		{
@@ -135,7 +136,7 @@ public class BeepBeepDriver implements Driver
 		}
 
 		url = url.trim();
-		return new BeepBeepConnection(url, extractAddress(url), prop);
+		return new BeepBeepConnection(inter, url, extractAddress(url), prop);
 	}
 
 	// @Override -- Comment out annotation for Java 1.6 compliance

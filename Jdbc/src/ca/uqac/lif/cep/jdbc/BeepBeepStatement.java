@@ -20,17 +20,19 @@ package ca.uqac.lif.cep.jdbc;
 import java.sql.ResultSet;
 
 import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.jdbc.Interpreter.ParseException;
 
 public class BeepBeepStatement extends EmptyStatement
 {
+  /**
+   * An interpreter
+   */
 	protected final Interpreter m_interpreter;
 	
 	BeepBeepStatement(Interpreter interpreter)
 	{
 		super();
 		m_interpreter = interpreter;
-		// Load a few extensions
-		m_interpreter.load(PackageExtension.class);
 	}
 	
 	@Override
