@@ -47,7 +47,7 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>../ltl.jar</filename>
+    <filename>../signal.jar</filename>
     <withdoc>false</withdoc>
   </jar>
   
