@@ -165,6 +165,9 @@
         <fileset dir="../">
           <include name="beepbeep-3.jar"/>
         </fileset>
+		<fileset dir="../">
+          <include name="concurrency.jar"/>
+        </fileset>
         <pathelement location="${build.libdir}/${junit.jarname}"/>
         <pathelement location="${build.libdir}/${junit.hamcrest}"/>
       </classpath>
@@ -226,6 +229,9 @@
           <include name="*.jar"/>
         </fileset>
         <pathelement path="${java.class.path}"/>
+		<fileset dir="../">
+          <include name="concurrency.jar"/>
+        </fileset>
         <pathelement location="${build.libdir}/${junit.jarname}"/>
         <pathelement location="${build.libdir}/${junit.hamcrest}"/>
         <fileset dir="../">
