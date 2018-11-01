@@ -61,7 +61,7 @@
       <name>MTNP</name>
       <classname>ca.uqac.lif.mtnp.DataFormatter</classname>
       <files>
-        <zip>https://github.com/liflab/mtnp/releases/download/v0.1.4-alpha/mtnp-0.1.4-alpha.zip</zip>
+        <zip>https://github.com/liflab/mtnp/releases/download/v0.1.8-alpha/mtnp-0.1.8-alpha.zip</zip>
       </files>
     </dependency>
   </dependencies>
