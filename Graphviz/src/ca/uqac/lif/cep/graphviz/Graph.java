@@ -35,12 +35,55 @@ public class Graph
 	protected Map<String,Set<Edge>> m_edges;
 	
 	/**
+	 * A map associating edge labels to numbers
+	 */
+	protected Map<String,Integer> m_edgeLabels;
+	
+	/**
+   * A map associating vertex labels to the sum of the weights
+   * on its incoming edges.
+   * Since edges are stored by source vertex, computing the input
+   * degree would require looping through every source vertex to
+   * look for a destination vertex, which would be very costly.
+   * The alternative is to update a separate map of the input
+   * degrees as the graph is manipulated.
+   */
+  protected Map<String,Float> m_inWeights;
+	
+	/**
+	 * A counter for giving unique numbers to edges
+	 */
+	protected int m_edgeCounter;
+	
+	/**
+	 * Whether to increment the weights or to replace the weight of an
+	 * edge with a new value
+	 */
+	protected boolean m_incrementWeights = true;
+	
+	/**
 	 * Creates a new empty graph
 	 */
 	public Graph()
 	{
 		super();
 		m_edges = new HashMap<String,Set<Edge>>();
+		m_edgeLabels = new HashMap<String,Integer>();
+		m_inWeights = new HashMap<String,Float>();
+		m_edgeCounter = 0;
+	}
+	
+	/**
+	 * Sets whether to increment the weights or to replace the weight of an
+   * edge with a new value
+	 * @param b Set to {@code true} to increment weights, {@code false}
+	 * to replace
+	 * @return This graph
+	 */
+	public Graph incrementWeight(boolean b)
+	{
+	  m_incrementWeights = b;
+	  return this;
 	}
 	
 	/**
@@ -51,19 +94,42 @@ public class Graph
 	public Graph add(Edge e)
 	{
 		Set<Edge> list = null;
+		int src_id = -1, dst_id = -1;
+		if (m_edgeLabels.containsKey(e.m_source))
+		{
+		  src_id = m_edgeLabels.get(e.m_source);
+		}
+		else
+		{
+		  src_id = m_edgeCounter++;
+		  m_edgeLabels.put(e.m_source, src_id);
+		}
+		if (m_edgeLabels.containsKey(e.m_destination))
+    {
+      dst_id = m_edgeLabels.get(e.m_destination);
+    }
+    else
+    {
+      dst_id = m_edgeCounter++;
+      m_edgeLabels.put(e.m_destination, dst_id);
+    }
 		if (m_edges.containsKey(e.m_source))
 			list = m_edges.get(e.m_source);
 		else
 			list = new HashSet<Edge>();
 		list.add(e);
 		m_edges.put(e.m_source, list);
+		if (!m_inWeights.containsKey(e.m_source))
+		{
+		  m_inWeights.put(e.m_source, e.m_weight);
+		}
 		return this;
 	}
 	
 	/**
 	 * Finds the edge with given source and destination vertices
 	 * @param source The source vertex
-	 * @param destination The destinatino vertex
+	 * @param destination The destination vertex
 	 * @return The edge, or {@code null} if no edge could be found
 	 */
 	public /*@Null*/ Edge getEdge(String source, String destination)
@@ -80,6 +146,20 @@ public class Graph
 	}
 	
 	/**
+	 * Returns the input weight of a vertex
+	 * @param vertex The vertex
+	 * @return The input weight, or -1 if the vertex does not exist
+	 */
+	public float getInWeight(String vertex)
+	{
+	  if (!m_inWeights.containsKey(vertex))
+	  {
+	    return -1;
+	  }
+	  return m_inWeights.get(vertex);
+	}
+	
+	/**
 	 * Increments the weight of an edge in the graph. If the edge
 	 * does not exist, a new edge is created and its weight is set
 	 * to <tt>weight_increment</tt>.
@@ -88,15 +168,25 @@ public class Graph
 	 * @param weight_increment The amount to add to the edge's weight 
 	 * @return This graph
 	 */
-	public Graph incrementWeight(String source, String destination, float weight_increment)
+	public Graph incrementWeight(String source, String destination, Number weight_increment)
 	{
 		Edge e = getEdge(source, destination);
+		float f_weight = weight_increment.floatValue();
 		if (e == null)
 		{
-			add(new Edge(source, destination, weight_increment));
+			add(new Edge(source, destination, f_weight));
 			return this;
 		}
-		e.m_weight += weight_increment;
+		if (m_incrementWeights)
+		{
+		  e.m_weight += f_weight;
+		  m_inWeights.put(destination, m_inWeights.get(source) + f_weight);
+		}
+		else
+		{
+		  e.m_weight = f_weight;
+		  m_inWeights.put(destination, f_weight);
+		}
 		return this;
 	}
 	
@@ -108,20 +198,44 @@ public class Graph
 	{
 		StringBuilder out = new StringBuilder();
 		out.append("digraph G {\n");
-		for (String vertex : m_edges.keySet())
+		for (Map.Entry<String,Integer> entry : m_edgeLabels.entrySet())
 		{
-			out.append(vertex).append("[label=\"").append(vertex).append("\"];\n");
+			out.append(entry.getValue()).append(" [").append(renderVertex(entry.getKey())).append("];\n");
 		}
 		for (Map.Entry<String,Set<Edge>> entry : m_edges.entrySet())
 		{
 			for (Edge e : entry.getValue())
 			{
-				out.append(e).append(" [label=\"").append(formatWeight(e.m_weight)).append("\"];\n");
+			  int src_id = m_edgeLabels.get(e.m_source);
+			  int dst_id = m_edgeLabels.get(e.m_destination);
+				out.append(src_id).append(" -> ").append(dst_id).append(" [").append(renderEdge(e)).append("];\n");
 			}
 		}
 		out.append("}");
 		return out.toString();
 	}
+	
+	/**
+	 * Renders an edge. Override this method to customize
+	 * the rendering.
+	 * @param e The edge to render
+	 * @return The label
+	 */
+	public String renderEdge(Edge e)
+	{
+	  return "label=\"" + formatWeight(e.m_weight) + "\"";
+	}
+	
+	/**
+   * Renders a vertex. Override this method to customize
+   * the rendering.
+   * @param vertex The string corresponding to the vertex to render
+   * @return The Graphviz string that goes between the brackets
+   */
+  public String renderVertex(String vertex)
+  {
+    return "label=\"" + vertex + "\"";
+  }
 	
 	/**
 	 * Removes decimals if number is an integer
@@ -163,7 +277,18 @@ public class Graph
 			}
 			g.m_edges.put(entry.getKey(), new_edges);
 		}
+		g.m_edgeLabels.putAll(m_edgeLabels);
 		return g;
+	}
+	
+	/**
+	 * Clears the contents of the graph
+	 */
+	public void clear()
+	{
+	  m_edges.clear();
+	  m_edgeLabels.clear();
+	  m_edgeCounter = 0;
 	}
 	
 	/**
@@ -217,6 +342,15 @@ public class Graph
 		public Edge duplicate(boolean with_state)
 		{
 			return new Edge(m_source, m_destination, m_weight);
+		}
+		
+		/**
+		 * Gets the weight of an edge
+		 * @return The weight
+		 */
+		public float getWeight()
+		{
+		  return m_weight;
 		}
 		
 		@Override

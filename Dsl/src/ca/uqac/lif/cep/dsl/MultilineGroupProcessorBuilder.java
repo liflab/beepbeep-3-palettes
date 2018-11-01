@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.dsl;
 
+import java.io.InputStream;
 import java.util.Deque;
 import java.util.Scanner;
 
@@ -33,16 +34,27 @@ public abstract class MultilineGroupProcessorBuilder extends GroupProcessorBuild
 	public GroupProcessor build(String expression) throws BuildException 
 	{
 		Scanner scanner = new Scanner(expression);
-		while (scanner.hasNextLine()) 
-		{
-			String line = scanner.nextLine().trim();
-			if (line.isEmpty() || (!m_commentChar.isEmpty() && line.startsWith(m_commentChar)))
-				continue;
-			buildLine(line);
-		}
-		scanner.close();
-		return endOfFileVisit();
+		return build(scanner);
 	}
+	
+	public GroupProcessor build(InputStream is) throws BuildException 
+  {
+    Scanner scanner = new Scanner(is);
+    return build(scanner);
+  }
+	
+  public GroupProcessor build(Scanner scanner) throws BuildException 
+  {
+    while (scanner.hasNextLine()) 
+    {
+      String line = scanner.nextLine().trim();
+      if (line.isEmpty() || (!m_commentChar.isEmpty() && line.startsWith(m_commentChar)))
+        continue;
+      buildLine(line);
+    }
+    scanner.close();
+    return endOfFileVisit();
+  }
 	
 	/**
 	 * Sets the character used to mark comment lines
@@ -54,9 +66,9 @@ public abstract class MultilineGroupProcessorBuilder extends GroupProcessorBuild
 		m_commentChar = cc;
 	}
 	
-	public void buildLine(String line) throws BuildException
+	public GroupProcessor buildLine(String line) throws BuildException
 	{
-		super.build(line);
+		return super.build(line);
 	}
 	
 	@Override

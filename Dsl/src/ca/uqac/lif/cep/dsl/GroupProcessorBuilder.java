@@ -123,4 +123,24 @@ public class GroupProcessorBuilder extends GrammarObjectBuilder<GroupProcessor>
 		Connector.connect(f, f_arity, pt, 0);
 		return pt;
 	}
+	
+	/**
+   * Encapsulates a processor into a group processor
+   * @param p The processor to encapsulate
+   * @return A {@link GroupProcessor} containing only p inside
+   */
+  protected static GroupProcessor encapsulate(Processor p)
+  {
+    if (p instanceof GroupProcessor)
+    {
+      return (GroupProcessor) p;
+    }
+    GroupProcessor gp = new GroupProcessor(p.getInputArity(), p.getOutputArity());
+    gp.addProcessor(p);
+    for (int i = 0; i < p.getInputArity(); i++)
+      gp.associateInput(i, p, i);
+    for (int i = 0; i < p.getOutputArity(); i++)
+      gp.associateOutput(i, p, i);
+    return gp;
+  }
 }

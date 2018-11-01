@@ -22,10 +22,10 @@ import ca.uqac.lif.cep.UniformProcessor;
 
 /**
  * Receives a stream of directed edges, and progressively
- * updates a directed graph.
+ * updates a directed weighted graph.
  * @author Sylvain Hallé
  */
-public class UpdateGraph extends UniformProcessor 
+public class UpdateWeightedGraph extends UniformProcessor 
 {
 	/**
 	 * The graph that is updated by this processor
@@ -35,7 +35,7 @@ public class UpdateGraph extends UniformProcessor
 	/**
 	 * Creates a new update graph processor
 	 */
-	public UpdateGraph()
+	public UpdateWeightedGraph()
 	{
 		this(new Graph());
 	}
@@ -44,22 +44,22 @@ public class UpdateGraph extends UniformProcessor
 	 * Creates a new update graph processor, starting with a given graph
 	 * @param g The graph
 	 */
-	public UpdateGraph(Graph g)
+	public UpdateWeightedGraph(Graph g)
 	{
-		super(2, 1);
+		super(3, 1);
 		m_graph = g;
 	}
 
 	@Override
 	public Processor duplicate(boolean with_state)
 	{
-		return new UpdateGraph(m_graph.duplicate(with_state));
+		return new UpdateWeightedGraph(m_graph.duplicate(with_state));
 	}
 
 	@Override
 	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
-		m_graph.incrementWeight((String) inputs[0], (String) inputs[1], 1);
+		m_graph.incrementWeight((String) inputs[0], (String) inputs[1], (Number) inputs[2]);
 		outputs[0] = m_graph;
 		return true;
 	}

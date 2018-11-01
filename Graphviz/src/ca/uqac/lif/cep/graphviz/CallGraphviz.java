@@ -35,15 +35,37 @@ public class CallGraphviz extends UniformProcessor
 	 */
 	private static final transient boolean s_graphvizPresent = checkGraphviz();
 	
+	/**
+	 * The image type to render.
+	 */
+	public static enum ImageType {SVG, PNG}
+	
+	/**
+	 * The image type to render.
+	 */
+	protected ImageType m_imageType;
+	
+	/**
+	 * Creates a new Graphviz processor.
+	 */
 	public CallGraphviz() 
 	{
-		super(1, 1);
+		this(ImageType.PNG);
 	}
+	
+	/**
+   * Creates a new Graphviz processor.
+   */
+  public CallGraphviz(ImageType type) 
+  {
+    super(1, 1);
+    m_imageType = type;
+  }
 
 	@Override
 	public CallGraphviz duplicate(boolean with_state) 
 	{
-		return new CallGraphviz();
+		return new CallGraphviz(m_imageType);
 	}
 
 	@Override
@@ -54,9 +76,14 @@ public class CallGraphviz extends UniformProcessor
 			throw new ProcessorException("Graphviz could not be found in the path");
 		}
 		byte[] ins = ((String) inputs[0]).getBytes();
+		String type = "-Tpng";
+		if (m_imageType == ImageType.SVG)
+		{
+		  type = "-Tsvg";
+		}
 		try 
 		{
-			byte[] image = CommandRunner.runAndGet(new String[]{"neato", "-Tpng"}, ins);
+			byte[] image = CommandRunner.runAndGet(new String[]{"neato", type}, ins);
 			outputs[0] = image;
 		}
 		catch (IOException e) 
