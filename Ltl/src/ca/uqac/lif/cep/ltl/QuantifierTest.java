@@ -1,3 +1,20 @@
+/*
+    BeepBeep, an event stream processor
+    Copyright (C) 2008-2018 Sylvain Hallé
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package ca.uqac.lif.cep.ltl;
 
 import static org.junit.Assert.*;
@@ -5,8 +22,6 @@ import static org.junit.Assert.*;
 import java.util.HashSet;
 import java.util.Queue;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -16,7 +31,6 @@ import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.Pushable;
-import ca.uqac.lif.cep.concurrency.NonBlockingPush;
 import ca.uqac.lif.cep.functions.ContextVariable;
 import ca.uqac.lif.cep.util.Equals;
 import ca.uqac.lif.cep.util.Numbers;
@@ -333,46 +347,6 @@ public class QuantifierTest
 		assertNotNull(o);
 		assertNotNull(o);
 		assertEquals(o, Troolean.Value.TRUE);
-	}
-	
-	@SuppressWarnings("unused")
-	@Test
-	@Ignore
-	public void testForAll2() 
-	{
-		ExecutorService service = Executors.newCachedThreadPool();
-		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, StreamVariable.X, StreamVariable.X)), 0);
-		ForAll fa = new ForAll("x", new DummyCollectionFunction(1, 2, 3), left);
-		NonBlockingPush nbp = new NonBlockingPush(fa, service);
-		QueueSource source1 = new QueueSource(1);
-		source1.addEvent(0);
-		Connector.connect(source1, fa);
-		Pullable p = fa.getPullableOutput(0);
-		Object o = p.pull();
-		assertNotNull(o);
-		assertNotNull(o);
-		assertEquals(o, Troolean.Value.TRUE);
-	}
-	
-	@Test
-	@Ignore
-	public void testForAll3() throws ProcessorException
-	{
-		ExecutorService service = Executors.newCachedThreadPool();
-		SlowFunctionProcessor left = new SlowFunctionProcessor(new FunctionTree(TrooleanCast.instance, new FunctionTree(Equals.instance, new ContextVariable("x"), new ContextVariable("z"))), 0);
-		ForAll fa = new ForAll("x", new DummyCollectionFunction(1, 2, 3), left);
-		NonBlockingPush nbp = new NonBlockingPush(fa, service);
-		nbp.start();
-		ForAll fa2 = new ForAll("z", new DummyCollectionFunction(1, 2, 3), fa);
-		QueueSource source1 = new QueueSource(1);
-		source1.addEvent(0);
-		Connector.connect(source1, fa2);
-		Pullable p = fa2.getPullableOutput(0);
-		Object o = p.pull();
-		assertNotNull(o);
-		assertNotNull(o);
-		assertEquals(Troolean.Value.FALSE, o);
-		nbp.stop();
 	}
 	
 	@SuppressWarnings("rawtypes")
