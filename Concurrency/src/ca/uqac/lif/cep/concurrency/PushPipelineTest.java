@@ -81,7 +81,7 @@ public class PushPipelineTest
 		assertEquals(4, queue.remove());
 	}
 	
-	@Test
+	@Test(timeout=10000)
 	public void pushTest3()
 	{
 		// Checks the correct behaviour of the pipeline in push mode, for
@@ -116,7 +116,7 @@ public class PushPipelineTest
 		assertEquals(4, queue.remove());
 	}
 	
-	@Test
+	@Test(timeout=10000)
 	public void getThreshold()
 	{
 		long delay = 2000;
