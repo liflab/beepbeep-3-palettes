@@ -28,8 +28,8 @@ import ca.uqac.lif.cep.functions.UnaryFunction;
 
 /**
  * Parses a line of an Apache log in the 
- * {@link https://httpd.apache.org/docs/1.3/logs.html common log format}
- * format and creates an {@link HttpRequest} object with it
+ * <a href="https://httpd.apache.org/docs/1.3/logs.html">common log format</a>
+ * and creates an {@link HttpRequest} object with it.
  * @author Sylvain Hallé
  *
  */

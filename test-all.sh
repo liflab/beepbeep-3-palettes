@@ -12,6 +12,7 @@ echo "This script will build all the palettes in this folder."
 for dir in */
 do
  if [[ $dir == "lib/" ]]; then continue; fi
+ if [[ $dir == "doc/" ]]; then continue; fi
  echo Testing $dir...
  pushd $dir
  ant test > /dev/null
