@@ -4,6 +4,8 @@ import static ca.uqac.lif.cep.Connector.INPUT;
 import static ca.uqac.lif.cep.Connector.LEFT;
 import static ca.uqac.lif.cep.Connector.OUTPUT;
 import static ca.uqac.lif.cep.Connector.RIGHT;
+import static org.junit.Assert.assertTrue;
+
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.ApplyFunction;
@@ -11,6 +13,7 @@ import ca.uqac.lif.cep.tmf.CountDecimate;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.petitpoucet.ProvenanceNode;
+import org.junit.Test;
 
 /**
  * Not actually a test, but has that suffix so that the build script won't
@@ -18,6 +21,12 @@ import ca.uqac.lif.petitpoucet.ProvenanceNode;
  */
 public class DemoTest 
 {
+  @Test
+  public void dummyTest()
+  {
+    assertTrue(true);
+  }
+  
 	public static void main(String[] args) 
 	{
 		QueueSource s1 = new QueueSource(1);
