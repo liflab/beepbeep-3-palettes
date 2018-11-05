@@ -15,7 +15,7 @@ import ca.uqac.lif.cep.tmf.QueueSink;
 
 public class PushPipelineTest 
 {
-	@Test
+	@Test(timeout=10000)
 	public void pushTest1()
 	{
 		Stopwatch sw = new Stopwatch();
@@ -46,7 +46,7 @@ public class PushPipelineTest
 		assertEquals(4, queue.remove());
 	}
 	
-	@Test
+	@Test(timeout=10000)
 	public void pushTest2()
 	{
 		// In this test, the 5 copies of the processor launched by the pipeline

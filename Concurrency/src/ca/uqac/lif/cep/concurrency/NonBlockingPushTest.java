@@ -18,7 +18,7 @@ import ca.uqac.lif.cep.tmf.QueueSink;
 
 public class NonBlockingPushTest
 {
-	@Test
+	@Test(timeout=10000)
 	public void test1() throws InterruptedException
 	{
 		int num_instances = 100, delay = 300;
@@ -63,7 +63,7 @@ public class NonBlockingPushTest
 		}
 	}
 	
-	@Test
+	@Test(timeout=10000)
 	public void test2() throws InterruptedException
 	{
 		// Same as test1, but for a binary processor
