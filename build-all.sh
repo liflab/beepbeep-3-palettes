@@ -11,6 +11,7 @@ popd () {
 echo "This script will build all the palettes in this folder."
 mkdir -p lib
 mkdir -p doc
+retcode=0
 for dir in */
 do
  if [[ $dir == "lib/" ]]; then continue; fi
@@ -18,8 +19,10 @@ do
  echo Building $dir...
  pushd $dir
  ant -q download-deps #> /dev/null
- if [ $? -ne 0 ]; then echo "Error downloading dependencies"; fi
+ #if [ $? -ne 0 ]; then echo "Error downloading dependencies"; fi
  ant -q #> /dev/null
- if [ $? -ne 0 ]; then echo "Error building palette"; fi
+ #if [ $? -ne 0 ]; then echo "Error building palette"; fi
+ let "retcode=retcode+$?"
  popd
 done
+exit $retcode
