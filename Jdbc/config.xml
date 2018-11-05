@@ -23,7 +23,7 @@
        script's default values -->
 
   <!-- The project's name -->
-  <name>Tuple extension for BeepBeep 3</name>
+  <name>JDBC extension for BeepBeep 3</name>
   
   <!-- The project's version number -->
   <version>0.1</version>
@@ -33,10 +33,7 @@
   <author>Sylvain Hall&#233;</author>
   
   <!-- The project's main class -->
-  <mainclass>ca.uqac.lif.cep.tuples.Main</mainclass>
-  
-  <!-- The location of rt.jar -->
-  <rtlocation>../rt.jar</rtlocation>
+  <mainclass>ca.uqac.lif.cep.jdbc.Main</mainclass>
   
   <!-- Installation folders -->
   <srcdir>src</srcdir>
@@ -52,7 +49,7 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>../tuples.jar</filename>
+    <filename>../http.jar</filename>
     <withdoc>false</withdoc>
   </jar>
   
@@ -60,7 +57,7 @@
     Write JAR dependencies here.
   -->
   <dependencies>
-  	<dependency>
+    <dependency>
       <!--
       BeepBeep
       -->

@@ -44,6 +44,7 @@
   <test>
     <srcdir>src</srcdir>
     <bindir>bin</bindir>
+    <filenamepattern>**/*Test.java</filenamepattern>
   </test>
   
   <!-- Output jar -->
@@ -56,7 +57,18 @@
     Write JAR dependencies here.
   -->
   <dependencies>
-<dependency>
+    <dependency>
+      <!--
+      BeepBeep
+      -->
+      <name>BeepBeep</name>
+      <classname>ca.uqac.lif.cep.Processor</classname>
+      <files>
+      	<zip>https://github.com/liflab/beepbeep-3/releases/download/v0.9-alpha/beepbeep-3-0.9-alpha.zip</zip>
+      </files>
+      <bundle>false</bundle>
+    </dependency>
+    <dependency>
     <!-- Jerrydog. A simple web server. -->
       <name>Jerrydog</name>
       <classname>ca.uqac.lif.jerrydog.Server</classname>

@@ -33,7 +33,10 @@
   <author>Sylvain Hall&#233;</author>
   
   <!-- The project's main class -->
-  <mainclass>ca.uqac.lif.cep.provenance.ProvenanceTreeRenderer</mainclass>
+  <mainclass>ca.uqac.lif.cep.provenance.Main</mainclass>
+  
+  <!-- The location of rt.jar -->
+  <rtlocation>../rt.jar</rtlocation>
   
   <!-- Installation folders -->
   <srcdir>src</srcdir>
@@ -43,6 +46,7 @@
   <test>
     <srcdir>src</srcdir>
     <bindir>bin</bindir>
+    <filenamepattern>**/*Test.java</filenamepattern>
   </test>
   
   <!-- Output jar -->
@@ -55,6 +59,17 @@
     Write JAR dependencies here.
   -->
   <dependencies>
+  	<dependency>
+      <!--
+      BeepBeep
+      -->
+      <name>BeepBeep</name>
+      <classname>ca.uqac.lif.cep.Processor</classname>
+      <files>
+      	<zip>https://github.com/liflab/beepbeep-3/releases/download/v0.9-alpha/beepbeep-3-0.9-alpha.zip</zip>
+      </files>
+      <bundle>false</bundle>
+    </dependency>
     <dependency>
     <!-- xml-lif. Used to parse XML messages -->
       <name>PetitPoucet</name>
@@ -62,6 +77,7 @@
       <files>
         <zip>https://github.com/liflab/petitpoucet/releases/download/v0.2-alpha/petitpoucet-0.2-alpha.zip</zip>
       </files>
+      <bundle>true</bundle>
     </dependency>
   </dependencies>
 </build>

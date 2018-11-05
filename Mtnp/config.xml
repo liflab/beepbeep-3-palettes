@@ -33,7 +33,10 @@
   <author>Sylvain Hall&#233;</author>
   
   <!-- The project's main class -->
-  <mainclass>ca.uqac.lif.cep.mtnp.PackageExtension</mainclass>
+  <mainclass>ca.uqac.lif.cep.mtnp.Main</mainclass>
+  
+  <!-- The location of rt.jar -->
+  <rtlocation>../rt.jar</rtlocation>
   
   <!-- Installation folders -->
   <srcdir>src</srcdir>
@@ -44,6 +47,7 @@
   <test>
     <srcdir>src</srcdir>
     <bindir>bin</bindir>
+    <filenamepattern>**/*Test.java</filenamepattern>
   </test>
   
   <!-- Output jar -->
@@ -57,12 +61,24 @@
   -->
   <dependencies>
     <dependency>
+      <!--
+      BeepBeep
+      -->
+      <name>BeepBeep</name>
+      <classname>ca.uqac.lif.cep.Processor</classname>
+      <files>
+      	<zip>https://github.com/liflab/beepbeep-3/releases/download/v0.9-alpha/beepbeep-3-0.9-alpha.zip</zip>
+      </files>
+      <bundle>false</bundle>
+    </dependency>
+    <dependency>
     <!-- json-lif. Used to parse JSON messages -->
       <name>MTNP</name>
       <classname>ca.uqac.lif.mtnp.DataFormatter</classname>
       <files>
         <zip>https://github.com/liflab/mtnp/releases/download/v0.1.8-alpha/mtnp-0.1.8-alpha.zip</zip>
       </files>
+      <bundle>true</bundle>
     </dependency>
   </dependencies>
 </build>
