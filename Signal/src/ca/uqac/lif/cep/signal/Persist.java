@@ -79,6 +79,7 @@ public class Persist extends UniformProcessor
   @Override
   public void reset()
   {
+    super.reset();
     m_lastValue = 0f;
     m_timeSinceLast = 0;
   }

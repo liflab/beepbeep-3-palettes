@@ -30,30 +30,41 @@ import ca.uqac.lif.cep.io.CommandRunner;
  */
 public class CallGraphviz extends UniformProcessor 
 {
-	/**
-	 * Boolean flag indicating if Graphviz is present in the environment
-	 */
-	private static final transient boolean s_graphvizPresent = checkGraphviz();
-	
-	/**
-	 * The image type to render.
-	 */
-	public static enum ImageType {SVG, PNG}
-	
-	/**
-	 * The image type to render.
-	 */
-	protected ImageType m_imageType;
-	
-	/**
-	 * Creates a new Graphviz processor.
-	 */
-	public CallGraphviz() 
-	{
-		this(ImageType.PNG);
-	}
-	
-	/**
+  /**
+   * Boolean flag indicating if Graphviz is present in the environment
+   */
+  private static final transient boolean s_graphvizPresent = checkGraphviz();
+
+  /**
+   * The image type to render.
+   */
+  public static enum ImageType {SVG, PNG}
+
+  /**
+   * The software to use for rendering
+   */
+  public static enum Renderer {DOT, NEATO, TWOPI, FDP, SFDP, CIRCO}
+
+
+  /**
+   * The image type to render.
+   */
+  protected ImageType m_imageType;
+
+  /**
+   * The command to run (either <tt>neato</tt> or <tt>dot</tt>, etc.)
+   */
+  protected String m_commandToRun = "neato";
+
+  /**
+   * Creates a new Graphviz processor.
+   */
+  public CallGraphviz() 
+  {
+    this(ImageType.PNG);
+  }
+
+  /**
    * Creates a new Graphviz processor.
    */
   public CallGraphviz(ImageType type) 
@@ -62,45 +73,80 @@ public class CallGraphviz extends UniformProcessor
     m_imageType = type;
   }
 
-	@Override
-	public CallGraphviz duplicate(boolean with_state) 
-	{
-		return new CallGraphviz(m_imageType);
-	}
+  /**
+   * Tells the processor to use a specific rendering program to
+   * generate the picture.
+   * @param r The renderer to use
+   * @return This processor
+   */
+  public CallGraphviz use(Renderer r)
+  {
+    switch (r)
+    {
+    case CIRCO:
+      m_commandToRun = "circo";
+      break;
+    case FDP:
+      m_commandToRun = "fdp";
+      break;
+    case SFDP:
+      m_commandToRun = "sfdp";
+      break;
+    case TWOPI:
+      m_commandToRun = "twopi";
+      break;
+    case DOT:
+      m_commandToRun = "dot";
+      break;
+    case NEATO:
+      m_commandToRun = "neato";
+      break;
+    default:
+      m_commandToRun = "neato";
+      break;
+    }
+    return this;
+  }
 
-	@Override
-	protected boolean compute(Object[] inputs, Object[] outputs) 
-	{
-		if (!s_graphvizPresent)
-		{
-			throw new ProcessorException("Graphviz could not be found in the path");
-		}
-		byte[] ins = ((String) inputs[0]).getBytes();
-		String type = "-Tpng";
-		if (m_imageType == ImageType.SVG)
-		{
-		  type = "-Tsvg";
-		}
-		try 
-		{
-			byte[] image = CommandRunner.runAndGet(new String[]{"neato", type}, ins);
-			outputs[0] = image;
-		}
-		catch (IOException e) 
-		{
-			throw new ProcessorException(e);
-		}
-		return true;
-	}
-	
-	/**
-	 * Checks if Graphviz is present in the environment by attempting to run
-	 * it from the command line
-	 * @return {@code true} if Graphviz could be run, {@code false} otherwise
-	 */
-	private static boolean checkGraphviz()
-	{
-		return true;
-	}
+  @Override
+  public CallGraphviz duplicate(boolean with_state) 
+  {
+    return new CallGraphviz(m_imageType);
+  }
+
+  @Override
+  protected boolean compute(Object[] inputs, Object[] outputs) 
+  {
+    if (!s_graphvizPresent)
+    {
+      throw new ProcessorException("Graphviz could not be found in the path");
+    }
+    byte[] ins = ((String) inputs[0]).getBytes();
+    String type = "-Tpng";
+    if (m_imageType == ImageType.SVG)
+    {
+      type = "-Tsvg";
+    }
+    try 
+    {
+      byte[] image = CommandRunner.runAndGet(new String[]{m_commandToRun, type}, ins);
+      outputs[0] = image;
+    }
+    catch (IOException e) 
+    {
+      throw new ProcessorException(e);
+    }
+    return true;
+  }
+
+  /**
+   * Checks if Graphviz is present in the environment by attempting to run
+   * it from the command line
+   * @return {@code true} if Graphviz could be run, {@code false} otherwise
+   */
+  private static boolean checkGraphviz()
+  {
+    return true;
+  }
 
 }

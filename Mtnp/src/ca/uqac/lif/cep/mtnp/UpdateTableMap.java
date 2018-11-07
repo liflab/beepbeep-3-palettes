@@ -48,6 +48,7 @@ public class UpdateTableMap extends UniformProcessor
 	@Override
 	public void reset()
 	{
+	  super.reset();
 		m_table = new HardTable(m_table.getColumnNames());
 	}
 

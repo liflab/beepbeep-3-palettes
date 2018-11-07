@@ -99,6 +99,7 @@ public class PredicateAssertion extends Function
 	@Override
 	public void reset() 
 	{
+	  super.reset();
 		for (Function f : m_arguments)
 		{
 			f.reset();

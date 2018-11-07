@@ -90,6 +90,7 @@ public class FirstOrderSlice extends SynchronousProcessor
   @Override
   public void reset()
   {
+    super.reset();
     m_slices.clear();
     m_function.reset();
   }

@@ -93,6 +93,7 @@ public class HttpSource extends Sink
   @Override
   public void reset()
   {
+    super.reset();
     m_server.stopServer();
     m_pullable = null;
   }

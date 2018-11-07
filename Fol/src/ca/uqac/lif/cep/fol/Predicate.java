@@ -137,6 +137,7 @@ public class Predicate extends Function
 	@Override
 	public void reset() 
 	{
+	  super.reset();
 		m_definition.clear();
 	}
 

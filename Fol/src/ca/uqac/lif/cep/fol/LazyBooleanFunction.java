@@ -146,9 +146,9 @@ public class LazyBooleanFunction extends Function
 	}
 
 	@Override
-	public void reset() {
-		// TODO Auto-generated method stub
-		
+	public void reset()
+	{
+		super.reset();
 	}
 
 	@Override

@@ -59,7 +59,15 @@ public class UpdateGraph extends UniformProcessor
 	@Override
 	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
-		m_graph.incrementWeight((String) inputs[0], (String) inputs[1], 1);
+	  if (inputs[0].getClass().isArray())
+    {
+     Object[] ins = (Object[]) inputs[0];
+     m_graph.incrementWeight((String) ins[0], (String) ins[1], 1);
+    }
+	  else
+	  {
+	    m_graph.incrementWeight((String) inputs[0], (String) inputs[1], 1);
+	  }
 		outputs[0] = m_graph;
 		return true;
 	}

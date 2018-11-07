@@ -89,6 +89,7 @@ public class MergeTuples extends Function
 	@Override
 	public void reset() 
 	{
+	  super.reset();
 		m_builder = null;
 	}
 

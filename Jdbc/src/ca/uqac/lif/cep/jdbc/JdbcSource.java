@@ -166,6 +166,7 @@ public class JdbcSource extends Source
   @Override
   public void reset()
   {
+    super.reset();
     m_hasRun = false;
   }
 }

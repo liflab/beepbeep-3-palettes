@@ -71,6 +71,7 @@ public abstract class FirstOrderQuantifier extends SynchronousProcessor
 	@Override
 	public void reset()
 	{
+	  super.reset();
 		m_slicer.reset();
 	}
 	

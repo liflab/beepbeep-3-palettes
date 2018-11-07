@@ -108,6 +108,7 @@ public class ParallelWindow extends AbstractWindow
 	@Override
 	public void reset()
 	{
+	  super.reset();
 		m_eventCount = 0;
 	}
 

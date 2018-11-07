@@ -105,7 +105,7 @@ public class SerializeEvents<T> extends Function
 	@Override
 	public void reset()
 	{
-		// Nothing to do
+		super.reset();
 	}
 
 	@Override

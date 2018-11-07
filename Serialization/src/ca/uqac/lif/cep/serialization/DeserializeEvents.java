@@ -115,7 +115,7 @@ public class DeserializeEvents<T,U> extends Function
 	@Override
 	public void reset()
 	{
-		// Nothing to do
+		super.reset();
 	}
 
 	@Override

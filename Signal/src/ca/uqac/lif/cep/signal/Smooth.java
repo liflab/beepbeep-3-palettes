@@ -82,7 +82,7 @@ public class Smooth extends WindowFunction
 		@Override
 		public void reset() 
 		{
-			// Nothing to do
+			super.reset();
 		}
 
 		@Override

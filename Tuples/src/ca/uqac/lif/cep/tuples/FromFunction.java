@@ -74,7 +74,7 @@ public class FromFunction extends Function
 	@Override
 	public void reset() 
 	{
-		// Nothing to do
+		super.reset();
 	}
 
 	@Override
