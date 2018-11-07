@@ -160,6 +160,20 @@ public class Graph
 	}
 	
 	/**
+   * Returns the output weight of a vertex
+   * @param vertex The vertex
+   * @return The output weight, or 0 if the vertex does not exist
+   */
+  public float getOutWeight(String vertex)
+  {
+    if (!m_edges.containsKey(vertex))
+    {
+      return 0;
+    }
+    return m_edges.get(vertex).size();
+  }
+	
+	/**
 	 * Increments the weight of an edge in the graph. If the edge
 	 * does not exist, a new edge is created and its weight is set
 	 * to <tt>weight_increment</tt>.
