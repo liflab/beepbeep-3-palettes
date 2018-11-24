@@ -15,17 +15,22 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.gnuplot;
+package ca.uqac.lif.cep.dsl;
+
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 
 /**
- * Dummy main file
+ * Dummy test file. It is there only to make sure that jUnit runs on the
+ * project.
  * @author Sylvain Hallé
  */
-public class Main
+public class DummyTest
 {
-  public static void main(String[] args)
+  @Test
+  public void dummyTest()
   {
-    System.out.println("This JAR file is not meant to be run from the command line");
-    System.exit(0);
+    assertTrue(true);
   }
 }

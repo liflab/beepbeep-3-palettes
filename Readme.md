@@ -16,14 +16,16 @@ At the moment, the folder contains the following palettes:
 - `Apache`: for parsing Apache log files
 - `Concurrency`: for using multi-threading in processors
 - `Diagnostics`: to help debugging processor chains
-- `Dsl`: for creating Domain Specific Languages
+- `Dsl`: for creating Domain Specific Languages with the
+  [Bullwinkle](https://github.com/sylvainhalle/Bullwinkle) parser
 - `Fol`: for manipulation of first-order logic statements
 - `Fsm`: for manipulation of extended finite-state machines
-- `Gnuplot`: for drawing plots from event streams
 - `Http`: send and receive events over a network
+- `Jdbc`: to interface with relational databases
 - `Json`: to read and write events in the JSON format
 - `Ltl`: to express properties in Linear Temporal Logic
-- `Mtnp`: front-end to the MTNP library to manipulate tables and plots
+- `Mtnp`: front-end to the [MTNP library](https://github.com/liflab/mtnp)
+   to manipulate tables and plots
 - `Provenance`: traceability in processor chains
 - `Serialization`: serialize/deserialize objects with the
    [Azrael](https://github.com/sylvainhalle/Azrael) library
@@ -31,7 +33,7 @@ At the moment, the folder contains the following palettes:
 - `Signal`: basic signal processing functions (peak detection, etc.)
 - `Tuples`: for manipulating tuples and using BeepBeep as a JDBC driver
 - `WebSocket`: to read/write events from/to a web socket
-- `Xml`: to read and write events in the JSON format
+- `Xml`: to read and write events in the XML format
 
 Depending on the projects, additional dependencies may need to be
 downloaded and installed. Please refer to the `Readme.md` file of each
@@ -43,11 +45,16 @@ Building the palettes
 
 ### tl;dr
 
-1. Build or download `beepbeep-3.jar` and put it in the root of this
-   repository.
-2. Run the script `build-all.sh` to build all palettes in succession.
-3. If everything goes well, all the resulting jars will be created at the
-   root of the repository. Move them around and enjoy.
+1. Run the script `build-all.sh` to build all palettes in succession.
+   Since some palettes have dependencies on other palettes, the script
+   must be run **twice**.
+2. If everything goes well, all the resulting jars will be created in the
+   `lib` repository. Move them around and enjoy. (Look out; this folder
+   also contains JARs that are not palettes, and used in support of the Ant
+   build script. Use the file creation date to distinguish them from the
+   freshly created JAR palettes.)
+3. You can also run the test scripts for each palette using the
+   `test-all.sh` script.
 
 ### More details
 
@@ -58,8 +65,8 @@ First make sure you have the following installed:
   version 7 or 8.
 - [Ant](http://ant.apache.org) to automate the compilation and build process
 
-Each palette depends on BeepBeep's core library, which must be built
-beforehand. Please refer to the build instructions for [BeepBeep's main
+Each palette depends on BeepBeep's core library, which must be built or
+downloaded beforehand. Please refer to the build instructions for [BeepBeep's main
 engine](https://github.com/liflab/beepbeep-3).
 The resulting file, `beepbeep-3.jar`, must be placed at the root of this
 repository prior to building any of the palettes.

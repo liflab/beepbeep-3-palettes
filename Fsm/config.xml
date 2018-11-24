@@ -51,7 +51,7 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>../fsm.jar</filename>
+    <filename>../lib/fsm.jar</filename>
     <withdoc>false</withdoc>
   </jar>
   

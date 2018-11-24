@@ -51,7 +51,7 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>../json.jar</filename>
+    <filename>../lib/json.jar</filename>
     <withdoc>false</withdoc>
   </jar>
   

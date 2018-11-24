@@ -52,7 +52,7 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>../serialization.jar</filename>
+    <filename>../lib/serialization.jar</filename>
     <withdoc>false</withdoc>
   </jar>
   

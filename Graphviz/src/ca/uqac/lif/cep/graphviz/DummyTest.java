@@ -29,7 +29,7 @@ import org.junit.Test;
 public class DummyTest
 {
   @Test
-  public static void dummyTest()
+  public void dummyTest()
   {
     assertTrue(true);
   }

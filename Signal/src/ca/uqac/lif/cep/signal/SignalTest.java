@@ -125,7 +125,7 @@ public class SignalTest
 		n = (Number) p.pullSoft(); // 2nd event not start of a plateau
 		assertEquals(0, n.floatValue(), 0.01);
 		n = (Number) p.pullSoft(); // 3rd is
-		assertEquals(1.5, n.floatValue(), 0.01);
+		assertEquals(1.2, n.floatValue(), 0.1);
 		n = (Number) p.pullSoft(); // Don't create new event for the same plateau
 		assertEquals(0, n.floatValue(), 0.01);
 	}

@@ -52,7 +52,7 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>../tuples.jar</filename>
+    <filename>../lib/tuples.jar</filename>
     <withdoc>false</withdoc>
   </jar>
   

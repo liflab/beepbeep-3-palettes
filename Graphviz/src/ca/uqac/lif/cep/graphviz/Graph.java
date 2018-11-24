@@ -276,7 +276,7 @@ public class Graph
 	
 	/**
 	 * Creates a deep copy of the graph
-	 * @boolean with_state Has no effect
+	 * @param with_state Has no effect
 	 * @return A copy of the graph
 	 */
 	public Graph duplicate(boolean with_state)

@@ -81,15 +81,15 @@ public class HttpRequest
 
 	/**
 	 * Creates a new HTTP request event
-	 * @param source_ip
-	 * @param identd
-	 * @param userid
-	 * @param unix_time
-	 * @param method
-	 * @param path
-	 * @param parameters
-	 * @param response_code
-	 * @param size
+	 * @param source_ip The source IP address
+	 * @param identd The identifier
+	 * @param userid The user ID
+	 * @param unix_time A Unix timestamp
+	 * @param method The method (i.e. GET, POST, etc.)
+	 * @param path The URL's path
+	 * @param parameters The URL's parameters, if any
+	 * @param response_code The response code of this request
+	 * @param size The size of the request
 	 */
 	public HttpRequest(String source_ip, String identd, String userid, long unix_time, Method method, String path, Map<String,String> parameters, int response_code, int size)
 	{

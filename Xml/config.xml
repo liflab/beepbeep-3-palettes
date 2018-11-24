@@ -52,7 +52,7 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>../xml.jar</filename>
+    <filename>../lib/xml.jar</filename>
     <withdoc>false</withdoc>
   </jar>
   

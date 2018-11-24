@@ -66,6 +66,8 @@ public class CallGraphviz extends UniformProcessor
 
   /**
    * Creates a new Graphviz processor.
+   * @param type The type of the image (PNG, etc.) to generate when
+   * Graphviz is called
    */
   public CallGraphviz(ImageType type) 
   {

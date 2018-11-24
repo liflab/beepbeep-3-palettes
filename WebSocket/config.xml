@@ -51,7 +51,7 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>../websocket.jar</filename>
+    <filename>../lib/websocket.jar</filename>
     <withdoc>false</withdoc>
   </jar>
   

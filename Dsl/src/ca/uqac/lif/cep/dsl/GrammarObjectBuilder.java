@@ -54,7 +54,8 @@ public class GrammarObjectBuilder<T> extends ParseTreeObjectBuilder<T>
 	 * Builds an object from an expression
 	 * @param expression The expression to parse
 	 * @return The returned object
-	 * @throws BuildException
+	 * @throws BuildException Thrown when no object could be built. This
+	 * generally happens due to a parsing error.
 	 */
 	public T build(String expression) throws BuildException
 	{

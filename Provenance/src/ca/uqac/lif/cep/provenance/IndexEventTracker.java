@@ -180,10 +180,11 @@ public class IndexEventTracker implements EventTracker
 	
 	/**
 	 * Gets the provenance tree for a given event.
-	 * @param p
-	 * @param stream_index
-	 * @param stream_pos
-	 * @return
+	 * @param p The processor
+	 * @param stream_index The index of the stream
+	 * @param stream_pos The position of the event in the stream
+   * @return The provenance node corresponding to that particular event, or
+   *   {@code null} if no node exists for the specified parameters
 	 */
 	public /*@NotNull*/ ProvenanceNode getProvenanceTree(Processor p, int stream_index, int stream_pos)
 	{
@@ -195,10 +196,11 @@ public class IndexEventTracker implements EventTracker
 	 * directed acyclic graph of all the provenance nodes on which the current node
 	 * depends. It is the reverse of the impact tree.
 	 * @see #getImpactTree(int, int, int)
-	 * @param proc_id
-	 * @param stream_index
-	 * @param stream_pos
-	 * @return
+   * @param proc_id The ID of the processor
+   * @param stream_index The index of the output stream on that processor
+   * @param stream_pos The position of the event in that stream
+   * @return The provenance node corresponding to that particular event, or
+   *   {@code null} if no node exists for the specified parameters
 	 */
 	public /*@NotNull*/ ProvenanceNode getProvenanceTree(int proc_id, int stream_index, int stream_pos)
 	{
@@ -243,10 +245,11 @@ public class IndexEventTracker implements EventTracker
 	 * acyclic graph of all the downstream provenance nodes that depend on the
 	 * given node.
 	 * @see #getProvenanceTree(int, int, int)
-	 * @param proc_id
-	 * @param stream_index
-	 * @param stream_pos
-	 * @return
+   * @param proc_id The ID of the processor
+   * @param stream_index The index of the output stream on that processor
+   * @param stream_pos The position of the event in that stream
+   * @return The provenance node corresponding to that particular event, or
+   *   {@code null} if no node exists for the specified parameters
 	 */
 	public /*@NotNull*/ ProvenanceNode getImpactTree(int proc_id, int stream_index, int stream_pos)
 	{

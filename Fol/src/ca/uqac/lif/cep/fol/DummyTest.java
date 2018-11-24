@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.mtnp;
+package ca.uqac.lif.cep.fol;
 
 import static org.junit.Assert.assertTrue;
 

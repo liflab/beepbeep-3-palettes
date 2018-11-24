@@ -229,8 +229,6 @@ public class MooreMachine extends SynchronousProcessor
 	 * @param outputs Any output symbol associated with the destination state,
 	 *   {@code null} otherwise
 	 * @return {@code false} if nothing fired, {@code true} otherwise
-	 * @ If an error occurred in the evaluation
-	 *   of the transition
 	 */
 	protected boolean fire(Transition t, Object[] inputs, Object[] outputs) 
 	{
@@ -283,8 +281,6 @@ public class MooreMachine extends SynchronousProcessor
 		 * @param context The context for the evaluation
 		 * @return <code>true</code> if the transition fires, <code>false</code>
 		 *   otherwise
-		 * @ If an error occurred in the evaluation
-		 *   of the transition
 		 */
 		public boolean isFired(Object[] inputs, Context context) 
 		{
@@ -301,8 +297,9 @@ public class MooreMachine extends SynchronousProcessor
 
 		/**
 		 * Modifies the context of the state machine
-		 * @  If an error occurs in the modification of
-		 *   the context
+		 * @param inputs The input parameters to the context assignment
+		 * @param outputs The output parameters to the context assignment
+		 * @param machine The Moore machine whose context is to be modified
 		 */
 		public void modifyContext(Object[] inputs, Object[] outputs, MooreMachine machine) 
 		{

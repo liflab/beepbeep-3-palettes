@@ -51,7 +51,7 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>../signal.jar</filename>
+    <filename>../lib/signal.jar</filename>
     <withdoc>false</withdoc>
   </jar>
   

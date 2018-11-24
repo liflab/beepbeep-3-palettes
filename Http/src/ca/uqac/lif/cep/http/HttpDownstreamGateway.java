@@ -103,9 +103,9 @@ public class HttpDownstreamGateway extends Source
 
 	/**
 	 * Creates a new downstream gateway.
-	 * @param port
-	 * @param url
-	 * @param m
+	 * @param port The TCP port to listen to
+	 * @param url The URL to respond to
+	 * @param m The HTTP method (GET, POST, etc.) to respond to
 	 */
 	public HttpDownstreamGateway(int port, String url, Method m)
 	{
@@ -114,10 +114,12 @@ public class HttpDownstreamGateway extends Source
 
 	/**
 	 * Creates a new downstream gateway.
-	 * @param port
-	 * @param url
-	 * @param m
-	 * @param pull_url
+   * @param port The TCP port to listen to
+   * @param url The URL to respond to
+   * @param m The HTTP method (GET, POST, etc.) to respond to
+	 * @param pull_url The URL to call when this processor is asked for a new
+	 * event. This can be null; in such a case, the processor won't do anything
+	 * when being pulled.
 	 */
 	public HttpDownstreamGateway(int port, String url, Method m, String pull_url)
 	{
