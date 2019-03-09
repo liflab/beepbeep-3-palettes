@@ -29,23 +29,55 @@ import ca.uqac.lif.cep.SynchronousProcessor;
  */
 public class TupleFeeder extends SynchronousProcessor
 {
+  /**
+   * The builder object used to create tuples
+   */
 	protected FixedTupleBuilder m_builder;
 	
+	/**
+	 * The character used to separate the text lines into fields
+	 */
+	protected String m_separator = ",";
+	
+	/**
+	 * Create a new tuple feeder
+	 */
 	public TupleFeeder()
 	{
 		this(null);
 	}
 	
+	/**
+	 * Create a new tuple feeder using a predefined tuple builder
+	 * @param builder The tuple buidler
+	 */
 	public TupleFeeder(FixedTupleBuilder builder)
 	{
 		super(1, 1);
 		m_builder = builder;
 	}
 	
+	/**
+	 * Sets the character used to separate the text lines into fields
+	 * @param separator The separator
+	 * @return
+	 */
+	/*@ non_null @*/ public TupleFeeder setSeparator(/*@ non_null @*/ String separator)
+	{
+	  m_separator = separator;
+	  return this;
+	}
+	
 	@Override
 	public TupleFeeder duplicate(boolean with_state)
 	{
-		return new TupleFeeder();
+	  if (with_state)
+	  {
+	    TupleFeeder tf = new TupleFeeder(m_builder);
+	    tf.setSeparator(m_separator);
+	    return tf;
+	  }
+		return new TupleFeeder().setSeparator(m_separator);
 	}
 
 	@Override
@@ -57,7 +89,7 @@ public class TupleFeeder extends SynchronousProcessor
 			// Ignore comment and empty lines
 			return true;
 		}
-		String[] parts = token.split(",");
+		String[] parts = token.split(m_separator);
 		if (m_builder == null)
 		{
 			// This is the first token we read; it contains the names
