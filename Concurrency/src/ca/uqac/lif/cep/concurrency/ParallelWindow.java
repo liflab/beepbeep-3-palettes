@@ -74,8 +74,10 @@ public class ParallelWindow extends AbstractWindow
 			// The first processor in the list has received the
 			// right number of events; remove it, and output its
 			// output
+		  
 			m_processors.removeFirst();
-			m_pushables.removeFirst();
+			Pushable p = m_pushables.removeFirst();
+			p.notifyEndOfTrace();
 			SinkLast sink = m_sinks.removeFirst();
 			outputs.add(sink.getLast());
 		}

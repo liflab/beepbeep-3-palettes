@@ -36,7 +36,7 @@ public class Next extends Trim
 		Next n = new Next();
 		if (with_state)
 		{
-			n.m_eventsReceived = m_eventsReceived;
+			n.m_inputCount = m_inputCount;
 			n.m_hasBeenNotifiedOfEndOfTrace = m_hasBeenNotifiedOfEndOfTrace;
 		}
 		return n;
