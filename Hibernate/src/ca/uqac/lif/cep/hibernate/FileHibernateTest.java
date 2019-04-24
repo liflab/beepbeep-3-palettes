@@ -15,8 +15,23 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package ca.uqac.lif.cep.hibernate;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
 
 /**
- * Palette that provides functionalities for serializing processors.
+ * Unit tests for the {@link FileHibernate} processor.
+ * @author Sylvain Hallé
  */
-package ca.uqac.lif.cep.hibernate;
+public class FileHibernateTest
+{
+  @Test
+  public void testFilename1()
+  {
+    FileHibernate fh = new FileHibernate("my-test-{$x}.xml", null, null, 1, 1);
+    fh.setContext("x", "foo");
+    assertEquals("my-test-foo.xml", fh.getFilename());
+  }
+}

@@ -20,6 +20,7 @@ package ca.uqac.lif.cep.hibernate;
 import ca.uqac.lif.azrael.fridge.Fridge;
 import ca.uqac.lif.azrael.fridge.FridgeException;
 import ca.uqac.lif.cep.Connector;
+import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pushable;
@@ -73,9 +74,10 @@ public class Hibernate extends SynchronousProcessor
   protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
   {
     Processor proc = null;
+    Fridge fridge = getFridge();
     try
     {
-      proc = (Processor) m_fridge.fetch();
+      proc = (Processor) fridge.fetch();
     }
     catch (FridgeException e)
     {
@@ -109,7 +111,7 @@ public class Hibernate extends SynchronousProcessor
     }
     try
     {
-      m_fridge.store(proc);
+      fridge.store(proc);
     }
     catch (FridgeException e)
     {
@@ -124,4 +126,60 @@ public class Hibernate extends SynchronousProcessor
     throw new UnsupportedOperationException("This processor cannot be duplicated");
   }
 
+  /**
+   * Gets an instance of fridge
+   * @return The fridge
+   */
+  protected Fridge getFridge()
+  {
+    return m_fridge;
+  }
+  
+  @Override
+  public void setContext(Context c)
+  {
+    Processor proc = null;
+    Fridge fridge = getFridge();
+    try
+    {
+      proc = (Processor) fridge.fetch();
+    }
+    catch (FridgeException e)
+    {
+      throw new ProcessorException(e);
+    }
+    proc.setContext(c);
+    try
+    {
+      fridge.store(proc);
+    }
+    catch (FridgeException e)
+    {
+      throw new ProcessorException(e);
+    }
+  }
+  
+  @Override
+  public void setContext(String key, Object value)
+  {
+    Processor proc = null;
+    Fridge fridge = getFridge();
+    try
+    {
+      proc = (Processor) fridge.fetch();
+    }
+    catch (FridgeException e)
+    {
+      throw new ProcessorException(e);
+    }
+    proc.setContext(key, value);
+    try
+    {
+      fridge.store(proc);
+    }
+    catch (FridgeException e)
+    {
+      throw new ProcessorException(e);
+    }    
+  }
 }
