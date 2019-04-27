@@ -58,15 +58,24 @@ public class Hibernate extends SynchronousProcessor
    * @param in_arity The input arity of the processor
    * @param out_arity The output arity of the processor
    */
-  public Hibernate(Fridge f, int in_arity, int out_arity)
+  public Hibernate(Processor p, Fridge f)
   {
-    super(in_arity, out_arity);
+    super(p.getInputArity(), p.getOutputArity());
+    int out_arity = p.getOutputArity();
     m_fridge = f;
     m_sink = new QueueSink(out_arity);
     m_queues = new ArrayList<Queue<Object>>(out_arity);
     for (int i = 0; i < out_arity; i++)
     {
       m_queues.add(m_sink.getQueue(i));
+    }
+    try
+    {
+      m_fridge.store(p);
+    }
+    catch (FridgeException e)
+    {
+      throw new ProcessorException(e);
     }
   }
 
@@ -116,6 +125,11 @@ public class Hibernate extends SynchronousProcessor
     catch (FridgeException e)
     {
       throw new ProcessorException(e);
+    }
+    // Disconnect the pullables from the sink
+    for (int i = 0; i < m_queues.size(); i++)
+    {
+      m_sink.setPullableInput(i, null);
     }
     return true;
   }

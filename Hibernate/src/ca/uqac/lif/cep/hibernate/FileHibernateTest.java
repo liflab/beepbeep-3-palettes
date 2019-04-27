@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.hibernate;
 
 import static org.junit.Assert.*;
 
+import ca.uqac.lif.cep.tmf.Passthrough;
 import org.junit.Test;
 
 /**
@@ -30,8 +31,7 @@ public class FileHibernateTest
   @Test
   public void testFilename1()
   {
-    FileHibernate fh = new FileHibernate("my-test-{$x}.xml", null, null, 1, 1);
-    fh.setContext("x", "foo");
-    assertEquals("my-test-foo.xml", fh.getFilename());
+    Passthrough pt = new Passthrough();
+    assertEquals("/tmp/" + pt.getId(), FileHibernate.getFilename(pt, "/tmp/"));
   }
 }

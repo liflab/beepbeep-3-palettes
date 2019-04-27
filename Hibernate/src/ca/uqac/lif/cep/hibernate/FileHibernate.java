@@ -20,49 +20,38 @@ package ca.uqac.lif.cep.hibernate;
 import ca.uqac.lif.azrael.ObjectPrinter;
 import ca.uqac.lif.azrael.ObjectReader;
 import ca.uqac.lif.azrael.fridge.FileFridge;
-import ca.uqac.lif.azrael.fridge.Fridge;
-import ca.uqac.lif.cep.Context;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import ca.uqac.lif.cep.Processor;
 
 /**
  * A {@link Hibernate} processor that saves its internal processor into
- * a local file. The name of the file can make references to the processor's
- * context variables. Consider the following piece of code:
- * <pre>
- * FileHibernate h = new FileHibernate("my-file-{$x}.xml", printer, reader, 1, 1);
- * </pre>
- * The pattern <tt>{$x}</tt> refers to the value of variable "x" in the processor's
- * <tt>Context</tt> object.
+ * a local file. The name of the file is made of a fixed path, followed
+ * by the hibernated processor's unique ID.
  * @author Sylvain Hallé
  */
 public class FileHibernate extends Hibernate
 {
-  protected ObjectPrinter<String> m_printer;
+  /**
+   * The printer that is used to print to a file
+   */
+  protected transient ObjectPrinter<String> m_printer;
   
-  protected ObjectReader<String> m_reader;
+  /**
+   * The reader that is used to read from the file
+   */
+  protected transient ObjectReader<String> m_reader;
   
-  protected String m_filenamePattern;
-  
-  protected static Pattern m_pattern = Pattern.compile("\\{\\$(.*?)\\}");
-  
-  public FileHibernate(String filename_pattern, ObjectPrinter<String> printer, ObjectReader<String> reader, int in_arity, int out_arity)
+  /**
+   * Creates a new file hibernate processor.
+   * @param p The processor to be hibernated
+   * @param path The path where to save the files. Must end with a trailing slash.
+   * @param printer The printer that is used to print to a file
+   * @param reader The reader that is used to read from the file
+   */
+  public FileHibernate(Processor p, String path, ObjectPrinter<String> printer, ObjectReader<String> reader)
   {
-    super(null, in_arity, out_arity);
-    m_filenamePattern = filename_pattern;
+    super(p, new FileFridge(printer, reader, getFilename(p, path)));
     m_printer = printer;
     m_reader = reader;
-  }
-  
-  @Override
-  protected Fridge getFridge()
-  {
-    if (m_fridge == null)
-    {
-      String filename = getFilename();
-      m_fridge = new FileFridge(m_printer, m_reader, filename);
-    }
-    return m_fridge;
   }
   
   /**
@@ -73,26 +62,8 @@ public class FileHibernate extends Hibernate
    * can be tested by external scripts. 
    * @return The filename
    */
-  public String getFilename()
+  public static String getFilename(Processor p, String path)
   {
-    Context con = getContext();
-    String filename_pattern = m_filenamePattern;
-    while (filename_pattern.contains("$"))
-    {
-      Matcher mat = m_pattern.matcher(filename_pattern);
-      if (!mat.find())
-      {
-        break;
-      }
-      String var_name = mat.group(1);
-      if (!con.containsKey(var_name))
-      {
-        break;
-      }
-      String value = con.get(var_name).toString();
-      filename_pattern = filename_pattern.replaceAll("\\{\\$" + var_name + "\\}", value);
-    }
-    return filename_pattern;
+    return path + p.getId();
   }
-
 }
