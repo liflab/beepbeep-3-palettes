@@ -21,6 +21,7 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * Implementation of a three-valued logic. The "Troolean" type
@@ -38,6 +39,11 @@ public class Troolean extends Constant
 	 * Static reference to the And function
 	 */
 	public static final transient TrooleanAnd AND_FUNCTION = new TrooleanAnd();
+	
+	/**
+	 * Static reference to the And function on arrays
+	 */
+	public static final transient TrooleanArrayAnd AND_ARRAY_FUNCTION = new TrooleanArrayAnd();
 	
 	/**
 	 * Static reference to the Or function
@@ -361,6 +367,32 @@ public class Troolean extends Constant
 			return Value.INCONCLUSIVE;
 		}
 		
+	}
+	
+	/**
+	 * Logical conjunction lifted into a binary function
+	 */
+	@SuppressWarnings("rawtypes")
+	private static class TrooleanArrayAnd extends UnaryFunction<Collection,Value>
+	{
+		TrooleanArrayAnd()
+		{
+			super(Collection.class, Value.class);
+		}
+		
+		@Override
+		public Value getValue(Collection x) 
+		{
+			Collection<Value> col = new HashSet<Value>();
+			for (Object o : x)
+			{
+				if (o instanceof Value)
+				{
+					col.add((Value) o);
+				}
+			}
+			return and(col);
+		}
 	}
 	
 	/**
