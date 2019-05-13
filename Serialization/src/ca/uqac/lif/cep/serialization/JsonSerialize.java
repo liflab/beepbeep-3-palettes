@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2019 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -19,7 +19,7 @@ package ca.uqac.lif.cep.serialization;
 
 import java.util.Set;
 
-import ca.uqac.lif.azrael.json.JsonSerializer;
+import ca.uqac.lif.azrael.json.JsonPrinter;
 import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.json.JsonElement;
 
@@ -31,7 +31,7 @@ public class JsonSerialize extends SerializeEvents<JsonElement>
 {
 	public JsonSerialize()
 	{
-		super(new JsonSerializer(), JsonElement.class);
+		super(new JsonPrinter(), JsonElement.class);
 	}
 
 	@Override

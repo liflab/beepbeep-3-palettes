@@ -19,8 +19,8 @@ package ca.uqac.lif.cep.serialization;
 
 import java.util.Set;
 
-import ca.uqac.lif.azrael.Serializer;
-import ca.uqac.lif.azrael.SerializerException;
+import ca.uqac.lif.azrael.ObjectPrinter;
+import ca.uqac.lif.azrael.PrintException;
 import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.functions.Function;
@@ -47,7 +47,7 @@ public class SerializeEvents<T> extends Function
 	/**
 	 * The serializer
 	 */
-	protected transient Serializer<T> m_serializer;
+	protected transient ObjectPrinter<T> m_serializer;
 	
 	/**
 	 * A reference to the class of the serialized objects. This
@@ -63,7 +63,7 @@ public class SerializeEvents<T> extends Function
 	 * @param output_type A reference to the class of the
 	 *   serialized objects 
 	 */
-	public SerializeEvents(Serializer<T> s, Class<T> output_type)
+	public SerializeEvents(ObjectPrinter<T> s, Class<T> output_type)
 	{
 		super();
 		m_serializer = s;
@@ -81,10 +81,10 @@ public class SerializeEvents<T> extends Function
 	{
 		try 
 		{
-			T serialized = m_serializer.serialize(inputs[0]);
+			T serialized = m_serializer.print(inputs[0]);
 			outputs[0] = serialized;
 		} 
-		catch (SerializerException e)
+		catch (PrintException e)
 		{
 			throw new FunctionException(e);
 		}

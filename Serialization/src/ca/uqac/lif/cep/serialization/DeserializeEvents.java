@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2019 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -19,8 +19,8 @@ package ca.uqac.lif.cep.serialization;
 
 import java.util.Set;
 
-import ca.uqac.lif.azrael.Serializer;
-import ca.uqac.lif.azrael.SerializerException;
+import ca.uqac.lif.azrael.ObjectReader;
+import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionException;
@@ -46,7 +46,7 @@ public class DeserializeEvents<T,U> extends Function
 	/**
 	 * The serializer
 	 */
-	protected transient Serializer<T> m_serializer;
+	protected transient ObjectReader<T> m_serializer;
 	
 	/**
 	 * A reference to the class of the serialized objects. This
@@ -64,14 +64,14 @@ public class DeserializeEvents<T,U> extends Function
 	
 	/**
 	 * Creates a new instance of the function.
-	 * @param s The serializer used to deserialize the function's
+	 * @param s The object reader used to deserialize the function's
 	 *   arguments
 	 * @param input_type A reference to the class of the
 	 *   serialized objects given as an argument
 	 * @param output_type A reference to the class of the
 	 *   deserialized objects 
 	 */
-	public DeserializeEvents(Serializer<T> s, Class<T> input_type, Class<U> output_type)
+	public DeserializeEvents(ObjectReader<T> s, Class<T> input_type, Class<U> output_type)
 	{
 		super();
 		m_serializer = s;
@@ -91,10 +91,10 @@ public class DeserializeEvents<T,U> extends Function
 		try 
 		{
 			@SuppressWarnings("unchecked")
-			Object deserialized = m_serializer.deserializeAs((T) inputs[0], m_outputType);
+			Object deserialized = m_serializer.read((T) inputs[0]);
 			outputs[0] = deserialized;
 		} 
-		catch (SerializerException e)
+		catch (ReadException e)
 		{
 			throw new FunctionException(e);
 		}
