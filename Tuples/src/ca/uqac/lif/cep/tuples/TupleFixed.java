@@ -253,6 +253,10 @@ public final class TupleFixed extends Tuple implements Duplicable
 	@Override
 	public int hashCode()
 	{
+	  if (m_values[0] == null)
+	  {
+	    return 0;
+	  }
 		return m_values[0].hashCode();
 	}
 

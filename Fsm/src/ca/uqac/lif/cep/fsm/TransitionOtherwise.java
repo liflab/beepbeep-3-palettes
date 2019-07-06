@@ -39,8 +39,13 @@ public final class TransitionOtherwise extends FunctionTransition
 	}
 	
 	public TransitionOtherwise(int destination, ContextAssignment assignment)
+  {
+    super(null, destination, assignment);
+  }
+	
+	public TransitionOtherwise(int destination, ContextAssignment ... assignments)
 	{
-		super(null, destination, assignment);
+		super(null, destination, assignments);
 	}
 
 	@Override

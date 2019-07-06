@@ -95,7 +95,7 @@ public class MooreMachine extends SynchronousProcessor
   protected void assignToContext(ContextAssignment asg)
   {
     Function f = asg.getAssignment();
-    Object[] in = new Object[]{f.getInputArity()};
+    Object[] in = new Object[f.getInputArity()];
     Object[] out = new Object[1];
     f.evaluate(in, out);
     setContext(asg.getVariable(), out[0]);
@@ -193,8 +193,12 @@ public class MooreMachine extends SynchronousProcessor
             // This transition fires: move to that state
             Object[] out = new Object[m_outputArity];
             boolean b = fire(t, inputs, out);
-            outputs.add(out);
-            return b;
+            if (b)
+            {
+              // Outputs were produced
+              outputs.add(out);
+            }
+            return true;
           }
         }
         catch (FunctionException e)
@@ -210,8 +214,12 @@ public class MooreMachine extends SynchronousProcessor
       {
         Object[] out = new Object[m_outputArity];
         boolean b = fire(otherwise, inputs, out);
-        outputs.add(out);
-        return b;
+        if (b)
+        {
+          // Outputs were produced
+          outputs.add(out);
+        }
+        return true;
       }
       catch (FunctionException e)
       {
@@ -228,7 +236,7 @@ public class MooreMachine extends SynchronousProcessor
    * @param inputs The inputs that caused the transition to fire
    * @param outputs Any output symbol associated with the destination state,
    *   {@code null} otherwise
-   * @return {@code false} if nothing fired, {@code true} otherwise
+   * @return {@code true} if an output symbol is produced, {@code false} otherwise
    */
   protected boolean fire(Transition t, Object[] inputs, Object[] outputs) 
   {
