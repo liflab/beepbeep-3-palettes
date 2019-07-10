@@ -1,6 +1,7 @@
 package ca.uqac.lif.cep.widgets;
 
 import ca.uqac.lif.cep.Connector.Variant;
+import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.functions.Function;
 import java.util.Set;
 import javax.swing.JLabel;
@@ -20,7 +21,7 @@ public class GetWidgetValue extends Function
   }
 
   @Override
-  public void evaluate(Object[] inputs, Object[] outputs)
+  public void evaluate(Object[] inputs, Object[] outputs, Context context)
   {
     if (inputs[0] instanceof ChangeEvent)
     {

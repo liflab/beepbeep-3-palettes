@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2019 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.signal;
 
 import java.util.Set;
 
+import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.tmf.WindowFunction;
 
@@ -52,7 +53,7 @@ public class Smooth extends WindowFunction
 		}
 
 		@Override
-		public void evaluate(Object[] inputs, Object[] outputs) 
+		public void evaluate(Object[] inputs, Object[] outputs, Context context) 
 		{
 			if (m_width == 0)
 			{
