@@ -66,7 +66,7 @@
       <name>BeepBeep</name>
       <classname>ca.uqac.lif.cep.Processor</classname>
       <files>
-      	<zip>https://github.com/liflab/beepbeep-3/releases/download/v0.10-alpha/beepbeep-3-0.10-alpha.zip</zip>
+      	<zip>https://github.com/liflab/beepbeep-3/releases/download/v0.10.2-alpha/beepbeep-3-0.10.2-alpha.zip</zip>
       </files>
       <bundle>false</bundle>
     </dependency>
@@ -77,7 +77,7 @@
       <name>Bullwinkle</name>
       <classname>ca.uqac.lif.bullwinkle.BnfParser</classname>
       <files>
-      	<zip>https://github.com/sylvainhalle/Bullwinkle/releases/download/v1.4.1/bullwinkle-1.4.1.zip</zip>
+      	<zip>https://github.com/sylvainhalle/Bullwinkle/releases/download/v1.4.4/bullwinkle-1.4.4.zip</zip>
       </files>
       <bundle>true</bundle>
     </dependency>
