@@ -57,6 +57,13 @@ public class MergeScalars extends Function
 	public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker) 
 	{
 		outputs[0] = m_builder.createTuple(inputs);
+		if (tracker != null)
+		{
+		  for (int i = 0; i < inputs.length; i++)
+		  {
+		    tracker.associateToOutput(-1, i, 0, 0, 0);
+		  }
+		}
 	}
 
 	@Override

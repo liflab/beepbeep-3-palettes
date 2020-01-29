@@ -40,7 +40,7 @@ public class LazyBooleanFunction extends Function
 	}
 	
 	@Override
-	public void evaluate(Object[] inputs, Object[] out, Context context, EventTracker tracker) 
+	public void evaluate(Object[] inputs, Object[] out, Context context, EventTracker tracker)
 	{
 		// Evaluate LHS
 		m_left.evaluate(inputs, out, context, tracker);

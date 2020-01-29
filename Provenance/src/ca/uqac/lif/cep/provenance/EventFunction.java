@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.provenance;
 
+import ca.uqac.lif.cep.EventNodeFunction;
 import ca.uqac.lif.petitpoucet.DirectValue;
 import ca.uqac.lif.petitpoucet.NodeFunction;
 
@@ -25,7 +26,7 @@ import ca.uqac.lif.petitpoucet.NodeFunction;
  * in a specific stream of a specific processor.
  * @author Sylvain Hallé
  */
-public abstract class EventFunction implements NodeFunction 
+public abstract class EventFunction implements EventNodeFunction, NodeFunction 
 {
 	/**
 	 * The ID of the processor which produces the event
@@ -88,6 +89,7 @@ public abstract class EventFunction implements NodeFunction
 	 * Gets the processor ID associated to this event function
 	 * @return The ID
 	 */
+	@Override
 	public int getProcessorId()
 	{
 		return m_processorId;
@@ -97,6 +99,7 @@ public abstract class EventFunction implements NodeFunction
 	 * Gets the stream index associated to this event function
 	 * @return The index
 	 */
+	@Override
 	public int getStreamIndex()
 	{
 		return m_streamIndex;
@@ -106,6 +109,7 @@ public abstract class EventFunction implements NodeFunction
 	 * Gets the stream position associated to this event function
 	 * @return The position
 	 */
+	@Override
 	public int getStreamPosition()
 	{
 		return m_streamPosition;

@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2018 Sylvain Hallé
+    Copyright (C) 2008-2020 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -55,8 +55,18 @@ public class Until extends SynchronousProcessor
 				Object[] e = new Object[1];
 				e[0] = true;
 				outputs.add(e);
+				if (i == m_eventCount)
+				{
+				  associateToOutput(1, m_inputCount, 0, m_outputCount);
+				}
+				else
+				{
+				  associateToOutput(0, m_inputCount, 0, m_outputCount);
+				}
+				m_outputCount++;
 			}
 			m_eventCount = 0;
+			m_inputCount++;
 			return true;
 		}
 		assert !right;
@@ -66,11 +76,19 @@ public class Until extends SynchronousProcessor
 			{
 				Object[] e = new Object[1];
 				e[0] = false;
+				if (i == m_eventCount)
+				{
+				  associateToOutput(0, m_inputCount, 0, m_outputCount);
+				  associateToOutput(1, m_inputCount, 0, m_outputCount);
+				}
 				outputs.add(e);
+				m_outputCount++;
 			}
 			m_eventCount = 0;
+			m_inputCount++;
 			return true;			
 		}
+		m_inputCount++;
 		return true;
 	}
 

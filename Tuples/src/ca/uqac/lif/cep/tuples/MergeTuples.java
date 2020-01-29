@@ -60,19 +60,23 @@ public class MergeTuples extends Function
 	@Override
 	public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
 	{
-		evaluate(inputs, outputs);
+	  Tuple new_t = new TupleMap();
+    for (int i = 0; i < inputs.length; i++)
+    {
+      Tuple t = (Tuple) inputs[i];
+      new_t.putAll(t);
+      if (tracker != null)
+      {
+        tracker.associateToOutput(-1, i, 0, 0, 0);
+      }
+    }
+    outputs[0] = new_t;
 	}
 
 	@Override
 	public void evaluate(Object[] inputs, Object[] outputs)
 	{
-		Tuple new_t = new TupleMap();
-		for (int i = 0; i < inputs.length; i++)
-		{
-			Tuple t = (Tuple) inputs[i];
-			new_t.putAll(t);
-		}
-		outputs[0] = new_t;
+		evaluate(inputs, outputs, null, null);
 	}
 
 	@Override

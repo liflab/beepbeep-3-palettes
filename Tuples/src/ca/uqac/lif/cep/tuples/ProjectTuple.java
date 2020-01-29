@@ -84,6 +84,10 @@ public class ProjectTuple extends Function
       m_pairs[i].m_value.evaluate(inputs, out, context);
       values[i] = out[0];
     }
+    if (tracker != null)
+    {
+      tracker.associateToOutput(-1, 0, 0, 0, 0);
+    }
     outputs[0] = m_builder.createTuple(values);
   }
 

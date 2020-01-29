@@ -72,7 +72,7 @@ public class SerializeEvents<T> extends Function
 	}
 
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs, Context context)  
+	public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
 	{
 		evaluate(inputs, outputs);
 	}

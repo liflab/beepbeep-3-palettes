@@ -49,7 +49,7 @@ public class FromFunction extends Function
 		AttributeGroup group = new AttributeGroup(m_traceNames);
 		for (int i = 0; i < m_traceNames.length; i++)
 		{
-			group.add(i,  (Tuple) inputs[i]);
+			group.add(i, (Tuple) inputs[i]);
 		}
 		out[0] = group;
 	}

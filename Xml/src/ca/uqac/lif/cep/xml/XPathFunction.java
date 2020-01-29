@@ -82,7 +82,7 @@ public class XPathFunction extends Function
 	 * @param context The context
 	 * @return The new expression where placeholders have been replaced
 	 */
-	protected static XPathExpression evaluatePlaceholders(XPathExpression expression, Context context)
+	protected static XPathExpression evaluatePlaceholders(XPathExpression expression, Context context, EventTracker tracker)
 	{
 		if (context == null)
 		{
@@ -152,7 +152,7 @@ public class XPathFunction extends Function
     XPathExpression n_exp;
     if (context != null)
     {
-      n_exp = evaluatePlaceholders(m_expression, context);
+      n_exp = evaluatePlaceholders(m_expression, context, tracker);
     }
     else
     {
@@ -160,6 +160,10 @@ public class XPathFunction extends Function
     }
     Collection<XmlElement> col = n_exp.evaluate((XmlElement) inputs[0]);
     outputs[0] = postProcess(col);
+    if (tracker != null)
+    {
+      tracker.associateToOutput(-1, 0, 0, 0, 0);
+    }
   }
   
   @Override
