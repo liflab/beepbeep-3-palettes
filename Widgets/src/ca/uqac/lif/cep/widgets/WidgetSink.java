@@ -3,6 +3,7 @@ package ca.uqac.lif.cep.widgets;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.tmf.Sink;
 import java.awt.Component;
+import java.awt.image.BufferedImage;
 import java.util.Queue;
 
 import javax.swing.ImageIcon;
@@ -53,6 +54,15 @@ public class WidgetSink extends Sink
       {
         // We assume array of bytes: set label to image
         ((JLabel) c).setIcon((ImageIcon) inputs[0]);
+      }
+      else if (inputs[0] instanceof BufferedImage)
+      {
+        ((JLabel) c).setIcon(new ImageIcon((BufferedImage) inputs[0]));
+      }
+      else if (inputs[0] instanceof byte[])
+      {
+        byte[] bytes = (byte[]) inputs[0];
+        ((JLabel) c).setIcon(new ImageIcon(bytes));
       }
       else
       {
