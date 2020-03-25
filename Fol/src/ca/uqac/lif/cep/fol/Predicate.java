@@ -22,6 +22,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.Function;
 
@@ -107,7 +108,7 @@ public class Predicate extends Function
 	}
 
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs, Context context) 
+	public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker) 
 	{
 		PredicateArgument arg = new PredicateArgument(inputs);
 		for (PredicateArgument def_arg : m_definition.keySet())

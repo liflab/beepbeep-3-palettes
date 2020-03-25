@@ -19,8 +19,8 @@ package ca.uqac.lif.cep.widgets;
 
 import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.functions.Function;
-import ca.uqac.lif.cep.Context;
 import java.util.Set;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
@@ -39,7 +39,7 @@ public class GetWidgetValue extends Function
   }
 
   @Override
-  public void evaluate(Object[] inputs, Object[] outputs, Context context)
+  public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
   {
     if (inputs[0] instanceof ChangeEvent)
     {

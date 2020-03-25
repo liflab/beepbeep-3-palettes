@@ -22,6 +22,7 @@ import java.util.Set;
 import ca.uqac.lif.azrael.ObjectReader;
 import ca.uqac.lif.azrael.ReadException;
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionException;
 
@@ -80,24 +81,25 @@ public class DeserializeEvents<T,U> extends Function
 	}
 
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs, Context context)  
+	public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)  
 	{
-		evaluate(inputs, outputs);
+	  try 
+    {
+      @SuppressWarnings("unchecked")
+      Object deserialized = m_serializer.read((T) inputs[0]);
+      outputs[0] = deserialized;
+    } 
+    catch (ReadException e)
+    {
+      throw new FunctionException(e);
+    }
+		
 	}
 
 	@Override
 	public void evaluate(Object[] inputs, Object[] outputs) 
 	{
-		try 
-		{
-			@SuppressWarnings("unchecked")
-			Object deserialized = m_serializer.read((T) inputs[0]);
-			outputs[0] = deserialized;
-		} 
-		catch (ReadException e)
-		{
-			throw new FunctionException(e);
-		}
+	  evaluate(inputs, outputs, null, null);
 	}
 
 	@Override

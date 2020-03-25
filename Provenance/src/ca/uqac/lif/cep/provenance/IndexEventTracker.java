@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2020 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -332,4 +332,14 @@ public class IndexEventTracker implements EventTracker
 		}
 		return size;
 	}
+
+  @Override
+  public EventTracker getCopy()
+  {
+    IndexEventTracker iet = new IndexEventTracker();
+    iet.m_inputConnections.putAll(m_inputConnections);
+    iet.m_mapping.putAll(m_mapping);
+    iet.m_outputConnections.putAll(m_outputConnections);
+    return iet;
+  }
 }

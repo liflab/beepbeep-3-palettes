@@ -3,6 +3,7 @@ package ca.uqac.lif.cep.fol;
 import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.util.Booleans;
@@ -39,16 +40,16 @@ public class LazyBooleanFunction extends Function
 	}
 	
 	@Override
-	public void evaluate(Object[] inputs, Object[] out, Context context) 
+	public void evaluate(Object[] inputs, Object[] out, Context context, EventTracker tracker) 
 	{
 		// Evaluate LHS
-		m_left.evaluate(inputs, out, context);
+		m_left.evaluate(inputs, out, context, tracker);
 		if ((Boolean) out[0] == m_stopValue)
 		{
 			return;
 		}
 		// Evaluate RHS
-		m_right.evaluate(inputs, out, context);
+		m_right.evaluate(inputs, out, context, tracker);
 		if ((Boolean) out[0] == m_stopValue)
 		{
 			return;				

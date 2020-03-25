@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.xml.Equality;
 import ca.uqac.lif.xml.Predicate;
@@ -146,7 +147,7 @@ public class XPathFunction extends Function
 	}
 
   @Override
-  public void evaluate(Object[] inputs, Object[] outputs, Context context)
+  public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
   {
     XPathExpression n_exp;
     if (context != null)

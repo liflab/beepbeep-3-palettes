@@ -21,6 +21,7 @@ import java.util.Set;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.functions.Function;
 
 /**
@@ -53,7 +54,7 @@ public class MergeScalars extends Function
 	}
 
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs, Context context) 
+	public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker) 
 	{
 		outputs[0] = m_builder.createTuple(inputs);
 	}

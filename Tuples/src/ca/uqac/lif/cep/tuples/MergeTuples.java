@@ -20,6 +20,7 @@ package ca.uqac.lif.cep.tuples;
 import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.functions.Function;
 
 /**
@@ -57,7 +58,7 @@ public class MergeTuples extends Function
 	}
 
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs, Context context)
+	public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
 	{
 		evaluate(inputs, outputs);
 	}

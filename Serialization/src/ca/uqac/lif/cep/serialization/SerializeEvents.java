@@ -23,6 +23,7 @@ import ca.uqac.lif.azrael.ObjectPrinter;
 import ca.uqac.lif.azrael.PrintException;
 import ca.uqac.lif.cep.Connector.Variant;
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionException;
 
@@ -77,7 +78,7 @@ public class SerializeEvents<T> extends Function
 	}
 
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs) 
+	public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker) 
 	{
 		try 
 		{

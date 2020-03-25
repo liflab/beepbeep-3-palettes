@@ -20,6 +20,7 @@ package ca.uqac.lif.cep.fol;
 import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.functions.Function;
 
 /**
@@ -56,7 +57,7 @@ public class PredicateAssertion extends Function
 	}
 
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs, Context context) 
+	public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker) 
 	{
 		Interpretation inter = (Interpretation) inputs[0];
 		if (!inter.containsPredicate(m_predicateName))

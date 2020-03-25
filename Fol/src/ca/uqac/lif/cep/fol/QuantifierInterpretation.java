@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.functions.Function;
 
 public abstract class QuantifierInterpretation extends Function
@@ -30,7 +31,7 @@ public abstract class QuantifierInterpretation extends Function
 	}
 	
 	@Override
-	public void evaluate(Object[] inputs, Object[] out, Context context) 
+	public void evaluate(Object[] inputs, Object[] out, Context context, EventTracker tracker) 
 	{
 		Interpretation inter = (Interpretation) inputs[0];
 		Set<Object> values = new HashSet<Object>();

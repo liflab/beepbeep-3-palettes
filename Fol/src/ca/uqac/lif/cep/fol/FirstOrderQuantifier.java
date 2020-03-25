@@ -23,6 +23,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.functions.Function;
 
 public abstract class FirstOrderQuantifier extends Function
@@ -84,7 +85,7 @@ public abstract class FirstOrderQuantifier extends Function
 	}
 
 	@Override
-	public void evaluate(Object[] inputs, Object[] outputs, Context context)
+	public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
 	{
 	  Collection<?> values;
     if (m_domainFunction == null)

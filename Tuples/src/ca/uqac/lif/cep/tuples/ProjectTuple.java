@@ -21,6 +21,8 @@ import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.tuples.FixedTupleBuilder;
 import ca.uqac.lif.cep.tuples.Tuple;
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.EventTracker;
+
 import java.util.Set;
 
 /**
@@ -73,7 +75,7 @@ public class ProjectTuple extends Function
   }
   
   @Override
-  public void evaluate(Object[] inputs, Object[] outputs, Context context)
+  public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
   {
     Object[] values = new Object[m_pairs.length];
     for (int i = 0; i < m_pairs.length; i++)

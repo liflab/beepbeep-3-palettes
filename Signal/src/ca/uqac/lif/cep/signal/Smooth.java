@@ -20,9 +20,9 @@ package ca.uqac.lif.cep.signal;
 import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
+import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.tmf.WindowFunction;
-import ca.uqac.lif.cep.Context;
 
 public class Smooth extends WindowFunction
 {
@@ -54,7 +54,7 @@ public class Smooth extends WindowFunction
 		}
 
 		@Override
-		public void evaluate(Object[] inputs, Object[] outputs, Context context) 
+		public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker) 
 		{
 			if (m_width == 0)
 			{
