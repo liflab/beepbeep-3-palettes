@@ -60,6 +60,8 @@ public class FileHibernate extends Hibernate
    * <p>
    * The method is declared as <tt>public</tt> on purpose, so that it
    * can be tested by external scripts. 
+   * @param p The processor for which to create a filename
+   * @param path The path to prefix to the filename
    * @return The filename
    */
   public static String getFilename(Processor p, String path)

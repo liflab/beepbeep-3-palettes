@@ -24,27 +24,27 @@
  * Temporal operators and quantifiers have processors in two versions:
  * Boolean and <em>Troolean</em>.
  * <p>
- * Boolean processors are called {@link ca.uqac.lif.cep.ltl.Globally}, 
- * {@link ca.uqac.lif.cep.ltl.Eventually}
- * {@link ca.uqac.lif.cep.ltl.Until}, {@link ca.uqac.lif.cep.ltl.Next},
- * and forst-order quantifiers.
+ * Boolean processors are called {@link ca.uqac.lif.cep.ltl.Globally Globally}, 
+ * {@link ca.uqac.lif.cep.ltl.Eventually Eventually}
+ * {@link ca.uqac.lif.cep.ltl.Until Until}, {@link ca.uqac.lif.cep.ltl.Next Next},
+ * and first-order quantifiers.
  * If a<sub>0</sub> a<sub>1</sub>
  * a<sub>2</sub> &hellip; is an input trace, the processor Globally
  * produces an output trace b<sub>0</sub> b<sub>1</sub>
  * b<sub>2</sub> &hellip; such that b<sub>i</sub> = false if and only
- * there exists j &geq; i such that b<sub>j</sub> = false. In other
+ * there exists j &ge; i such that b<sub>j</sub> = false. In other
  * words, the i-th output event is the Boolean verdict of evaluating
  * <b>G</b> &phi; on the input trace, starting at the i-th event.
  * <p>
- * Troolean processors are called {@link ca.uqac.lif.cep.ltl.Always},
- *  {@link ca.uqac.lif.cep.ltl.Sometime},
- * {@link ca.uqac.lif.cep.ltl.UpTo}, {@link ca.uqac.lif.cep.ltl.After}, 
- * {@link ca.uqac.lif.cep.ltl.Every} and {@link ca.uqac.lif.cep.ltl.Some}.
+ * Troolean processors are called {@link ca.uqac.lif.cep.ltl.Always Always},
+ * {@link ca.uqac.lif.cep.ltl.Sometime Sometime},
+ * {@link ca.uqac.lif.cep.ltl.UpTo UpTo}, {@link ca.uqac.lif.cep.ltl.After After}, 
+ * {@link ca.uqac.lif.cep.ltl.Every Every} and {@link ca.uqac.lif.cep.ltl.Some Some}.
  * If a<sub>0</sub> a<sub>1</sub>
  * a<sub>2</sub> &hellip; is an input trace, the processor Always
  * produces an output trace b<sub>0</sub> b<sub>1</sub>
  * b<sub>2</sub> &hellip; such that b<sub>i</sub> = false if there exists
- * j &leq; i such that b<sub>j</sub> = false, and "?" (the
+ * j &le; i such that b<sub>j</sub> = false, and "?" (the
  * "inconclusive" value of LTL<sub>3</sub>) otherwise.  In other
  * words, the i-th output event is the Boolean verdict of evaluating
  * <b>G</b> &phi; on the input trace, after reading i events.

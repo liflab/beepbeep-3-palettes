@@ -51,7 +51,7 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>../lib/graphviz.jar</filename>
+    <filename>../jars/graphviz.jar</filename>
     <withdoc>false</withdoc>
   </jar>
   

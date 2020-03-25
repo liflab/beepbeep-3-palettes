@@ -3,10 +3,9 @@ A set of ready-made palettes for BeepBeep 3
 
 This repository contains projects producing various independent
 extensions to the [BeepBeep 3](https://liflab.github.io/beepbeep-3)
-event stream query engine. Each project is also independent from the others, and
-can be built separately. All projects require `beepbeep-3.jar` in their
-classpath (or alternately, must point to the `Core` source files from
-BeepBeep's repository) in order to compile and run.
+event stream query engine. Each project is also independent from the others,
+and can be built separately. All projects require `beepbeep-3.jar` in their
+classpath.
 
 Available palettes
 ------------------
@@ -20,6 +19,8 @@ At the moment, the folder contains the following palettes:
   [Bullwinkle](https://github.com/sylvainhalle/Bullwinkle) parser
 - `Fol`: for manipulation of first-order logic statements
 - `Fsm`: for manipulation of extended finite-state machines
+- `Graphviz`: manipulate and draw directed graphs using Graphviz
+- `Hibernation`: save/restore processor states to persistent storage
 - `Http`: send and receive events over a network
 - `Jdbc`: to interface with relational databases
 - `Json`: to read and write events in the JSON format
@@ -76,7 +77,7 @@ projects has the same Ant build script that allows you to compile them
 (see below).
 
 If the project you want to compile has dependencies,
- you can automatically download any libraries missing from your
+you can automatically download any libraries missing from your
 system by typing:
 
     ant download-deps
@@ -98,10 +99,10 @@ folder).
 
 Compile the sources by simply typing:
 
-    ant
+    ant all
 
 This will produce a file called `xxx.jar` (depending on the palette you
-are compiling) in the root folder.
+are compiling) in the `lib` folder.
 
 In addition, the script generates in the `doc` folder the Javadoc
 documentation for using BeepBeep. To show documentation in Eclipse,
@@ -140,8 +141,8 @@ restructured, the API may change, and so on. This is R&D!
 About the author                                                   {#about}
 ----------------
 
-BeepBeep 3 was written by [Sylvain Hallé](http://leduotang.ca/sylvain),
-associate professor at Université du Québec à Chicoutimi, Canada. Part of
+BeepBeep 3 was written by [Sylvain Hallé](https://leduotang.ca/sylvain),
+Full Professor at Université du Québec à Chicoutimi, Canada. Part of
 this work has been funded by the Canada Research Chair in Software
 Specification, Testing and Verification and the
 [Natural Sciences and Engineering Research Council

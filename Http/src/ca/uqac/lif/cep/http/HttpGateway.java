@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hall�
+    Copyright (C) 2008-2017 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -41,7 +41,7 @@ public abstract class HttpGateway
 	 * Sends a GET request to a specified URL
 	 * @param url The URL
 	 * @return The string of the HTTP response
-	 * @throws Exception
+	 * @throws IOException If something goes wrong with the request
 	 */
 	public static String sendGet(String url) throws IOException
 	{
@@ -69,7 +69,7 @@ public abstract class HttpGateway
 	 * @param url The URL
 	 * @param payload The request's payload
 	 * @return The string of the HTTP response
-	 * @throws Exception
+	 * @throws IOException If something goes wrong with the request
 	 */
 	public static String sendPost(String url, String payload) throws IOException 
 	{

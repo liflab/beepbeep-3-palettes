@@ -49,7 +49,7 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>../lib/jdbc.jar</filename>
+    <filename>../jars/jdbc.jar</filename>
     <withdoc>false</withdoc>
   </jar>
   

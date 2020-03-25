@@ -51,7 +51,7 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>../lib/apache.jar</filename>
+    <filename>../jars/apache.jar</filename>
     <withdoc>false</withdoc>
   </jar>
   

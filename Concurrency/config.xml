@@ -52,7 +52,7 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>../lib/concurrency.jar</filename>
+    <filename>../jars/concurrency.jar</filename>
     <withdoc>false</withdoc>
   </jar>
   

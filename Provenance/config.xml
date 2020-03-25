@@ -51,7 +51,7 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>../lib/provenance.jar</filename>
+    <filename>../jars/provenance.jar</filename>
     <withdoc>false</withdoc>
   </jar>
   

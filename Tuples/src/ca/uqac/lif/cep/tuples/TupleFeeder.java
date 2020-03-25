@@ -60,7 +60,7 @@ public class TupleFeeder extends SynchronousProcessor
 	/**
 	 * Sets the character used to separate the text lines into fields
 	 * @param separator The separator
-	 * @return
+	 * @return This tuple feeder
 	 */
 	/*@ non_null @*/ public TupleFeeder setSeparator(/*@ non_null @*/ String separator)
 	{

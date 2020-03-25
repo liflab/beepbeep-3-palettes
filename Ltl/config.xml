@@ -51,7 +51,7 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>../lib/ltl.jar</filename>
+    <filename>../jars/ltl.jar</filename>
     <withdoc>false</withdoc>
   </jar>
   

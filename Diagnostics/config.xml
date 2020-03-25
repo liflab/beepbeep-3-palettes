@@ -52,7 +52,7 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>../lib/diagnostics.jar</filename>
+    <filename>../jars/diagnostics.jar</filename>
     <withdoc>false</withdoc>
   </jar>
   

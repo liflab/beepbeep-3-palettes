@@ -53,10 +53,9 @@ public class Hibernate extends SynchronousProcessor
   
   /**
    * Creates a new hibernate processor
+   * @param p The processor to hibernate
    * @param f The fridge used to store the processor. The fridge must
    * already store the processor.
-   * @param in_arity The input arity of the processor
-   * @param out_arity The output arity of the processor
    */
   public Hibernate(Processor p, Fridge f)
   {

@@ -51,7 +51,7 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>../lib/dsl.jar</filename>
+    <filename>../jars/dsl.jar</filename>
     <withdoc>false</withdoc>
   </jar>
   

@@ -34,7 +34,7 @@ import ca.uqac.lif.json.JsonParser;
 import ca.uqac.lif.json.JsonParser.JsonParseException;
 
 /**
- * Unit tests for the {@link ParseJson} and {@link JPathEvaluator}
+ * Unit tests for the {@link ParseJson} and {@link JPathFunction}
  * @author Sylvain Hallé
  */
 public class JsonTest 

@@ -52,7 +52,7 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>../lib/fol.jar</filename>
+    <filename>../jars/fol.jar</filename>
     <withdoc>false</withdoc>
   </jar>
   

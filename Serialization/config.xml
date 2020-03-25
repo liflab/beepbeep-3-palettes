@@ -23,7 +23,7 @@
        script's default values -->
 
   <!-- The project's name -->
-  <name>Concurrency extension for BeepBeep 3</name>
+  <name>Serialization extension for BeepBeep 3</name>
   
   <!-- The project's version number -->
   <version>0.2.1</version>
@@ -52,7 +52,7 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>../lib/serialization.jar</filename>
+    <filename>../jars/serialization.jar</filename>
     <withdoc>false</withdoc>
   </jar>
   

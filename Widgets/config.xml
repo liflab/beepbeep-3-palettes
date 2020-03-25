@@ -52,7 +52,7 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>../lib/widgets.jar</filename>
+    <filename>../jars/widgets.jar</filename>
     <withdoc>false</withdoc>
   </jar>
   
