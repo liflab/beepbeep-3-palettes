@@ -77,6 +77,14 @@
       <classname>ca.uqac.lif.azrael.ObjectPrinter</classname>
       <files>
         <jar>https://github.com/sylvainhalle/Azrael/releases/download/v2.0/azrael-core.jar</jar>
+      </files>
+      <bundle>true</bundle>
+    </dependency>
+    <dependency>
+      <!-- Azrael JSON. Generic serialization library -->
+      <name>Azrael JSON</name>
+      <classname>ca.uqac.lif.azrael.json.JsonReader</classname>
+      <files>
         <jar>https://github.com/sylvainhalle/Azrael/releases/download/v2.0/azrael-json.jar</jar>
       </files>
       <bundle>true</bundle>

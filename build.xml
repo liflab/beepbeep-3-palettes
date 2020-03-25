@@ -44,7 +44,8 @@
     description="Install ant-contrib if not present">
     <echo message="ant-contrib is not installed. Downloading..." level="info"/>
     <mkdir dir="${build.rootlibdir}"/>
-    <get src="http://sylvainhalle.github.io/AntRun/dependencies/ant-contrib-1.0b3-bin.zip" dest="${build.rootlibdir}/ant-contrib-1.0b3-bin.zip"/>
+    <get src="http://sylvainhalle.github.io/AntRun/dependencies/ant-contrib-1.0b3-bin.zip" 
+      dest="${build.rootlibdir}/ant-contrib-1.0b3-bin.zip"/>
     <unzip src="${build.rootlibdir}/ant-contrib-1.0b3-bin.zip" dest="${build.rootlibdir}">
       <patternset>
         <include name="**/*.jar"/>
@@ -58,7 +59,7 @@
   <mkdir dir="jars"/>
 
   <!-- Calls the "jar" task in each subfolder -->  
-  <target name="jar" depends="init">
+  <target name="jar" depends="init,prepare">
     <for param="subdir">
       <dirset dir=".">
         <include name="*"/>
@@ -221,14 +222,21 @@
       <bottom><![CDATA[<i>Copyright&nbsp;&#169; ]]>${build.author}<![CDATA[. All Rights Reserved.</i>]]></bottom>
       <link href="http://docs.oracle.com/javase/6/docs/api/"/>
       <sourcefiles>
-<fileset dir="." defaultexcludes="yes">
-  <include name="**/*.java"/>
-  <exclude name="**/*Test.java"/>
-</fileset>
+      	<fileset dir="." defaultexcludes="yes">
+      		<include name="**/*.java"/>
+      		<exclude name="**/*Test.java"/>
+      	</fileset>
       </sourcefiles>
       <classpath>
         <fileset file="${build.rootlibdir}/beepbeep-3.jar"/>
       </classpath>
     </javadoc>
+  </target>
+  
+  <!-- Task that prepares the environment before the compilation.
+       This is mostly a *hack* so that the Jdbc palette, which depends on
+       Tuples, can compile by copying tuples.jar to its dep dir. -->
+  <target name="prepare" depends="init">
+    <copy file="jars/tuples.jar" tofile="Jdbc/dep/tuples.jar" failonerror="false"/>
   </target>
 </project>
