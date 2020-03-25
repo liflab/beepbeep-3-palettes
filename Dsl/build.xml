@@ -23,7 +23,7 @@
   xmlns:jacoco="antlib:org.jacoco.ant">
   
   <!-- The build script's version number. Do not edit! -->
-  <property name="antrun.version" value="1.5.3"/>
+  <property name="antrun.version" value="1.6"/>
   
   <!-- Load project properties from XML file -->
   <xmlproperty file="config.xml"/>
@@ -148,6 +148,9 @@
       <pathelement location="${build.test.bindir}"/>
       <pathelement path="${java.class.path}"/>
     </path>
+    <!-- Create empty doc folders -->
+    <mkdir dir="${build.docdir}"/>
+    <mkdir dir="${build.docdir}/doc-files"/>
   </target>
 
   <!-- Check if a local rt.jar is present. If so, it will override the
@@ -260,7 +263,7 @@
   <!-- Target: jar
        Generates a JAR file with the compiled files and javadoc
   -->
-  <target name="jar" depends="compile,javadoc" description="Create the runnable JAR">
+  <target name="jar" depends="compile" description="Create the runnable JAR">
       <tstamp>
          <format property="TODAY" pattern="yyyy-MM-dd HH:mm:ss" />
       </tstamp>
@@ -451,7 +454,6 @@
   <target name="download-rt6">
     <get src="http://sylvainhalle.github.io/AntRun/dependencies/1.6.0_45/rt.jar" dest="${build.rtlocation}"/>
   </target>
-
   
   <!-- Target: junit
        Download jUnit JARs if not present, and puts them in the lib folder
