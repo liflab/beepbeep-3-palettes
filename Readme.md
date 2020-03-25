@@ -28,7 +28,7 @@ At the moment, the folder contains the following palettes:
 - `Mtnp`: front-end to the [MTNP library](https://github.com/liflab/mtnp)
    to manipulate tables and plots
 - `Provenance`: traceability in processor chains
-- `Serialization`: serialize/deserialize objects with the
+- `Serialization`: serialize/deserialize events with the
    [Azrael](https://github.com/sylvainhalle/Azrael) library
 - `Sets`: to manipulate streams of sets
 - `Signal`: basic signal processing functions (peak detection, etc.)
@@ -46,16 +46,13 @@ Building the palettes
 
 ### tl;dr
 
-1. Run the script `build-all.sh` to build all palettes in succession.
+1. Run `ant` to build all palettes in succession.
    Since some palettes have dependencies on other palettes, the script
    must be run **twice**.
 2. If everything goes well, all the resulting jars will be created in the
-   `lib` repository. Move them around and enjoy. (Look out; this folder
-   also contains JARs that are not palettes, and used in support of the Ant
-   build script. Use the file creation date to distinguish them from the
-   freshly created JAR palettes.)
-3. You can also run the test scripts for each palette using the
-   `test-all.sh` script.
+   `jars` repository. Move them around and enjoy.
+3. You can also run the test scripts for each palette by running
+   `ant test` script.
 
 ### More details
 
@@ -84,25 +81,16 @@ system by typing:
 
 This will put the missing JAR files in the `deps` folder in the project's
 root. These libraries should then be put somewhere in the classpath, such as
-in Java's extension folder (don't leave them there, it won't work). You can
-do that by typing (**with administrator rights**):
-
-    ant install-deps
-
-or by putting them manually in the extension folder. Type `ant init` and it
-will print out what that folder is for your system.
-
-Do **not** create subfolders there (i.e. put the archive directly in that
-folder).
+in Java's extension folder (don't leave them there, it won't work).
 
 ### Compiling
 
 Compile the sources by simply typing:
 
-    ant all
+    ant
 
 This will produce a file called `xxx.jar` (depending on the palette you
-are compiling) in the `lib` folder.
+are compiling) in the `jars` folder.
 
 In addition, the script generates in the `doc` folder the Javadoc
 documentation for using BeepBeep. To show documentation in Eclipse,
