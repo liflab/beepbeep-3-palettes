@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2020 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -69,12 +69,6 @@ public class SerializeEvents<T> extends Function
 		super();
 		m_serializer = s;
 		m_outputType = output_type;
-	}
-
-	@Override
-	public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
-	{
-		evaluate(inputs, outputs);
 	}
 
 	@Override
