@@ -15,11 +15,9 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 /**
- * 
- */
-/**
- * @author sylvain
- *
+ * Use AWT and Swing widgets and event sources or sinks.
+ * @author Sylvain Hallé
  */
 package ca.uqac.lif.cep.widgets;
