@@ -115,13 +115,15 @@ public class HttpUpstreamGateway extends Sink
 		 * called as a result of a push. 
 		 */
 		String payload = (String) inputs[0];
+		boolean success = false;
 		if (m_pushMethod == Method.POST)
 		{
-			for (int i = 0; i < s_numRetries; i++)
+			for (int i = 0; i < s_numRetries && !success; i++)
 			{
 				try 
 				{
 					HttpGateway.sendPost(m_pushUrl, payload);
+					success = true;
 				}
 				catch (ConnectException ce)
 				{
