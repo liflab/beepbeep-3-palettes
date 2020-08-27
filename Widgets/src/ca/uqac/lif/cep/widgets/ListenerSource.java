@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2018 Sylvain Hallé
+    Copyright (C) 2008-2020 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -20,6 +20,9 @@ package ca.uqac.lif.cep.widgets;
 import ca.uqac.lif.cep.tmf.Source;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.Queue;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -30,7 +33,7 @@ import javax.swing.event.ChangeListener;
  * Swing widget.
  * @author Sylvain Hallé
  */
-public class ListenerSource extends Source implements ActionListener, ChangeListener
+public class ListenerSource extends Source implements ActionListener, ChangeListener, MouseListener, MouseMotionListener
 {
   /**
    * Creates a new action listener source
@@ -70,6 +73,55 @@ public class ListenerSource extends Source implements ActionListener, ChangeList
   
   @Override
   public void actionPerformed(ActionEvent e)
+  {
+    m_tempQueue.add(new Object[] {e});
+    push(); 
+  }
+
+  @Override
+  public void mouseDragged(MouseEvent e)
+  {
+    m_tempQueue.add(new Object[] {e});
+    push(); 
+  }
+
+  @Override
+  public void mouseMoved(MouseEvent e)
+  {
+    m_tempQueue.add(new Object[] {e});
+    push(); 
+  }
+
+  @Override
+  public void mouseClicked(MouseEvent e)
+  {
+    m_tempQueue.add(new Object[] {e});
+    push(); 
+  }
+
+  @Override
+  public void mousePressed(MouseEvent e)
+  {
+    m_tempQueue.add(new Object[] {e});
+    push(); 
+  }
+
+  @Override
+  public void mouseReleased(MouseEvent e)
+  {
+    m_tempQueue.add(new Object[] {e});
+    push(); 
+  }
+
+  @Override
+  public void mouseEntered(MouseEvent e)
+  {
+    m_tempQueue.add(new Object[] {e});
+    push(); 
+  }
+
+  @Override
+  public void mouseExited(MouseEvent e)
   {
     m_tempQueue.add(new Object[] {e});
     push(); 
