@@ -34,6 +34,7 @@ At the moment, the folder contains the following palettes:
 - `Signal`: basic signal processing functions (peak detection, etc.)
 - `Tuples`: for manipulating tuples and using BeepBeep as a JDBC driver
 - `WebSocket`: to read/write events from/to a web socket
+- `Widgets`: to manipulate AWT and Swing widgets as processors
 - `Xml`: to read and write events in the XML format
 
 Depending on the projects, additional dependencies may need to be
