@@ -20,6 +20,7 @@ package ca.uqac.lif.cep.http;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -30,72 +31,72 @@ import java.net.URL;
  */
 public abstract class HttpGateway 
 {
-	public static final transient String s_userAgent = "BeepBeep HTTP Gateway";
-	
-	private HttpGateway()
-	{
-		throw new UnsupportedOperationException();
-	}
-	
-	/**
-	 * Sends a GET request to a specified URL
-	 * @param url The URL
-	 * @return The string of the HTTP response
-	 * @throws IOException If something goes wrong with the request
-	 */
-	public static String sendGet(String url) throws IOException
-	{
-		URL obj = new URL(url);
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-		con.setRequestMethod("GET");
-		con.setRequestProperty("User-Agent", s_userAgent);
+  public static final transient String s_userAgent = "BeepBeep HTTP Gateway";
 
-		//int responseCode = con.getResponseCode();
-		BufferedReader in = new BufferedReader(
-		        new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuilder response = new StringBuilder();
+  private HttpGateway()
+  {
+    throw new UnsupportedOperationException();
+  }
 
-		while ((inputLine = in.readLine()) != null)
-		{
-			response.append(inputLine);
-		}
-		in.close();
-		return response.toString();
-	}
-	
-	/**
-	 * Sends a POST request to a specified URL
-	 * @param url The URL
-	 * @param payload The request's payload
-	 * @return The string of the HTTP response
-	 * @throws IOException If something goes wrong with the request
-	 */
-	public static String sendPost(String url, String payload) throws IOException 
-	{
-		URL obj = new URL(url);
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+  /**
+   * Sends a GET request to a specified URL
+   * @param url The URL
+   * @return The string of the HTTP response
+   * @throws IOException If something goes wrong with the request
+   */
+  public static String sendGet(String url) throws IOException
+  {
+    URL obj = new URL(url);
+    HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+    con.setRequestMethod("GET");
+    con.setRequestProperty("User-Agent", s_userAgent);
 
-		//add request header
-		con.setRequestMethod("POST");
-		con.setRequestProperty("User-Agent", s_userAgent);
-		// Send post request
-		con.setDoOutput(true);
-		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-		wr.writeBytes(payload);
-		wr.flush();
-		wr.close();
+    //int responseCode = con.getResponseCode();
+    BufferedReader in = new BufferedReader(
+        new InputStreamReader(con.getInputStream()));
+    String inputLine;
+    StringBuilder response = new StringBuilder();
 
-		//int responseCode = con.getResponseCode();
-		BufferedReader in = new BufferedReader(
-		        new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuilder response = new StringBuilder();
+    while ((inputLine = in.readLine()) != null)
+    {
+      response.append(inputLine);
+    }
+    in.close();
+    return response.toString();
+  }
 
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
-		}
-		in.close();
-		return response.toString();
-	}
+  /**
+   * Sends a POST request to a specified URL
+   * @param url The URL
+   * @param payload The request's payload
+   * @return The string of the HTTP response
+   * @throws IOException If something goes wrong with the request
+   */
+  public static String sendPost(String url, String payload) throws IOException 
+  {
+    URL obj = new URL(url);
+    HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+    //add request header
+    con.setRequestMethod("POST");
+    con.setRequestProperty("User-Agent", s_userAgent);
+    // Send post request
+    con.setDoOutput(true);
+    DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+    wr.writeBytes(payload);
+    wr.flush();
+    wr.close();
+
+    InputStream c_is = con.getInputStream();
+    BufferedReader in = new BufferedReader(
+        new InputStreamReader(c_is));
+    String inputLine;
+    StringBuilder response = new StringBuilder();
+
+    while ((inputLine = in.readLine()) != null) {
+      response.append(inputLine);
+    }
+    in.close();
+    return response.toString();
+  }
 }

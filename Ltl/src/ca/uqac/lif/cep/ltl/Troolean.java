@@ -367,6 +367,11 @@ public class Troolean extends Constant
 			return Value.INCONCLUSIVE;
 		}
 		
+		@Override
+		public String toString()
+		{
+		  return "\u22cf";
+		}
 	}
 	
 	/**
@@ -416,6 +421,12 @@ public class Troolean extends Constant
 		{
 			return Value.INCONCLUSIVE;
 		}
+		
+		@Override
+    public String toString()
+    {
+      return "\u22ce";
+    }
 	}
 	
 	/**
