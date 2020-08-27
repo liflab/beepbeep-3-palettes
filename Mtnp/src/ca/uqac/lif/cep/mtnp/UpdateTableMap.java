@@ -19,37 +19,18 @@ package ca.uqac.lif.cep.mtnp;
 
 import java.util.Map;
 
-import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.UniformProcessor;
-import ca.uqac.lif.mtnp.table.HardTable;
 import ca.uqac.lif.mtnp.table.TableEntry;
 
-public class UpdateTableMap extends UniformProcessor
+/**
+ * Adds contents to a table by receiving a stream of {@link Map} objects, each
+ * corresponding to a tuple of key-value pairs to add to the table.
+ * @author Sylvain Hallé
+ */
+public class UpdateTableMap extends UpdateTable
 {
-	protected HardTable m_table;
-
 	public UpdateTableMap(String ... col_names)
 	{
-		super(1, 1);
-		m_table = new HardTable(col_names);
-	}
-	
-	protected TableEntry createEntry(Object[] inputs)
-	{
-		String[] col_names = m_table.getColumnNames();
-		TableEntry e = new TableEntry();
-		for (int i = 0; i < Math.min(col_names.length, inputs.length); i++)
-		{
-			e.put(col_names[i], inputs[i]);
-		}
-		return e;
-	}
-	
-	@Override
-	public void reset()
-	{
-	  super.reset();
-		m_table = new HardTable(m_table.getColumnNames());
+		super(1, col_names);
 	}
 
   @Override
@@ -68,9 +49,13 @@ public class UpdateTableMap extends UniformProcessor
   }
 
   @Override
-  public Processor duplicate(boolean with_state)
+  public UpdateTableMap duplicate(boolean with_state)
   {
-    // TODO Auto-generated method stub
-    return null;
+    UpdateTableMap utm = new UpdateTableMap(m_table.getColumnNames());
+    if (with_state)
+    {
+      utm.m_table = m_table.duplicate(with_state);
+    }
+    return utm;
   }
 }

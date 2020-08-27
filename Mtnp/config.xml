@@ -26,7 +26,7 @@
   <name>Manipulate Tables N'Plots extension for BeepBeep 3</name>
   
   <!-- The project's version number -->
-  <version>0.2</version>
+  <version>0.2.1</version>
   
   <!-- The project's author. Currently this only
   shows up in the footer of the Javadoc documentation. -->
@@ -76,7 +76,7 @@
       <name>MTNP</name>
       <classname>ca.uqac.lif.mtnp.DataFormatter</classname>
       <files>
-        <zip>https://github.com/liflab/mtnp/releases/download/v0.1.12-alpha/mtnp-0.1.12-alpha.zip</zip>
+        <zip>https://github.com/liflab/mtnp/releases/download/v0.1.13-alpha/mtnp-0.1.13-alpha.zip</zip>
       </files>
       <bundle>true</bundle>
     </dependency>
