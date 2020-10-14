@@ -18,14 +18,38 @@
 package ca.uqac.lif.cep.mtnp;
 
 import ca.uqac.lif.cep.ProcessorException;
+import ca.uqac.lif.mtnp.table.HardTable;
 import ca.uqac.lif.mtnp.table.TableEntry;
 
+/**
+ * Adds contents to a table from multiple streams. A new line in the table is
+ * added for every event front received by the processor.
+ * @author Sylvain Hallé
+ */
 public class UpdateTableStream extends UpdateTable
 {
+  /**
+   * Creates a new instance of the processor.
+   * @param column_names The names of the columns of the table to update.
+   * Each input stream will correspond to the value of an attribute at
+   * the corresponding position. 
+   */
 	public UpdateTableStream(String ... column_names)
 	{
 		super(column_names.length, column_names);
 	}
+	
+	/**
+   * Creates a new instance of the processor.
+   * @param t The table where entries will be added from incoming events
+   * @param column_names The names of the columns of the table to update.
+   * Each input stream will correspond to the value of an attribute at
+   * the corresponding position. 
+   */
+	public UpdateTableStream(HardTable t, String ... column_names)
+  {
+    super(column_names.length, t);
+  }
 	
 	@Override
 	protected boolean compute(Object[] inputs, Object[] outputs) throws ProcessorException
