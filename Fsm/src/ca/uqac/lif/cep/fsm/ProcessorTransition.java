@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2021 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -66,9 +66,24 @@ public class ProcessorTransition extends MooreMachine.Transition
 	 */
 	final int m_destination;
 	
-	public ProcessorTransition(ProcessorTransition pt) 
+	/**
+   * Creates a new processor transition from another transition.
+   * @param pt The transition to copy from
+   */
+  public ProcessorTransition(ProcessorTransition pt) 
+  {
+    this(pt, false);
+  }
+	
+	/**
+	 * Creates a new processor transition, by copying state from another
+	 * transition.
+	 * @param pt The transition to copy from
+	 * @param with_state The 
+	 */
+	public ProcessorTransition(ProcessorTransition pt, boolean with_state) 
 	{
-		this(pt.m_destination, pt.m_condition.duplicate());
+		this(pt.m_destination, pt.m_condition.duplicate(with_state));
 	}
 	
 	/**
@@ -136,4 +151,9 @@ public class ProcessorTransition extends MooreMachine.Transition
 		return m_condition + " -> " + m_destination;
 	}
 	
+	@Override
+	public ProcessorTransition duplicate(boolean with_state)
+	{
+	  return new ProcessorTransition(this, with_state);
+	}
 }

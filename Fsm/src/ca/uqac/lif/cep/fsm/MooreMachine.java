@@ -412,7 +412,7 @@ public class MooreMachine extends SynchronousProcessor
       List<Transition> new_lt = new ArrayList<Transition>();
       for (Transition t : lt)
       {
-        new_lt.add((Transition) t.duplicate(with_state));
+        new_lt.add(t.duplicate(with_state));
       }
       out.m_relation.put(k, new_lt);
     }		
