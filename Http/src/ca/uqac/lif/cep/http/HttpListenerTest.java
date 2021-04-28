@@ -139,16 +139,15 @@ public class HttpListenerTest
 		Thread.sleep(100);
 		p.push("A");
 		Thread.sleep(100);
-		// TODO: For some reason, the process method in cb is called twice for each request
-		assertEquals(2, cb.getRequestCount());
+		assertEquals(1, cb.getRequestCount());
 		assertEquals("A", cb.m_lastBodyContents);
 		p.push("B");
 		Thread.sleep(100);
-		assertEquals(4, cb.getRequestCount());
+		assertEquals(2, cb.getRequestCount());
 		assertEquals("B", cb.m_lastBodyContents);
 		p.push("C");
 		Thread.sleep(100);
-		assertEquals(6, cb.getRequestCount());
+		assertEquals(3, cb.getRequestCount());
 		assertEquals("C", cb.m_lastBodyContents);
 		test_server.stopServer();
 	}
