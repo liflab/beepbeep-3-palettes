@@ -43,6 +43,7 @@
   <libdir>../lib</libdir>
   <bindir>bin</bindir>
   <docdir>doc</docdir>
+  <depdir>dep</depdir>
   <test>
     <srcdir>src</srcdir>
     <bindir>bin</bindir>

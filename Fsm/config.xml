@@ -26,7 +26,7 @@
   <name>Finite-state machine extension for BeepBeep 3</name>
   
   <!-- The project's version number -->
-  <version>0.2</version>
+  <version>0.2.1</version>
   
   <!-- The project's author. Currently this only
   shows up in the footer of the Javadoc documentation. -->
@@ -43,6 +43,7 @@
   <bindir>bin</bindir>
   <docdir>doc</docdir>
   <libdir>../lib</libdir>
+  <depdir>dep</depdir>
   <test>
     <srcdir>src</srcdir>
     <bindir>bin</bindir>

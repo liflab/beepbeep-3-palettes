@@ -133,12 +133,21 @@
           <then>
             <sequential>
               <echo message="Entering @{subdir}" />
-              <ant dir="@{subdir}" target="test" />
+              <trycatch>
+                <try>
+                  <ant dir="@{subdir}" target="test" />
+                </try>
+                <catch>
+                  <echo message="Tests failed for folder @{subdir}"/>
+                  <property name="test.onefailed" value="true"/>
+                </catch>
+              </trycatch>
             </sequential>
           </then>
         </if>
       </sequential>
     </for>
+    <fail message="Tests failed for one of the palettes" if="test.onefailed"/>
   </target>
   
   <!-- Calls the "clean" task in each subfolder -->

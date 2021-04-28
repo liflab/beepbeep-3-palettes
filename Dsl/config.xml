@@ -43,6 +43,7 @@
   <libdir>../lib</libdir>
   <bindir>bin</bindir>
   <docdir>doc</docdir>
+  <depdir>dep</depdir>
   <test>
     <srcdir>src</srcdir>
     <bindir>bin</bindir>
@@ -77,7 +78,7 @@
       <name>Bullwinkle</name>
       <classname>ca.uqac.lif.bullwinkle.BnfParser</classname>
       <files>
-      	<zip>https://github.com/sylvainhalle/Bullwinkle/releases/download/v1.4.4/bullwinkle-1.4.4.zip</zip>
+      	<zip>https://github.com/sylvainhalle/Bullwinkle/releases/download/v1.4.5/bullwinkle-1.4.5.zip</zip>
       </files>
       <bundle>true</bundle>
     </dependency>
