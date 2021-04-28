@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
     AntRun, a general-purpose Ant build script
-    Copyright (C) 2015-2020  Sylvain Hallé
+    Copyright (C) 2015-2021  Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@
   
   <!-- The folder where libraries (ant-contrib, etc.) will be downloaded
        if necessary -->
-  <property name="build.libdir" value="lib"/>
+  <property name="build.libdir" value="Source/Core/lib"/>
 
   <!-- The folder with the project's source files -->
   <property name="build.srcdir" value="Source/Core/src"/>
@@ -54,7 +54,7 @@
   <property name="build.bindir" value="Source/Core/bin"/>
   
   <!-- The folder where the downloaded dependencies (if any) should go -->
-  <property name="build.depdir" value="dep"/>
+  <property name="build.depdir" value="Source/Core/dep"/>
   
   <!-- The folder with the project's test source files -->
   <property name="build.test.srcdir" value="Source/CoreTest/src"/>
@@ -354,7 +354,7 @@
     </copy>
   </target>
   
-  <!-- Target: clean
+  <!-- Target: wipe
        Wipes any temporary files or directories
   -->
   <target name="wipe" description="Wipes the project: deletes everything but sources">
@@ -458,7 +458,7 @@
   <!-- Target: junit
        Download jUnit JARs if not present, and puts them in the lib folder
   -->
-  <property name="junit.jarname" value="junit-4.12.jar"/>
+  <property name="junit.jarname" value="junit-4.13.2.jar"/>
   <property name="junit.hamcrest" value="hamcrest-core-1.3.jar"/>
   <condition property="junit.absent" value="false" else="true">
     <and>
@@ -468,11 +468,7 @@
   </condition>
   <target name="junit" if="${junit.absent}" description="Install jUnit if not present">
     <mkdir dir="${build.libdir}"/>
-    <!--
-    <get src="http://search.maven.org/remotecontent?filepath=junit/junit/4.12/${junit.jarname}" dest="${build.libdir}/${junit.jarname}"/>
-    <get src="http://search.maven.org/remotecontent?filepath=org/hamcrest/hamcrest-core/1.3/${junit.hamcrest}" dest="${build.libdir}/${junit.hamcrest}"/>
-    -->
-    <get src="https://repo1.maven.org/maven2/junit/junit/4.12/${junit.jarname}" dest="${build.libdir}/${junit.jarname}"/>
+    <get src="https://repo1.maven.org/maven2/junit/junit/4.13.2/${junit.jarname}" dest="${build.libdir}/${junit.jarname}"/>
     <get src="https://repo1.maven.org/maven2/org/hamcrest/hamcrest-core/1.3/${junit.hamcrest}" dest="${build.libdir}/${junit.hamcrest}"/>
   </target>
   
@@ -485,7 +481,7 @@
   </condition>
   <target name="jacoco" if="${jacoco.absent}" description="Install JaCoCo if not present">
     <mkdir dir="${build.libdir}"/>
-    <get src="http://search.maven.org/remotecontent?filepath=org/jacoco/jacoco/0.8.5/jacoco-0.8.5.zip" dest="${build.libdir}/jacoco.zip"/>
+    <get src="http://search.maven.org/remotecontent?filepath=org/jacoco/jacoco/0.8.6/jacoco-0.8.6.zip" dest="${build.libdir}/jacoco.zip"/>
     <unzip src="${build.libdir}/jacoco.zip" dest="${build.libdir}">
       <patternset>
         <include name="**/*.jar"/>
