@@ -37,6 +37,7 @@ import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.functions.FunctionTree;
+import ca.uqac.lif.cep.functions.RaiseArity;
 import ca.uqac.lif.cep.functions.StreamVariable;
 import ca.uqac.lif.cep.functions.UnaryFunction;
 import ca.uqac.lif.cep.tmf.Fork;
@@ -107,9 +108,31 @@ public class QuantifierTest
 	}
 	
 	@Test
+  public void testEvery2Duplicate() 
+  {
+    FunctionTree tree = new FunctionTree(TrooleanCast.instance, new FunctionTree(Numbers.isLessThan, StreamVariable.X, new ContextVariable("x"))); 
+    ApplyFunction gt = new ApplyFunction(tree);
+    Every fa = (Every) new Every("x", new DummyCollectionFunction(1, 2, 3), gt).duplicate();
+    QueueSink sink = new QueueSink(1);
+    Connector.connect(fa, sink);
+    Pushable in = fa.getPushableInput(0);
+    Queue<Object> queue = sink.getQueue(0);
+    in.push(0);
+    assertFalse(queue.isEmpty());
+    Object output = queue.remove();
+    assertNotNull(output);
+    assertTrue(output instanceof Troolean.Value);
+    assertEquals(Troolean.Value.TRUE, (Troolean.Value) output);
+    in.push(10);
+    assertFalse(queue.isEmpty());
+    output = queue.remove();
+    assertEquals(Troolean.Value.FALSE, (Troolean.Value) output);
+  }
+	
+	@Test
 	public void testEvery3() 
 	{
-	  FunctionTree tree = new FunctionTree(TrooleanCast.instance, new FunctionTree(Numbers.isGreaterThan, StreamVariable.X, StreamVariable.Y));
+	  FunctionTree tree = new FunctionTree(TrooleanCast.instance, new RaiseArity(1, new FunctionTree(Numbers.isGreaterThan, new ContextVariable("x"), new ContextVariable("y"))));
 		ApplyFunction gt = new ApplyFunction(tree);
 		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), gt);
 		Some fa2 = new Some("y", new DummyCollectionFunction(1, 2, 3), fa);
@@ -130,7 +153,7 @@ public class QuantifierTest
 	{
 		QueueSource source = new QueueSource(1);
 		source.addEvent(0);
-		FunctionTree tree = new FunctionTree(TrooleanCast.instance, new FunctionTree(Numbers.isGreaterThan, StreamVariable.X, StreamVariable.Y));
+		FunctionTree tree = new FunctionTree(TrooleanCast.instance, new RaiseArity(1, new FunctionTree(Numbers.isGreaterThan, new ContextVariable("x"), new ContextVariable("y"))));
 		ApplyFunction gt = new ApplyFunction(tree);
 		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), gt);
 		Some fa2 = new Some("y", new DummyCollectionFunction(1, 2, 3), fa);
@@ -145,7 +168,7 @@ public class QuantifierTest
 	@Test
 	public void testEvery4() 
 	{
-	  FunctionTree tree = new FunctionTree(TrooleanCast.instance, new FunctionTree(Numbers.isGreaterThan, StreamVariable.X, StreamVariable.Y));
+	  FunctionTree tree = new FunctionTree(TrooleanCast.instance, new RaiseArity(1, new FunctionTree(Numbers.isGreaterThan, new ContextVariable("y"), new ContextVariable("x"))));
 		ApplyFunction gt = new ApplyFunction(tree);
 		Every fa = new Every("x", new DummyCollectionFunction(1, 2, 3), gt);
 		Some fa2 = new Some("y", new DummyCollectionFunction(2, 3, 4), fa);
@@ -164,9 +187,9 @@ public class QuantifierTest
 	@Test
 	public void testEveryPull5() 
 	{
-		QueueSource source = new QueueSource(1);
+		QueueSource source = new QueueSource().setEvents(1);
 		source.addEvent(0);
-		FunctionTree tree = new FunctionTree(TrooleanCast.instance, new FunctionTree(Numbers.isGreaterThan, new ContextVariable("y"), new ContextVariable("x")));
+		FunctionTree tree = new FunctionTree(TrooleanCast.instance, new RaiseArity(1, new FunctionTree(Numbers.isGreaterThan, new ContextVariable("y"), new ContextVariable("x"))));
 		ApplyFunction gt = new ApplyFunction(tree);
 		Every fa = new Every("x", new DummyCollectionFunction(2), gt);
 		Every fa2 = new Every("y", new DummyCollectionFunction(1), fa);
