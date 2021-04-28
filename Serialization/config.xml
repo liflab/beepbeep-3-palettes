@@ -26,7 +26,7 @@
   <name>Serialization extension for BeepBeep 3</name>
   
   <!-- The project's version number -->
-  <version>0.2.2</version>
+  <version>0.2.3</version>
   
   <!-- The project's author. Currently this only
   shows up in the footer of the Javadoc documentation. -->
@@ -67,7 +67,7 @@
       <name>BeepBeep</name>
       <classname>ca.uqac.lif.cep.Processor</classname>
       <files>
-      	<zip>https://github.com/liflab/beepbeep-3/releases/download/v0.10.3-alpha/beepbeep-3-0.10.3-alpha.zip</zip>
+      	<zip>https://github.com/liflab/beepbeep-3/releases/download/v0.10.4-alpha/beepbeep-3-0.10.4-alpha.zip</zip>
       </files>
       <bundle>false</bundle>
     </dependency>
@@ -76,7 +76,7 @@
       <name>Azrael</name>
       <classname>ca.uqac.lif.azrael.ObjectPrinter</classname>
       <files>
-        <jar>https://github.com/sylvainhalle/Azrael/releases/download/v2.0.1/azrael-core.jar</jar>
+        <jar>https://github.com/sylvainhalle/Azrael/releases/download/v2.0.2/azrael-core.jar</jar>
       </files>
       <bundle>true</bundle>
     </dependency>
@@ -85,7 +85,7 @@
       <name>Azrael JSON</name>
       <classname>ca.uqac.lif.azrael.json.JsonReader</classname>
       <files>
-        <jar>https://github.com/sylvainhalle/Azrael/releases/download/v2.0.1/azrael-json.jar</jar>
+        <jar>https://github.com/sylvainhalle/Azrael/releases/download/v2.0.2/azrael-json.jar</jar>
       </files>
       <bundle>true</bundle>
     </dependency>
