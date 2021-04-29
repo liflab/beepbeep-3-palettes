@@ -116,32 +116,6 @@ public class PushPipelineTest
 		assertEquals(4, queue.remove());
 	}
 	
-	@Test(timeout=10000)
-	public void getThreshold()
-	{
-		long delay = 2000;
-		int num = 50;
-		Stopwatch sw = new Stopwatch();
-		ExecutorService ex = Executors.newCachedThreadPool();
-		LoopPassthrough spt = new LoopPassthrough(1, delay);
-		PushPipeline pp = new PushPipeline(spt, ex);
-		QueueSink qs = new QueueSink(1);
-		Queue<Object> queue = qs.getQueue();
-		Pushable p = pp.getPushableInput();
-		Connector.connect(pp, qs);
-		sw.start();
-		for (int i = 0; i < num; i++)
-		{
-			p.push(0);
-		}
-		while (queue.size() < num)
-		{
-			
-		}
-		sw.stop();
-		System.out.println("Expected: " + num * delay + "; acutal: " + sw.getDuration());
-	}
-	
 	public static void assertQueueSize(int lower, int higher, Queue<?> q)
 	{
 		int size = q.size();
