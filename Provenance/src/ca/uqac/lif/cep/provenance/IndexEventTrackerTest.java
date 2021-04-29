@@ -59,6 +59,7 @@ public class IndexEventTrackerTest
 		Pullable p = add.getPullableOutput();
 		p.pull();
 		ProvenanceNode node = tracker.fetchProvenanceNode(add_id, 0, 0);
+		assertNotNull(node);
 		assertEquals(2, node.getParents().size());
 		p.pull();
 		node = tracker.fetchProvenanceNode(add_id, 0, 1);
@@ -90,7 +91,7 @@ public class IndexEventTrackerTest
 		ei1 = (InputValue) node.getParents().get(0).getNodeFunction();
 		assertEquals(0, ei1.getStreamIndex());
 		assertEquals(1, ei1.getStreamPosition());
-		OutputValue ov2 = (OutputValue) node.getParents().get(1).getNodeFunction();
+		InputValue ov2 = (InputValue) node.getParents().get(1).getNodeFunction();
 		assertEquals(0, ov2.getStreamIndex());
 		assertEquals(0, ov2.getStreamPosition());
 		assertEquals(add_id, ov2.getProcessorId());
@@ -100,7 +101,7 @@ public class IndexEventTrackerTest
 		ei1 = (InputValue) node.getParents().get(0).getNodeFunction();
 		assertEquals(0, ei1.getStreamIndex());
 		assertEquals(2, ei1.getStreamPosition());
-		ov2 = (OutputValue) node.getParents().get(1).getNodeFunction();
+		ov2 = (InputValue) node.getParents().get(1).getNodeFunction();
 		assertEquals(0, ov2.getStreamIndex());
 		assertEquals(1, ov2.getStreamPosition());
 		assertEquals(add_id, ov2.getProcessorId());
@@ -155,9 +156,14 @@ public class IndexEventTrackerTest
 		NodeFunction n2_f = n2.getNodeFunction();
 		assertTrue(n2_f instanceof OutputValue);
 		assertEquals(1, n2.getParents().size());
-		NodeFunction n3_f = n2.getParents().get(0).getParents().get(0).getNodeFunction();
-		assertTrue(n3_f instanceof QueueFunction);
-		assertEquals(0, ((QueueFunction) n3_f).getIndex());
+		ProvenanceNode n3 = n2.getParents().get(0);
+		NodeFunction n3_f = n3.getNodeFunction();
+		assertTrue(n3_f instanceof OutputValue);
+		assertEquals(1, n3.getParents().size());
+		ProvenanceNode n4 = n3.getParents().get(0);
+		NodeFunction n4_f = n4.getNodeFunction();
+		assertTrue(n4_f instanceof QueueFunction);
+		assertEquals(0, ((QueueFunction) n4_f).getIndex());
 	}
 	
 	@Test

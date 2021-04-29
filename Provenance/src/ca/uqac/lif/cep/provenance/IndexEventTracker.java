@@ -97,7 +97,7 @@ public class IndexEventTracker implements EventTracker
 	public void associateToInput(int id, int in_stream_index, int in_stream_pos, int out_stream_index, int out_stream_pos)
 	{
 		ProvenanceNode pn_child = fetchOrCreateProvenanceNode(id, out_stream_index, out_stream_pos);
-		ProvenanceNode pn_parent = new ProvenanceNode(new EventFunction.InputValue(-1, in_stream_index, in_stream_pos));
+		ProvenanceNode pn_parent = new ProvenanceNode(new EventFunction.InputValue(id, in_stream_index, in_stream_pos));
 		pn_child.addParent(pn_parent);
 	}
 	
