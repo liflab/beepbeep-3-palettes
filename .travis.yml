@@ -2,17 +2,16 @@ language: java
 dist: bionic
 sudo: required
 notifications:
-  # Email notifications are disabled to not annoy anybody.
-  email: false 
-# Run SonarQube on code
+  email: false
 addons:
-  sonarqube:
+  sonarcloud:
+    organization: "liflab"
     token:
-      secure: c11f78b32f6c5a83c760c5b6d6ea388e166b07f7 # encrypted value of your token
+      secure: aH/65XflQzAjOevmeAfKwXbJ5AYCVtu/EjRiR8RrY/qthrbQb4fRWx1xf1KzXhDkRJyWr8J3obK2CNn5DeAUmX3IMPEdiMMGq9xhAHoILaO8T7NmFZhYE0/lzCIKYJI0AwljN0s3fefR3drmefnWf3Sv+NJGzyh2C3l9FSjuCTTBsgr63kqRUyZLTiRmpTU4MPsB7bGyZX/coOkdHtzYpJmjhxXLV5n1kZ1Jgrs5/L0+PAwvWyu1/n087c7ipp9CegvNyCwcKuF+S9JGQYdP8/76fKc2GmBaPIbRHEFuFjSrl4CPqDFH4Thm1NHbEg5G6+G9g8ZMed+RH5eFecIpFnbsAg0fHig5d5noT3b6Fxv1IJwdV1260pZQrPtiSbxMGTIUm9W2XArt1WGkuOrv657HESnpV5OcBfEjkSzwAzRQzCf6lFtLjOJDoSyhzD3VWEHeOBF+xCZISNFft+LsPIjSEBGadvL1uDA9CacEh2Fs1OSWcvR9321AAJ1XDMuxuBKy3+r0Vu8u6HSA0CNVWKNGBkbBtoWuj3ZOuyU9SeJ/LE0xJy2TsBH1n5U8Im6Sl7/ZxYZyNHuLnrpV6gCQo/QZjeeRWYTxwfPK1bAcAZfxExTMbrc8uxO64LATObZmyfp6VWdguWi4r1FHfI4PYa110NyZU+o2AraE9cun1vU=
 before_install:
 - sudo apt-get install ant-optional
 script:
-  - ant download-deps
-  - ant
-  - ant test
-  - sonar-scanner
+- ant download-deps
+- ant
+- ant test
+- sonar-scanner
