@@ -332,6 +332,7 @@
         </sourcefiles>
       </structure>
       <html destdir="${coverage.reportdir}"/>
+      <xml destfile="${test.reportdir}/report.xml"/>
     </jacoco:report>
     <!-- Fail if some test has failed -->
     <fail if="test.failed"/>
