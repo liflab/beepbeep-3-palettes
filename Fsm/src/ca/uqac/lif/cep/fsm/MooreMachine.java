@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2018 Sylvain Hallé
+    Copyright (C) 2008-2022 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -28,6 +28,7 @@ import java.util.Set;
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Duplicable;
 import ca.uqac.lif.cep.ProcessorException;
+import ca.uqac.lif.cep.PubliclyStateful;
 import ca.uqac.lif.cep.SynchronousProcessor;
 import ca.uqac.lif.cep.functions.ContextAssignment;
 import ca.uqac.lif.cep.functions.Function;
@@ -48,7 +49,7 @@ import ca.uqac.lif.cep.functions.FunctionException;
  * @author Sylvain Hallé
  *
  */
-public class MooreMachine extends SynchronousProcessor
+public class MooreMachine extends SynchronousProcessor implements PubliclyStateful
 {
   /**
    * A map from a state to the list of transitions from that
@@ -432,5 +433,11 @@ public class MooreMachine extends SynchronousProcessor
     }
     return out;
   }
+
+	@Override
+	public Object getState()
+	{
+		return m_currentState;
+	}
 
 }
