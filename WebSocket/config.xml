@@ -43,6 +43,7 @@
   <libdir>../lib</libdir>
   <bindir>bin</bindir>
   <docdir>doc</docdir>
+  <depdir>dep</depdir>
   <test>
     <srcdir>src</srcdir>
     <bindir>bin</bindir>
@@ -75,7 +76,7 @@
       <name>java_websocket</name>
       <classname>org.java_websocket.client.WebSocketClient</classname>
       <files>
-        <zip>https://github.com/liflab/Java-WebSocket/releases/download/v1.3.0/java_websocket-1.3.zip</zip>
+        <zip>https://github.com/TooTallNate/Java-WebSocket/releases/download/v1.5.3/Java-WebSocket-1.5.3.jar</zip>
       </files>
       <bundle>true</bundle>
     </dependency>

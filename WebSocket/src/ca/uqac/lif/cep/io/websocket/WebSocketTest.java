@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2022 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -111,11 +111,18 @@ public class WebSocketTest
 		 */
 		public void send(String message)
 		{
-			Collection<WebSocket> con = connections();
+			Collection<WebSocket> con = getConnections();
 			for (WebSocket socket : con)
 			{
 				socket.send(message);
 			}
+		}
+
+		@Override
+		public void onStart()
+		{
+			// TODO Auto-generated method stub
+			
 		}
 	}
 	
