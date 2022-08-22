@@ -111,14 +111,13 @@ public class WebSocketTest
 		 */
 		public void send(String message)
 		{
-			Collection<WebSocket> con = getConnections();
+			Collection<WebSocket> con = connections();
 			for (WebSocket socket : con)
 			{
 				socket.send(message);
 			}
 		}
 
-		@Override
 		public void onStart()
 		{
 			// TODO Auto-generated method stub
