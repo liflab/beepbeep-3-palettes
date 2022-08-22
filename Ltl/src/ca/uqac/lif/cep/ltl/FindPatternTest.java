@@ -25,7 +25,7 @@ import java.util.Queue;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.PubliclyStateful;
+import ca.uqac.lif.cep.Stateful;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.cep.ltl.FindPattern.PatternInstance;
@@ -82,7 +82,7 @@ public class FindPatternTest
 		assertEquals(2, pi.getSubSequence().size());
 	}
 	
-	protected static class BAfterA extends UniformProcessor implements PubliclyStateful
+	protected static class BAfterA extends UniformProcessor implements Stateful
 	{
 		protected int m_state;
 		

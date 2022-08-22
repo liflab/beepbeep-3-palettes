@@ -26,7 +26,7 @@ import java.util.Queue;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
-import ca.uqac.lif.cep.PubliclyStateful;
+import ca.uqac.lif.cep.Stateful;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SynchronousProcessor;
 import ca.uqac.lif.cep.provenance.EventFunction;
@@ -283,15 +283,15 @@ public class FindPattern extends SynchronousProcessor
 		/**
 		 * Gets the current internal state of the monitor.
 		 * @return The monitor's state, or 0 if the monitor does not implement the
-		 * {@link PubliclyStateful} interface
+		 * {@link Stateful} interface
 		 */
 		/*@ non_null @*/ protected Object getMonitorState()
 		{
-			if (!(m_monitor instanceof PubliclyStateful))
+			if (!(m_monitor instanceof Stateful))
 			{
 				return 0;
 			}
-			return ((PubliclyStateful) m_monitor).getState();
+			return ((Stateful) m_monitor).getState();
 		}
 
 		/**

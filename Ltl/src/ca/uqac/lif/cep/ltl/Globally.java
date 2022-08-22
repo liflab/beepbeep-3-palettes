@@ -19,13 +19,14 @@ package ca.uqac.lif.cep.ltl;
 
 import java.util.Queue;
 
+import ca.uqac.lif.cep.Stateful;
 import ca.uqac.lif.cep.SynchronousProcessor;
 
 /**
  * Boolean implementation of the LTL <b>G</b> processor
  * @author Sylvain Hallé
  */
-public class Globally extends SynchronousProcessor 
+public class Globally extends SynchronousProcessor implements Stateful
 {
 	protected int m_notFalseCount = 0;
 	
@@ -74,5 +75,14 @@ public class Globally extends SynchronousProcessor
 		}
 		m_inputCount++;
 		return true;
+	}
+	
+	/**
+	 * @since 0.11
+	 */
+	@Override
+	public Object getState()
+	{
+		return m_notFalseCount;
 	}
 }

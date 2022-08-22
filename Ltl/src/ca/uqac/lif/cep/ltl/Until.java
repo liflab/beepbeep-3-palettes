@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2020 Sylvain Hallé
+    Copyright (C) 2008-2022 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -19,13 +19,14 @@ package ca.uqac.lif.cep.ltl;
 
 import java.util.Queue;
 
+import ca.uqac.lif.cep.Stateful;
 import ca.uqac.lif.cep.SynchronousProcessor;
 
 /**
  * Boolean implementation of the LTL <b>U</b> processor
  * @author Sylvain Hallé
  */
-public class Until extends SynchronousProcessor 
+public class Until extends SynchronousProcessor implements Stateful
 {
 	protected int m_eventCount = 0;
 	
@@ -101,5 +102,14 @@ public class Until extends SynchronousProcessor
 			u.m_eventCount = m_eventCount;
 		}
 		return u;
+	}
+	
+	/**
+	 * @since 0.11
+	 */
+	@Override
+	public Object getState()
+	{
+		return m_eventCount;
 	}
 }
