@@ -53,6 +53,24 @@ public class FindPattern extends SynchronousProcessor
 	protected List<PatternInstance> m_instances;
 
 	/**
+	 * A flag that determines if processor instances that are known to be
+	 * non-matches should be removed.
+	 */
+	protected boolean m_removeNonMatches = true;
+
+	/**
+	 * A flag that determines if newly created processor instances that remain in
+	 * their initial state should be removed.
+	 */
+	protected boolean m_removeImmobileOnStart = true;
+	
+	/**
+	 * A flag that determines if events that are not part of the progressing
+	 * subsequence of an instance should be removed.
+	 */
+	protected boolean m_removeNonProgressing = true;
+
+	/**
 	 * Creates a new instance of the FindPattern processor.
 	 * @param pattern The processor acting as a monitor to detect pattern
 	 * instances
@@ -69,22 +87,19 @@ public class FindPattern extends SynchronousProcessor
 	{
 		Processor m_dup = m_pattern.duplicate();
 		m_dup.setEventTracker(m_eventTracker);
-		if (m_instances.isEmpty())
-		{
-			PatternInstance new_pi = new PatternInstance(m_dup, m_inputCount++);
-			m_instances.add(new_pi);
-		}
+		PatternInstance new_pi = new PatternInstance(m_dup, m_inputCount++);
+		m_instances.add(new_pi);
 		Iterator<PatternInstance> it = m_instances.iterator();
 		List<PatternInstance> matches = new ArrayList<PatternInstance>();
 		while (it.hasNext())
 		{
 			PatternInstance pi = it.next();
 			boolean moved = pi.push(inputs[0]);
-			/*if (pi == new_pi && !moved)
+			if (pi == new_pi && !moved && m_removeImmobileOnStart)
 			{
 				it.remove();
 				continue;
-			}*/
+			}
 			Troolean.Value verdict = pi.getVerdict();
 			switch (verdict)
 			{
@@ -95,7 +110,10 @@ public class FindPattern extends SynchronousProcessor
 				break;
 			case FALSE:
 				// Non-match: delete this instance
-				it.remove();
+				if (m_removeNonMatches)
+				{
+					it.remove();
+				}
 				break;
 			default:
 				break;
@@ -136,7 +154,7 @@ public class FindPattern extends SynchronousProcessor
 		return fp;
 	}
 
-	protected static class PatternInstance
+	public class PatternInstance
 	{
 		/**
 		 * The processor acting as a monitor to detect pattern instances.
@@ -311,7 +329,7 @@ public class FindPattern extends SynchronousProcessor
 		{
 			if (moved)
 			{
-				if (m_seen.containsKey(new_state))
+				if (m_removeNonProgressing && m_seen.containsKey(new_state))
 				{
 					// Back to a previously visited state: first eliminate loop
 					int loop_start = m_seen.get(new_state);
