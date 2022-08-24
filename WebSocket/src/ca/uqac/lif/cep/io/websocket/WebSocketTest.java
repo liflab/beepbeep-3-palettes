@@ -111,7 +111,7 @@ public class WebSocketTest
 		 */
 		public void send(String message)
 		{
-			Collection<WebSocket> con = connections();
+			Collection<WebSocket> con = getConnections();
 			for (WebSocket socket : con)
 			{
 				socket.send(message);
