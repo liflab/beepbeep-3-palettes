@@ -42,6 +42,11 @@ public class FindPattern extends SynchronousProcessor
 	/*@ non_null @*/ protected Processor m_pattern;
 
 	/**
+	 * The initial state of that processor.
+	 */
+	/*@ null @*/ protected Object m_initialState;
+
+	/**
 	 * The instances of the pattern currently being monitored over various
 	 * suffixes of the input trace.
 	 */
@@ -64,19 +69,22 @@ public class FindPattern extends SynchronousProcessor
 	{
 		Processor m_dup = m_pattern.duplicate();
 		m_dup.setEventTracker(m_eventTracker);
-		PatternInstance new_pi = new PatternInstance(m_dup, m_inputCount++);
-		m_instances.add(new_pi);
+		if (m_instances.isEmpty())
+		{
+			PatternInstance new_pi = new PatternInstance(m_dup, m_inputCount++);
+			m_instances.add(new_pi);
+		}
 		Iterator<PatternInstance> it = m_instances.iterator();
 		List<PatternInstance> matches = new ArrayList<PatternInstance>();
 		while (it.hasNext())
 		{
 			PatternInstance pi = it.next();
 			boolean moved = pi.push(inputs[0]);
-			if (pi == new_pi && !moved)
+			/*if (pi == new_pi && !moved)
 			{
 				it.remove();
 				continue;
-			}
+			}*/
 			Troolean.Value verdict = pi.getVerdict();
 			switch (verdict)
 			{
@@ -95,7 +103,7 @@ public class FindPattern extends SynchronousProcessor
 		}
 		if (!matches.isEmpty())
 		{
-			outputs.add(new Object[] {true});
+			outputs.add(new Object[] {matches});
 			if (m_eventTracker != null)
 			{
 				for (PatternInstance m : matches)
@@ -144,7 +152,7 @@ public class FindPattern extends SynchronousProcessor
 		 * A sink keeping the last event produced by the monitor so far.
 		 */
 		/*@ non_null @*/ protected SinkLast m_sink;
-		
+
 		/**
 		 * The index of the event in the global input stream corresponding to index
 		 * 0 of this instance's input stream. 
@@ -204,10 +212,7 @@ public class FindPattern extends SynchronousProcessor
 			m_pushable.push(o);
 			Object new_state = getMonitorState();
 			boolean moved = !new_state.equals(m_currentState);
-			if (moved)
-			{
-				append(o, new_state);
-			}
+			append(o, new_state, moved);
 			m_currentState = new_state;
 			return moved;
 		}
@@ -299,37 +304,45 @@ public class FindPattern extends SynchronousProcessor
 		 * cleans it up if this new event introduces a loop.
 		 * @param event The event to add
 		 * @param new_state The new state of the monitor
+		 * @param moved A flag indicating if this state is different from the
+		 * state in the previous event
 		 */
-		protected void append(Object event, Object new_state)
+		protected void append(Object event, Object new_state, boolean moved)
 		{
-			if (m_seen.containsKey(new_state))
+			if (moved)
 			{
-				// Back to a previously visited state: first eliminate loop
-				int loop_start = m_seen.get(new_state);
-				int loop_len = m_stateSequence.size() - loop_start;
-				for (int i = loop_start; i < m_stateSequence.size(); i++)
+				if (m_seen.containsKey(new_state))
 				{
-					m_seen.remove(m_stateSequence.get(i));
+					// Back to a previously visited state: first eliminate loop
+					int loop_start = m_seen.get(new_state);
+					int loop_len = m_stateSequence.size() - loop_start - 1;
+					for (int i = loop_start + 1; i < m_stateSequence.size(); i++)
+					{
+						m_seen.remove(m_stateSequence.get(i));
+					}
+					for (int i = 0; i < loop_len; i++)
+					{
+						m_stateSequence.remove(loop_start + 1);
+						m_subSequence.remove(loop_start + 1);
+					}
 				}
-				for (int i = 0; i < loop_len; i++)
+				else
 				{
-					m_stateSequence.remove(loop_start);
-					m_subSequence.remove(loop_start);
+					m_subSequence.add(m_currentIndex);
+					m_stateSequence.add(new_state);
+					m_seen.put(new_state, m_stateSequence.size() - 1);
 				}
 			}
-			m_subSequence.add(m_currentIndex);
 			m_currentIndex++;
-			m_stateSequence.add(new_state);
-			m_seen.put(new_state, m_stateSequence.size() - 1);
 		}
-		
+
 		/*@ pure non_null @*/ protected List<Integer> getInputIndices(int proc_id, ProvenanceNode tree)
 		{
 			List<Integer> indices = new ArrayList<Integer>();
 			getInputIndices(proc_id, tree, indices);
 			return indices;
 		}
-		
+
 		/*@ pure @*/ protected void getInputIndices(int proc_id, ProvenanceNode n, List<Integer> list)
 		{
 			NodeFunction nf = n.getNodeFunction();

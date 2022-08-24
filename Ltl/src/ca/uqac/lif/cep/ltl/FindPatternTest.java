@@ -53,7 +53,6 @@ public class FindPatternTest
 		p.push("b");
 		assertFalse(q.isEmpty());
 		assertEquals(1, q.size());
-		assertEquals(true, q.remove());
 		ProvenanceNode root = fp.getEventTracker().getProvenanceTree(fp.getId(), 0, 0);
 		assertNotNull(root);
 	}
@@ -73,13 +72,18 @@ public class FindPatternTest
 		assertTrue(q.isEmpty());
 		p.push("a");
 		assertTrue(q.isEmpty());
+		p.push("c");
+		assertTrue(q.isEmpty());
+		p.push("c");
+		assertTrue(q.isEmpty());
 		p.push("b");
 		assertFalse(q.isEmpty());
 		assertEquals(1, q.size());
 		List<PatternInstance> lpi = (List<PatternInstance>) q.remove();
 		PatternInstance pi = lpi.get(0);
 		assertEquals(2, pi.getStartOffset());
-		assertEquals(2, pi.getSubSequence().size());
+		List<Integer> subseq = pi.getSubSequence();
+		assertEquals(2, subseq.size());
 	}
 	
 	protected static class BAfterA extends UniformProcessor implements Stateful
