@@ -63,7 +63,7 @@ public class FindPattern extends SynchronousProcessor
 	 * their initial state should be removed.
 	 */
 	protected boolean m_removeImmobileOnStart = true;
-	
+
 	/**
 	 * A flag that determines if events that are not part of the progressing
 	 * subsequence of an instance should be removed.
@@ -252,11 +252,16 @@ public class FindPattern extends SynchronousProcessor
 		/*@ pure non_null @*/ public Troolean.Value getVerdict()
 		{
 			Object[] objs = m_sink.getLast();
-			if (objs == null || objs.length == 0 || !(objs[0] instanceof Troolean.Value))
+			if (objs == null || objs.length == 0)
 			{
 				return Troolean.Value.INCONCLUSIVE;
 			}
-			return (Troolean.Value) objs[0];
+			Object o = objs[0];
+			if (!(o instanceof Troolean.Value))
+			{
+				return Troolean.Value.INCONCLUSIVE;
+			}
+			return (Troolean.Value) o;
 		}
 
 		/**
@@ -327,9 +332,16 @@ public class FindPattern extends SynchronousProcessor
 		 */
 		protected void append(Object event, Object new_state, boolean moved)
 		{
+			if (!m_removeNonProgressing)
+			{
+				m_subSequence.add(m_currentIndex);
+				m_stateSequence.add(new_state);
+				m_seen.put(new_state, m_stateSequence.size() - 1);
+				return;
+			}
 			if (moved)
 			{
-				if (m_removeNonProgressing && m_seen.containsKey(new_state))
+				if (m_seen.containsKey(new_state))
 				{
 					// Back to a previously visited state: first eliminate loop
 					int loop_start = m_seen.get(new_state);
