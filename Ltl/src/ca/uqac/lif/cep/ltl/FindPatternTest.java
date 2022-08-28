@@ -28,20 +28,20 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Stateful;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.UniformProcessor;
-import ca.uqac.lif.cep.ltl.FindPattern.PatternInstance;
+import ca.uqac.lif.cep.ltl.FindMonitorPattern.PatternInstance;
 import ca.uqac.lif.cep.provenance.IndexEventTracker;
 import ca.uqac.lif.cep.tmf.QueueSink;
 import ca.uqac.lif.petitpoucet.ProvenanceNode;
 
 /**
- * Unit tests for {@link FindPattern}.
+ * Unit tests for {@link FindMonitorPattern}.
  */
 public class FindPatternTest
 {
 	@Test
 	public void test1()
 	{
-		FindPattern fp = new FindPattern(new BAfterA());
+		FindMonitorPattern fp = new FindMonitorPattern(new BAfterA());
 		Pushable p = fp.getPushableInput();
 		QueueSink qs = new QueueSink();
 		Connector.connect(fp, qs);
@@ -61,7 +61,7 @@ public class FindPatternTest
 	@Test
 	public void test2()
 	{
-		FindPattern fp = new FindPattern(new BAfterA());
+		FindMonitorPattern fp = new FindMonitorPattern(new BAfterA());
 		Pushable p = fp.getPushableInput();
 		QueueSink qs = new QueueSink();
 		Connector.connect(fp, qs);

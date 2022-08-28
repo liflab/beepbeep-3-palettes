@@ -19,10 +19,12 @@ package ca.uqac.lif.cep.ltl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Processor;
@@ -34,7 +36,11 @@ import ca.uqac.lif.cep.tmf.SinkLast;
 import ca.uqac.lif.petitpoucet.NodeFunction;
 import ca.uqac.lif.petitpoucet.ProvenanceNode;
 
-public class FindPattern extends SynchronousProcessor
+/**
+ * Finds instances of a pattern in a stream, as specified by a runtime monitor.
+ * @author Sylvain Hallé
+ */
+public class FindMonitorPattern extends SynchronousProcessor
 {
 	/**
 	 * The processor acting as a monitor to detect pattern instances.
@@ -50,7 +56,7 @@ public class FindPattern extends SynchronousProcessor
 	 * The instances of the pattern currently being monitored over various
 	 * suffixes of the input trace.
 	 */
-	protected List<PatternInstance> m_instances;
+	/*@ non_null @*/ protected List<PatternInstance> m_instances;
 
 	/**
 	 * A flag that determines if processor instances that are known to be
@@ -69,13 +75,19 @@ public class FindPattern extends SynchronousProcessor
 	 * subsequence of an instance should be removed.
 	 */
 	protected boolean m_removeNonProgressing = true;
+	
+	/**
+	 * A flag that determines if only a single monitor instances in a given state
+	 * should be kept at any moment.
+	 */
+	protected boolean m_removeSameState = true;
 
 	/**
 	 * Creates a new instance of the FindPattern processor.
 	 * @param pattern The processor acting as a monitor to detect pattern
 	 * instances
 	 */
-	public FindPattern(/*@ non_null @*/ Processor pattern)
+	public FindMonitorPattern(/*@ non_null @*/ Processor pattern)
 	{
 		super(1, 1);
 		m_pattern = pattern;
@@ -89,12 +101,26 @@ public class FindPattern extends SynchronousProcessor
 		m_dup.setEventTracker(m_eventTracker);
 		PatternInstance new_pi = new PatternInstance(m_dup, m_inputCount++);
 		m_instances.add(new_pi);
-		Iterator<PatternInstance> it = m_instances.iterator();
+		ListIterator<PatternInstance> it = m_instances.listIterator(m_instances.size());
 		List<PatternInstance> matches = new ArrayList<PatternInstance>();
-		while (it.hasNext())
+		Set<Object> seen_states = new HashSet<Object>();
+		while (it.hasPrevious())
 		{
-			PatternInstance pi = it.next();
+			PatternInstance pi = it.previous();
 			boolean moved = pi.push(inputs[0]);
+			Object state = pi.getMonitorState();
+			if (m_removeSameState)
+			{
+				if (seen_states.contains(state))
+				{
+					it.remove();
+					continue;
+				}
+				else
+				{
+					seen_states.add(state);
+				}
+			}
 			if (pi == new_pi && !moved && m_removeImmobileOnStart)
 			{
 				it.remove();
@@ -139,9 +165,9 @@ public class FindPattern extends SynchronousProcessor
 	}
 
 	@Override
-	public FindPattern duplicate(boolean with_state)
+	public FindMonitorPattern duplicate(boolean with_state)
 	{
-		FindPattern fp = new FindPattern(m_pattern);
+		FindMonitorPattern fp = new FindMonitorPattern(m_pattern);
 		if (with_state)
 		{
 			fp.m_inputCount = m_inputCount;
@@ -154,6 +180,10 @@ public class FindPattern extends SynchronousProcessor
 		return fp;
 	}
 
+	/**
+	 * The objects returned by the processor indicating that a pattern instance
+	 * has been found in the stream.
+	 */
 	public class PatternInstance
 	{
 		/**
@@ -270,22 +300,6 @@ public class FindPattern extends SynchronousProcessor
 		 */
 		/*@ pure non_null @*/ public List<Integer> getSubSequence()
 		{
-			/*List<Integer> offset_indices = new ArrayList<Integer>();
-			EventTracker et = m_monitor.getEventTracker();
-			if (et == null)
-			{
-				return offset_indices;
-			}
-			int mon_id = m_monitor.getId();
-			for (int out_index : m_subSequence)
-			{
-				List<Integer> in_indices = getInputIndices(mon_id, et.getProvenanceTree(mon_id, 0, out_index));
-				for (int i : in_indices)
-				{
-					offset_indices.add(i + m_startOffset);
-				}
-			}
-			return offset_indices;*/
 			return m_subSequence;
 		}
 
