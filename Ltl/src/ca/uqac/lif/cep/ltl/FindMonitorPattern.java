@@ -167,11 +167,15 @@ public class FindMonitorPattern extends SynchronousProcessor
 	@Override
 	public FindMonitorPattern duplicate(boolean with_state)
 	{
-		FindMonitorPattern fp = new FindMonitorPattern(m_pattern);
+		FindMonitorPattern fp = new FindMonitorPattern(m_pattern.duplicate(with_state));
 		if (with_state)
 		{
 			fp.m_inputCount = m_inputCount;
 			fp.m_outputCount = m_outputCount;
+			fp.m_removeImmobileOnStart = m_removeImmobileOnStart;
+			fp.m_removeNonMatches = m_removeNonMatches;
+			fp.m_removeNonProgressing = m_removeNonProgressing;
+			fp.m_removeSameState = m_removeSameState;
 			for (PatternInstance pi : m_instances)
 			{
 				fp.m_instances.add(pi.duplicate(with_state));
