@@ -355,6 +355,7 @@ public class FindMonitorPattern extends SynchronousProcessor
 				m_subSequence.add(m_currentIndex);
 				m_stateSequence.add(new_state);
 				m_seen.put(new_state, m_stateSequence.size() - 1);
+				m_currentIndex++;
 				return;
 			}
 			if (moved)
