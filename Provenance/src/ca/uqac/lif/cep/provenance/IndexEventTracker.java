@@ -18,9 +18,11 @@
 package ca.uqac.lif.cep.provenance;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import ca.uqac.lif.cep.EventTracker;
+import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.provenance.EventFunction.InputValue;
 import ca.uqac.lif.petitpoucet.BrokenChain;
@@ -61,6 +63,14 @@ public class IndexEventTracker implements EventTracker
 	
 	protected final Map<Integer,Map<Integer,ProcessorConnection>> m_outputConnections = new HashMap<Integer,Map<Integer,ProcessorConnection>>();
 	
+	protected final Map<Integer,GroupProcessor> m_groups = new HashMap<Integer,GroupProcessor>();
+	
+	@Override
+	public void add(GroupProcessor g)
+	{
+		m_groups.put(g.getId(), g);
+	}
+	
 	protected void setConnection(Map<Integer,Map<Integer,ProcessorConnection>> map, int source_proc_id, int stream_index, ProcessorConnection connection)
 	{
 		if (!map.containsKey(source_proc_id))
@@ -71,7 +81,7 @@ public class IndexEventTracker implements EventTracker
 		m1.put(stream_index, connection);
 	}
 	
-	protected /*@Null*/ ProcessorConnection getConnection(Map<Integer,Map<Integer,ProcessorConnection>> map, int source_proc_id, int stream_index)
+	protected /*@ null @*/ ProcessorConnection getConnection(Map<Integer,Map<Integer,ProcessorConnection>> map, int source_proc_id, int stream_index)
 	{
 		if (!map.containsKey(source_proc_id))
 		{
@@ -207,6 +217,36 @@ public class IndexEventTracker implements EventTracker
 		ProvenanceNode node = fetchProvenanceNode(proc_id, stream_index, stream_pos);
 		if (node == null)
 		{
+			if (m_groups.containsKey(proc_id))
+			{
+				GroupProcessor gp = m_groups.get(proc_id);
+				EventTracker inner_tracker = gp.getInnerTracker();
+				Processor gp_output = gp.getAssociatedOutput(stream_index);
+				if (gp_output == null)
+				{
+					return BrokenChain.instance;
+				}
+				ProvenanceNode root = inner_tracker.getProvenanceTree(gp_output.getId(), stream_index, stream_pos);
+				List<ProvenanceNode> leaves = ProvenanceTree.getInputLeaves(root);
+				for (ProvenanceNode leaf : leaves)
+				{
+					if (leaf.getNodeFunction() instanceof InputValue)
+					{
+						InputValue iv = (InputValue) leaf.getNodeFunction();
+						int group_input_index = gp.getGroupInputIndex(iv.getProcessorId(), iv.getStreamIndex());
+						if (group_input_index == -1)
+						{
+							//leaf.addParent(BrokenChain.instance);
+						}
+						else
+						{
+							ProvenanceNode sub_root = getProvenanceTree(gp.getId(), group_input_index, iv.getStreamPosition());
+							leaf.addParent(sub_root);
+						}
+					}
+				}
+				return root;
+			}
 			return BrokenChain.instance;
 		}
 		ProvenanceNode expanded_node = new ProvenanceNode(node.getNodeFunction());
@@ -224,7 +264,7 @@ public class IndexEventTracker implements EventTracker
 				{
 					// Not found; declare a broken chain
 					new_parent = parent;
-					parent.addParent(BrokenChain.instance);
+					//parent.addParent(BrokenChain.instance);
 				}
 				else
 				{
@@ -341,6 +381,7 @@ public class IndexEventTracker implements EventTracker
     iet.m_inputConnections.putAll(m_inputConnections);
     iet.m_mapping.putAll(m_mapping);
     iet.m_outputConnections.putAll(m_outputConnections);
+    iet.m_groups.putAll(m_groups);
     return iet;
   }
 }
