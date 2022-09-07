@@ -223,7 +223,8 @@ public class IndexEventTracker implements EventTracker
 				if (pc == null)
 				{
 					// Not found; declare a broken chain
-					new_parent = BrokenChain.instance;
+					new_parent = parent;
+					parent.addParent(BrokenChain.instance);
 				}
 				else
 				{
