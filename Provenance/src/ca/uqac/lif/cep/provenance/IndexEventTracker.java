@@ -58,19 +58,19 @@ public class IndexEventTracker implements EventTracker
 	 * instead of a linear search through an unordered set (or list).
 	 */
 	protected final Map<Integer,Map<Integer,Map<Integer,ProvenanceNode>>> m_mapping = new HashMap<Integer,Map<Integer,Map<Integer,ProvenanceNode>>>();
-	
+
 	protected final Map<Integer,Map<Integer,ProcessorConnection>> m_inputConnections = new HashMap<Integer,Map<Integer,ProcessorConnection>>();
-	
+
 	protected final Map<Integer,Map<Integer,ProcessorConnection>> m_outputConnections = new HashMap<Integer,Map<Integer,ProcessorConnection>>();
-	
+
 	protected final Map<Integer,GroupProcessor> m_groups = new HashMap<Integer,GroupProcessor>();
-	
+
 	@Override
 	public void add(GroupProcessor g)
 	{
 		m_groups.put(g.getId(), g);
 	}
-	
+
 	protected void setConnection(Map<Integer,Map<Integer,ProcessorConnection>> map, int source_proc_id, int stream_index, ProcessorConnection connection)
 	{
 		if (!map.containsKey(source_proc_id))
@@ -80,7 +80,7 @@ public class IndexEventTracker implements EventTracker
 		Map<Integer,ProcessorConnection> m1 = map.get(source_proc_id);
 		m1.put(stream_index, connection);
 	}
-	
+
 	protected /*@ null @*/ ProcessorConnection getConnection(Map<Integer,Map<Integer,ProcessorConnection>> map, int source_proc_id, int stream_index)
 	{
 		if (!map.containsKey(source_proc_id))
@@ -102,7 +102,7 @@ public class IndexEventTracker implements EventTracker
 		ProvenanceNode pn_parent = new ProvenanceNode(f);
 		pn_child.addParent(pn_parent);
 	}
-	
+
 	@Override
 	public void associateToInput(int id, int in_stream_index, int in_stream_pos, int out_stream_index, int out_stream_pos)
 	{
@@ -110,7 +110,7 @@ public class IndexEventTracker implements EventTracker
 		ProvenanceNode pn_parent = new ProvenanceNode(new EventFunction.InputValue(id, in_stream_index, in_stream_pos));
 		pn_child.addParent(pn_parent);
 	}
-	
+
 	@Override
 	public void associateToOutput(int id, int in_stream_index, int in_stream_pos, int out_stream_index, int out_stream_pos)
 	{
@@ -118,7 +118,7 @@ public class IndexEventTracker implements EventTracker
 		ProvenanceNode pn_parent = new ProvenanceNode(new EventFunction.OutputValue(id, in_stream_index, in_stream_pos));
 		pn_child.addParent(pn_parent);
 	}
-	
+
 	@Override
 	public void setTo(Processor ... processors)
 	{
@@ -127,7 +127,7 @@ public class IndexEventTracker implements EventTracker
 			p.setEventTracker(this);
 		}
 	}
-	
+
 	/**
 	 * Fetches the {@link ca.uqac.lif.petitpoucet.ProvenanceNode ProvenanceNode}
 	 * for a given processor/index/position triplet. Since these nodes are stored
@@ -158,7 +158,7 @@ public class IndexEventTracker implements EventTracker
 		}
 		return (ProvenanceNode) m2.get(stream_pos);
 	}
-	
+
 	/**
 	 * Fetches the {@link ca.uqac.lif.petitpoucet.ProvenanceNode ProvenanceNode}
 	 * for a given processor/index/position triplet. Contrast this to
@@ -187,30 +187,30 @@ public class IndexEventTracker implements EventTracker
 		}
 		return (ProvenanceNode) m2.get(stream_pos);
 	}
-	
+
 	/**
 	 * Gets the provenance tree for a given event.
 	 * @param p The processor
 	 * @param stream_index The index of the stream
 	 * @param stream_pos The position of the event in the stream
-   * @return The provenance node corresponding to that particular event, or
-   *   {@code null} if no node exists for the specified parameters
+	 * @return The provenance node corresponding to that particular event, or
+	 *   {@code null} if no node exists for the specified parameters
 	 */
 	public /*@NotNull*/ ProvenanceNode getProvenanceTree(Processor p, int stream_index, int stream_pos)
 	{
 		return getProvenanceTree(p.getId(), stream_index, stream_pos);
 	}
-	
+
 	/**
 	 * Gets the provenance tree for a given event. The provenance tree is the
 	 * directed acyclic graph of all the provenance nodes on which the current node
 	 * depends. It is the reverse of the impact tree.
 	 * @see #getImpactTree(int, int, int)
-   * @param proc_id The ID of the processor
-   * @param stream_index The index of the output stream on that processor
-   * @param stream_pos The position of the event in that stream
-   * @return The provenance node corresponding to that particular event, or
-   *   {@code null} if no node exists for the specified parameters
+	 * @param proc_id The ID of the processor
+	 * @param stream_index The index of the output stream on that processor
+	 * @param stream_pos The position of the event in that stream
+	 * @return The provenance node corresponding to that particular event, or
+	 *   {@code null} if no node exists for the specified parameters
 	 */
 	public /*@NotNull*/ ProvenanceNode getProvenanceTree(int proc_id, int stream_index, int stream_pos)
 	{
@@ -240,8 +240,10 @@ public class IndexEventTracker implements EventTracker
 						}
 						else
 						{
-							ProvenanceNode sub_root = getProvenanceTree(gp.getId(), group_input_index, iv.getStreamPosition());
-							leaf.addParent(sub_root);
+							InputValue global_iv = new InputValue(gp.getId(), group_input_index, iv.getStreamPosition());
+							ProvenanceNode sub_root = new ProvenanceNode(global_iv);
+							ProvenanceNode expanded_sub_root = expandInputs(sub_root, gp.getId());
+							leaf.addParent(expanded_sub_root);
 						}
 					}
 				}
@@ -249,6 +251,11 @@ public class IndexEventTracker implements EventTracker
 			}
 			return BrokenChain.instance;
 		}
+		return expandInputs(node, proc_id);
+	}
+
+	protected ProvenanceNode expandInputs(ProvenanceNode node, int proc_id)
+	{
 		ProvenanceNode expanded_node = new ProvenanceNode(node.getNodeFunction());
 		for (ProvenanceNode parent : node.getParents())
 		{
@@ -280,17 +287,17 @@ public class IndexEventTracker implements EventTracker
 		}
 		return expanded_node;
 	}
-	
+
 	/**
 	 * Gets the impact tree for a given event. The impact tree is the directed
 	 * acyclic graph of all the downstream provenance nodes that depend on the
 	 * given node.
 	 * @see #getProvenanceTree(int, int, int)
-   * @param proc_id The ID of the processor
-   * @param stream_index The index of the output stream on that processor
-   * @param stream_pos The position of the event in that stream
-   * @return The provenance node corresponding to that particular event, or
-   *   {@code null} if no node exists for the specified parameters
+	 * @param proc_id The ID of the processor
+	 * @param stream_index The index of the output stream on that processor
+	 * @param stream_pos The position of the event in that stream
+	 * @return The provenance node corresponding to that particular event, or
+	 *   {@code null} if no node exists for the specified parameters
 	 */
 	public /*@NotNull*/ ProvenanceNode getImpactTree(int proc_id, int stream_index, int stream_pos)
 	{
@@ -329,33 +336,33 @@ public class IndexEventTracker implements EventTracker
 		}
 		return expanded_node;
 	}
-	
+
 	@Override
 	public void setConnection(int output_proc_id, int output_stream_index, int input_proc_id, int input_stream_index)
 	{
 		setConnection(m_inputConnections, input_proc_id, input_stream_index, new ProcessorConnection(output_proc_id, output_stream_index));
 		setConnection(m_outputConnections, output_proc_id, output_stream_index, new ProcessorConnection(input_proc_id, input_stream_index));
 	}
-	
+
 	protected static class ProcessorConnection
 	{
 		public int m_procId;
 		public int m_streamIndex;
-		
+
 		public ProcessorConnection(int proc_id, int stream_index)
 		{
 			super();
 			m_procId = proc_id;
 			m_streamIndex = stream_index;
 		}
-		
+
 		@Override
 		public String toString()
 		{
 			return "P" + m_procId + "." + m_streamIndex; 
 		}
 	}
-	
+
 	/**
 	 * Returns the size of this tracker. This corresponds to the number of unique
 	 * input-output associations that are stored.
@@ -374,14 +381,17 @@ public class IndexEventTracker implements EventTracker
 		return size;
 	}
 
-  @Override
-  public EventTracker getCopy()
-  {
-    IndexEventTracker iet = new IndexEventTracker();
-    iet.m_inputConnections.putAll(m_inputConnections);
-    iet.m_mapping.putAll(m_mapping);
-    iet.m_outputConnections.putAll(m_outputConnections);
-    iet.m_groups.putAll(m_groups);
-    return iet;
-  }
+	@Override
+	public EventTracker getCopy(boolean with_state)
+	{
+		IndexEventTracker iet = new IndexEventTracker();
+		if (with_state)
+		{
+			iet.m_inputConnections.putAll(m_inputConnections);
+			iet.m_mapping.putAll(m_mapping);
+			iet.m_outputConnections.putAll(m_outputConnections);
+			iet.m_groups.putAll(m_groups);
+		}
+		return iet;
+	}
 }
