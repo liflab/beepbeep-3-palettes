@@ -25,6 +25,7 @@ import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.GroupProcessor;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.provenance.EventFunction.InputValue;
+import ca.uqac.lif.cep.provenance.EventFunction.OutputValue;
 import ca.uqac.lif.petitpoucet.BrokenChain;
 import ca.uqac.lif.petitpoucet.NodeFunction;
 import ca.uqac.lif.petitpoucet.ProvenanceNode;
@@ -278,6 +279,11 @@ public class IndexEventTracker implements EventTracker
 					// Found it: recurse
 					new_parent = getProvenanceTree(pc.m_procId, pc.m_streamIndex, iv.getStreamPosition());
 				}
+			}
+			else if (nf instanceof OutputValue)
+			{
+				OutputValue ov = (OutputValue) nf;
+				new_parent = getProvenanceTree(ov.getProcessorId(), ov.getStreamIndex(), ov.getStreamPosition());
 			}
 			else
 			{
