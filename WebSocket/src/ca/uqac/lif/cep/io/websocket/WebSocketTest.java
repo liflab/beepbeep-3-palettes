@@ -34,7 +34,6 @@ import org.java_websocket.server.WebSocketServer;
 import org.junit.Test;
 
 import ca.uqac.lif.cep.Connector;
-import ca.uqac.lif.cep.io.websocket.WebSocketReader;
 import ca.uqac.lif.cep.tmf.QueueSink;
 
 /**
