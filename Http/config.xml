@@ -35,6 +35,9 @@
   <!-- The project's main class -->
   <mainclass>ca.uqac.lif.cep.http.PackageExtension</mainclass>
   
+  <!-- Target JDK version for compilation -->
+  <targetjdk>8</targetjdk>
+  
   <!-- Installation folders -->
   <srcdir>src</srcdir>
   <libdir>../lib</libdir>

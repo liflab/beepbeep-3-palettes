@@ -32,6 +32,9 @@
   shows up in the footer of the Javadoc documentation. -->
   <author>Sylvain Hall&#233;</author>
   
+  <!-- Target JDK version for compilation -->
+  <targetjdk>8</targetjdk>
+  
   <!-- The project's main class -->
   <mainclass>ca.uqac.lif.cep.hibernate.Hibernate</mainclass>
   

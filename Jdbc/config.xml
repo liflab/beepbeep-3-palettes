@@ -53,6 +53,9 @@
     <withdoc>false</withdoc>
   </jar>
   
+  <!-- Target JDK version for compilation -->
+  <targetjdk>8</targetjdk>
+  
   <!--
     Write JAR dependencies here.
   -->
