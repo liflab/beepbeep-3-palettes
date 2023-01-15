@@ -35,7 +35,7 @@
   <!-- The project's main class -->
   <mainclass>ca.uqac.lif.cep.ltl.Main</mainclass>
   
-  <!-- The target version of the JDK to compile for -->
+  <!-- Target JDK version for compilation -->
   <targetjdk>8</targetjdk>
   
   <!-- Installation folders -->
