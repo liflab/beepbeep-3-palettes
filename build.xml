@@ -168,6 +168,8 @@
         </if>
       </sequential>
     </for>
+    <echo message="Deleting jars dir" />
+    <delete dir="jars" includes="*.jar" />
   </target>
   
   <!-- Calls the "wipe" task in each subfolder -->
@@ -246,6 +248,6 @@
        This is mostly a *hack* so that the Jdbc palette, which depends on
        Tuples, can compile by copying tuples.jar to its dep dir. -->
   <target name="prepare" depends="init">
-    <copy file="jars/tuples.jar" tofile="Jdbc/dep/tuples.jar" failonerror="false"/>
+    <copy file="jars/tuples.jar" tofile="Jdbc/lib/tuples.jar" failonerror="false"/>
   </target>
 </project>

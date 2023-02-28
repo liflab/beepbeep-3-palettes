@@ -35,8 +35,8 @@
   <!-- The project's main class -->
   <mainclass>ca.uqac.lif.cep.fol.Main</mainclass>
   
-  <!-- The location of rt.jar -->
-  <rtlocation>../rt.jar</rtlocation>
+  <!-- The target version of the JDK to compile for -->
+  <targetjdk>8</targetjdk>
   
   <!-- Installation folders -->
   <srcdir>src</srcdir>
