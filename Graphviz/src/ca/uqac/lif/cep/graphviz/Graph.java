@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2018 Sylvain Hallé and friends
+    Copyright (C) 2008-2023 Sylvain Hallé and friends
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Simple representation of a directed graph
+ * Simple representation of a directed graph.
  * @author Sylvain Hallé
  */
 public class Graph 
@@ -32,12 +32,12 @@ public class Graph
 	 * A collection of directed edges in this graph. Edges are indexed
 	 * by source node to facilitate lookup.
 	 */
-	protected Map<String,Set<Edge>> m_edges;
+	protected final Map<String,Set<Edge>> m_edges;
 	
 	/**
 	 * A map associating edge labels to numbers
 	 */
-	protected Map<String,Integer> m_edgeLabels;
+	protected final Map<String,Integer> m_edgeLabels;
 	
 	/**
    * A map associating vertex labels to the sum of the weights
@@ -48,16 +48,16 @@ public class Graph
    * The alternative is to update a separate map of the input
    * degrees as the graph is manipulated.
    */
-  protected Map<String,Float> m_inWeights;
+  protected final Map<String,Float> m_inWeights;
 	
 	/**
-	 * A counter for giving unique numbers to edges
+	 * A counter for giving unique numbers to edges.
 	 */
 	protected int m_edgeCounter;
 	
 	/**
 	 * Whether to increment the weights or to replace the weight of an
-	 * edge with a new value
+	 * edge with a new value.
 	 */
 	protected boolean m_incrementWeights = true;
 	
@@ -114,9 +114,13 @@ public class Graph
       m_edgeLabels.put(e.m_destination, dst_id);
     }
 		if (m_edges.containsKey(e.m_source))
+		{
 			list = m_edges.get(e.m_source);
+		}
 		else
+		{
 			list = new HashSet<Edge>();
+		}
 		list.add(e);
 		m_edges.put(e.m_source, list);
 		if (!m_inWeights.containsKey(e.m_source))
@@ -140,7 +144,9 @@ public class Graph
 		for (Edge e : edges)
 		{
 			if (source.compareTo(e.m_source) == 0 && destination.compareTo(e.m_destination) == 0)
+			{
 				return e;
+			}
 		}
 		return null;
 	}
@@ -266,7 +272,7 @@ public class Graph
 	}
 	
 	/**
-	 * Creates a deep copy of the graph
+	 * Creates a deep copy of the graph.
 	 * @return A copy of the graph
 	 */
 	public Graph duplicate()
@@ -275,7 +281,7 @@ public class Graph
 	}
 	
 	/**
-	 * Creates a deep copy of the graph
+	 * Creates a deep copy of the graph.
 	 * @param with_state Has no effect
 	 * @return A copy of the graph
 	 */
@@ -292,11 +298,12 @@ public class Graph
 			g.m_edges.put(entry.getKey(), new_edges);
 		}
 		g.m_edgeLabels.putAll(m_edgeLabels);
+		g.m_inWeights.putAll(m_inWeights);
 		return g;
 	}
 	
 	/**
-	 * Clears the contents of the graph
+	 * Clears the contents of the graph.
 	 */
 	public void clear()
 	{
@@ -306,7 +313,7 @@ public class Graph
 	}
 	
 	/**
-	 * A weighted directed edge in a graph
+	 * A weighted directed edge in a graph.
 	 */
 	public static class Edge
 	{
