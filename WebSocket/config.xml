@@ -80,5 +80,15 @@
       </files>
       <bundle>true</bundle>
     </dependency>
+    <dependency>
+    <!-- slf4j. Dependency of java_websocket. We use a NOP logger since we don't need it. -->
+      <name>slf4j</name>
+      <classname>org.slf4j.LoggerFactory</classname>
+      <files>
+        <jar>https://repo1.maven.org/maven2/org/slf4j/slf4j-api/2.0.6/slf4j-api-2.0.6.jar</jar>
+        <jar>https://repo1.maven.org/maven2/org/slf4j/slf4j-nop/2.0.6/slf4j-nop-2.0.6.jar</jar>
+      </files>
+      <bundle>true</bundle>
+    </dependency>
   </dependencies>
 </build>
