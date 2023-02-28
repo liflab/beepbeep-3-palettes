@@ -18,8 +18,6 @@
 package ca.uqac.lif.cep.tuples;
 
 import ca.uqac.lif.cep.functions.Function;
-import ca.uqac.lif.cep.tuples.FixedTupleBuilder;
-import ca.uqac.lif.cep.tuples.Tuple;
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.EventTracker;
 
