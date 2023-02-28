@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -15,7 +15,6 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package ca.uqac.lif.cep.tuples;
 
 import java.util.ArrayList;
@@ -87,7 +86,7 @@ public class RegexTupleBuilder extends SynchronousProcessor
 		for (int i = 1; i < group_count; i++) // i=0 is the entire pattern
 		{
 			String group = mat.group(i);
-			String name = new Integer(i).toString();
+			String name = Integer.toString(i);
 			if (i < num_names)
 			{
 				name = m_attributeNames.get(i - 1).getName();
