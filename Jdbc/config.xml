@@ -26,7 +26,7 @@
   <name>JDBC extension for BeepBeep 3</name>
   
   <!-- The project's version number -->
-  <version>0.1</version>
+  <version>0.5</version>
   
   <!-- The project's author. Currently this only
   shows up in the footer of the Javadoc documentation. -->
@@ -49,7 +49,7 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>../jars/jdbc.jar</filename>
+    <filename>../jars/jdbc</filename>
     <withdoc>false</withdoc>
   </jar>
   
