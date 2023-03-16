@@ -60,8 +60,8 @@ Building the palettes
 First make sure you have the following installed:
 
 - The Java Development Kit (JDK) to compile. BeepBeep was developed and
-  tested on version 6 of the JDK, but it is probably safe to use either
-  version 7 or 8.
+  tested on version 8 of the JDK, but it is probably safe to use any later
+  version.
 - [Ant](http://ant.apache.org) to automate the compilation and build process
 
 Each palette depends on BeepBeep's core library, which must be built or
@@ -104,10 +104,20 @@ Some of these palettes can can test themselves by running:
     ant test
 
 Unit tests are run with [jUnit](http://junit.org); a detailed report of
-these tests in HTML format is availble in the folder `tests/junit`, which
+these tests in HTML format is availble in the folder `tests`, which
 is automatically created. Code coverage is also computed with
 [JaCoCo](http://www.eclemma.org/jacoco/); a detailed report is available
-in the folder `tests/coverage`.
+in the folder `coverage`.
+
+### Creating a fat JAR file
+
+Once all the palettes have been built, a (fat) JAR file packaging all the
+palettes can be creating by typing:
+
+    ant fat-jar
+
+in the root folder of this repository. The resulting file will be called
+`beepbeep-3-palettes-x.x.zip`, where `x.x` is the current version.
 
 ### Creating a fat Zip file
 
