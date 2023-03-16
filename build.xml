@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
 	A build script for a super-project containing multiple sub-projects
-    Copyright (C) 2019-2020  Sylvain Hallé
+    Copyright (C) 2019-2023  Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,6 +21,9 @@
   <!-- The project's display name -->
   <property name="build.name" value="BeepBeep 3 Palettes"/>
   
+  <!-- The bundle's version -->
+  <property name="build.version" value="0.5"/>
+  
   <!-- The author -->
   <property name="build.author" value="Sylvain Hallé"/>
 
@@ -36,7 +39,7 @@
   <!-- Load ant-contrib -->
   <target name="init" depends="ant-contrib">
     <taskdef resource="net/sf/antcontrib/antlib.xml"
-        classpath="${build.rootlibdir}/ant-contrib-1.0b3.jar"/>
+      classpath="${build.rootlibdir}/ant-contrib-1.0b3.jar"/>
   </target>
   
   <!-- Download ant-contrib -->
@@ -48,7 +51,7 @@
       dest="${build.rootlibdir}/ant-contrib-1.0b3-bin.zip"/>
     <unzip src="${build.rootlibdir}/ant-contrib-1.0b3-bin.zip" dest="${build.rootlibdir}">
       <patternset>
-        <include name="**/*.jar"/>
+      <include name="**/*.jar"/>
       </patternset>
       <mapper type="flatten"/>
     </unzip>
@@ -62,41 +65,54 @@
   <target name="jar" depends="init,prepare">
     <for param="subdir">
       <dirset dir=".">
-        <include name="*"/>
+      <include name="*"/>
       </dirset>
       <sequential>
-          <if>
-            <available file="@{subdir}/build.xml"/>
-            <then>
-              <trycatch>
-                <try>
-                  <ant dir="@{subdir}" target="jar" />
-                </try>
-                <catch>
-                  <echo message="Build failed for folder @{subdir}"/>
-                  <property name="build.onefailed" value="true"/>
-                </catch>
-              </trycatch>
-            </then>
-          </if>
+        <if>
+          <available file="@{subdir}/build.xml"/>
+          <then>
+            <trycatch>
+            <try>
+              <ant dir="@{subdir}" target="jar" />
+            </try>
+            <catch>
+              <echo message="Build failed for folder @{subdir}"/>
+              <property name="build.onefailed" value="true"/>
+            </catch>
+            </trycatch>
+          </then>
+        </if>
       </sequential>
     </for>
     <fail message="Build failed for one of the palettes" if="build.onefailed"/>
+  </target>
+  
+  <!-- Creates a "fat JAR" including the JARs of all palettes -->
+  <target name="fat-jar" depends="jar">
+    <zip destfile="beepbeep-palettes-${build.version}.jar">
+      <zipgroupfileset dir="jars" includes="*-${build.version}.jar"/>
+    </zip>
+    <zip destfile="beepbeep-palettes-${build.version}-sources.jar">
+      <zipgroupfileset dir="jars" includes="*-${build.version}-sources.jar"/>
+    </zip>
+    <zip destfile="beepbeep-palettes-${build.version}-javadoc.jar">
+      <zipgroupfileset dir="jars" includes="*-${build.version}-javadoc.jar"/>
+    </zip>
   </target>
   
   <!-- Calls the "show-properties" task in each subfolder -->
   <target name="show-properties" depends="init">
     <for param="subdir">
       <dirset dir=".">
-        <include name="*"/>
+      <include name="*"/>
       </dirset>
       <sequential>
-        <if>
-          <available file="@{subdir}/build.xml"/>
-          <then>
-            <ant dir="@{subdir}" target="show-properties" />
-          </then>
-        </if>
+      <if>
+        <available file="@{subdir}/build.xml"/>
+        <then>
+          <ant dir="@{subdir}" target="show-properties" />
+        </then>
+      </if>
       </sequential>
     </for>
   </target>
@@ -105,18 +121,18 @@
   <target name="download-deps" depends="init">
     <for param="subdir">
       <dirset dir=".">
-        <include name="*"/>
+      <include name="*"/>
       </dirset>
       <sequential>
-        <if>
-          <available file="@{subdir}/build.xml"/>
-          <then>
-            <sequential>
-              <echo message="Entering @{subdir}" />
-              <ant dir="@{subdir}" target="download-deps" />
-            </sequential>
-          </then>
-        </if>
+      <if>
+        <available file="@{subdir}/build.xml"/>
+        <then>
+          <sequential>
+            <echo message="Entering @{subdir}" />
+            <ant dir="@{subdir}" target="download-deps" />
+          </sequential>
+        </then>
+      </if>
       </sequential>
     </for>
   </target>
@@ -125,26 +141,26 @@
   <target name="test" depends="init">
     <for param="subdir">
       <dirset dir=".">
-        <include name="*"/>
+      <include name="*"/>
       </dirset>
       <sequential>
-        <if>
-          <available file="@{subdir}/build.xml"/>
-          <then>
-            <sequential>
-              <echo message="Entering @{subdir}" />
-              <trycatch>
-                <try>
-                  <ant dir="@{subdir}" target="test" />
-                </try>
-                <catch>
-                  <echo message="Tests failed for folder @{subdir}"/>
-                  <property name="test.onefailed" value="true"/>
-                </catch>
-              </trycatch>
-            </sequential>
-          </then>
-        </if>
+      <if>
+        <available file="@{subdir}/build.xml"/>
+        <then>
+          <sequential>
+            <echo message="Entering @{subdir}" />
+            <trycatch>
+            <try>
+              <ant dir="@{subdir}" target="test" />
+            </try>
+            <catch>
+              <echo message="Tests failed for folder @{subdir}"/>
+              <property name="test.onefailed" value="true"/>
+            </catch>
+            </trycatch>
+          </sequential>
+        </then>
+      </if>
       </sequential>
     </for>
     <fail message="Tests failed for one of the palettes" if="test.onefailed"/>
@@ -154,18 +170,18 @@
   <target name="clean" depends="init">
     <for param="subdir">
       <dirset dir=".">
-        <include name="*"/>
+      <include name="*"/>
       </dirset>
       <sequential>
-        <if>
-          <available file="@{subdir}/build.xml"/>
-          <then>
-            <sequential>
-              <echo message="Entering @{subdir}" />
-              <ant dir="@{subdir}" target="clean" />
-            </sequential>
-          </then>
-        </if>
+      <if>
+        <available file="@{subdir}/build.xml"/>
+        <then>
+          <sequential>
+            <echo message="Entering @{subdir}" />
+            <ant dir="@{subdir}" target="clean" />
+          </sequential>
+        </then>
+      </if>
       </sequential>
     </for>
     <echo message="Deleting jars dir" />
@@ -176,18 +192,18 @@
   <target name="wipe" depends="init">
     <for param="subdir">
       <dirset dir=".">
-        <include name="*"/>
+      <include name="*"/>
       </dirset>
       <sequential>
-        <if>
-          <available file="@{subdir}/build.xml"/>
-          <then>
-            <sequential>
-              <echo message="Entering @{subdir}" />
-              <ant dir="@{subdir}" target="wipe" />
-            </sequential>
-          </then>
-        </if>
+      <if>
+        <available file="@{subdir}/build.xml"/>
+        <then>
+          <sequential>
+            <echo message="Entering @{subdir}" />
+            <ant dir="@{subdir}" target="wipe" />
+          </sequential>
+        </then>
+      </if>
       </sequential>
     </for>
   </target>
@@ -200,15 +216,15 @@
   <target name="print-folders" depends="init">
     <for param="subdir">
       <dirset dir=".">
-        <include name="*"/>
+      <include name="*"/>
      </dirset>
      <sequential>
-        <if>
-          <available file="@{subdir}/build.xml"/>
-          <then>
-            <echo message="@{subdir}"/>
-          </then>
-        </if>
+      <if>
+        <available file="@{subdir}/build.xml"/>
+        <then>
+          <echo message="@{subdir}"/>
+        </then>
+      </if>
      </sequential>
     </for>
   </target>
@@ -218,6 +234,7 @@
     <mkdir dir="${build.rootdocdir}"/>
     <mkdir dir="${build.rootdocdir}/doc-files"/>
     <javadoc
+      overview="project-overview.html"
       destdir="docs/javadoc"
       packagenames="*"
       excludepackagenames=""
@@ -231,17 +248,144 @@
       windowtitle="BeepBeep 3 Palettes API Reference">
       <doctitle><![CDATA[<h1>]]>${build.name}<![CDATA[ Documentation</h1>]]></doctitle>
       <bottom><![CDATA[<i>Copyright&nbsp;&#169; ]]>${build.author}<![CDATA[. All Rights Reserved.</i>]]></bottom>
-      <link href="http://docs.oracle.com/javase/6/docs/api/"/>
-      <sourcefiles>
-      	<fileset dir="." defaultexcludes="yes">
-      		<include name="**/*.java"/>
-      		<exclude name="**/*Test.java"/>
-      	</fileset>
-      </sourcefiles>
+      <link href="http://docs.oracle.com/javase/8/docs/api/"/>
+      <fileset dir="Apache/src">
+        <include name="**"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Concurrency/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Diagnostics/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Dsl/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Fol/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Fsm/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <!-- Not yet
+      <fileset dir="Groovy/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      -->
+      <fileset dir="Hibernate/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Hibernate/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Http/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Jdbc/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Json/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Mtnp/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Provenance/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Serialization/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Signal/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Tuples/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="WebSocket/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Widgets/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Xml/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <!-- No groups, as each palette is in its own package
+      <group title="Apache" packages="ca.uqac.lif.cep.apache"/>
+      <group title="Concurrency" packages="ca.uqac.lif.cep.concurrency"/>
+      <group title="Diagnostics" packages="ca.uqac.lif.cep.diagnostics"/>
+      <group title="Dsl" packages="ca.uqac.lif.cep.dsl"/>
+      <group title="Fol" packages="ca.uqac.lif.cep.fol"/>
+      <group title="Fsm" packages="ca.uqac.lif.cep.fsm"/>
+      <group title="Graphviz" packages="ca.uqac.lif.cep.graphviz"/>
+      <group title="Hibernate" packages="ca.uqac.lif.cep.hibernate"/>
+      <group title="Http" packages="ca.uqac.lif.cep.http"/>
+      <group title="Jdbc" packages="ca.uqac.lif.cep.jdbc"/>
+      <group title="Json" packages="ca.uqac.lif.cep.json"/>
+      <group title="Mtnp" packages="ca.uqac.lif.cep.mtnp"/>
+      <group title="Provenance" packages="ca.uqac.lif.cep.provenance"/>
+      <group title="Serialization" packages="ca.uqac.lif.cep.serialization"/>
+      <group title="Signal" packages="ca.uqac.lif.cep.signal"/>
+      <group title="Tuples" packages="ca.uqac.lif.cep.tuples"/>
+      <group title="WebSocket" packages="ca.uqac.lif.cep.websocket"/>
+      <group title="Widgets" packages="ca.uqac.lif.cep.widgets"/>
+      <group title="Xml" packages="ca.uqac.lif.cep.xml"/>
+      -->
       <classpath>
         <fileset file="${build.rootlibdir}/beepbeep-3.jar"/>
+        <fileset file="Dsl/dep/*.jar"/>
+        <fileset file="Http/dep/*.jar"/>
+        <fileset file="Json/dep/*.jar"/>
+        <fileset file="Mtnp/dep/*.jar"/>
+        <fileset file="Serialization/dep/*.jar"/>
+        <fileset file="WebSocket/dep/*.jar"/>
+        <fileset file="Xml/dep/*.jar"/>
       </classpath>
     </javadoc>
+    <copy todir="docs/javadoc/doc-files">
+      <!-- <fileset dir="Apache/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Concurrency/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Diagnostics/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Dsl/src/doc-files"/> No such folder -->
+      <!--  <fileset dir="Fol/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Fsm/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Graphviz/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Groovy/src/doc-files"/> Not yet -->
+      <!-- <fileset dir="Hibernate/src/doc-files"/> No such folder -->
+      <fileset dir="Http/src/doc-files"/>
+      <!-- <fileset dir="Jdbc/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Json/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Ltl/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Mtnp/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Provenance/src/doc-files"/> No such folder -->
+      <fileset dir="Serialization/src/doc-files"/>
+      <!-- <fileset dir="Signal/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Tuples/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="WebSocket/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Widgets/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Xml/src/doc-files"/> No such folder -->
+    </copy>
   </target>
   
   <!-- Task that prepares the environment before the compilation.
