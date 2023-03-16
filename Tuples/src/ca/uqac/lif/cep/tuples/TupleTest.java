@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.tuples.test;
+package ca.uqac.lif.cep.tuples;
 
 import static org.junit.Assert.*;
 
@@ -29,18 +29,6 @@ import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.Constant;
 import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.tmf.QueueSource;
-import ca.uqac.lif.cep.tuples.AttributeExpression;
-import ca.uqac.lif.cep.tuples.AttributeGroup;
-import ca.uqac.lif.cep.tuples.ExpandAsColumns;
-import ca.uqac.lif.cep.tuples.From;
-import ca.uqac.lif.cep.tuples.FromFunction;
-import ca.uqac.lif.cep.tuples.GetAttribute;
-import ca.uqac.lif.cep.tuples.MergeTuples;
-import ca.uqac.lif.cep.tuples.Select;
-import ca.uqac.lif.cep.tuples.Tuple;
-import ca.uqac.lif.cep.tuples.TupleFixed;
-import ca.uqac.lif.cep.tuples.TupleMap;
-import ca.uqac.lif.cep.tuples.Where;
 import ca.uqac.lif.cep.util.Booleans;
 import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.cep.tuples.Select.SelectFunction;
