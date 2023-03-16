@@ -186,6 +186,7 @@
     </for>
     <echo message="Deleting jars dir" />
     <delete dir="jars" includes="*.jar" />
+    <delete dir="docs" />
   </target>
   
   <!-- Calls the "wipe" task in each subfolder -->
