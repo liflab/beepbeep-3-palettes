@@ -42,6 +42,36 @@ downloaded and installed. Please refer to the `Readme.md` file of each
 particular project (if any) for more information on compiling and
 building these extensions.
 
+Using BeepBeep palettes in a project
+------------------------------------
+
+You can [download the latest JAR files](https://github.com/liflab/beepbeep-3-palettes/releases/latest)
+and place them in your classpath. Otherwise, you can declare the palettes as a
+dependency in your project. This will download a single JAR file that bundles
+all the palettes together.
+
+### Maven
+
+```xml
+<dependency>
+  <groupId>io.github.liflab</groupId>
+  <artifactId>beepbeep-3-palettes</artifactId>
+  <version>0.5</version>
+</dependency>
+```
+
+### Ivy
+
+```xml
+<dependency org="io.github.liflab" name="beepbeep-3-palettes" rev="0.5"/>
+```
+
+### Gradle
+
+```
+compileOnly group: 'io.github.liflab', name: 'beepbeep-3', version: '0.10.8-alpha'
+```
+
 Building the palettes
 ---------------------
 
