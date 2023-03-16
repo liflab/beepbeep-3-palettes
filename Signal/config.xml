@@ -56,6 +56,11 @@
     <withdoc>false</withdoc>
   </jar>
   
+  <!-- All test reports merged into one -->
+  <report>
+    <junitdir>../tests</junitdir>
+  </report>
+  
   <!--
     Write JAR dependencies here.
   -->

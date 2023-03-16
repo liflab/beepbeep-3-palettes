@@ -50,6 +50,11 @@
     <filenamepattern>**/*Test.java</filenamepattern>
   </test>
   
+  <!-- All test reports merged into one -->
+  <report>
+    <junitdir>../tests</junitdir>
+  </report>
+  
   <!-- Output jar -->
   <jar>
     <filename>../jars/mtnp</filename>
