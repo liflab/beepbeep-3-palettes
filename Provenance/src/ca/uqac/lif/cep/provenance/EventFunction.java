@@ -61,9 +61,9 @@ public abstract class EventFunction implements EventNodeFunction, NodeFunction
 	
 	/**
 	 * Creates a new event function.
-   * @param proc_id The ID of the processor
-   * @param stream_index The index of the output stream on that processor
-   * @param stream_pos The position of the event in that stream
+   * @param id The ID of the processor
+   * @param index The index of the output stream on that processor
+   * @param position The position of the event in that stream
 	 */
 	public EventFunction(int id, int index, int position)
 	{

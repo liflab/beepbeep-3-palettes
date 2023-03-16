@@ -20,8 +20,8 @@ package ca.uqac.lif.cep.diagnostics;
 import ca.uqac.lif.cep.UniformProcessor;
 
 /**
- * A {@link Passthrough} processor that keeps the count of events that
- * went through it.
+ * A {@link ca.uqac.lif.cep.tmf.Passthrough Passthrough} processor that keeps
+ * the count of events that went through it.
  * @author Sylvain Hallé
  */
 public class PassthroughCounter extends UniformProcessor

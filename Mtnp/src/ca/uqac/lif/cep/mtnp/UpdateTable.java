@@ -30,8 +30,9 @@ import ca.uqac.lif.mtnp.table.TableEntry;
  * table</li>
  * <li>{@link UpdateTableStream} work in the same way, but receives <i>n</i>
  * input streams instead of a single array of <i>n</i> elements</li>
- * <li>{@link UpdateTableMap} receives a stream of {@link Map} objects, each
- * corresponding to a tuple of key-value pairs to add to the table</li>
+ * <li>{@link UpdateTableMap} receives a stream of {@link java.util.Map Map}
+ * objects, each corresponding to a tuple of key-value pairs to add to the
+ * table</li>
  * </ul> 
  * @author Sylvain Hallé
  */
