@@ -44,7 +44,7 @@
   <test>
     <srcdir>src</srcdir>
     <bindir>bin</bindir>
-    <filenamepattern>**/*Test.java</filenamepattern>
+    <filenamepattern>**/*Test.*</filenamepattern>
   </test>
   
   <!-- All test reports merged into one -->
