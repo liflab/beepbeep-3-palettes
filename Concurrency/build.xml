@@ -26,7 +26,7 @@
   <antversion property="antversion.running" />
   
   <!-- The build script's version number. Do not edit! -->
-  <property name="antrun.version" value="1.10.2"/>
+  <property name="antrun.version" value="1.10.3"/>
   
   <!-- Load project properties from XML file -->
   <xmlproperty file="config.xml"/>
@@ -379,7 +379,9 @@
       </executiondata>
       <structure name="${build.name}">
         <classfiles>
-            <fileset dir="${build.bindir}"/>
+            <fileset dir="${build.bindir}">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
         </classfiles>
         <sourcefiles encoding="UTF-8">
             <fileset dir="${build.srcdir}"/>

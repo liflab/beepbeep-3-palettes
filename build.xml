@@ -40,6 +40,9 @@
   <!-- Versions of various dependencies -->
   <property name="versions.jacoco" value="0.8.8"/>
   
+  <!-- Pattern designating a test file (source or binary) -->
+  <property name="build.test.filenamepattern" value="**/*Test.*"/>
+  
   <!-- Check if ant-contrib is present -->
   <available file="${build.libdir}/ant-contrib-1.0b3.jar" property="antcontrib.present"/>
   
@@ -237,27 +240,68 @@
       </executiondata>
       <structure name="${build.name}">
         <classfiles>
-            <fileset dir="Apache/bin"/>
-            <fileset dir="Concurrency/bin"/>
-            <fileset dir="Diagnostics/bin"/>
-            <fileset dir="Dsl/bin"/>
-            <fileset dir="Fol/bin"/>
-            <fileset dir="Fsm/bin"/>
-            <fileset dir="Graphviz/bin"/>
-            <!-- <fileset dir="Groovy/bin"/> Not yet -->
-            <fileset dir="Hibernate/bin"/>
-            <fileset dir="Http/bin"/>
-            <fileset dir="Jdbc/bin"/>
-            <fileset dir="Json/bin"/>
-            <fileset dir="Ltl/bin"/>
-            <fileset dir="Mtnp/bin"/>
-            <fileset dir="Provenance/bin"/>
-            <fileset dir="Serialization/bin"/>
-            <fileset dir="Signal/bin"/>
-            <fileset dir="Tuples/bin"/>
-            <fileset dir="WebSocket/bin"/>
-            <fileset dir="Widgets/bin"/>
-            <fileset dir="Xml/bin"/>
+            <fileset dir="Apache/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Concurrency/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Diagnostics/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Dsl/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Fol/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Fsm/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Graphviz/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <!-- <fileset dir="Groovy/bin">
+            </fileset> Not yet -->
+            <fileset dir="Hibernate/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Http/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Jdbc/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Json/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Ltl/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Mtnp/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Provenance/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Serialization/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Signal/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Tuples/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="WebSocket/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Widgets/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Xml/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
         </classfiles>
         <sourcefiles encoding="UTF-8">
             <fileset dir="Apache/src"/>
