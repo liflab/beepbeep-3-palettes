@@ -69,7 +69,7 @@ all the palettes together.
 ### Gradle
 
 ```
-compileOnly group: 'io.github.liflab', name: 'beepbeep-3', version: '0.10.8-alpha'
+compileOnly group: 'io.github.liflab', name: 'beepbeep-3-palettes', version: '0.5'
 ```
 
 Building the palettes
