@@ -40,14 +40,51 @@ import ca.uqac.lif.cep.util.Equals;
 import ca.uqac.lif.cep.util.NthElement;
 import ca.uqac.lif.cep.util.Numbers;
 
+/**
+ * Creates complex events out of low-level events occurring to Java iterators.
+ * Each basic event represents a method call done on a Java iterator. It is
+ * an array made of two elements:
+ * <ul>
+ * <li>The object's hashcode (an integer)</li>
+ * <li>The name of the method being called on this object (a String)</li>
+ * </ul>
+ * The goal is to produce a high-level stream where each event summarizes the
+ * "lifecycle" of an iterator, from its instantiation to its disposal. When an
+ * iterator is destroyed, a "complex" {@link IteratorLifecycle} event should be
+ * produced, summarizing the operations done on this iterator during its
+ * lifespan: its hashcode, and the number of times some methods have been
+ * called on it.
+ * 
+ */
 public class IteratorDemo
 {
 	public static void main(String[] args)
 	{
-		SliceLast slice = new SliceLast(new NthElement(0), new RangeCep(
+		/* Create a RangeCep processor that will aggregate information about a
+		 * single instance of iterator. */
+		RangeCep cep = new RangeCep(
+				/* The range processor returns true until the "dispose" event is seen,
+				 * triggering the creation of the complex output event. */
 				new ApplyFunction(new FunctionTree(Booleans.not, new FunctionTree(Equals.instance, new FunctionTree(new NthElement(1), StreamVariable.X), new Constant("dispose")))),
-				new Processor[] {new ApplyFunction(new NthElement(0)), new CountIf("next"), new CountIf("hasNext"), new CountIf("remove")},
-				new CreateIteratorLifecycle()));
+				/* Four processors respectively output... */ 
+				new Processor[] {
+						/* The iterator's hashcode (same value in each event) */
+						new ApplyFunction(new NthElement(0)),
+						/* The cumulative number of "next" calls seen so far */
+						new CountIf("next"),
+						/* The cumulative number of "hasNext" calls seen so far */
+						new CountIf("hasNext"),
+						/* The cumulative number of "remove" calls seen so far */
+						new CountIf("remove")},
+				/* The function called to create the complex event when the end of the
+				 * range (i.e. the "dispose" event) is reached. */
+				new CreateIteratorLifecycle());
+		
+		/* Create a slice processor associating one instance of the RangeCep
+		 * processor to each individual instance of iterator in circulation. */
+		SliceLast slice = new SliceLast(new NthElement(0), cep);
+		
+		/* Connect to a printer and push some events. */
 		Connector.connect(slice, new Println());
 		Pushable p = slice.getPushableInput();
 		Object i1 = new Object();
@@ -59,6 +96,10 @@ public class IteratorDemo
 		p.push(new Object[]{i1, "dispose"});
 	}
 	
+	/**
+	 * Processor that accumulates the number of events where the method name
+	 * (i.e. second element of the array) is equal to a specific string.
+	 */
 	protected static class CountIf extends GroupProcessor
 	{
 		public CountIf(String name)
