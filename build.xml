@@ -213,7 +213,6 @@
     <mkdir dir="coverage"/>
     <jacoco:merge destfile="coverage/merged.exec">
 	  <fileset dir="Apache/tests/coverage" includes="*.exec"/>
-	  <fileset dir="Concurrency/tests/coverage" includes="*.exec"/>
 	  <fileset dir="Diagnostics/tests/coverage" includes="*.exec"/>
 	  <fileset dir="Dsl/tests/coverage" includes="*.exec"/>
 	  <fileset dir="Fol/tests/coverage" includes="*.exec"/>
@@ -241,9 +240,6 @@
       <structure name="${build.name}">
         <classfiles>
             <fileset dir="Apache/bin">
-              <exclude name="${build.test.filenamepattern}"/>
-            </fileset>
-            <fileset dir="Concurrency/bin">
               <exclude name="${build.test.filenamepattern}"/>
             </fileset>
             <fileset dir="Diagnostics/bin">
@@ -305,7 +301,6 @@
         </classfiles>
         <sourcefiles encoding="UTF-8">
             <fileset dir="Apache/src"/>
-            <fileset dir="Concurrency/src"/>
             <fileset dir="Diagnostics/src"/>
             <fileset dir="Dsl/src"/>
             <fileset dir="Fol/src"/>
@@ -424,10 +419,6 @@
         <include name="**"/>
         <exclude name="**/*Test.java"/>
       </fileset>
-      <fileset dir="Concurrency/src">
-        <include name="**/*.java"/>
-        <exclude name="**/*Test.java"/>
-      </fileset>
       <fileset dir="Diagnostics/src">
         <include name="**/*.java"/>
         <exclude name="**/*Test.java"/>
@@ -504,7 +495,6 @@
       </fileset>
       <!-- No groups, as each palette is in its own package
       <group title="Apache" packages="ca.uqac.lif.cep.apache"/>
-      <group title="Concurrency" packages="ca.uqac.lif.cep.concurrency"/>
       <group title="Diagnostics" packages="ca.uqac.lif.cep.diagnostics"/>
       <group title="Dsl" packages="ca.uqac.lif.cep.dsl"/>
       <group title="Fol" packages="ca.uqac.lif.cep.fol"/>
@@ -536,7 +526,6 @@
     </javadoc>
     <copy todir="docs/javadoc/doc-files">
       <!-- <fileset dir="Apache/src/doc-files"/> No such folder -->
-      <!-- <fileset dir="Concurrency/src/doc-files"/> No such folder -->
       <!-- <fileset dir="Diagnostics/src/doc-files"/> No such folder -->
       <!-- <fileset dir="Dsl/src/doc-files"/> No such folder -->
       <!--  <fileset dir="Fol/src/doc-files"/> No such folder -->
