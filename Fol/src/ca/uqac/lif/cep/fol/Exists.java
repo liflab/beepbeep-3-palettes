@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -17,9 +17,7 @@
  */
 package ca.uqac.lif.cep.fol;
 
-import ca.uqac.lif.cep.CompoundFuture;
 import ca.uqac.lif.cep.functions.Function;
-import java.util.concurrent.Future;
 
 /**
  * Function that acts as a first-order existential quantifier.
@@ -53,35 +51,8 @@ public class Exists extends FirstOrderQuantifier
   }
 
   @Override
-  protected Future<Object[]> newFuture(Future<Object[]>[] futures)
-  {
-    return new ExistsFunctionFuture(futures);
-  }
-
-  @Override
   public Function duplicate(boolean with_state)
   {
     return new Exists(m_variable, m_function.duplicate(with_state));
-  }
-  
-  protected static class ExistsFunctionFuture extends CompoundFuture<Object[],Object[]>
-  {
-    public ExistsFunctionFuture(Future<Object[]>[] futures)
-    {
-      super(futures);
-    }
-    
-    @Override
-    public Boolean[] compute(Object[][] values)
-    {
-      for (Object[] a : values)
-      {
-        if (((Boolean) a[0]))
-        {
-          return new Boolean[]{true};
-        }
-      }
-      return new Boolean[]{false};
-    }
   }
 }

@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -19,8 +19,6 @@ package ca.uqac.lif.cep.fol;
 
 import java.util.Collection;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.EventTracker;
@@ -46,43 +44,6 @@ public abstract class FirstOrderQuantifier extends Function
   {
     this(x, null, f);
   }
-
-	@Override
-	/*@ non_null @*/ public Future<Object[]> evaluateFast(Object[] inputs, Object[] outputs, Context context, ExecutorService service) 
-	{
-	  Collection<?> values;
-	  if (m_domainFunction == null)
-	  {
-	    values = (Collection<?>) inputs[0];
-	  }
-	  else
-	  {
-	    Object[] dom = new Object[m_domainFunction.getOutputArity()];
-	    m_domainFunction.evaluate(inputs, dom, context);
-	    values = (Collection<?>) dom[0];
-	  }
-		Object[][] all_vals = new Object[values.size()][1];
-		@SuppressWarnings("unchecked")
-		Future<Object[]>[] all_futures = new Future[values.size()];
-		int dom_count = 0;
-		for (Object value : values)
-		{
-			Context new_context = new Context(context);
-			Function exp = m_function.duplicate();
-			all_vals[dom_count] = new Object[1];
-			new_context.put(m_variable, value);
-			if (m_domainFunction == null)
-			{
-			  all_futures[dom_count] = exp.evaluateFast(new Object[]{value}, all_vals[dom_count], new_context, service);
-			}
-			else
-			{
-			  all_futures[dom_count] = exp.evaluateFast(inputs, all_vals[dom_count], new_context, service);
-			}
-			dom_count++;
-		}
-		return newFuture(all_futures); 
-	}
 
 	@Override
 	public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
@@ -157,7 +118,4 @@ public abstract class FirstOrderQuantifier extends Function
 	}
 	
 	protected abstract void getVerdict(Object[][] inputs, Object[] outputs);
-	
-	protected abstract Future<Object[]> newFuture(Future<Object[]>[] futures);
-	
 }

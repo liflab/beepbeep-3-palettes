@@ -72,7 +72,7 @@ public abstract class MultilineGroupProcessorBuilder extends GroupProcessorBuild
 	}
 	
 	@Override
-	protected synchronized GroupProcessor postVisit(Deque<Object> stack) 
+	protected GroupProcessor postVisit(Deque<Object> stack) 
 	{
 		return null;
 	}

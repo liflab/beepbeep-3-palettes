@@ -67,7 +67,7 @@ public class GroupProcessorBuilder extends GrammarObjectBuilder<GroupProcessor>
   }
 
   @Override
-  protected synchronized GroupProcessor postVisit(Deque<Object> stack)
+  protected GroupProcessor postVisit(Deque<Object> stack)
   {
     if (stack.isEmpty())
     {
