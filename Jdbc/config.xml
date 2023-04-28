@@ -26,7 +26,7 @@
   <name>JDBC extension for BeepBeep 3</name>
   
   <!-- The project's version number -->
-  <version>0.5</version>
+  <version>0.5.99-alpha</version>
   
   <!-- The project's author. Currently this only
   shows up in the footer of the Javadoc documentation. -->
@@ -72,7 +72,7 @@
       <name>BeepBeep</name>
       <classname>ca.uqac.lif.cep.Processor</classname>
       <files>
-      	<zip>https://github.com/liflab/beepbeep-3/releases/download/v0.10.8-alpha/beepbeep-3-0.10.8-alpha.zip</zip>
+      	<zip>https://github.com/liflab/beepbeep-3/releases/download/v0.10.9-alpha/beepbeep-3-0.10.9-alpha.zip</zip>
       </files>
       <bundle>false</bundle>
     </dependency>
