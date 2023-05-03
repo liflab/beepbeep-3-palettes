@@ -13,6 +13,7 @@ Available palettes
 At the moment, the folder contains the following palettes:
 
 - `Apache`: for parsing Apache log files
+- `Complex`: for creating complex events out of lower-level events
 - `Concurrency`: for using multi-threading in processors
 - `Diagnostics`: to help debugging processor chains
 - `Dsl`: for creating Domain Specific Languages with the
