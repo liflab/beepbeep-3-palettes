@@ -46,6 +46,11 @@ import ca.uqac.lif.cep.tmf.PushUnit;
  * by each of the &pi;<sub><i>i</i></sub> on the event range; its output is the
  * complex event created out of those values.</li>
  * </ul>
+ * In addition, the processor may optionally allow restarts 
+ * (using {@link #allowRestarts(boolean)}). In this case, when a complex event
+ * is produced, &pi;<sub><i>R</i></sub> and all of the &pi;<sub><i>i</i></sub>
+ * are reset to their initial state, which makes it possible for a new
+ * complex event to be produced with the events received from this point on. 
  * @author Sylvain Hallé
  */
 public class RangeCep extends SynchronousProcessor
@@ -92,6 +97,19 @@ public class RangeCep extends SynchronousProcessor
 	/*@ non_null @*/ protected final Function m_complexEventFunction;
 	
 	/**
+	 * A flag that determines if more than one complex event can be produced
+	 * (default: {@code false}).
+	 */
+	protected boolean m_allowRestarts = false;
+	
+	/**
+	 * A flag that determines if the event that determines the end boundary of
+	 * the range should be included (i.e. pushed) a part of the complex event
+	 * (default: {@code false}).
+	 */
+	protected boolean m_includesLast = false;
+	
+	/**
 	 * Creates a new range complex event processor.
 	 * @param range_processor The processor used to determine the range of events
 	 * to include in the complex event
@@ -129,10 +147,39 @@ public class RangeCep extends SynchronousProcessor
 		m_dataProcessors = data;
 		m_currentState = State.BEFORE;
 	}
+	
+	/**
+	 * Sets whether the processor is allowed to produce multiple successive
+	 * complex events.
+	 * @param b Set to {@code true} to allow restarts, {@code false} otherwise
+	 * @return This processor
+	 */
+	/*@ non_null @*/ public RangeCep allowRestarts(boolean b)
+	{
+		m_allowRestarts = b;
+		return this;
+	}
+	
+	/**
+	 * Sets whether the event that determines the end boundary of the range
+	 * should be included (i.e. pushed) a part of the complex event.
+	 * @param b Set to {@code true} to include this last event, {@code false}
+	 * otherwise
+	 * @return This processor
+	 */
+	/*@ non_null @*/ public RangeCep includesLast(boolean b)
+	{
+		m_includesLast = b;
+		return this;
+	}
 
 	@Override
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
 	{
+		if (!m_allowRestarts && m_currentState == State.AFTER)
+		{
+			return false;
+		}
 		m_range.push(inputs[0]);
 		Object a_verdict = m_range.getLast();
 		boolean verdict = false;
@@ -147,14 +194,32 @@ public class RangeCep extends SynchronousProcessor
 			if (verdict == false)
 			{
 				// Done: produce complex event
+				if (m_includesLast)
+				{
+					pushFront(inputs);
+				}
 				Object o = produceComplexEvent();
 				outputs.add(new Object[] {o});
-				return false;
+				if (m_allowRestarts)
+				{
+					m_range.reset();
+					for (PushUnit pu : m_dataProcessors)
+					{
+						pu.reset();
+					}
+					m_complexEventFunction.reset();
+					m_currentState = State.BEFORE;
+				}
+				else
+				{
+					m_currentState = State.AFTER;
+				}
+				return m_allowRestarts;
 			}
 			break;
 		case AFTER:
 			// Won't output anything
-			return false;
+			return m_allowRestarts;
 		case BEFORE:
 			if (verdict == false)
 			{
@@ -171,12 +236,21 @@ public class RangeCep extends SynchronousProcessor
 		if (m_currentState == State.ONGOING)
 		{
 			// Push event to all data processors
-			for (PushUnit p : m_dataProcessors)
-			{
-				p.push(inputs[0]);
-			}
+			pushFront(inputs);
 		}
 		return true;
+	}
+	
+	/**
+	 * Pushes an event front to all data processors.
+	 * @param inputs The event front
+	 */
+	protected void pushFront(Object[] inputs)
+	{
+		for (PushUnit p : m_dataProcessors)
+		{
+			p.push(inputs[0]);
+		}
 	}
 	
 	/**
@@ -223,6 +297,7 @@ public class RangeCep extends SynchronousProcessor
 			p_dups[i] = m_dataProcessors[i].duplicate(false);
 		}
 		RangeCep sc = new RangeCep(m_range.duplicate(false), p_dups, m_complexEventFunction.duplicate(false));
+		sc.allowRestarts(m_allowRestarts);
 		return sc;
 	}
 }
