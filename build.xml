@@ -213,7 +213,7 @@
     <mkdir dir="coverage"/>
     <jacoco:merge destfile="coverage/merged.exec">
 	  <fileset dir="Apache/tests/coverage" includes="*.exec"/>
-	  <fileset dir="Cep/tests/coverage" includes="*.exec"/>
+	  <fileset dir="Complex/tests/coverage" includes="*.exec"/>
 	  <fileset dir="Diagnostics/tests/coverage" includes="*.exec"/>
 	  <fileset dir="Dsl/tests/coverage" includes="*.exec"/>
 	  <fileset dir="Fol/tests/coverage" includes="*.exec"/>
@@ -243,7 +243,7 @@
             <fileset dir="Apache/bin">
               <exclude name="${build.test.filenamepattern}"/>
             </fileset>
-            <fileset dir="Cep/bin">
+            <fileset dir="Complex/bin">
               <exclude name="${build.test.filenamepattern}"/>
             </fileset>
             <fileset dir="Diagnostics/bin">
@@ -305,7 +305,7 @@
         </classfiles>
         <sourcefiles encoding="UTF-8">
             <fileset dir="Apache/src"/>
-            <fileset dir="Cep/src"/>
+            <fileset dir="Complex/src"/>
             <fileset dir="Diagnostics/src"/>
             <fileset dir="Dsl/src"/>
             <fileset dir="Fol/src"/>
@@ -424,7 +424,7 @@
         <include name="**"/>
         <exclude name="**/*Test.java"/>
       </fileset>
-      <fileset dir="Cep/src">
+      <fileset dir="Complex/src">
         <include name="**"/>
         <exclude name="**/*Test.java"/>
       </fileset>
@@ -504,7 +504,7 @@
       </fileset>
       <!-- No groups, as each palette is in its own package
       <group title="Apache" packages="ca.uqac.lif.cep.apache"/>
-      <group title="Cep" packages="ca.uqac.lif.cep.complex"/>
+      <group title="Complex" packages="ca.uqac.lif.cep.complex"/>
       <group title="Diagnostics" packages="ca.uqac.lif.cep.diagnostics"/>
       <group title="Dsl" packages="ca.uqac.lif.cep.dsl"/>
       <group title="Fol" packages="ca.uqac.lif.cep.fol"/>
@@ -536,7 +536,7 @@
     </javadoc>
     <copy todir="docs/javadoc/doc-files">
       <!-- <fileset dir="Apache/src/doc-files"/> No such folder -->
-      <!-- <fileset dir="Cep/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Complex/src/doc-files"/> No such folder -->
       <!-- <fileset dir="Diagnostics/src/doc-files"/> No such folder -->
       <!-- <fileset dir="Dsl/src/doc-files"/> No such folder -->
       <!--  <fileset dir="Fol/src/doc-files"/> No such folder -->
