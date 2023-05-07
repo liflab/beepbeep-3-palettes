@@ -28,6 +28,9 @@
   <!-- The project's version number -->
   <version>0.5.99-alpha</version>
   
+  <!-- The project's package (with a trailing slash) -->
+  <package>ca/uqac/lif/cep/diagnostics/</package>
+  
   <!-- The project's author. Currently this only
   shows up in the footer of the Javadoc documentation. -->
   <author>Sylvain Hall&#233;</author>
