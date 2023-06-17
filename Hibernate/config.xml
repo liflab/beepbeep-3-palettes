@@ -26,7 +26,7 @@
   <name>Hibernate palette for BeepBeep 3</name>
   
   <!-- The project's version number -->
-  <version>0.5.99-alpha</version>
+  <version>0.6</version>
   
   <!-- The project's package (with a trailing slash) -->
   <package>ca/uqac/lif/cep/hibernate/</package>
