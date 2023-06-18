@@ -406,7 +406,7 @@
     <mkdir dir="${build.rootdocdir}/doc-files"/>
     <javadoc
       overview="project-overview.html"
-      destdir="docs/javadoc"
+      destdir="${build.rootdocdir}"
       packagenames="*"
       excludepackagenames=""
       defaultexcludes="yes"
@@ -444,12 +444,6 @@
         <include name="**/*.java"/>
         <exclude name="**/*Test.java"/>
       </fileset>
-      <!-- Not yet
-      <fileset dir="Groovy/src">
-        <include name="**/*.java"/>
-        <exclude name="**/*Test.java"/>
-      </fileset>
-      -->
       <fileset dir="Hibernate/src">
         <include name="**/*.java"/>
         <exclude name="**/*Test.java"/>
@@ -524,7 +518,7 @@
       <group title="Xml" packages="ca.uqac.lif.cep.xml"/>
       -->
       <classpath>
-        <fileset file="${build.libdir}/beepbeep-3.jar"/>
+        <fileset file="Apache/lib/beepbeep*.jar"/>
         <fileset file="Dsl/dep/*.jar"/>
         <fileset file="Http/dep/*.jar"/>
         <fileset file="Json/dep/*.jar"/>

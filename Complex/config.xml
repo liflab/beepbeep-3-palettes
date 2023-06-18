@@ -60,7 +60,7 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>../jars/cep</filename>
+    <filename>../jars/complex</filename>
     <withdoc>false</withdoc>
   </jar>
   
