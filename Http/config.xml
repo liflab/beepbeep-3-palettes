@@ -84,7 +84,7 @@
       <name>Jerrydog</name>
       <classname>ca.uqac.lif.jerrydog.Server</classname>
       <files>
-        <zip>https://github.com/sylvainhalle/Jerrydog/releases/download/v0.3.2/jerrydog-0.3.2.zip</zip>
+        <jar>https://github.com/sylvainhalle/Jerrydog/releases/download/v0.3.3/jerrydog-0.3.3.jar</jar>
       </files>
       <bundle>true</bundle>
     </dependency>

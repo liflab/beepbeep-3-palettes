@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2023 Sylvain Hallé and friends
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -15,25 +15,32 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ca.uqac.lif.cep.graphviz;
+package ca.uqac.lif.cep.json;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
+import ca.uqac.lif.cep.functions.UnaryFunction;
+import ca.uqac.lif.json.JsonElement;
+import ca.uqac.lif.json.JsonString;
 
 /**
- * Unit tests for {@link Graph}.
+ * Extracts a number value from a JSON element.
  * @author Sylvain Hallé
  */
-public class GraphTest
+public class StringValue extends UnaryFunction<JsonElement,String>
 {
-  @Test
-  public void testDuplicate1()
+  public static final transient StringValue instance = new StringValue();
+  
+  protected StringValue()
   {
-    Graph g = new Graph();
-    g.add("A", "B", 10);
-    g.add("B", "B", 3);
-    Graph g_dup = g.duplicate();
-    assertEquals(3, g_dup.getInWeight("B"), 0);
+    super(JsonElement.class, String.class);
+  }
+  
+  @Override
+  public String getValue(JsonElement x)
+  {
+    if (x instanceof JsonString)
+    {
+      return ((JsonString) x).stringValue();
+    }
+    return "";
   }
 }

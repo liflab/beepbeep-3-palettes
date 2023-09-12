@@ -32,15 +32,20 @@ public class Graph
 	 * A collection of directed edges in this graph. Edges are indexed
 	 * by source node to facilitate lookup.
 	 */
-	protected final Map<String,Set<Edge>> m_edges;
+	protected final Map<Integer,Set<Edge>> m_edges;
 	
 	/**
-	 * A map associating edge labels to numbers
+	 * A map associating vertex IDs to labels.
 	 */
-	protected final Map<String,Integer> m_edgeLabels;
+	protected final Map<Integer,String> m_vertexLabels;
 	
 	/**
-   * A map associating vertex labels to the sum of the weights
+	 * A map associating labels to vertex IDs.
+	 */
+	protected final Map<String,Integer> m_vertexIds;
+	
+	/**
+   * A map associating vertices to the sum of the weights
    * on its incoming edges.
    * Since edges are stored by source vertex, computing the input
    * degree would require looping through every source vertex to
@@ -48,12 +53,12 @@ public class Graph
    * The alternative is to update a separate map of the input
    * degrees as the graph is manipulated.
    */
-  protected final Map<String,Float> m_inWeights;
+  protected final Map<Integer,Float> m_inWeights;
 	
 	/**
-	 * A counter for giving unique numbers to edges.
+	 * A counter for giving unique numbers to vertices.
 	 */
-	protected int m_edgeCounter;
+	protected int m_vertexCounter;
 	
 	/**
 	 * Whether to increment the weights or to replace the weight of an
@@ -67,10 +72,24 @@ public class Graph
 	public Graph()
 	{
 		super();
-		m_edges = new HashMap<String,Set<Edge>>();
-		m_edgeLabels = new HashMap<String,Integer>();
-		m_inWeights = new HashMap<String,Float>();
-		m_edgeCounter = 0;
+		m_edges = new HashMap<Integer,Set<Edge>>();
+		m_vertexLabels = new HashMap<Integer,String>();
+		m_vertexIds = new HashMap<String,Integer>();
+		m_inWeights = new HashMap<Integer,Float>();
+		m_vertexCounter = 0;
+	}
+	
+	/**
+	 * Creates a new graph by copying another graph.
+	 * @param g The graph to copy
+	 */
+	public Graph(Graph g)
+	{
+		this();
+		m_edges.putAll(g.m_edges);
+		m_vertexLabels.putAll(g.m_vertexLabels);
+		m_inWeights.putAll(m_inWeights);
+		m_vertexCounter = g.m_vertexCounter;
 	}
 	
 	/**
@@ -86,6 +105,46 @@ public class Graph
 	  return this;
 	}
 	
+	public Graph add(String source, String destination, float weight)
+	{
+		if (!m_vertexLabels.containsValue(source))
+		{
+			m_vertexLabels.put(m_vertexCounter, source);
+			m_vertexIds.put(source, m_vertexCounter);
+			m_vertexCounter++;
+		}
+		if (!m_vertexLabels.containsValue(destination))
+		{
+			m_vertexLabels.put(m_vertexCounter, destination);
+			m_vertexIds.put(destination, m_vertexCounter);
+			m_vertexCounter++;
+		}
+		int id_src = m_vertexIds.get(source);
+		int id_dst = m_vertexIds.get(destination);
+		return add(id_src, id_dst, weight);
+	}
+	
+	public Graph add(int source, int destination, float weight)
+	{
+		Set<Edge> list = null;
+		Edge e = new Edge(source, destination, weight);
+		if (!m_edges.containsKey(source))
+		{
+			list = new HashSet<Edge>();
+			m_edges.put(source, list);
+		}
+		else
+		{
+			list = m_edges.get(source);
+		}
+		list.add(e);
+		if (!m_inWeights.containsKey(e.m_source))
+		{
+		  m_inWeights.put(e.m_source, e.m_weight);
+		}
+		return this;
+	}
+	
 	/**
 	 * Adds an edge to the graph
 	 * @param e The edge
@@ -94,25 +153,6 @@ public class Graph
 	public Graph add(Edge e)
 	{
 		Set<Edge> list = null;
-		int src_id = -1, dst_id = -1;
-		if (m_edgeLabels.containsKey(e.m_source))
-		{
-		  src_id = m_edgeLabels.get(e.m_source);
-		}
-		else
-		{
-		  src_id = m_edgeCounter++;
-		  m_edgeLabels.put(e.m_source, src_id);
-		}
-		if (m_edgeLabels.containsKey(e.m_destination))
-    {
-      dst_id = m_edgeLabels.get(e.m_destination);
-    }
-    else
-    {
-      dst_id = m_edgeCounter++;
-      m_edgeLabels.put(e.m_destination, dst_id);
-    }
 		if (m_edges.containsKey(e.m_source))
 		{
 			list = m_edges.get(e.m_source);
@@ -136,14 +176,16 @@ public class Graph
 	 * @param destination The destination vertex
 	 * @return The edge, or {@code null} if no edge could be found
 	 */
-	public /*@Null*/ Edge getEdge(String source, String destination)
+	/*@ null @*/ public Edge getEdge(int source, int destination)
 	{
 		if (!m_edges.containsKey(source))
+		{
 			return null;
+		}
 		Set<Edge> edges = m_edges.get(source);
 		for (Edge e : edges)
 		{
-			if (source.compareTo(e.m_source) == 0 && destination.compareTo(e.m_destination) == 0)
+			if (source == e.m_source && destination == e.m_destination)
 			{
 				return e;
 			}
@@ -152,11 +194,25 @@ public class Graph
 	}
 	
 	/**
+	 * Returns the input weight of a vertex by designating a vertex label.
+	 * @param vertex The vertex label
+	 * @return The input weight, or -1 if the vertex does not exist
+	 */
+	public float getInWeight(String vertex)
+	{
+		if (m_vertexIds.containsKey(vertex))
+		{
+			return m_inWeights.get(m_vertexIds.get(vertex));
+		}
+		return -1;
+	}
+	
+	/**
 	 * Returns the input weight of a vertex
 	 * @param vertex The vertex
 	 * @return The input weight, or -1 if the vertex does not exist
 	 */
-	public float getInWeight(String vertex)
+	public float getInWeight(int vertex)
 	{
 	  if (!m_inWeights.containsKey(vertex))
 	  {
@@ -170,7 +226,7 @@ public class Graph
    * @param vertex The vertex
    * @return The output weight, or 0 if the vertex does not exist
    */
-  public float getOutWeight(String vertex)
+  public float getOutWeight(int vertex)
   {
     if (!m_edges.containsKey(vertex))
     {
@@ -178,6 +234,37 @@ public class Graph
     }
     return m_edges.get(vertex).size();
   }
+  
+  /**
+	 * Increments the weight of an edge in the graph, by designating
+	 * it with the labels of the source and destination vertices. 
+	 * If the edge
+	 * does not exist, a new edge is created and its weight is set
+	 * to <tt>weight_increment</tt>. Note that this method assumes that
+	 * each vertex in the graph has a different label in order to be used.
+	 * @param source The label of the source vertex
+	 * @param destination The label of the destination vertex
+	 * @param weight_increment The amount to add to the edge's weight 
+	 * @return This graph
+	 */
+	public Graph incrementWeight(String source, String destination, Number weight_increment)
+	{
+		if (!m_vertexLabels.containsValue(source))
+		{
+			m_vertexLabels.put(m_vertexCounter, source);
+			m_vertexIds.put(source, m_vertexCounter);
+			m_vertexCounter++;
+		}
+		if (!m_vertexLabels.containsValue(destination))
+		{
+			m_vertexLabels.put(m_vertexCounter, destination);
+			m_vertexIds.put(destination, m_vertexCounter);
+			m_vertexCounter++;
+		}
+		int id_src = m_vertexIds.get(source);
+		int id_dst = m_vertexIds.get(destination);
+		return incrementWeight(id_src, id_dst, weight_increment);
+	}
 	
 	/**
 	 * Increments the weight of an edge in the graph. If the edge
@@ -188,7 +275,7 @@ public class Graph
 	 * @param weight_increment The amount to add to the edge's weight 
 	 * @return This graph
 	 */
-	public Graph incrementWeight(String source, String destination, Number weight_increment)
+	public Graph incrementWeight(int source, int destination, Number weight_increment)
 	{
 		Edge e = getEdge(source, destination);
 		float f_weight = weight_increment.floatValue();
@@ -218,16 +305,16 @@ public class Graph
 	{
 		StringBuilder out = new StringBuilder();
 		out.append("digraph G {\n");
-		for (Map.Entry<String,Integer> entry : m_edgeLabels.entrySet())
+		for (Map.Entry<Integer,String> entry : m_vertexLabels.entrySet())
 		{
-			out.append(entry.getValue()).append(" [").append(renderVertex(entry.getKey())).append("];\n");
+			out.append(entry.getKey()).append(" [").append(renderVertex(entry.getValue())).append("];\n");
 		}
-		for (Map.Entry<String,Set<Edge>> entry : m_edges.entrySet())
+		for (Map.Entry<Integer,Set<Edge>> entry : m_edges.entrySet())
 		{
 			for (Edge e : entry.getValue())
 			{
-			  int src_id = m_edgeLabels.get(e.m_source);
-			  int dst_id = m_edgeLabels.get(e.m_destination);
+			  int src_id = e.m_source;
+			  int dst_id = e.m_destination;
 				out.append(src_id).append(" -> ").append(dst_id).append(" [").append(renderEdge(e)).append("];\n");
 			}
 		}
@@ -288,7 +375,7 @@ public class Graph
 	public Graph duplicate(boolean with_state)
 	{
 		Graph g = new Graph();
-		for (Map.Entry<String, Set<Edge>> entry : m_edges.entrySet())
+		for (Map.Entry<Integer, Set<Edge>> entry : m_edges.entrySet())
 		{
 			Set<Edge> new_edges = new HashSet<Edge>();
 			for (Edge e : entry.getValue())
@@ -297,7 +384,8 @@ public class Graph
 			}
 			g.m_edges.put(entry.getKey(), new_edges);
 		}
-		g.m_edgeLabels.putAll(m_edgeLabels);
+		g.m_vertexLabels.putAll(m_vertexLabels);
+		g.m_vertexIds.putAll(m_vertexIds);
 		g.m_inWeights.putAll(m_inWeights);
 		return g;
 	}
@@ -308,8 +396,8 @@ public class Graph
 	public void clear()
 	{
 	  m_edges.clear();
-	  m_edgeLabels.clear();
-	  m_edgeCounter = 0;
+	  m_vertexLabels.clear();
+	  m_vertexCounter = 0;
 	}
 	
 	/**
@@ -325,12 +413,12 @@ public class Graph
 		/**
 		 * The source vertex
 		 */
-		protected String m_source = "";
+		protected int m_source = -1;
 		
 		/**
 		 * The destination vertex
 		 */
-		protected String m_destination = "";
+		protected int m_destination = -1;
 		
 		/**
 		 * Creates a new edge
@@ -338,7 +426,7 @@ public class Graph
 		 * @param destination The destination vertex
 		 * @param weight The edge's weight
 		 */
-		public Edge(String source, String destination, float weight)
+		protected Edge(int source, int destination, float weight)
 		{
 			super();
 			m_source = source;
@@ -377,7 +465,7 @@ public class Graph
 		@Override
 		public int hashCode()
 		{
-			return m_source.hashCode() + m_destination.hashCode();
+			return m_source + m_destination;
 		}
 		
 		@Override
@@ -388,8 +476,8 @@ public class Graph
 				return false;
 			}
 			Edge e = (Edge) o;
-			return e.m_source.compareTo(m_source) == 0 &&
-					e.m_destination.compareTo(m_destination) == 0;
+			return e.m_source == m_source &&
+					e.m_destination == m_destination;
 		}
 		
 		@Override

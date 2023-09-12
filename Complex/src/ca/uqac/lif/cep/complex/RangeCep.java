@@ -298,6 +298,7 @@ public class RangeCep extends SynchronousProcessor
 		}
 		RangeCep sc = new RangeCep(m_range.duplicate(false), p_dups, m_complexEventFunction.duplicate(false));
 		sc.allowRestarts(m_allowRestarts);
+		sc.includesLast(m_includesLast);
 		return sc;
 	}
 }
