@@ -98,7 +98,7 @@
   </target>
   
   <!-- Creates a "fat JAR" including the JARs of all palettes -->
-  <target name="fat-jar" depends="jar">
+  <target name="fat-jar">
     <zip destfile="beepbeep-palettes-${build.version}.jar">
       <zipgroupfileset dir="jars" includes="*-${build.version}.jar"/>
     </zip>
