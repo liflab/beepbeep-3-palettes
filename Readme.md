@@ -57,20 +57,20 @@ all the palettes together.
 <dependency>
   <groupId>io.github.liflab</groupId>
   <artifactId>beepbeep-3-palettes</artifactId>
-  <version>0.5</version>
+  <version>0.7</version>
 </dependency>
 ```
 
 ### Ivy
 
 ```xml
-<dependency org="io.github.liflab" name="beepbeep-3-palettes" rev="0.5"/>
+<dependency org="io.github.liflab" name="beepbeep-3-palettes" rev="0.7"/>
 ```
 
 ### Gradle
 
 ```
-compileOnly group: 'io.github.liflab', name: 'beepbeep-3-palettes', version: '0.5'
+compileOnly group: 'io.github.liflab', name: 'beepbeep-3-palettes', version: '0.7'
 ```
 
 Building the palettes
@@ -98,7 +98,7 @@ First make sure you have the following installed:
 Each palette depends on BeepBeep's core library, which must be built or
 downloaded beforehand. Please refer to the build instructions for [BeepBeep's main
 engine](https://github.com/liflab/beepbeep-3).
-The resulting file, `beepbeep-3.jar`, must be placed at the root of this
+The resulting JAR file, must be placed at the root of this
 repository prior to building any of the palettes.
 
 The repository is separated into multiple *projects*. Each of these

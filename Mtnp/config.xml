@@ -75,7 +75,7 @@
       <name>BeepBeep</name>
       <classname>ca.uqac.lif.cep.Processor</classname>
       <files>
-      	<jar>https://github.com/liflab/beepbeep-3/releases/download/v0.11/beepbeep-3-0.11.jar</jar>
+      	<jar>https://github.com/liflab/beepbeep-3/releases/download/v0.11.1/beepbeep-3-0.11.1.jar</jar>
       </files>
       <bundle>false</bundle>
     </dependency>
