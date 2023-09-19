@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -74,6 +74,28 @@ public class Derivation extends SynchronousProcessor
 		Connector.connect(this, p2);
 		return this;
 	}
+	
+	/**
+   * Reconnects p1 and p2 so as to place the current processor
+   * in-between. That is, the output of p1 is sent to the derivation,
+   * and the output of the derivation is sent as the input of p2.
+   * 
+   * @param p1 The first processor
+   * @param out_index The index of the first processor's output to connect to
+   * the derivation
+   * @param p2 The second processor
+   * @param in_index The index of the second processor's input to connect to
+   * the derivation
+   * @return This derivation
+   * 
+   * @since 0.8
+   */
+  public Derivation reconnect(Processor p1, int out_index, Processor p2, int in_index)
+  {
+    Connector.connect(p1, out_index, this, 0);
+    Connector.connect(this, 0, p2, in_index);
+    return this;
+  }
 	
 	@Override
 	public void start() throws ProcessorException
