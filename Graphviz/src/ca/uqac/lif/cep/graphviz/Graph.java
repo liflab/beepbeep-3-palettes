@@ -462,6 +462,24 @@ public class Graph
 		  return m_weight;
 		}
 		
+		/**
+		 * Gets the destination vertex of the edge.
+		 * @return The vertex ID
+		 */
+		public int getDestination()
+		{
+			return m_destination;
+		}
+		
+		/**
+		 * Gets the source vertex of the edge.
+		 * @return The vertex ID
+		 */
+		public int getSource()
+		{
+			return m_source;
+		}
+		
 		@Override
 		public int hashCode()
 		{
