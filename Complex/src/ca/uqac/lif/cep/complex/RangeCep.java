@@ -110,6 +110,13 @@ public class RangeCep extends SynchronousProcessor
 	protected boolean m_includesLast = false;
 	
 	/**
+	 * A flag that determines if the false event that marks the end of a
+	 * range should count as the first event of a new range (i.e. complex events
+	 * are contiguous).
+	 */
+	protected boolean m_contiguous = false;
+	
+	/**
 	 * Creates a new range complex event processor.
 	 * @param range_processor The processor used to determine the range of events
 	 * to include in the complex event
@@ -172,6 +179,19 @@ public class RangeCep extends SynchronousProcessor
 		m_includesLast = b;
 		return this;
 	}
+	
+	/**
+	 * Sets whether the false event that marks the end of a range should count as
+	 * the first event of a new range (i.e. complex events are contiguous). 
+	 * @param b Set to {@code true} to make complex events contiguous, {@code
+	 * false} otherwise
+	 * @return This processor
+	 */
+	/*@ non_null @*/ public RangeCep isContiguous(boolean b)
+	{
+		m_contiguous = b;
+		return this;
+	}
 
 	@Override
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs)
@@ -208,7 +228,15 @@ public class RangeCep extends SynchronousProcessor
 						pu.reset();
 					}
 					m_complexEventFunction.reset();
-					m_currentState = State.BEFORE;
+					if (m_contiguous)
+					{
+						m_currentState = State.ONGOING;
+						pushFront(inputs);
+					}
+					else
+					{
+						m_currentState = State.BEFORE;
+					}
 				}
 				else
 				{
