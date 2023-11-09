@@ -231,6 +231,7 @@ public class RangeCep extends SynchronousProcessor
 					if (m_contiguous)
 					{
 						m_currentState = State.ONGOING;
+						m_range.push(inputs[0]);
 						pushFront(inputs);
 					}
 					else
