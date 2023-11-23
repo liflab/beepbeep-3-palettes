@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2020 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -16,6 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package ca.uqac.lif.cep.mtnp;
+
+import java.util.List;
 
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.mtnp.table.HardTable;
@@ -38,6 +40,17 @@ public class UpdateTableArray extends UpdateTable
 	{
 		super(1, column_names);
 	}
+	
+	/**
+   * Creates a new instance of the processor.
+   * @param column_names The names of the columns of the table to update.
+   * Each element of an array will be the value of the attribute at
+   * the corresponding position. 
+   */
+  public UpdateTableArray(List<String> column_names)
+  {
+    super(1, column_names);
+  }
 	
 	/**
 	 * Creates a new instance of the processor.
