@@ -17,6 +17,8 @@
  */
 package ca.uqac.lif.cep.mtnp;
 
+import java.util.List;
+
 import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.mtnp.table.HardTable;
 import ca.uqac.lif.mtnp.table.TableEntry;
@@ -52,6 +54,19 @@ public abstract class UpdateTable extends UniformProcessor
 	{
 		super(in_arity, 1);
 		m_table = new HardTable(column_names);
+	}
+	
+	/**
+	 * Creates a new instance of the processor.
+	 * @param in_arity The input arity
+	 * @param column_names The names of the columns in the resulting table
+	 */
+	public UpdateTable(int in_arity, List<String> column_names)
+	{
+		super(in_arity, 1);
+		String[] col_names = new String[column_names.size()];
+		column_names.toArray(col_names);
+		m_table = new HardTable(col_names);
 	}
 	
 	/**

@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2023 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -17,6 +17,7 @@
  */
 package ca.uqac.lif.cep.tuples;
 
+import java.util.List;
 import java.util.Set;
 
 import ca.uqac.lif.cep.Connector;
@@ -42,7 +43,7 @@ public class MergeScalars extends Function
 	/**
 	 * The names given to the attributes corresponding to each scalar
 	 */
-	protected String[] m_attributeNames;
+	protected final String[] m_attributeNames;
 	
 	protected FixedTupleBuilder m_builder;
 	
@@ -51,6 +52,17 @@ public class MergeScalars extends Function
 		super();
 		m_attributeNames = names;
 		m_builder = new FixedTupleBuilder(names);
+	}
+	
+	public MergeScalars(List<String> names)
+	{
+		super();
+		m_attributeNames = new String[names.size()];
+		for (int i = 0; i < names.size(); i++)
+		{
+			m_attributeNames[i] = names.get(i);
+		}
+		m_builder = new FixedTupleBuilder(m_attributeNames);
 	}
 
 	@Override
