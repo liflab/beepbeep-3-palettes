@@ -102,7 +102,7 @@ public class FirstOrderSlice extends SynchronousProcessor
 	protected boolean compute(Object[] inputs, Queue<Object[]> outputs) 
 	{
 		// Evaluate domain function
-		if (!m_boolean || m_inputCount == 0)
+		if (m_boolean || m_inputCount == 0)
 		{
 			Object[] values = new Object[1];
 			m_function.evaluate(inputs, values);
