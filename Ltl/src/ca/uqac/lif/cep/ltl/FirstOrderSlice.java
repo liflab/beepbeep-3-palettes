@@ -105,7 +105,7 @@ public class FirstOrderSlice extends SynchronousProcessor
 		if (m_boolean || m_inputCount == 0)
 		{
 			Object[] values = new Object[1];
-			m_function.evaluate(inputs, values);
+			m_function.evaluate(inputs, values, m_context);
 			// Create new slice and set context
 			if (values[0] instanceof Collection<?>)
 			{

@@ -307,9 +307,9 @@ public class Troolean extends Constant
 		{
 			return Value.INCONCLUSIVE;
 		}
-		if (o instanceof Value)
+		if (o instanceof Troolean.Value)
 		{
-			return (Value) o;
+			return (Troolean.Value) o;
 		}
 		if (o instanceof Boolean)
 		{
