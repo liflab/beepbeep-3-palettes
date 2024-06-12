@@ -29,7 +29,7 @@ public class Exists extends FirstOrderQuantifier
 {
 	public Exists(String var_name, Function dom_function, Processor expression)
 	{
-		super(var_name, dom_function, expression);
+		super(var_name, dom_function, expression, true);
 	}
 	
 	protected Exists(FirstOrderSlice fos)

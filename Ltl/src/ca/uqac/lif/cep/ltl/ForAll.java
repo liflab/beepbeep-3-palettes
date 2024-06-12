@@ -29,7 +29,7 @@ public class ForAll extends FirstOrderQuantifier
 {
 	public ForAll(String var_name, Function dom_function, Processor expression)
 	{
-		super(var_name, dom_function, expression);
+		super(var_name, dom_function, expression, true);
 	}
 	
 	protected ForAll(FirstOrderSlice fos)

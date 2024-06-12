@@ -29,7 +29,7 @@ public class Some extends FirstOrderQuantifier
 {
 	public Some(String var_name, Function dom_function, Processor expression)
 	{
-		super(var_name, dom_function, expression);
+		super(var_name, dom_function, expression, false);
 	}
 	
 	protected Some(FirstOrderSlice fos)

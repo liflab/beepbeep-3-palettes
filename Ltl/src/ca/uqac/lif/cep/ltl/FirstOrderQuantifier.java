@@ -36,10 +36,10 @@ public abstract class FirstOrderQuantifier extends SynchronousProcessor
 	
 	protected SinkLast m_sink;
 	
-	public FirstOrderQuantifier(String var_name, Function dom_function, Processor expression)
+	public FirstOrderQuantifier(String var_name, Function dom_function, Processor expression, boolean is_boolean)
 	{
 		super(1, 1);
-		m_slicer = new FirstOrderSlice(var_name, dom_function, expression);
+		m_slicer = new FirstOrderSlice(var_name, dom_function, expression, is_boolean);
 		m_slicerPushable = m_slicer.getPushableInput();
 		m_sink = new SinkLast();
 		Connector.connect(m_slicer, m_sink);
