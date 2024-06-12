@@ -25,8 +25,30 @@ import java.util.HashSet;
 
 /**
  * Implementation of a three-valued logic. The "Troolean" type
- * has three values: TRUE, FALSE and INCONCLUSIVE (which can also
- * stand for UNKNOWN).
+ * has three values: TRUE ("&top;"), FALSE ("&bot;") and INCONCLUSIVE ("?",
+ * which can also stand for UNKNOWN). The truth table for Troolean connectives
+ * is defined as follows:
+ * <p>
+ * <table border="1">
+ * <tr><th>&and;</th><th>&bot;</th><th>?</th><th>&top;</hd></tr>
+ * <tr><th>&bot;</th><td>&bot;</td><td>&bot;</td><td>&bot;</td></tr>
+ * <tr><th>?</th><td>&bot;</td><td>?</td><td>?</td></tr>
+ * <tr><th>&top;</th><td>&bot;</td><td>?</td><td>&top;</td></tr>
+ * </table>
+ * <p>
+ * <table border="1">
+ * <tr><th>&or;</th><th>&bot;</th><th>?</th><th>&top;</th></tr>
+ * <tr><th>&bot;</th><td>&bot;</td><td>?</td><td>&top;</td></tr>
+ * <tr><th>?</th><td>?</td><td>?</td><td>&top;</td></tr>
+ * <tr><th>&top;</th><td>&top;</td><td>&top;</td><td>&top;</td></tr>
+ * </table>
+ * <p>
+ * <table border="1">
+ * <tr><th>&not;</th><td></td></tr>
+ * <tr><th>&bot;</th><td>&top;</td></tr>
+ * <tr><th>?</th><td>?</td></tr>
+ * <tr><th>&top;</th><td>&bot;</td></tr>
+ * </table>
  */
 public class Troolean extends Constant
 {	
