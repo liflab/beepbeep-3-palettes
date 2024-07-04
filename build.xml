@@ -26,7 +26,7 @@
   <property name="build.name" value="BeepBeep 3 Palettes"/>
   
   <!-- The bundle's version -->
-  <property name="build.version" value="0.7"/>
+  <property name="build.version" value="0.8"/>
   
   <!-- The author -->
   <property name="build.author" value="Sylvain Hallé"/>

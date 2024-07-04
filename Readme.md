@@ -4,8 +4,8 @@ A set of ready-made palettes for BeepBeep 3
 This repository contains projects producing various independent
 extensions to the [BeepBeep 3](https://liflab.github.io/beepbeep-3)
 event stream query engine. Each project is also independent from the others,
-and can be built separately. All projects require `beepbeep-3.jar` in their
-classpath.
+and can be built separately. All projects require `beepbeep-3-xxx.jar` in
+their classpath.
 
 Available palettes
 ------------------
@@ -57,20 +57,26 @@ all the palettes together.
 <dependency>
   <groupId>io.github.liflab</groupId>
   <artifactId>beepbeep-3-palettes</artifactId>
-  <version>0.7</version>
+  <version>0.8</version>
 </dependency>
 ```
 
 ### Ivy
 
 ```xml
-<dependency org="io.github.liflab" name="beepbeep-3-palettes" rev="0.7"/>
+<dependency org="io.github.liflab" name="beepbeep-3-palettes" rev="0.8"/>
 ```
 
 ### Gradle
 
 ```
-compileOnly group: 'io.github.liflab', name: 'beepbeep-3-palettes', version: '0.7'
+compileOnly group: 'io.github.liflab', name: 'beepbeep-3-palettes', version: '0.8'
+```
+
+### Groovy
+
+```
+@Grab('io.github.liflab:beepbeep-3-palettes:0.8')
 ```
 
 Building the palettes
@@ -172,7 +178,7 @@ About the author                                                   {#about}
 ----------------
 
 BeepBeep 3 was written by [Sylvain Hallé](https://leduotang.ca/sylvain),
-Full Professor at Université du Québec à Chicoutimi, Canada. Part of
+full professor at Université du Québec à Chicoutimi, Canada. Part of
 this work has been funded by the Canada Research Chair in Software
 Specification, Testing and Verification and the
 [Natural Sciences and Engineering Research Council
