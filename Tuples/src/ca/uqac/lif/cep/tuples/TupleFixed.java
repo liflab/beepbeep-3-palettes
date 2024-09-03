@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2024 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -25,7 +25,6 @@ import java.util.Map;
 import java.util.Set;
 
 import ca.uqac.lif.cep.Duplicable;
-
 
 /**
  * Implementation of a named tuple. Contrarily to a {@link TupleMap},
@@ -169,21 +168,19 @@ public final class TupleFixed extends Tuple implements Duplicable
 	@Override
 	public final Tuple put(String key, Object value)
 	{
-		// Do nothing
-		return null;
+		throw new UnsupportedOperationException("Put operation not supported on fixed tuples");
 	}
 
 	@Override
 	public final void putAll(Map<? extends String, ? extends Object> m)
 	{
-		// Do nothing
+		throw new UnsupportedOperationException("PutAll operation not supported on fixed tuples");
 	}
 
 	@Override
 	public final Tuple remove(Object key)
 	{
-		// Do nothing
-		return null;
+		throw new UnsupportedOperationException("Remove operation not supported on fixed tuples");
 	}
 
 	@Override
