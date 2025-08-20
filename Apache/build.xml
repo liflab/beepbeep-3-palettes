@@ -543,7 +543,7 @@
 
   <!-- Generate Eclipse .classpath from config.xml -->
   <target name="gen-classpath" depends="init">
-    <xslt in="config.xml" out="${eclipse.classpath}" style="${xslt.dir}/classpath.xsl">
+    <xslt in="config.xml" out="${eclipse.classpath}" style="classpath.xsl">
       <!-- You can pass parameters if needed -->
     </xslt>
     <echo>.classpath generated</echo>
@@ -551,7 +551,7 @@
 
   <!-- Generate Eclipse .project from config.xml -->
   <target name="gen-project" depends="init">
-    <xslt in="config.xml" out="${eclipse.project}" style="${xslt.dir}/project.xsl"/>
+    <xslt in="config.xml" out="${eclipse.project}" style="project.xsl"/>
     <echo>.project generated</echo>
   </target>
 
