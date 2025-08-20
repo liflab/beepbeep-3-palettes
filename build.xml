@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
 	A build script for a super-project containing multiple sub-projects
-    Copyright (C) 2019-2023  Sylvain Hallé
+    Copyright (C) 2019-2025  Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
   <property name="build.name" value="BeepBeep 3 Palettes"/>
   
   <!-- The bundle's version -->
-  <property name="build.version" value="0.8"/>
+  <property name="build.version" value="0.8.1"/>
   
   <!-- The author -->
   <property name="build.author" value="Sylvain Hallé"/>
@@ -121,6 +121,23 @@
         <available file="@{subdir}/build.xml"/>
         <then>
           <ant dir="@{subdir}" target="show-properties" />
+        </then>
+      </if>
+      </sequential>
+    </for>
+  </target>
+  
+  <!-- Calls the "eclipse" task in each subfolder -->
+  <target name="eclipse" depends="init">
+    <for param="subdir">
+      <dirset dir=".">
+      <include name="*"/>
+      </dirset>
+      <sequential>
+      <if>
+        <available file="@{subdir}/build.xml"/>
+        <then>
+          <ant dir="@{subdir}" target="eclipse" />
         </then>
       </if>
       </sequential>

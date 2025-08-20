@@ -79,5 +79,6 @@
       </files>
       <bundle>false</bundle>
     </dependency>
+    <project>BeepBeep 3</project>
   </dependencies>
 </build>
