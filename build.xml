@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
+<<<<<<< HEAD
     AntRun, a general-purpose Ant build script
     Copyright (C) 2015-2025  Sylvain Hallé
+=======
+	A build script for a super-project containing multiple sub-projects
+    Copyright (C) 2019-2025  Sylvain Hallé
+>>>>>>> f340687 (Update to super build script)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -508,6 +513,7 @@
     <get src="http://sylvainhalle.github.io/AntRun/dependencies/xmltask.jar" dest="${build.libdir}/${xmltask.jarname}"/>
   </target>
 
+<<<<<<< HEAD
   <!-- Target: junit
        Download jUnit JARs if not present, and puts them in the lib folder
   -->
@@ -521,6 +527,459 @@
     <mkdir dir="${build.libdir}"/>
     <get src="https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/${versions.junit}/junit-platform-console-standalone-${versions.junit}.jar" dest="${build.libdir}/junit-platform-console-standalone-${versions.junit}.jar"/>
     <get src="https://repo1.maven.org/maven2/org/apache/ant/ant-junitlauncher/${antversion.running}/ant-junitlauncher-${antversion.running}.jar" dest="${build.libdir}/ant-junitlauncher-${antversion.running}.jar"/>
+=======
+  <!-- Calls the "download-deps" task in each subfolder -->
+  <target name="download-deps" depends="init">
+    <for param="subdir">
+      <dirset dir=".">
+      <include name="*"/>
+      </dirset>
+      <sequential>
+      <if>
+        <available file="@{subdir}/build.xml"/>
+        <then>
+          <sequential>
+            <echo message="Entering @{subdir}" />
+            <ant dir="@{subdir}" target="download-deps" />
+          </sequential>
+        </then>
+      </if>
+      </sequential>
+    </for>
+  </target>
+  
+  <!-- Calls the "eclipse" task in each subfolder -->
+  <target name="eclipse" depends="init">
+    <for param="subdir">
+      <dirset dir=".">
+      <include name="*"/>
+      </dirset>
+      <sequential>
+      <if>
+        <available file="@{subdir}/build.xml"/>
+        <then>
+          <sequential>
+            <echo message="Entering @{subdir}" />
+            <ant dir="@{subdir}" target="eclipse" />
+          </sequential>
+        </then>
+      </if>
+      </sequential>
+    </for>
+  </target>
+  
+  <!-- Calls the "test" task in each subfolder -->
+  <target name="test" depends="init">
+    <for param="subdir">
+      <dirset dir=".">
+        <include name="*"/>
+      </dirset>
+      <sequential>
+      <if>
+        <available file="@{subdir}/build.xml"/>
+        <then>
+          <sequential>
+            <echo message="Entering @{subdir}" />
+            <trycatch>
+            <try>
+              <ant dir="@{subdir}" target="test" />
+            </try>
+            <catch>
+              <echo message="Tests failed for folder @{subdir}"/>
+              <property name="test.onefailed" value="true"/>
+            </catch>
+            </trycatch>
+          </sequential>
+        </then>
+      </if>
+      </sequential>
+    </for>
+    <fail message="Tests failed for one of the palettes" if="test.onefailed"/>
+  </target>
+  
+  <target name="junit-report">
+    <!-- For the junit-report task, it is sufficient to call the task of a single sub-project -->
+    <ant dir="Apache" usenativebasedir="true" target="junit-report" />
+  </target>
+  
+  <target name="jacoco-report" depends="init,jacoco">
+    <!-- Call the jacoco-report task on children -->
+    <for param="subdir">
+      <dirset dir=".">
+        <include name="*"/>
+      </dirset>
+      <sequential>
+      <if>
+        <available file="@{subdir}/build.xml"/>
+        <then>
+          <sequential>
+            <echo message="Entering @{subdir}" />
+            <trycatch>
+            <try>
+              <ant dir="@{subdir}" usenativebasedir="true" target="jacoco-report" />
+            </try>
+            <catch>
+              <echo message="Report failed for folder @{subdir}"/>
+            </catch>
+            </trycatch>
+          </sequential>
+        </then>
+      </if>
+      </sequential>
+    </for>
+    <!-- Load JaCoCo -->
+    <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+      <classpath path="${build.libdir}/jacocoant.jar"/>
+    </taskdef>
+    <mkdir dir="coverage"/>
+    <jacoco:merge destfile="coverage/merged.exec">
+	  <fileset dir="Apache/tests/coverage" includes="*.exec"/>
+	  <fileset dir="Complex/tests/coverage" includes="*.exec"/>
+	  <fileset dir="Diagnostics/tests/coverage" includes="*.exec"/>
+	  <fileset dir="Dsl/tests/coverage" includes="*.exec"/>
+	  <fileset dir="Fol/tests/coverage" includes="*.exec"/>
+	  <fileset dir="Fsm/tests/coverage" includes="*.exec"/>
+	  <fileset dir="Graphviz/tests/coverage" includes="*.exec"/>
+	  <!-- <fileset dir="Groovy/tests/coverage" includes="*.exec"/> Not yet -->
+	  <fileset dir="Hibernate/tests/coverage" includes="*.exec"/>
+	  <fileset dir="Http/tests/coverage" includes="*.exec"/>
+	  <fileset dir="Jdbc/tests/coverage" includes="*.exec"/>
+	  <fileset dir="Json/tests/coverage" includes="*.exec"/>
+	  <fileset dir="Ltl/tests/coverage" includes="*.exec"/>
+	  <fileset dir="Mtnp/tests/coverage" includes="*.exec"/>
+	  <fileset dir="Provenance/tests/coverage" includes="*.exec"/>
+	  <fileset dir="Serialization/tests/coverage" includes="*.exec"/>
+	  <fileset dir="Signal/tests/coverage" includes="*.exec"/>
+	  <fileset dir="Tuples/tests/coverage" includes="*.exec"/>
+	  <fileset dir="WebSocket/tests/coverage" includes="*.exec"/>
+	  <fileset dir="Widgets/tests/coverage" includes="*.exec"/>
+	  <fileset dir="Xml/tests/coverage" includes="*.exec"/>
+    </jacoco:merge>
+    <jacoco:report>
+      <executiondata>
+        <file file="coverage/merged.exec"/>
+      </executiondata>
+      <structure name="${build.name}">
+        <classfiles>
+            <fileset dir="Apache/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Complex/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Diagnostics/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Dsl/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Fol/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Fsm/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Graphviz/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <!-- <fileset dir="Groovy/bin">
+            </fileset> Not yet -->
+            <fileset dir="Hibernate/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Http/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Jdbc/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Json/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Ltl/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Mtnp/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Provenance/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Serialization/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Signal/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Tuples/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="WebSocket/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Widgets/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+            <fileset dir="Xml/bin">
+              <exclude name="${build.test.filenamepattern}"/>
+            </fileset>
+        </classfiles>
+        <sourcefiles encoding="UTF-8">
+            <fileset dir="Apache/src"/>
+            <fileset dir="Complex/src"/>
+            <fileset dir="Diagnostics/src"/>
+            <fileset dir="Dsl/src"/>
+            <fileset dir="Fol/src"/>
+            <fileset dir="Fsm/src"/>
+            <fileset dir="Graphviz/src"/>
+            <!-- <fileset dir="Groovy/src"/> Not yet -->
+            <fileset dir="Hibernate/src"/>
+            <fileset dir="Http/src"/>
+            <fileset dir="Jdbc/src"/>
+            <fileset dir="Json/src"/>
+            <fileset dir="Ltl/src"/>
+            <fileset dir="Mtnp/src"/>
+            <fileset dir="Provenance/src"/>
+            <fileset dir="Serialization/src"/>
+            <fileset dir="Signal/src"/>
+            <fileset dir="Tuples/src"/>
+            <fileset dir="WebSocket/src"/>
+            <fileset dir="Widgets/src"/>
+            <fileset dir="Xml/src"/>
+        </sourcefiles>
+      </structure>
+      <html destdir="coverage"/>
+      <xml destfile="tests/report.xml"/>
+    </jacoco:report>
+  </target>
+  
+  <target name="report" depends="junit-report,jacoco-report">
+    <!-- Just call the two dependent tasks -->
+  </target>
+  
+  <!-- Calls the "clean" task in each subfolder -->
+  <target name="clean" depends="init">
+    <for param="subdir">
+      <dirset dir=".">
+      <include name="*"/>
+      </dirset>
+      <sequential>
+      <if>
+        <available file="@{subdir}/build.xml"/>
+        <then>
+          <sequential>
+            <echo message="Entering @{subdir}" />
+            <ant dir="@{subdir}" target="clean" />
+          </sequential>
+        </then>
+      </if>
+      </sequential>
+    </for>
+    <echo message="Deleting jars dir" />
+    <delete dir="jars" includes="*.jar" />
+    <delete dir="docs" />
+  </target>
+  
+  <!-- Calls the "wipe" task in each subfolder -->
+  <target name="wipe" depends="init">
+    <for param="subdir">
+      <dirset dir=".">
+      <include name="*"/>
+      </dirset>
+      <sequential>
+      <if>
+        <available file="@{subdir}/build.xml"/>
+        <then>
+          <sequential>
+            <echo message="Entering @{subdir}" />
+            <ant dir="@{subdir}" target="wipe" />
+          </sequential>
+        </then>
+      </if>
+      </sequential>
+    </for>
+  </target>
+
+  <!-- Calls the jar task for each project -->
+  <target name="all" depends="init,jar">
+  </target>
+
+  <!-- Prints the name of each subfolder that has a build script -->
+  <target name="print-folders" depends="init">
+    <for param="subdir">
+      <dirset dir=".">
+      <include name="*"/>
+     </dirset>
+     <sequential>
+      <if>
+        <available file="@{subdir}/build.xml"/>
+        <then>
+          <echo message="@{subdir}"/>
+        </then>
+      </if>
+     </sequential>
+    </for>
+  </target>
+    
+  <!-- Builds the javadoc for the palettes -->
+  <target name="javadoc" depends="init">
+    <mkdir dir="${build.rootdocdir}"/>
+    <mkdir dir="${build.rootdocdir}/doc-files"/>
+    <javadoc
+      overview="project-overview.html"
+      destdir="${build.rootdocdir}"
+      packagenames="*"
+      excludepackagenames=""
+      defaultexcludes="yes"
+      author="true"
+      version="true"
+      use="true"
+      Encoding="utf8"
+      docencoding="utf8"
+      charset="utf8"
+      windowtitle="BeepBeep 3 Palettes API Reference">
+      <doctitle><![CDATA[<h1>]]>${build.name}<![CDATA[ Documentation</h1>]]></doctitle>
+      <bottom><![CDATA[<i>Copyright&nbsp;&#169; ]]>${build.author}<![CDATA[. All Rights Reserved.</i>]]></bottom>
+      <link href="http://docs.oracle.com/javase/8/docs/api/"/>
+      <fileset dir="Apache/src">
+        <include name="**"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Complex/src">
+        <include name="**"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Diagnostics/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Dsl/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Fol/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Fsm/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Hibernate/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Hibernate/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Http/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Jdbc/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Json/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Mtnp/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Provenance/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Serialization/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Signal/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Tuples/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="WebSocket/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Widgets/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <fileset dir="Xml/src">
+        <include name="**/*.java"/>
+        <exclude name="**/*Test.java"/>
+      </fileset>
+      <!-- No groups, as each palette is in its own package
+      <group title="Apache" packages="ca.uqac.lif.cep.apache"/>
+      <group title="Complex" packages="ca.uqac.lif.cep.complex"/>
+      <group title="Diagnostics" packages="ca.uqac.lif.cep.diagnostics"/>
+      <group title="Dsl" packages="ca.uqac.lif.cep.dsl"/>
+      <group title="Fol" packages="ca.uqac.lif.cep.fol"/>
+      <group title="Fsm" packages="ca.uqac.lif.cep.fsm"/>
+      <group title="Graphviz" packages="ca.uqac.lif.cep.graphviz"/>
+      <group title="Hibernate" packages="ca.uqac.lif.cep.hibernate"/>
+      <group title="Http" packages="ca.uqac.lif.cep.http"/>
+      <group title="Jdbc" packages="ca.uqac.lif.cep.jdbc"/>
+      <group title="Json" packages="ca.uqac.lif.cep.json"/>
+      <group title="Mtnp" packages="ca.uqac.lif.cep.mtnp"/>
+      <group title="Provenance" packages="ca.uqac.lif.cep.provenance"/>
+      <group title="Serialization" packages="ca.uqac.lif.cep.serialization"/>
+      <group title="Signal" packages="ca.uqac.lif.cep.signal"/>
+      <group title="Tuples" packages="ca.uqac.lif.cep.tuples"/>
+      <group title="WebSocket" packages="ca.uqac.lif.cep.websocket"/>
+      <group title="Widgets" packages="ca.uqac.lif.cep.widgets"/>
+      <group title="Xml" packages="ca.uqac.lif.cep.xml"/>
+      -->
+      <classpath>
+        <fileset file="Apache/lib/beepbeep*.jar"/>
+        <fileset file="Dsl/dep/*.jar"/>
+        <fileset file="Http/dep/*.jar"/>
+        <fileset file="Json/dep/*.jar"/>
+        <fileset file="Mtnp/dep/*.jar"/>
+        <fileset file="Serialization/dep/*.jar"/>
+        <fileset file="WebSocket/dep/*.jar"/>
+        <fileset file="Xml/dep/*.jar"/>
+      </classpath>
+    </javadoc>
+    <copy todir="docs/javadoc/doc-files">
+      <!-- <fileset dir="Apache/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Complex/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Diagnostics/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Dsl/src/doc-files"/> No such folder -->
+      <!--  <fileset dir="Fol/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Fsm/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Graphviz/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Groovy/src/doc-files"/> Not yet -->
+      <!-- <fileset dir="Hibernate/src/doc-files"/> No such folder -->
+      <fileset dir="Http/src/doc-files"/>
+      <!-- <fileset dir="Jdbc/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Json/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Ltl/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Mtnp/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Provenance/src/doc-files"/> No such folder -->
+      <fileset dir="Serialization/src/doc-files"/>
+      <!-- <fileset dir="Signal/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Tuples/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="WebSocket/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Widgets/src/doc-files"/> No such folder -->
+      <!-- <fileset dir="Xml/src/doc-files"/> No such folder -->
+    </copy>
+  </target>
+  
+  <!-- Task that prepares the environment before the compilation.
+       This is mostly a *hack* so that the Jdbc palette, which depends on
+       Tuples, can compile by copying tuples.jar to its dep dir. -->
+  <target name="prepare" depends="init">
+    <copy file="jars/tuples.jar" tofile="Jdbc/lib/tuples.jar" failonerror="false"/>
+>>>>>>> f340687 (Update to super build script)
   </target>
   
   <!-- Target: jacoco
