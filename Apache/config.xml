@@ -23,7 +23,7 @@
        script's default values -->
 
   <!-- The project's name -->
-  <name>Apache Log extension for BeepBeep 3</name>
+  <name>Apache</name>
   
   <!-- The project's version number -->
   <version>0.8</version>

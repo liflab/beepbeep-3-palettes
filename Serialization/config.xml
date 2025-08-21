@@ -23,7 +23,7 @@
        script's default values -->
 
   <!-- The project's name -->
-  <name>Serialization extension for BeepBeep 3</name>
+  <name>Serialization</name>
   
   <!-- The project's version number -->
   <version>0.8</version>
@@ -79,21 +79,22 @@
       </files>
       <bundle>false</bundle>
     </dependency>
+    <project>BeepBeep 3</project>
   	<dependency>
     <!-- Azrael. Generic serialization library -->
       <name>Azrael</name>
       <classname>ca.uqac.lif.azrael.ObjectPrinter</classname>
       <files>
-        <jar>https://github.com/sylvainhalle/Azrael/releases/download/v2.1.1/azrael-core.jar</jar>
+	<jar>https://github.com/sylvainhalle/Azrael/releases/download/v2.1.2/azrael-core-2.1.2.jar</jar>
       </files>
-      <bundle>true</bundle>
+      <bundle>false</bundle>
     </dependency>
     <dependency>
       <!-- Azrael JSON. Generic serialization library -->
       <name>Azrael JSON</name>
       <classname>ca.uqac.lif.azrael.json.JsonReader</classname>
       <files>
-        <jar>https://github.com/sylvainhalle/Azrael/releases/download/v2.1.1/azrael-json.jar</jar>
+	<jar>https://github.com/sylvainhalle/Azrael/releases/download/v2.1.2/azrael-json-2.1.2.jar</jar>
       </files>
       <bundle>true</bundle>
     </dependency>

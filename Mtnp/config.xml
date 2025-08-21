@@ -23,7 +23,7 @@
        script's default values -->
 
   <!-- The project's name -->
-  <name>Manipulate Tables N'Plots extension for BeepBeep 3</name>
+  <name>MTNP</name>
   
   <!-- The project's version number -->
   <version>0.8</version>
@@ -79,12 +79,13 @@
       </files>
       <bundle>false</bundle>
     </dependency>
+    <project>BeepBeep 3</project>
     <dependency>
     <!-- json-lif. Used to parse JSON messages -->
       <name>MTNP</name>
       <classname>ca.uqac.lif.mtnp.DataFormatter</classname>
       <files>
-        <zip>https://github.com/liflab/mtnp/releases/download/v0.1.13a-alpha/mtnp-0.1.13-alpha.zip</zip>
+        <jar>https://github.com/liflab/mtnp/releases/download/v0.1.13a-alpha/mtnp-0.1.13-alpha.jar</jar>
       </files>
       <bundle>true</bundle>
     </dependency>

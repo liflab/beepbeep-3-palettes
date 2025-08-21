@@ -23,7 +23,7 @@
        script's default values -->
 
   <!-- The project's name -->
-  <name>Provenance management for BeepBeep 3</name>
+  <name>Provenance</name>
   
   <!-- The project's version number -->
   <version>0.8</version>
@@ -79,14 +79,15 @@
       </files>
       <bundle>false</bundle>
     </dependency>
+    <project>BeepBeep 3</project>
     <dependency>
     <!-- xml-lif. Used to parse XML messages -->
       <name>PetitPoucet</name>
       <classname>ca.uqac.lif.petitpoucet.ProvenanceNode</classname>
       <files>
-        <zip>https://github.com/liflab/petitpoucet/releases/download/v0.2-alpha/petitpoucet-0.2-alpha.zip</zip>
+        <jar>https://github.com/liflab/petitpoucet/releases/download/v0.2-alpha/petitpoucet-0.2-alpha.jar</jar>
       </files>
-      <bundle>true</bundle>
+      <bundle>false</bundle>
     </dependency>
   </dependencies>
 </build>

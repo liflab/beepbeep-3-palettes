@@ -23,7 +23,7 @@
        script's default values -->
 
   <!-- The project's name -->
-  <name>JSON extension for BeepBeep 3</name>
+  <name>JSON</name>
   
   <!-- The project's version number -->
   <version>0.8</version>
@@ -79,12 +79,13 @@
       </files>
       <bundle>false</bundle>
     </dependency>
+    <project>BeepBeep 3</project>
     <dependency>
     <!-- json-lif. Used to parse JSON messages -->
       <name>json-lif</name>
       <classname>ca.uqac.lif.json.JsonMain</classname>
       <files>
-        <zip>https://github.com/liflab/json-lif/releases/download/v1.6.4/json-lif-1.6.4.zip</zip>
+        <jar>https://github.com/liflab/json-lif/releases/download/v1.6.4/json-lif-1.6.4.jar</jar>
       </files>
       <bundle>true</bundle>
     </dependency>

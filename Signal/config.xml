@@ -23,7 +23,7 @@
        script's default values -->
 
   <!-- The project's name -->
-  <name>Signal processing palette for BeepBeep 3</name>
+  <name>Signal</name>
   
   <!-- The project's version number -->
   <version>0.8</version>
@@ -79,5 +79,6 @@
       </files>
       <bundle>false</bundle>
     </dependency>
+    <project>BeepBeep 3</project>
   </dependencies>
 </build>

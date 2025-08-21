@@ -23,7 +23,7 @@
        script's default values -->
 
   <!-- The project's name -->
-  <name>WebSocket palette for BeepBeep 3</name>
+  <name>WebSockets</name>
   
   <!-- The project's version number -->
   <version>0.8</version>
@@ -79,6 +79,7 @@
       </files>
       <bundle>false</bundle>
     </dependency>
+    <project>BeepBeep 3</project>
     <dependency>
     <!-- java_websocket. Used to implement the websocket -->
       <name>java_websocket</name>

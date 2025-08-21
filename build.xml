@@ -568,6 +568,26 @@
     </for>
   </target>
   
+  <!-- Calls the "clean-eclipse" task in each subfolder -->
+  <target name="clean-eclipse" depends="init">
+    <for param="subdir">
+      <dirset dir=".">
+      <include name="*"/>
+      </dirset>
+      <sequential>
+      <if>
+        <available file="@{subdir}/build.xml"/>
+        <then>
+          <sequential>
+            <echo message="Entering @{subdir}" />
+            <ant dir="@{subdir}" target="clean-eclipse" />
+          </sequential>
+        </then>
+      </if>
+      </sequential>
+    </for>
+  </target>
+  
   <!-- Calls the "test" task in each subfolder -->
   <target name="test" depends="init">
     <for param="subdir">

@@ -23,7 +23,7 @@
        script's default values -->
 
   <!-- The project's name -->
-  <name>XML palette for BeepBeep 3</name>
+  <name>XML</name>
   
   <!-- The project's version number -->
   <version>0.8</version>
@@ -79,12 +79,13 @@
       </files>
       <bundle>false</bundle>
     </dependency>
+    <project>BeepBeep 3</project>
     <dependency>
     <!-- xml-lif. Used to parse XML messages -->
       <name>xml-lif</name>
       <classname>ca.uqac.lif.xml.XmlElement</classname>
       <files>       
-        <zip>https://github.com/liflab/xml-lif/releases/download/v1.2.2/xml-lif-1.2.2.zip</zip>
+        <jar>https://github.com/liflab/xml-lif/releases/download/v1.2.2/xml-lif-1.2.2.jar</jar>
       </files>
       <bundle>true</bundle>
     </dependency>

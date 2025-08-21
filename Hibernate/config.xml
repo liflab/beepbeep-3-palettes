@@ -23,7 +23,7 @@
        script's default values -->
 
   <!-- The project's name -->
-  <name>Hibernate palette for BeepBeep 3</name>
+  <name>Hibernate</name>
   
   <!-- The project's version number -->
   <version>0.8</version>
@@ -79,6 +79,7 @@
       </files>
       <bundle>false</bundle>
     </dependency>
+    <project>BeepBeep 3</project>
     <dependency>
     <!-- Azrael. For serialization. -->
       <name>Azrael</name>
@@ -86,7 +87,7 @@
       <files>
         <jar>https://github.com/sylvainhalle/Azrael/releases/download/v2.1.2/azrael-core-2.1.2.jar</jar>
       </files>
-      <bundle>true</bundle>
+      <bundle>false</bundle>
     </dependency>
   </dependencies>
 </build>
