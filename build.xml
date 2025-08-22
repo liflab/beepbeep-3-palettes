@@ -127,8 +127,8 @@
     </for>
   </target>
   
-  <!-- Calls the "eclipse" task in each subfolder -->
-  <target name="eclipse" depends="init">
+  <!-- Calls the "download-deps" task in each subfolder -->
+  <target name="download-deps" depends="init">
     <for param="subdir">
       <dirset dir=".">
       <include name="*"/>
@@ -137,7 +137,7 @@
       <if>
         <available file="@{subdir}/build.xml"/>
         <then>
-          <ant dir="@{subdir}" target="eclipse" />
+          <ant dir="@{subdir}" target="download-deps" />
         </then>
       </if>
       </sequential>
