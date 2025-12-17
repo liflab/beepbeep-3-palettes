@@ -20,7 +20,6 @@ package ca.uqac.lif.cep.tuples;
 import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
-import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.functions.Function;
 
 /**
@@ -44,7 +43,7 @@ public class FromFunction extends Function
 	}
 	
 	@Override
-	public void evaluate(Object[] inputs, Object[] out, Context context, EventTracker tracker) 
+	public void evaluate(Object[] inputs, Object[] out, Context context) 
 	{
 		AttributeGroup group = new AttributeGroup(m_traceNames);
 		for (int i = 0; i < m_traceNames.length; i++)

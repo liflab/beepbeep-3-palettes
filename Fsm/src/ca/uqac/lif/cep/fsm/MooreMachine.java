@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2022 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -207,13 +207,11 @@ public class MooreMachine extends SynchronousProcessor implements Stateful
 						// This transition fires: move to that state
 						Object[] out = new Object[m_outputArity];
 						boolean b = fire(t, inputs, out);
-						updatePathHistory();
 						m_inputCount++;
 						if (b)
 						{
 							// Outputs were produced
 							outputs.add(out);
-							updateProvenance();
 							m_outputCount++;
 						}
 						return true;
@@ -232,13 +230,11 @@ public class MooreMachine extends SynchronousProcessor implements Stateful
 			{
 				Object[] out = new Object[m_outputArity];
 				boolean b = fire(otherwise, inputs, out);
-				updatePathHistory();
 				m_inputCount++;
 				if (b)
 				{
 					// Outputs were produced
 					outputs.add(out);
-					updateProvenance();
 					m_outputCount++;
 				}
 				return true;
@@ -250,51 +246,6 @@ public class MooreMachine extends SynchronousProcessor implements Stateful
 		}
 		// Screwed: no transition defined for this input
 		return false;
-	}
-
-	protected void updatePathHistory()
-	{
-		if (m_eventTracker != null)
-		{
-			if (m_lastOccurrences.containsKey(m_currentState) && m_lastOccurrences.get(m_currentState) != -1)
-			{
-				int last_pos = m_lastOccurrences.get(m_currentState);
-				for (int i = m_looplessPath.size() - 1; i >= 0; i--)
-				{
-					if (m_looplessPath.get(i) == last_pos)
-					{
-						for (int j = i; j < m_looplessPath.size(); j++)
-						{
-							m_looplessPath.remove(i);
-						}
-						break;
-					}
-				}
-				for (Integer state : m_outputSymbols.keySet())
-				{
-					if (m_lastOccurrences.get(state) >= last_pos)
-					{
-						m_lastOccurrences.put(state, -1);
-					}
-				}
-			}
-			if (m_currentState != m_initialState)
-			{
-				m_looplessPath.add(m_inputCount);
-				m_lastOccurrences.put(m_currentState, m_inputCount);
-			}
-		}
-	}
-
-	protected void updateProvenance()
-	{
-		if (m_eventTracker != null)
-		{
-			for (int position : m_looplessPath)
-			{
-				m_eventTracker.associateToInput(getId(), 0, position, 0, m_outputCount);
-			}
-		}
 	}
 
 	/**

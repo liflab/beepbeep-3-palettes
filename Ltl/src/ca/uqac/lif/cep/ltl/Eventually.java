@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2020 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -65,7 +65,6 @@ public class Eventually extends SynchronousProcessor implements Stateful
 				e[0] = true;
 				outputs.add(e);
 				m_outputCount++;
-				associateToOutput(0, m_inputCount, 0, m_outputCount);
 			}
 			m_notTrueCount = 0;
 		}

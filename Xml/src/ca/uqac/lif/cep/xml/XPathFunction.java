@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import ca.uqac.lif.cep.Context;
-import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.xml.Equality;
 import ca.uqac.lif.xml.Predicate;
@@ -82,7 +81,7 @@ public class XPathFunction extends Function
 	 * @param context The context
 	 * @return The new expression where placeholders have been replaced
 	 */
-	protected static XPathExpression evaluatePlaceholders(XPathExpression expression, Context context, EventTracker tracker)
+	protected static XPathExpression evaluatePlaceholders(XPathExpression expression, Context context)
 	{
 		if (context == null)
 		{
@@ -147,12 +146,12 @@ public class XPathFunction extends Function
 	}
 
   @Override
-  public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
+  public void evaluate(Object[] inputs, Object[] outputs, Context context)
   {
     XPathExpression n_exp;
     if (context != null)
     {
-      n_exp = evaluatePlaceholders(m_expression, context, tracker);
+      n_exp = evaluatePlaceholders(m_expression, context);
     }
     else
     {
@@ -160,10 +159,6 @@ public class XPathFunction extends Function
     }
     Collection<XmlElement> col = n_exp.evaluate((XmlElement) inputs[0]);
     outputs[0] = postProcess(col);
-    if (tracker != null)
-    {
-      tracker.associateToOutput(-1, 0, 0, 0, 0);
-    }
   }
   
   @Override

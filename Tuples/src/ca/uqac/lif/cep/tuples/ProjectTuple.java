@@ -19,8 +19,6 @@ package ca.uqac.lif.cep.tuples;
 
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.Context;
-import ca.uqac.lif.cep.EventTracker;
-
 import java.util.Set;
 
 /**
@@ -73,7 +71,7 @@ public class ProjectTuple extends Function
   }
   
   @Override
-  public void evaluate(Object[] inputs, Object[] outputs, Context context, EventTracker tracker)
+  public void evaluate(Object[] inputs, Object[] outputs, Context context)
   {
     Object[] values = new Object[m_pairs.length];
     for (int i = 0; i < m_pairs.length; i++)
@@ -81,10 +79,6 @@ public class ProjectTuple extends Function
       Object[] out = new Object[1];
       m_pairs[i].m_value.evaluate(inputs, out, context);
       values[i] = out[0];
-    }
-    if (tracker != null)
-    {
-      tracker.associateToOutput(-1, 0, 0, 0, 0);
     }
     outputs[0] = m_builder.createTuple(values);
   }

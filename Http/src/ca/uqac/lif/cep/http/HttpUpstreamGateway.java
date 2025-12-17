@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2017 Sylvain Hallé
+    Copyright (C) 2008-2025 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -19,6 +19,7 @@ package ca.uqac.lif.cep.http;
 
 import java.io.IOException;
 import java.net.ConnectException;
+import java.net.URISyntaxException;
 import java.util.Queue;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -42,7 +43,6 @@ import ca.uqac.lif.jerrydog.Server;
  */
 public class HttpUpstreamGateway extends Sink
 {
-
 	/**
 	 * The URL that will be called when events are pushed
 	 * to this gateway
@@ -140,6 +140,10 @@ public class HttpUpstreamGateway extends Sink
 				{
 					throw new ProcessorException(e);
 				}
+				catch (URISyntaxException e)
+				{
+					throw new ProcessorException(e);
+				}
 			}
 		}
 		else if (m_pushMethod == Method.GET)
@@ -152,10 +156,13 @@ public class HttpUpstreamGateway extends Sink
 			{
 				throw new ProcessorException(e);
 			}
+			catch (URISyntaxException e)
+			{
+				throw new ProcessorException(e);
+			}
 		}
 		return true;
 	}
-
 
 	@Override
 	public void start() throws ProcessorException

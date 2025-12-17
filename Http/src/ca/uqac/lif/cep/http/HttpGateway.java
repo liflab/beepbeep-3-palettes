@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 /**
@@ -43,10 +45,11 @@ public abstract class HttpGateway
    * @param url The URL
    * @return The string of the HTTP response
    * @throws IOException If something goes wrong with the request
+   * @throws URISyntaxException If the URL is malformed
    */
-  public static String sendGet(String url) throws IOException
+  public static String sendGet(String url) throws IOException, URISyntaxException
   {
-    URL obj = new URL(url);
+    URL obj = new URI(url).toURL();
     HttpURLConnection con = (HttpURLConnection) obj.openConnection();
     con.setRequestMethod("GET");
     con.setRequestProperty("User-Agent", s_userAgent);
@@ -71,10 +74,11 @@ public abstract class HttpGateway
    * @param payload The request's payload
    * @return The string of the HTTP response
    * @throws IOException If something goes wrong with the request
+   * @throws URISyntaxException If the URL is malformed
    */
-  public static String sendPost(String url, String payload) throws IOException 
+  public static String sendPost(String url, String payload) throws IOException, URISyntaxException 
   {
-    URL obj = new URL(url);
+  	URL obj = new URI(url).toURL();
     HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
     //add request header

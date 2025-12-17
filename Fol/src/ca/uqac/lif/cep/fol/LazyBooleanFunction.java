@@ -1,14 +1,29 @@
+/*
+    BeepBeep, an event stream processor
+    Copyright (C) 2008-2025 Sylvain Hallé
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package ca.uqac.lif.cep.fol;
 
 import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
-import ca.uqac.lif.cep.EventTracker;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.util.Booleans;
 import ca.uqac.lif.cep.functions.UnaryFunction;
-
 
 public class LazyBooleanFunction extends Function
 {
@@ -40,16 +55,16 @@ public class LazyBooleanFunction extends Function
 	}
 	
 	@Override
-	public void evaluate(Object[] inputs, Object[] out, Context context, EventTracker tracker)
+	public void evaluate(Object[] inputs, Object[] out, Context context)
 	{
 		// Evaluate LHS
-		m_left.evaluate(inputs, out, context, tracker);
+		m_left.evaluate(inputs, out, context);
 		if ((Boolean) out[0] == m_stopValue)
 		{
 			return;
 		}
 		// Evaluate RHS
-		m_right.evaluate(inputs, out, context, tracker);
+		m_right.evaluate(inputs, out, context);
 		if ((Boolean) out[0] == m_stopValue)
 		{
 			return;				
