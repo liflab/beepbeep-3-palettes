@@ -9,14 +9,14 @@
   
   <!-- Project coordinates -->
   <groupId>io.github.liflab</groupId>  
-  <artifactId>beepbeep-3-palettes</artifactId>  
-  <version>0.8</version>
+  <artifactId>beepbeep-palettes</artifactId>  
+  <version>3.13</version>
   <packaging>jar</packaging>
   
   <!-- Project description -->
   <name>BeepBeep 3 Palette Bundle</name>
   <description>A set of modular extensions for the BeepBeep 3 event stream processing library.</description>
-  <url>https://liflab.github.io/${project.artifactId}</url>
+  <url>https://liflab.github.io/beepbeep-3-palettes</url>
   
   <!-- License information -->
   <licenses>
@@ -38,17 +38,17 @@
   
   <!-- Version control -->
   <scm>
-    <connection>scm:git:git://github.com/liflab/${project.artifactId}.git</connection>
-    <developerConnection>scm:git:ssh://github.com:liflab/${project.artifactId}.git</developerConnection>
-    <url>http://github.com/liflab/${project.artifactId}/tree/master</url>
+    <connection>scm:git:git://github.com/liflab/beepbeep-3-palettes.git</connection>
+    <developerConnection>scm:git:ssh://github.com:liflab/beepbeep-3-palettes.git</developerConnection>
+    <url>http://github.com/liflab/beepbeep-3-palettes/tree/master</url>
   </scm>
   
   <!-- Dependencies -->
   <dependencies>
     <dependency>
       <groupId>io.github.liflab</groupId>
-      <artifactId>beepbeep-3</artifactId>
-      <version>0.12</version>
+      <artifactId>beepbeep</artifactId>
+      <version>3.13</version>
     </dependency>
   </dependencies>
 </project>

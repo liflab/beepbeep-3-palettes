@@ -207,12 +207,10 @@ public class MooreMachine extends SynchronousProcessor implements Stateful
 						// This transition fires: move to that state
 						Object[] out = new Object[m_outputArity];
 						boolean b = fire(t, inputs, out);
-						m_inputCount++;
 						if (b)
 						{
 							// Outputs were produced
 							outputs.add(out);
-							m_outputCount++;
 						}
 						return true;
 					}
@@ -230,12 +228,10 @@ public class MooreMachine extends SynchronousProcessor implements Stateful
 			{
 				Object[] out = new Object[m_outputArity];
 				boolean b = fire(otherwise, inputs, out);
-				m_inputCount++;
 				if (b)
 				{
 					// Outputs were produced
 					outputs.add(out);
-					m_outputCount++;
 				}
 				return true;
 			}

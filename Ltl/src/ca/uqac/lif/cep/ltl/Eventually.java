@@ -64,7 +64,6 @@ public class Eventually extends SynchronousProcessor implements Stateful
 				Object[] e = new Object[1];
 				e[0] = true;
 				outputs.add(e);
-				m_outputCount++;
 			}
 			m_notTrueCount = 0;
 		}
@@ -72,7 +71,6 @@ public class Eventually extends SynchronousProcessor implements Stateful
 		{
 			m_notTrueCount++;
 		}
-		m_inputCount++;
 		return true;
 	}
 	

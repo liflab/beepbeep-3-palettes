@@ -4,13 +4,14 @@ ca.uqac.lif.cep.diagnostics
 ca.uqac.lif.cep.dsl
 ca.uqac.lif.cep.fol
 ca.uqac.lif.cep.fsm
+ca.uqac.lif.cep.graphviz
 ca.uqac.lif.cep.hibernate
 ca.uqac.lif.cep.http
 ca.uqac.lif.cep.io.websocket
 ca.uqac.lif.cep.jdbc
 ca.uqac.lif.cep.json
+ca.uqac.lif.cep.ltl
 ca.uqac.lif.cep.mtnp
-ca.uqac.lif.cep.provenance
 ca.uqac.lif.cep.serialization
 ca.uqac.lif.cep.signal
 ca.uqac.lif.cep.tuples

@@ -56,10 +56,8 @@ public class Until extends SynchronousProcessor implements Stateful
 				Object[] e = new Object[1];
 				e[0] = true;
 				outputs.add(e);
-				m_outputCount++;
 			}
 			m_eventCount = 0;
-			m_inputCount++;
 			return true;
 		}
 		assert !right;
@@ -70,13 +68,10 @@ public class Until extends SynchronousProcessor implements Stateful
 				Object[] e = new Object[1];
 				e[0] = false;
 				outputs.add(e);
-				m_outputCount++;
 			}
 			m_eventCount = 0;
-			m_inputCount++;
 			return true;			
 		}
-		m_inputCount++;
 		return true;
 	}
 

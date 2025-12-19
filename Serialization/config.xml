@@ -26,7 +26,7 @@
   <name>Serialization</name>
   
   <!-- The project's version number -->
-  <version>0.8</version>
+  <version>3.13</version>
   
   <!-- The project's package (with a trailing slash) -->
   <package>ca/uqac/lif/cep/serialization/</package>
@@ -39,7 +39,7 @@
   <mainclass>ca.uqac.lif.cep.serialization.Main</mainclass>
   
   <!-- Target JDK version for compilation -->
-  <targetjdk>8</targetjdk>
+  <targetjdk>11</targetjdk>
   
   <!-- Installation folders -->
   <srcdir>src</srcdir>
@@ -75,7 +75,7 @@
       <name>BeepBeep</name>
       <classname>ca.uqac.lif.cep.Processor</classname>
       <files>
-      	<jar>https://github.com/liflab/beepbeep-3/releases/download/v0.11.2/beepbeep-3-0.11.2.jar</jar>
+      	<jar>https://github.com/liflab/beepbeep-3/releases/download/v3.13/beepbeep-3.13.jar</jar>
       </files>
       <bundle>false</bundle>
     </dependency>
@@ -85,7 +85,7 @@
       <name>Azrael</name>
       <classname>ca.uqac.lif.azrael.ObjectPrinter</classname>
       <files>
-	<jar>https://github.com/sylvainhalle/Azrael/releases/download/v2.1.2/azrael-core-2.1.2.jar</jar>
+	<jar>https://github.com/sylvainhalle/Azrael/releases/download/v2.2/azrael-core-2.2.jar</jar>
       </files>
       <bundle>false</bundle>
     </dependency>
@@ -94,7 +94,7 @@
       <name>Azrael JSON</name>
       <classname>ca.uqac.lif.azrael.json.JsonReader</classname>
       <files>
-	<jar>https://github.com/sylvainhalle/Azrael/releases/download/v2.1.2/azrael-json-2.1.2.jar</jar>
+	<jar>https://github.com/sylvainhalle/Azrael/releases/download/v2.2/azrael-json-2.2.jar</jar>
       </files>
       <bundle>true</bundle>
     </dependency>

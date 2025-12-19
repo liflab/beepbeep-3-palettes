@@ -64,7 +64,6 @@ public class Globally extends SynchronousProcessor implements Stateful
 				Object[] e = new Object[1];
 				e[0] = false;
 				outputs.add(e);
-				m_outputCount++;
 			}
 			m_notFalseCount = 0;
 		}
@@ -72,7 +71,6 @@ public class Globally extends SynchronousProcessor implements Stateful
 		{
 			m_notFalseCount++;
 		}
-		m_inputCount++;
 		return true;
 	}
 	

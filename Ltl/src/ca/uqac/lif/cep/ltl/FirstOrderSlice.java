@@ -45,6 +45,8 @@ public class FirstOrderSlice extends SynchronousProcessor
 	protected List<Pushable> m_pushables;
 
 	protected List<SinkLast> m_sinks;
+	
+	protected int m_inputCount;
 
 	public FirstOrderSlice(String var_name, Function dom_function, Processor expression, boolean is_boolean)
 	{
@@ -56,6 +58,7 @@ public class FirstOrderSlice extends SynchronousProcessor
 		m_slices = new ArrayList<Processor>();
 		m_pushables = new ArrayList<Pushable>();
 		m_sinks = new ArrayList<SinkLast>();
+		m_inputCount = 0;
 	}
 
 	@Override
@@ -96,6 +99,7 @@ public class FirstOrderSlice extends SynchronousProcessor
 		super.reset();
 		m_slices.clear();
 		m_function.reset();
+		m_inputCount = 0;
 	}
 
 	@Override
