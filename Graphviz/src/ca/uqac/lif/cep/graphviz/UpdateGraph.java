@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2018 Sylvain Hallé and friends
+    Copyright (C) 2008-2026 Sylvain Hallé and friends
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -33,6 +33,12 @@ public class UpdateGraph extends UniformProcessor
 	protected Graph m_graph;
 	
 	/**
+	 * The graph used as the starting point for the update. This
+	 * graph is restored on a call to {@link Processor#reset()}.
+	 */
+	protected final Graph m_startGraph; 
+	
+	/**
 	 * Creates a new update graph processor
 	 */
 	public UpdateGraph()
@@ -46,14 +52,38 @@ public class UpdateGraph extends UniformProcessor
 	 */
 	public UpdateGraph(Graph g)
 	{
+		this(g.duplicate(), g);
+	}
+	
+	/**
+	 * Creates a new update graph processor, defining the current graph and
+	 * the initial graph.
+	 * @param g The current graph
+	 * @param start The starting graph
+	 * @see #m_startGraph
+	 */
+	protected UpdateGraph(Graph g, Graph start)
+	{
 		super(2, 1);
 		m_graph = g;
+		m_startGraph = start;
 	}
 
 	@Override
-	public Processor duplicate(boolean with_state)
+	public UpdateGraph duplicate(boolean with_state)
 	{
-		return new UpdateGraph(m_graph.duplicate(with_state));
+		if (with_state)
+		{
+			return new UpdateGraph(m_graph.duplicate(with_state), m_startGraph);
+		}
+		return new UpdateGraph(m_startGraph.duplicate());
+	}
+	
+	@Override
+	public void reset()
+	{
+		super.reset();
+		m_graph = m_startGraph.duplicate();
 	}
 
 	@Override

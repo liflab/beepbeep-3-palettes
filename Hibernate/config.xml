@@ -89,5 +89,15 @@
       </files>
       <bundle>true</bundle>
     </dependency>
+    <!-- Azrael. For serialization. -->
+    <dependency>
+      <name>Azrael JSON</name>
+      <classname>ca.uqac.lif.azrael.json.JsonPrinter</classname>
+      <files>
+        <jar>https://github.com/sylvainhalle/Azrael/releases/download/v2.2/azrael-json-2.2.jar</jar>
+      </files>
+      <bundle>true</bundle>
+    </dependency>
+ 
   </dependencies>
 </build>

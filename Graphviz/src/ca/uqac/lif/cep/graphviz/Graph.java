@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2023 Sylvain Hallé and friends
+    Copyright (C) 2008-2026 Sylvain Hallé and friends
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -86,10 +86,20 @@ public class Graph
 	public Graph(Graph g)
 	{
 		this();
-		m_edges.putAll(g.m_edges);
+		for (Map.Entry<Integer, Set<Edge>> entry : g.m_edges.entrySet())
+		{
+			Set<Edge> new_edges = new HashSet<Edge>();
+			for (Edge e : entry.getValue())
+			{
+				new_edges.add(e.duplicate(true));
+			}
+			m_edges.put(entry.getKey(), new_edges);
+		}
+		m_vertexIds.putAll(g.m_vertexIds);
 		m_vertexLabels.putAll(g.m_vertexLabels);
-		m_inWeights.putAll(m_inWeights);
+		m_inWeights.putAll(g.m_inWeights);
 		m_vertexCounter = g.m_vertexCounter;
+		m_incrementWeights = g.m_incrementWeights;
 	}
 	
 	/**
@@ -171,6 +181,24 @@ public class Graph
 	}
 	
 	/**
+	 * Gets the number of vertices in the graph.
+	 * @return The number of vertices
+	 */
+	public int vertexCount()
+	{
+		return m_edges.size();
+	}
+	
+	/**
+	 * Gets the number of edges in the graph.
+	 * @return The number of edges
+	 */
+	public int edgeCount()
+	{
+		return m_edges.values().size();
+	}
+	
+	/**
 	 * Finds the edge with given source and destination vertices
 	 * @param source The source vertex
 	 * @param destination The destination vertex
@@ -191,6 +219,19 @@ public class Graph
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * Finds the edge with given source and destination vertices
+	 * @param source The label of the source vertex
+	 * @param destination The label of the destination vertex
+	 * @return The edge, or {@code null} if no edge could be found
+	 */
+	/*@ null @*/ public Edge getEdge(String source, String destination)
+	{
+		int src = m_vertexIds.getOrDefault(source, -1);
+		int dst = m_vertexIds.getOrDefault(destination, -1);
+		return getEdge(src, dst);
 	}
 	
 	/**
@@ -374,20 +415,11 @@ public class Graph
 	 */
 	public Graph duplicate(boolean with_state)
 	{
-		Graph g = new Graph();
-		for (Map.Entry<Integer, Set<Edge>> entry : m_edges.entrySet())
+		if (with_state)
 		{
-			Set<Edge> new_edges = new HashSet<Edge>();
-			for (Edge e : entry.getValue())
-			{
-				new_edges.add(e.duplicate(with_state));
-			}
-			g.m_edges.put(entry.getKey(), new_edges);
+			return new Graph(this);
 		}
-		g.m_vertexLabels.putAll(m_vertexLabels);
-		g.m_vertexIds.putAll(m_vertexIds);
-		g.m_inWeights.putAll(m_inWeights);
-		return g;
+		return new Graph();
 	}
 	
 	/**

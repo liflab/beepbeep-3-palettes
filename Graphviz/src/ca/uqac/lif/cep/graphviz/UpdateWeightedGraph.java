@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2018 Sylvain Hallé and friends
+    Copyright (C) 2008-2026 Sylvain Hallé and friends
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -33,6 +33,12 @@ public class UpdateWeightedGraph extends UniformProcessor
 	protected Graph m_graph;
 	
 	/**
+	 * The graph used as the starting point for the update. This
+	 * graph is restored on a call to {@link Processor#reset()}.
+	 */
+	protected final Graph m_startGraph; 
+	
+	/**
 	 * Creates a new update graph processor
 	 */
 	public UpdateWeightedGraph()
@@ -46,14 +52,31 @@ public class UpdateWeightedGraph extends UniformProcessor
 	 */
 	public UpdateWeightedGraph(Graph g)
 	{
+		this(g.duplicate(), g);
+	}
+	
+	protected UpdateWeightedGraph(Graph g, Graph start)
+	{
 		super(3, 1);
 		m_graph = g;
+		m_startGraph = start;
+	}
+	
+	@Override
+	public void reset()
+	{
+		super.reset();
+		m_graph = m_startGraph.duplicate();
 	}
 
 	@Override
-	public Processor duplicate(boolean with_state)
+	public UpdateWeightedGraph duplicate(boolean with_state)
 	{
-		return new UpdateWeightedGraph(m_graph.duplicate(with_state));
+		if (with_state)
+		{
+			return new UpdateWeightedGraph(m_graph.duplicate(with_state), m_startGraph);
+		}
+		return new UpdateWeightedGraph(m_startGraph.duplicate());
 	}
 
 	@Override
