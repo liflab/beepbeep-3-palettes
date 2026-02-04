@@ -23,30 +23,27 @@
        script's default values -->
 
   <!-- The project's name -->
-  <name>XML</name>
+  <name>Zeppelin</name>
   
   <!-- The project's version number -->
   <version>3.14</version>
   
   <!-- The project's package (with a trailing slash) -->
-  <package>ca/uqac/lif/cep/xml/</package>
+  <package>ca/uqac/lif/cep/zeppelin/</package>
   
   <!-- The project's author. Currently this only
   shows up in the footer of the Javadoc documentation. -->
   <author>Sylvain Hall&#233;</author>
   
   <!-- The project's main class -->
-  <mainclass>ca.uqac.lif.cep.xml.Main</mainclass>
-  
-  <!-- Target JDK version for compilation -->
-  <targetjdk>11</targetjdk>
+  <mainclass>ca.uqac.lif.cep.zeppelin.Main</mainclass>
   
   <!-- Installation folders -->
   <srcdir>src</srcdir>
   <libdir>../lib</libdir>
   <bindir>bin</bindir>
-  <depdir>dep</depdir>
   <docdir>doc</docdir>
+  <depdir>dep</depdir>
   <test>
     <srcdir>src</srcdir>
     <bindir>bin</bindir>
@@ -60,15 +57,18 @@
   
   <!-- Output jar -->
   <jar>
-    <filename>../jars/xml</filename>
+    <filename>../jars/zeppelin</filename>
     <withdoc>false</withdoc>
   </jar>
+  
+  <!-- Target JDK version for compilation -->
+  <targetjdk>11</targetjdk>
   
   <!--
     Write JAR dependencies here.
   -->
   <dependencies>
-  	<dependency>
+    <dependency>
       <!--
       BeepBeep
       -->
@@ -80,14 +80,6 @@
       <bundle>false</bundle>
     </dependency>
     <project>BeepBeep 3</project>
-    <dependency>
-    <!-- xml-lif. Used to parse XML messages -->
-      <name>xml-lif</name>
-      <classname>ca.uqac.lif.xml.XmlElement</classname>
-      <files>       
-        <jar>https://github.com/liflab/xml-lif/releases/download/v1.2.2/xml-lif-1.2.2.jar</jar>
-      </files>
-      <bundle>true</bundle>
-    </dependency>
+    <project>MTNP</project>
   </dependencies>
 </build>

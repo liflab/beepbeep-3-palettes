@@ -26,7 +26,7 @@
   <name>Tuples</name>
   
   <!-- The project's version number -->
-  <version>3.13</version>
+  <version>3.14</version>
   
   <!-- The project's package (with a trailing slash) -->
   <package>ca/uqac/lif/cep/tuples/</package>
@@ -75,7 +75,7 @@
       <name>BeepBeep</name>
       <classname>ca.uqac.lif.cep.Processor</classname>
       <files>
-      	<jar>https://github.com/liflab/beepbeep-3/releases/download/v3.13/beepbeep-3.13.jar</jar>
+      	<jar>https://github.com/liflab/beepbeep-3/releases/download/v3.14/beepbeep-3.14.jar</jar>
       </files>
       <bundle>false</bundle>
     </dependency>

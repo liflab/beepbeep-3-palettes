@@ -63,7 +63,7 @@ public class MergeWeightedGraphs extends BinaryFunction<Graph, Graph, Graph>
 	@Override
 	public Graph getStartValue()
 	{
-		return new Graph();
+		return new Graph().setNodeStyle("shape=\"rect\"").setGraphStyle("overlap=\"false\",sep=\"10\"");
 	}
 	
 	protected static int getOrCreate(Graph g, String label)

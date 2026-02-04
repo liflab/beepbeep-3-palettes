@@ -43,21 +43,21 @@ public class UpdateWeightedGraph extends UniformProcessor
 	 */
 	public UpdateWeightedGraph()
 	{
-		this(new Graph());
+		this(new Graph(), false);
 	}
 	
 	/**
 	 * Creates a new update graph processor, starting with a given graph
 	 * @param g The graph
 	 */
-	public UpdateWeightedGraph(Graph g)
+	public UpdateWeightedGraph(Graph g, boolean in_array)
 	{
-		this(g.duplicate(), g);
+		this(g.duplicate(), g, in_array);
 	}
 	
-	protected UpdateWeightedGraph(Graph g, Graph start)
+	protected UpdateWeightedGraph(Graph g, Graph start, boolean in_array)
 	{
-		super(3, 1);
+		super(in_array ? 1 : 3, 1);
 		m_graph = g;
 		m_startGraph = start;
 	}
@@ -74,20 +74,20 @@ public class UpdateWeightedGraph extends UniformProcessor
 	{
 		if (with_state)
 		{
-			return new UpdateWeightedGraph(m_graph.duplicate(with_state), m_startGraph);
+			return new UpdateWeightedGraph(m_graph.duplicate(with_state), m_startGraph, m_inputArity == 1);
 		}
-		return new UpdateWeightedGraph(m_startGraph.duplicate());
+		return new UpdateWeightedGraph(m_startGraph.duplicate(), m_inputArity == 1);
 	}
 
 	@Override
 	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
-	  if (inputs[0].getClass().isArray())
+	  if (m_inputArity == 1) // inputs are in an array
 	  {
 	   Object[] ins = (Object[]) inputs[0];
 	   m_graph.incrementWeight((String) ins[0], (String) ins[1], (Number) ins[2]);
 	  }
-	  else
+	  else // inputs are separate
 	  {
 	    m_graph.incrementWeight((String) inputs[0], (String) inputs[1], (Number) inputs[2]);
 	  }

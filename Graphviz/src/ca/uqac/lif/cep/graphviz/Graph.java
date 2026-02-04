@@ -45,6 +45,16 @@ public class Graph
 	protected final Map<String,Integer> m_vertexIds;
 	
 	/**
+	 * A string representing the style of the graph.
+	 */
+	protected String m_graphStyle;
+	
+	/**
+	 * A string representing the style of the nodes.
+	 */
+	protected String m_nodeStyle;
+	
+	/**
    * A map associating vertices to the sum of the weights
    * on its incoming edges.
    * Since edges are stored by source vertex, computing the input
@@ -77,6 +87,8 @@ public class Graph
 		m_vertexIds = new HashMap<String,Integer>();
 		m_inWeights = new HashMap<Integer,Float>();
 		m_vertexCounter = 0;
+		m_graphStyle = "";
+		m_nodeStyle = "";
 	}
 	
 	/**
@@ -100,6 +112,8 @@ public class Graph
 		m_inWeights.putAll(g.m_inWeights);
 		m_vertexCounter = g.m_vertexCounter;
 		m_incrementWeights = g.m_incrementWeights;
+		m_graphStyle = g.m_graphStyle;
+		m_nodeStyle = g.m_nodeStyle;
 	}
 	
 	/**
@@ -339,13 +353,43 @@ public class Graph
 	}
 	
 	/**
-	 * Outputs the graph in DOT format
+	 * Assigns a default style to the nodes of the graph. 
+	 * @param style The style string, in the format expected by Graphviz
+	 * @return This graph
+	 */
+	public Graph setNodeStyle(String style)
+	{
+		m_nodeStyle = style;
+		return this;
+	}
+	
+	/**
+	 * Assigns a default style to the graph. 
+	 * @param style The style string, in the format expected by Graphviz
+	 * @return This graph
+	 */
+	public Graph setGraphStyle(String style)
+	{
+		m_graphStyle = style;
+		return this;
+	}
+	
+	/**
+	 * Outputs the graph in DOT format.
 	 * @return A DOT string
 	 */
 	public String toDot()
 	{
 		StringBuilder out = new StringBuilder();
 		out.append("digraph G {\n");
+		if (!m_graphStyle.isEmpty())
+		{
+			out.append("graph [").append(m_graphStyle).append("];\n");
+		}
+		if (!m_nodeStyle.isEmpty())
+		{
+			out.append("node [").append(m_nodeStyle).append("];\n");
+		}
 		for (Map.Entry<Integer,String> entry : m_vertexLabels.entrySet())
 		{
 			out.append(entry.getKey()).append(" [").append(renderVertex(entry.getValue())).append("];\n");
