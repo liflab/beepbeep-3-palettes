@@ -55,6 +55,11 @@ public class Graph
 	protected String m_nodeStyle;
 	
 	/**
+	 * A string representing the style of the edges.
+	 */
+	protected String m_edgeStyle;
+	
+	/**
    * A map associating vertices to the sum of the weights
    * on its incoming edges.
    * Since edges are stored by source vertex, computing the input
@@ -89,6 +94,7 @@ public class Graph
 		m_vertexCounter = 0;
 		m_graphStyle = "";
 		m_nodeStyle = "";
+		m_edgeStyle = "";
 	}
 	
 	/**
@@ -114,6 +120,7 @@ public class Graph
 		m_incrementWeights = g.m_incrementWeights;
 		m_graphStyle = g.m_graphStyle;
 		m_nodeStyle = g.m_nodeStyle;
+		m_edgeStyle = g.m_edgeStyle;
 	}
 	
 	/**
@@ -129,6 +136,15 @@ public class Graph
 	  return this;
 	}
 	
+	/**
+	 * Adds an edge to the graph, by designating it with the labels of the source and destination vertices.
+	 * If the vertices do not exist, they are created. Note that this method assumes that
+	 * each vertex in the graph has a different label in order to be used.
+	 * @param source The label of the source vertex
+	 * @param destination The label of the destination vertex
+	 * @param weight The weight of the edge
+	 * @return
+	 */
 	public Graph add(String source, String destination, float weight)
 	{
 		if (!m_vertexLabels.containsValue(source))
@@ -148,6 +164,13 @@ public class Graph
 		return add(id_src, id_dst, weight);
 	}
 	
+	/**
+	 * Adds an edge to the graph.
+	 * @param source The source vertex
+	 * @param destination The destination vertex
+	 * @param weight The weight of the edge
+	 * @return This graph
+	 */
 	public Graph add(int source, int destination, float weight)
 	{
 		Set<Edge> list = null;
@@ -170,7 +193,7 @@ public class Graph
 	}
 	
 	/**
-	 * Adds an edge to the graph
+	 * Adds an edge to the graph.
 	 * @param e The edge
 	 * @return This graph
 	 */
@@ -364,6 +387,17 @@ public class Graph
 	}
 	
 	/**
+	 * Assigns a default style to the edges of the graph.
+	 * @param style The style string, in the format expected by Graphviz
+	 * @return This graph
+	 */
+	public Graph setEdgeStyle(String style)
+	{
+		m_edgeStyle = style;
+		return this;
+	}
+	
+	/**
 	 * Assigns a default style to the graph. 
 	 * @param style The style string, in the format expected by Graphviz
 	 * @return This graph
@@ -389,6 +423,10 @@ public class Graph
 		if (!m_nodeStyle.isEmpty())
 		{
 			out.append("node [").append(m_nodeStyle).append("];\n");
+		}
+		if (!m_edgeStyle.isEmpty())
+		{
+			out.append("edge [").append(m_edgeStyle).append("];\n");
 		}
 		for (Map.Entry<Integer,String> entry : m_vertexLabels.entrySet())
 		{

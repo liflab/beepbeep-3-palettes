@@ -39,7 +39,7 @@ public class MergeWeightedGraphs extends BinaryFunction<Graph, Graph, Graph>
 	/**
 	 * Creates a new instance of the function.
 	 */
-	MergeWeightedGraphs()
+	protected MergeWeightedGraphs()
 	{
 		super(Graph.class, Graph.class, Graph.class);
 	}
