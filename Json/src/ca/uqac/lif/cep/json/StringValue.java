@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2024 Sylvain Hallé
+    Copyright (C) 2008-2026 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -22,7 +22,7 @@ import ca.uqac.lif.json.JsonElement;
 import ca.uqac.lif.json.JsonString;
 
 /**
- * Extracts a number value from a JSON element.
+ * Extracts a string value from a JSON element.
  * @author Sylvain Hallé
  */
 public class StringValue extends UnaryFunction<JsonElement,String>
