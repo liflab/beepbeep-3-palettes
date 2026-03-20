@@ -20,7 +20,6 @@ package ca.uqac.lif.cep.mtnp;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.UniformProcessor;
 import ca.uqac.lif.mtnp.plot.Plot;
@@ -88,7 +87,7 @@ public class DrawPlot extends UniformProcessor
 	}
 
 	@Override
-	public Processor duplicate(boolean with_state)
+	public DrawPlot duplicate(boolean with_state)
 	{
 		// Does not make much sense to clone this
 		throw new UnsupportedOperationException();

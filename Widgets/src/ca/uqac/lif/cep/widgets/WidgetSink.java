@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.widgets;
 
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.tmf.Sink;
 import java.awt.Component;
 import java.awt.image.BufferedImage;
@@ -53,7 +52,7 @@ public class WidgetSink extends Sink
   }
 
   @Override
-  public Processor duplicate(boolean with_state)
+  public WidgetSink duplicate(boolean with_state)
   {
     throw new UnsupportedOperationException("Method duplicate is not supported on this processor");
   }

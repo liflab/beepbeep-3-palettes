@@ -2,7 +2,6 @@ package ca.uqac.lif.cep.diagnostics;
 
 import java.util.Queue;
 
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.tmf.Sink;
 
@@ -46,7 +45,7 @@ public class ThroughputMeter extends Sink
 	}
 
 	@Override
-	public Processor duplicate(boolean with_state) 
+	public ThroughputMeter duplicate(boolean with_state) 
 	{
 		ThroughputMeter tm = new ThroughputMeter(m_callback, m_refreshInterval);
 		if (with_state)

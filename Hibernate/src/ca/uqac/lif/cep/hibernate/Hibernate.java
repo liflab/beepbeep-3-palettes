@@ -134,7 +134,7 @@ public class Hibernate extends SynchronousProcessor
   }
 
   @Override
-  public Processor duplicate(boolean with_state)
+  public Hibernate duplicate(boolean with_state)
   {
     throw new UnsupportedOperationException("This processor cannot be duplicated");
   }

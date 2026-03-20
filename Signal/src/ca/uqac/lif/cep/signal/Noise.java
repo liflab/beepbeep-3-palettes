@@ -2,7 +2,6 @@ package ca.uqac.lif.cep.signal;
 
 import java.util.Random;
 
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.UniformProcessor;
 
 public class Noise extends UniformProcessor
@@ -27,7 +26,7 @@ public class Noise extends UniformProcessor
   }
 
   @Override
-  public Processor duplicate(boolean with_state)
+  public Noise duplicate(boolean with_state)
   {
     return new Noise(m_range);
   }

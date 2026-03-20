@@ -20,7 +20,6 @@ package ca.uqac.lif.cep.io.websocket;
 import java.net.URI;
 import java.util.Queue;
 
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
 import ca.uqac.lif.cep.SynchronousProcessor;
 
@@ -64,7 +63,7 @@ public class WebSocketReader extends SynchronousProcessor
 	}
 
 	@Override
-	public Processor duplicate(boolean with_state) 
+	public WebSocketReader duplicate(boolean with_state) 
 	{
 		return new WebSocketReader(m_serverUri);
 	}

@@ -110,7 +110,7 @@ public class RangeCepTest
 		}
 
 		@Override
-		public Processor duplicate(boolean with_state)
+		public DummyRange duplicate(boolean with_state)
 		{
 			// Don't care
 			return null;

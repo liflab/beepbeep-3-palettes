@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.jdbc;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -44,7 +43,7 @@ public class JdbcSource extends Source
   /**
    * The database connection object
    */
-  protected Connection m_connection = null;
+  protected java.sql.Connection m_connection = null;
 
   /**
    * The statement object corresponding to the SQL query being executed 
@@ -77,7 +76,7 @@ public class JdbcSource extends Source
    * to be a table name, as any SQL expression that returns a table (e.g.
    * a <code>SELECT</code> statement) can do.
    */
-  public JdbcSource(Connection conn, String tablename)
+  public JdbcSource(java.sql.Connection conn, String tablename)
   {
     super(1);
     m_connection = conn;

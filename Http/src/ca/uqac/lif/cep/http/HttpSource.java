@@ -17,7 +17,6 @@
  */
 package ca.uqac.lif.cep.http;
 
-import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.tmf.Sink;
@@ -105,7 +104,7 @@ public class HttpSource extends Sink
   }
 
   @Override
-  public Processor duplicate(boolean with_state)
+  public HttpSource duplicate(boolean with_state)
   {
     // It doesn't make much sense to clone a network processor
     throw new UnsupportedOperationException();

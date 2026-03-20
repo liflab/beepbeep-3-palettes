@@ -24,6 +24,7 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Context;
 import ca.uqac.lif.cep.Processor;
 import ca.uqac.lif.cep.Pushable;
+import ca.uqac.lif.cep.SingleProcessor;
 import ca.uqac.lif.cep.SynchronousProcessor;
 import ca.uqac.lif.cep.functions.Function;
 import ca.uqac.lif.cep.tmf.SinkLast;
@@ -76,7 +77,7 @@ public abstract class FirstOrderQuantifier extends SynchronousProcessor
 	}
 	
 	@Override
-	public void duplicateInto(Processor p)
+	public void duplicateInto(SingleProcessor p)
 	{
 	  super.duplicateInto(p);
 	  FirstOrderQuantifier foq = (FirstOrderQuantifier) p;
