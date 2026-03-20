@@ -87,7 +87,7 @@
       <files>
 	<jar>https://github.com/sylvainhalle/Azrael/releases/download/v2.2/azrael-core-2.2.jar</jar>
       </files>
-      <bundle>false</bundle>
+      <bundle>true</bundle>
     </dependency>
     <dependency>
       <!-- Azrael JSON. Generic serialization library -->

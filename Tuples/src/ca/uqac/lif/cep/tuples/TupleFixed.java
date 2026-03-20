@@ -1,6 +1,6 @@
 /*
     BeepBeep, an event stream processor
-    Copyright (C) 2008-2024 Sylvain Hallé
+    Copyright (C) 2008-2026 Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import ca.uqac.lif.cep.Duplicable;
+import ca.uqac.lif.petitpoucet.Duplicable;
 
 /**
  * Implementation of a named tuple. Contrarily to a {@link TupleMap},

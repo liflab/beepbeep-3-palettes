@@ -26,7 +26,7 @@ import java.util.Queue;
 import java.util.Set;
 
 import ca.uqac.lif.cep.Context;
-import ca.uqac.lif.cep.Duplicable;
+import ca.uqac.lif.petitpoucet.Duplicable;
 import ca.uqac.lif.cep.ProcessorException;
 import ca.uqac.lif.cep.Stateful;
 import ca.uqac.lif.cep.SynchronousProcessor;

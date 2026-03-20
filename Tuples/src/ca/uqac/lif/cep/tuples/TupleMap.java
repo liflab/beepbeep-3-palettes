@@ -22,8 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import ca.uqac.lif.cep.Duplicable;
-
+import ca.uqac.lif.petitpoucet.Duplicable;
 
 /**
  * Implementation of a named tuple based on the <code>Map</code> class.
