@@ -74,15 +74,15 @@ public class UpdateWeightedGraph extends UniformProcessor
 	{
 		if (with_state)
 		{
-			return new UpdateWeightedGraph(m_graph.duplicate(with_state), m_startGraph, m_inputArity == 1);
+			return new UpdateWeightedGraph(m_graph.duplicate(with_state), m_startGraph, getInputArity() == 1);
 		}
-		return new UpdateWeightedGraph(m_startGraph.duplicate(), m_inputArity == 1);
+		return new UpdateWeightedGraph(m_startGraph.duplicate(), getInputArity() == 1);
 	}
 
 	@Override
 	protected boolean compute(Object[] inputs, Object[] outputs)
 	{
-	  if (m_inputArity == 1) // inputs are in an array
+	  if (getInputArity() == 1) // inputs are in an array
 	  {
 	   Object[] ins = (Object[]) inputs[0];
 	   m_graph.incrementWeight((String) ins[0], (String) ins[1], (Number) ins[2]);

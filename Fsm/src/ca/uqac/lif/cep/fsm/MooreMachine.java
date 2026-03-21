@@ -205,7 +205,7 @@ public class MooreMachine extends SynchronousProcessor implements Stateful
 					if (t.isFired(inputs, m_context))
 					{
 						// This transition fires: move to that state
-						Object[] out = new Object[m_outputArity];
+						Object[] out = new Object[getOutputArity()];
 						boolean b = fire(t, inputs, out);
 						if (b)
 						{
@@ -226,7 +226,7 @@ public class MooreMachine extends SynchronousProcessor implements Stateful
 			// No "normal" transition has fired, but we have an "otherwise": fire it
 			try
 			{
-				Object[] out = new Object[m_outputArity];
+				Object[] out = new Object[getOutputArity()];
 				boolean b = fire(otherwise, inputs, out);
 				if (b)
 				{
