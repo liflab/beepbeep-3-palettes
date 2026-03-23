@@ -51,7 +51,7 @@ public class InterpretationBuilder extends SynchronousProcessor
 	public InterpretationBuilder duplicate(boolean with_state)
 	{
 		InterpretationBuilder out = new InterpretationBuilder();
-		out.setContext(m_context);
+		out.setContext(getContext());
 		if (with_state)
 		{
 			out.m_interpretation = new Interpretation(m_interpretation);

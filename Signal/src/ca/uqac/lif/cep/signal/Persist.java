@@ -67,7 +67,7 @@ public class Persist extends UniformProcessor
   public Persist duplicate(boolean with_state)
   {
     Persist d = new Persist(m_width);
-    d.m_context.putAll(getContext());
+    d.getContext().putAll(getContext());
     if (with_state)
     {
       d.m_lastValue = m_lastValue;

@@ -77,9 +77,9 @@ public abstract class FirstOrderQuantifier extends SynchronousProcessor
 	}
 	
 	@Override
-	public void duplicateInto(SingleProcessor p)
+	protected void duplicate(SingleProcessor p, boolean with_state)
 	{
-	  super.duplicateInto(p);
+	  super.duplicate(p, with_state);
 	  FirstOrderQuantifier foq = (FirstOrderQuantifier) p;
 	  foq.m_slicer = (FirstOrderSlice) m_slicer.duplicate();
 	}

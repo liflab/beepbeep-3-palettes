@@ -34,10 +34,7 @@ public class Next extends Trim
 	public Next duplicate(boolean with_state)
 	{
 		Next n = new Next();
-		if (with_state)
-		{
-			n.m_hasBeenNotifiedOfEndOfTrace = m_hasBeenNotifiedOfEndOfTrace;
-		}
+		duplicate(n, with_state);
 		return n;
 	}
 }

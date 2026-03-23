@@ -38,7 +38,7 @@ public class NewForAll extends NewQuantifier
   public NewForAll duplicate(boolean with_state)
   {
     NewForAll nfa = new NewForAll(m_variableName, m_domainFunction, m_expression);
-    nfa.setContext(m_context);
+    nfa.setContext(getContext());
     return nfa;
   }
 }

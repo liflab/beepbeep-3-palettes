@@ -202,7 +202,7 @@ public class MooreMachine extends SynchronousProcessor implements Stateful
 			{
 				try
 				{
-					if (t.isFired(inputs, m_context))
+					if (t.isFired(inputs, getContext()))
 					{
 						// This transition fires: move to that state
 						Object[] out = new Object[getOutputArity()];
@@ -257,7 +257,7 @@ public class MooreMachine extends SynchronousProcessor implements Stateful
 		m_currentState = t.getDestination();
 		t.modifyContext(inputs, outputs, this);
 		//System.out.println(t);
-		//System.out.println(m_context);
+		//System.out.println(getContext());
 		// Anything to output?
 		if (m_outputSymbols.containsKey(m_currentState))
 		{
@@ -265,7 +265,7 @@ public class MooreMachine extends SynchronousProcessor implements Stateful
 			for (int i = 0; i < outputs.length; i++)
 			{
 				Object[] o_val = new Object[out[i].getOutputArity()];
-				out[i].evaluate(inputs, o_val, m_context);
+				out[i].evaluate(inputs, o_val, getContext());
 				outputs[i] = o_val[0];
 			}
 			return true;
@@ -370,7 +370,7 @@ public class MooreMachine extends SynchronousProcessor implements Stateful
 		}		
 		if (with_state)
 		{
-			out.setContext(m_context);
+			out.setContext(getContext());
 			out.m_currentState = m_currentState;
 			out.m_lastOccurrences.putAll(m_lastOccurrences);
 			out.m_looplessPath.addAll(m_looplessPath);

@@ -41,7 +41,7 @@ public class Some extends FirstOrderQuantifier
 	public Some duplicate(boolean with_state)
 	{
 		Some f = new Some(m_slicer.duplicate(with_state));
-		f.setContext(m_context);
+		f.setContext(getContext());
 		return f;
 	}
 

@@ -57,7 +57,7 @@ public class NewTrooleanForAll extends NewQuantifier
   public NewTrooleanForAll duplicate(boolean with_state)
   {
     NewTrooleanForAll nfa = new NewTrooleanForAll(m_variableName, m_domainFunction, m_expression);
-    nfa.setContext(m_context);
+    nfa.setContext(getContext());
     return nfa;
   }
 }

@@ -109,14 +109,14 @@ public class FirstOrderSlice extends SynchronousProcessor
 		if (m_boolean || m_inputCount == 0)
 		{
 			Object[] values = new Object[1];
-			m_function.evaluate(inputs, values, m_context);
+			m_function.evaluate(inputs, values, getContext());
 			// Create new slice and set context
 			if (values[0] instanceof Collection<?>)
 			{
 				for (Object val : (Collection<?>) values[0])
 				{
 					Processor new_p = m_expression.duplicate();
-					new_p.setContext(m_context);
+					new_p.setContext(getContext());
 					new_p.setContext(m_varName, val);
 					// Connect to sink, add to lists
 					m_slices.add(new_p);

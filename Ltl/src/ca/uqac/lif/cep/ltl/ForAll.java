@@ -41,8 +41,8 @@ public class ForAll extends FirstOrderQuantifier
 	public ForAll duplicate(boolean with_state)
 	{
 		ForAll f = new ForAll(m_slicer.duplicate(with_state));
-		super.duplicateInto(f);
-		f.setContext(m_context);
+		super.duplicate(f, false);
+		f.setContext(getContext());
 		return f;
 	}
 

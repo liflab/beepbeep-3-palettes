@@ -41,7 +41,7 @@ public abstract class NewQuantifier extends SynchronousProcessor
     for (Object v : (Collection<?>) dom_out[0])
     {
       Processor new_exp = m_expression.duplicate();
-      new_exp.setContext(m_context);
+      new_exp.setContext(getContext());
       new_exp.setContext(m_variableName, v);
       Pushable p = new_exp.getPushableInput();
       m_pushables.add(p);
