@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
 	A build script for a super-project containing multiple sub-projects
-    Copyright (C) 2019-2025  Sylvain Hallé
+    Copyright (C) 2019-2026  Sylvain Hallé
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -129,6 +129,57 @@
     <fail message="Task @{task} failed in folder ${build.whofailed}" if="build.onefailed"/>
     </sequential>
   </macrodef>
+  
+    <!-- Macro to call git -->
+    <macrodef name="git">
+		<attribute name="command" />
+		<attribute name="options" default="" />
+		<attribute name="dir" default="" />
+		<attribute name="failerror" default="false" />
+		<element name="args" optional="true" />
+		<sequential>
+			<echo message="git dir @{dir}" />
+			<echo message="git @{command}" />
+			<exec executable="git" dir="@{dir}" failonerror="@{failerror}">
+				<arg line="@{command} @{options}" />
+				<args />
+			</exec>
+		</sequential>
+	</macrodef>
+	
+	<!-- Macro to call git pull -->
+	<macrodef name="git-pull">
+		<attribute name="failerror" default="false" />
+		<git command="pull" failerror="@{failerror}" />
+	</macrodef>
+	
+	<!-- Macro to call git push -->
+	<macrodef name="git-push">
+		<attribute name="failerror" default="false" />
+		<git command="push" failerror="@{failerror}" />
+	</macrodef>
+	
+	<!-- Target: pull
+	     Pulls the current repository -->
+	<target name="pull" depends="init" description="Pulls the current repository">
+	  <git-pull />
+	</target>
+	
+    <!-- Target: push
+	     Pushes the current repository -->
+	<target name="push" depends="init" description="Pulls the current repository">
+	  <git-push />
+	</target>
+  
+  <!-- Target: copy
+       Copy a local version of BeepBeep in each palette. It is assumed that
+       the JAR files are in a "sibling" folder to the current one, called
+       `core`. -->
+  <target name="copy" depends="init" description="Copy a local version of BeepBeep in each palette">
+    <copy todir="lib" preservelastmodified="true" overwrite="true">
+      <fileset dir="../core" includes="beepbeep-*.jar"/>
+    </copy>
+  </target>
 
   <!-- Target: phase1-jar
        Build all projects that have a build.xml, excluding those tagged for
